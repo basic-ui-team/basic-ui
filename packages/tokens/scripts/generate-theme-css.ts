@@ -21,7 +21,9 @@ type ThemeObj = Record<string, Record<string, string | number>>;
 const PRIMITIVE_PREFIXES = ["--color-green-", "--color-purple-", "--color-gray-"];
 
 /** Filter out primitive color tokens, keeping only semantic colors and other theme tokens */
-function filterPrimitiveTokens(props: Record<string, string | number>): Record<string, string | number> {
+function filterPrimitiveTokens(
+  props: Record<string, string | number>,
+): Record<string, string | number> {
   return Object.fromEntries(
     Object.entries(props).filter(
       ([varName]) => !PRIMITIVE_PREFIXES.some((prefix) => varName.startsWith(prefix)),
@@ -34,7 +36,9 @@ function computeDarkDiff(
   lightProps: Record<string, string | number>,
   dark: ThemeObj,
 ): Record<string, string | number> {
-  const darkProps = filterPrimitiveTokens(themeToCustomProperties(dark as any) as Record<string, string | number>);
+  const darkProps = filterPrimitiveTokens(
+    themeToCustomProperties(dark as any) as Record<string, string | number>,
+  );
   const diff: Record<string, string | number> = {};
 
   for (const [varName, value] of Object.entries(darkProps)) {
@@ -46,7 +50,9 @@ function computeDarkDiff(
 }
 
 const light = lightTheme as unknown as ThemeObj;
-const lightProps = filterPrimitiveTokens(themeToCustomProperties(light) as Record<string, string | number>);
+const lightProps = filterPrimitiveTokens(
+  themeToCustomProperties(light) as Record<string, string | number>,
+);
 const dark = darkTheme as unknown as ThemeObj;
 const darkDiff = computeDarkDiff(lightProps, dark);
 
