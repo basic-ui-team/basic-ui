@@ -1,0 +1,9 @@
+/**
+ * Light Mode Theme (Default)
+ *
+ * Light mode is the default. These overrides are a no-op
+ * but included for consistency and potential future customization.
+ */
+:root {
+  /* All light mode tokens are defined in ../tokens.css */
+}

@@ -1,8 +1,11 @@
-import { ThemeConfig } from ".";
+import { mergeTheme, ThemeConfig } from ".";
+import { defaultTheme } from "./config/default";
+import { convertToKebabCase } from "./utils";
 
 /**
  * Inject a theme configuration into CSS custom properties.
  * Call this once at app root to apply theme overrides globally.
+ * The config object can include any subset of the theme categories (colors, spacing, etc.) and will be merged with defaults.
  *
  * @example
  * const myTheme: ThemeConfig = {
@@ -16,7 +19,7 @@ import { ThemeConfig } from ".";
  * };
  * createTheme(myTheme);
  */
-export function createTheme(config: ThemeConfig): void {
+export function createTheme(config: Partial<ThemeConfig>): void {
   const root = document.documentElement;
 
   // Map config property names to their CSS variable prefixes
@@ -37,7 +40,9 @@ export function createTheme(config: ThemeConfig): void {
     opacity: "opacity",
   };
 
-  Object.entries(config).forEach(([category, values]) => {
+  const theme = mergeTheme(defaultTheme, config); // Merge with defaults to ensure all tokens are present
+
+  Object.entries(theme).forEach(([category, values]) => {
     if (values) {
       const prefix = prefixMap[category] || convertToKebabCase(category);
       Object.entries(values).forEach(([key, value]) => {
@@ -47,6 +52,3 @@ export function createTheme(config: ThemeConfig): void {
   });
 }
 
-function convertToKebabCase(str: string): string {
-  return str.replace(/([A-Z])/g, "-$1").toLowerCase();
-}

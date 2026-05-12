@@ -1,0 +1,49 @@
+/**
+ * Dark Mode Theme Overrides
+ *
+ * Apply these CSS variable overrides when .dark class is present on <html>
+ */
+.dark {
+  /* ===== BACKGROUNDS & SURFACES ===== */
+  --color-bg: hsl(210 10% 8%);
+  --color-surface: hsl(210 15% 12%);
+  --color-surface-hover: hsl(210 15% 16%);
+  --color-surface-active: hsl(210 15% 20%);
+  --color-muted-bg: hsl(210 10% 18%);
+  --color-secondary-bg: hsl(210 10% 18%);
+
+  /* ===== PRIMARY ===== */
+  --color-primary: hsl(119 43% 60%);
+  --color-primary-hover: hsl(119 43% 70%);
+  --color-primary-active: hsl(119 43% 52%);
+  --color-primary-light: hsl(119 43% 15%);
+
+  /* ===== SECONDARY ===== */
+  --color-secondary: hsl(299 35% 70%);
+  --color-secondary-hover: hsl(299 35% 80%);
+  --color-secondary-active: hsl(299 35% 55%);
+  --color-secondary-light: hsl(299 35% 15%);
+
+  /* ===== TEXT ===== */
+  --color-text: hsl(210 20% 95%);
+  --color-text-secondary: hsl(210 12% 84%);
+  --color-text-light: hsl(210 10% 68%);
+  --color-text-dark: hsl(210 16% 90%);
+
+  /* ===== BORDERS ===== */
+  --color-border: hsl(210 10% 32%);
+  --color-border-muted: hsl(210 10% 18%);
+
+  /* ===== SKELETON & PLACEHOLDERS ===== */
+  --color-skeleton: hsl(210 10% 32%);
+
+  /* ===== FEEDBACK ===== */
+  --color-success: hsl(119 43% 60%);
+  --color-success-light: hsl(119 43% 15%);
+  --color-warning: hsl(45 90% 65%);
+  --color-warning-light: hsl(45 80% 15%);
+  --color-error: hsl(0 84% 70%);
+  --color-error-light: hsl(0 80% 15%);
+  --color-info: hsl(210 88% 65%);
+  --color-info-light: hsl(210 85% 15%);
+}
