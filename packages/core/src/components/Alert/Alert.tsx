@@ -1,0 +1,114 @@
+import React, { useState } from "react";
+import { cn } from "@core/lib";
+import { Icon } from "../Icon";
+import { CheckCircleIcon, XCircleIcon, AlertTriangleIcon, InfoIcon, XIcon } from "@basic-ui/icons";
+
+import {
+  alertVariants,
+  alertTitleVariants,
+  alertIconVariants,
+  alertContentVariants,
+} from "./alert.variants";
+import type { AlertProps } from "./alert.types";
+
+// Map alert severities to icon components
+const ICON_MAP: Record<string, React.ComponentType> = {
+  success: CheckCircleIcon,
+  error: XCircleIcon,
+  warning: AlertTriangleIcon,
+  info: InfoIcon,
+};
+
+/**
+ * Alert — Slot-based notification component
+ *
+ * Displays persistent inline feedback with optional title and dismissal.
+ * Uses semantic slots (`title` + `description`) for composition clarity.
+ *
+ * Accessibility:
+ * - Uses `role="alert"` for error/warning (time-sensitive)
+ * - Uses `role="status"` for info/success (polite notifications)
+ * - Includes semantic icons and title support
+ * - Dismissible alerts include accessible close button
+ *
+ * @example
+ * // Simple info alert (description slot)
+ * <Alert description="This is an informational message" />
+ *
+ * // Error alert with title and dismissible
+ * <Alert
+ *   severity="error"
+ *   title="Error"
+ *   description="Something went wrong. Please try again."
+ *   dismissible
+ *   onDismiss={() => setShowAlert(false)}
+ * />
+ */
+export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
+  (
+    {
+      severity = "info",
+      borderless = false,
+      title,
+      description,
+      dismissible = false,
+      onDismiss,
+      isOpen = true,
+      className,
+      ...props
+    },
+    ref,
+  ) => {
+    const [isDismissed, setIsDismissed] = useState(false);
+
+    const handleDismiss = () => {
+      setIsDismissed(true);
+      onDismiss?.();
+    };
+
+    // Determine if alert should be shown
+    const isVisible = isOpen && !isDismissed;
+
+    if (!isVisible) {
+      return null;
+    }
+
+    // Semantic role: alert for urgent messages, status for polite notifications
+    const role = severity === "error" || severity === "warning" ? "alert" : "status";
+
+    const IconComponent = ICON_MAP[severity];
+
+    return (
+      <div
+        ref={ref}
+        role={role}
+        className={cn(alertVariants({ severity, borderless }), className)}
+        {...props}
+      >
+        {/* Icon */}
+        <div className={alertIconVariants()}>
+          <Icon icon={<IconComponent />} variant={severity} size="sm" />
+        </div>
+
+        {/* Content */}
+        <div className={alertContentVariants()}>
+          {title && <div className={alertTitleVariants()}>{title}</div>}
+          <div>{description}</div>
+        </div>
+
+        {/* Dismiss button */}
+        {dismissible && (
+          <button
+            onClick={handleDismiss}
+            className="shrink-0 -mr-sm -my-sm p-sm hover:bg-black/5 rounded transition-colors"
+            aria-label="Dismiss alert"
+          >
+            <Icon icon={<XIcon />} size="sm" />
+          </button>
+        )}
+      </div>
+    );
+  },
+);
+
+Alert.displayName = "Alert";

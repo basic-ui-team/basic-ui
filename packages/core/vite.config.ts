@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -14,6 +14,11 @@ export default defineConfig({
       "@icons": path.resolve(__dirname, "../icons/src"),
       "@shared": path.resolve(__dirname, "../shared/src"),
     },
+  },
+  test: {
+    globals: true,
+    environment: "jsdom",
+    setupFiles: ["../../vitest.setup.ts"],
   },
   build: {
     lib: {
