@@ -5,43 +5,52 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import tsPlugin from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
 
+const commonPlugins = {
+  "react-hooks": reactPlugin,
+  "react-refresh": reactRefresh,
+};
+
+const commonLanguageOptions = {
+  ecmaVersion: 2020,
+  sourceType: "module",
+  globals: globals.browser,
+  parserOptions: {
+    ecmaFeatures: { jsx: true },
+  },
+};
+
 export default [
   { ignores: ["dist", "build", "coverage", "node_modules", ".next", "storybook-static"] },
   {
     files: ["**/*.{js,jsx,ts,tsx}"],
-    languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
-      parserOptions: {
-        ecmaFeatures: { jsx: true },
-      },
-    },
+    languageOptions: commonLanguageOptions,
     rules: {
       ...js.configs.recommended.rules,
       "react-hooks/exhaustive-deps": "warn",
     },
-    plugins: {
-      "react-hooks": reactPlugin,
-      "react-refresh": reactRefresh,
-    },
+    plugins: commonPlugins,
   },
   {
     files: ["**/*.{ts,tsx}"],
+    ignores: ["**/*.config.{ts,tsx}", "**/*.d.ts"],
     languageOptions: {
+      ...commonLanguageOptions,
       parser: tsParser,
-      parserOptions: {
-        ecmaVersion: 2020,
-        sourceType: "module",
-        ecmaFeatures: { jsx: true },
-        project: true,
-      },
-      globals: globals.browser,
+      parserOptions: { ...commonLanguageOptions.parserOptions, project: true },
     },
-    plugins: {
-      "@typescript-eslint": tsPlugin,
-      "react-hooks": reactPlugin,
-      "react-refresh": reactRefresh,
+    plugins: { ...commonPlugins, "@typescript-eslint": tsPlugin },
+    rules: {
+      ...tsPlugin.configs.recommended.rules,
+      "react-hooks/exhaustive-deps": "warn",
     },
+  },
+  {
+    files: ["**/*.config.{ts,tsx}", "**/*.d.ts"],
+    languageOptions: {
+      ...commonLanguageOptions,
+      parser: tsParser,
+    },
+    plugins: { ...commonPlugins, "@typescript-eslint": tsPlugin },
     rules: {
       ...tsPlugin.configs.recommended.rules,
       "react-hooks/exhaustive-deps": "warn",

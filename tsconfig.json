@@ -23,7 +23,13 @@
     "noFallthroughCasesInSwitch": true,
 
     /* Path aliases */
-    "paths": {}
+    "paths": {
+      "@core/*": ["./packages/core/src/*"],
+      "@tokens/*": ["./packages/tokens/src/*"],
+      "@icons/*": ["./packages/icons/src/*"],
+      "@storybook/*": ["./apps/storybook/src/*"],
+      "@shared/*": ["./packages/shared/src/*"]
+    }
   },
   "include": ["packages", "apps"],
   "references": [
