@@ -31,8 +31,8 @@ describe("extractTokens", () => {
     ["letterSpacing", "tracking", "tight"],
     ["fontFamily", "font", "sans"],
     ["duration", "duration", "fast"],
-    ["easing", "easing", "in"],
-    ["zIndex", "z-index", "modal"],
+    ["easing", "ease", "in"],
+    ["zIndex", "z", "modal"],
     ["breakpoint", "breakpoint", "sm"],
     ["opacity", "opacity", "disabled"],
   ])("category: %s uses %s prefix", (category, prefix, key) => {

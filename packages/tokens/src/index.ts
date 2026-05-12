@@ -31,6 +31,7 @@ export { lightTheme, darkTheme };
 
 // Utilities
 export { mergeTheme, extractTokens, tokenName, cssVar } from "./utils";
+export { PREFIX_MAP } from "./constants";
 
 // Tailwind integration
 export { default as preset } from "./tailwind/preset";

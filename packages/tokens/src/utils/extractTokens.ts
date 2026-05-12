@@ -1,4 +1,6 @@
 import { ThemeConfig } from "@tokens/types";
+import { convertToKebabCase } from "./css-var";
+import { PREFIX_MAP } from "..";
 
 /**
  * Extracts tokens from a theme configuration for a specific category (e.g., colors, spacing).
@@ -8,24 +10,7 @@ export function extractTokens(
   theme: ThemeConfig,
   category: keyof ThemeConfig,
 ): Record<string, string | number> {
-  const prefixMap: Record<string, string> = {
-    colors: "color",
-    spacing: "spacing",
-    radius: "radius",
-    shadows: "shadow",
-    fontSize: "font-size",
-    fontWeight: "font-weight",
-    lineHeight: "line-height",
-    letterSpacing: "tracking",
-    fontFamily: "font",
-    duration: "duration",
-    easing: "easing",
-    zIndex: "z-index",
-    breakpoint: "breakpoint",
-    opacity: "opacity",
-  };
-
-  const prefix = prefixMap[category] || category;
+  const prefix = PREFIX_MAP[category as keyof typeof PREFIX_MAP] || convertToKebabCase(category);
   const tokens: Record<string, string | number> = {};
 
   if (theme[category]) {

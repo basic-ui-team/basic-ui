@@ -1,26 +1,11 @@
+import { PREFIX_MAP } from "../constants";
+
 /**
  * Generate a CSS custom property name from category and key
  * @example tokenName("color", "primary") → "--color-primary"
  */
 export function tokenName(category: string, key: string): string {
-  const prefixMap: Record<string, string> = {
-    colors: "color",
-    spacing: "spacing",
-    radius: "radius",
-    shadows: "shadow",
-    fontSize: "font-size",
-    fontWeight: "font-weight",
-    lineHeight: "line-height",
-    letterSpacing: "tracking",
-    fontFamily: "font",
-    duration: "duration",
-    easing: "ease",
-    zIndex: "z",
-    breakpoint: "breakpoint",
-    opacity: "opacity",
-  };
-
-  const prefix = prefixMap[category] || convertToKebabCase(category);
+  const prefix = PREFIX_MAP[category as keyof typeof PREFIX_MAP] || convertToKebabCase(category);
   return `--${prefix}-${key}`;
 }
 
