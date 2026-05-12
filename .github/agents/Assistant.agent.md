@@ -57,6 +57,7 @@ This project is structured as a monorepo, which allows for better organization a
 - `@simple-ui/icons`: This package contains a collection of icons that can be used in the components. These icons are designed to be simple and consistent with the overall design principles of the library.
 - `@simple-ui/tokens`: This package contains design tokens, which are a set of variables that define the visual design of the components, such as colors, typography, spacing, and other design properties. These tokens allow developers to easily customize the appearance of the components while maintaining consistency across the library.
 - `@simple-ui/storybook`: This package contains the Storybook configuration and stories for the components. This allows developers to see how the components work in isolation and provides a way to test and showcase the components.
+- `@simple-ui/docs`: This package contains the documentation for the library, which is built using Astro and Starlight. This documentation provides guidance on how to use the components effectively and includes examples and best practices for building UI components with the library.
 
 ## Common commands
 
@@ -130,9 +131,9 @@ Skills available to the Assistant agent are located in the .github/skills direct
 
 | Skill Name               | Description                                                                                                                                                                                                      | link                                         |
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
-| a11y-audit               | This skill performs an accessibility audit on a given component or page, checking for common accessibility issues and providing recommendations for improvement.                                                 | [link](./skills/a11y-audit.md)               |
-| design-tokens            | This skill helps manage design tokens for the simple-ui library, allowing agents to easily create, update, and maintain design tokens that define the visual design of the components.                           | [link](./skills/design-tokens.md)            |
-| component-implementation | This skill assists with the implementation of UI components, providing guidance on best practices for building simple, well-designed, and performant components that align with the library's design principles. | [link](./skills/component-implementation.md) |
+| a11y-audit               | This skill performs an accessibility audit on a given component or page, checking for common accessibility issues and providing recommendations for improvement.                                                 | [link](../skills/a11y-audit)               |
+| design-tokens            | This skill helps manage design tokens for the simple-ui library, allowing agents to easily create, update, and maintain design tokens that define the visual design of the components.                           | [link](../skills/design-tokens)            |
+| component-implementation | This skill assists with the implementation of UI components, providing guidance on best practices for building simple, well-designed, and performant components that align with the library's design principles. | [link](../skills/component-implementation) |
 
 ## Pre-PR Checklist
 
