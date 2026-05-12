@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "@basic-ui/tokens": "workspace:*",
+    "@basic-ui/icons": "workspace:*",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "tailwind-merge": "^3.5.0"

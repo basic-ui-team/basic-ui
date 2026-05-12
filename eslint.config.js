@@ -1,59 +1,41 @@
+// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
+import storybook from "eslint-plugin-storybook";
+
 import js from "@eslint/js";
 import globals from "globals";
-import reactPlugin from "eslint-plugin-react-hooks";
+import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
-import tsPlugin from "@typescript-eslint/eslint-plugin";
-import tsParser from "@typescript-eslint/parser";
+import tseslint from "typescript-eslint";
+import { defineConfig, globalIgnores } from "eslint/config";
 
-const commonPlugins = {
-  "react-hooks": reactPlugin,
-  "react-refresh": reactRefresh,
-};
-
-const commonLanguageOptions = {
-  ecmaVersion: 2020,
-  sourceType: "module",
-  globals: globals.browser,
-  parserOptions: {
-    ecmaFeatures: { jsx: true },
-  },
-};
-
-export default [
-  { ignores: ["dist", "build", "coverage", "node_modules", ".next", "storybook-static"] },
+export default defineConfig([
+  globalIgnores(["dist", "build", "coverage", "node_modules", ".next", "storybook-static"]),
   {
     files: ["**/*.{js,jsx,ts,tsx}"],
-    languageOptions: commonLanguageOptions,
-    rules: {
-      ...js.configs.recommended.rules,
-      "react-hooks/exhaustive-deps": "warn",
+    extends: [
+      js.configs.recommended,
+      tseslint.configs.recommended,
+      reactHooks.configs.flat.recommended,
+      reactRefresh.configs.vite,
+    ],
+    languageOptions: {
+      ecmaVersion: 2020,
+      sourceType: "module",
+      globals: globals.browser,
+      parserOptions: {
+        ecmaFeatures: { jsx: true },
+      },
     },
-    plugins: commonPlugins,
   },
   {
     files: ["**/*.{ts,tsx}"],
-    ignores: ["**/*.config.{ts,tsx}", "**/*.d.ts"],
+    ignores: ["**/*.config.{ts,tsx}", "**/*.d.ts", "vitest.setup.ts"],
+    extends: [tseslint.configs.recommendedTypeChecked],
     languageOptions: {
-      ...commonLanguageOptions,
-      parser: tsParser,
-      parserOptions: { ...commonLanguageOptions.parserOptions, project: true },
-    },
-    plugins: { ...commonPlugins, "@typescript-eslint": tsPlugin },
-    rules: {
-      ...tsPlugin.configs.recommended.rules,
-      "react-hooks/exhaustive-deps": "warn",
+      parserOptions: {
+        project: true,
+      },
     },
   },
-  {
-    files: ["**/*.config.{ts,tsx}", "**/*.d.ts"],
-    languageOptions: {
-      ...commonLanguageOptions,
-      parser: tsParser,
-    },
-    plugins: { ...commonPlugins, "@typescript-eslint": tsPlugin },
-    rules: {
-      ...tsPlugin.configs.recommended.rules,
-      "react-hooks/exhaustive-deps": "warn",
-    },
-  },
-];
+  ...storybook.configs["flat/recommended"],
+]);
