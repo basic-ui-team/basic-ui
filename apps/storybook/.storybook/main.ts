@@ -7,7 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const config: StorybookConfig = {
   stories: ["../../../packages/core/src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
-  addons: ["@storybook/addon-a11y", "@storybook/addon-docs"],
+  addons: ["@storybook/addon-a11y", "@storybook/addon-docs", "@storybook/addon-themes"],
   framework: "@storybook/react-vite",
   core: {
     disableTelemetry: true,

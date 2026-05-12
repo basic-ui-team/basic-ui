@@ -3,3 +3,10 @@
 /* Scan workspace packages for class names */
 @source "../../../packages/core/src";
 @source "../../../packages/icons/src";
+
+/* Apply theme background to preview body */
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition: background-color 0.2s, color 0.2s;
+}

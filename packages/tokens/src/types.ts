@@ -1,11 +1,43 @@
 export type SemanticColorTokens =
+  // Primitives: Green ramp
+  | "green-50"
+  | "green-100"
+  | "green-200"
+  | "green-300"
+  | "green-400"
+  | "green-500"
+  | "green-600"
+  | "green-700"
+  | "green-800"
+  | "green-900"
+  // Primitives: Purple ramp
+  | "purple-50"
+  | "purple-100"
+  | "purple-200"
+  | "purple-300"
+  | "purple-400"
+  | "purple-500"
+  | "purple-600"
+  | "purple-700"
+  // Primitives: Gray ramp
+  | "gray-50"
+  | "gray-100"
+  | "gray-200"
+  | "gray-300"
+  | "gray-400"
+  | "gray-500"
+  | "gray-600"
+  | "gray-700"
+  | "gray-800"
+  | "gray-900"
+  // Semantic: Backgrounds & surfaces
   | "bg"
   | "surface"
   | "surface-hover"
   | "surface-active"
   | "muted-bg"
   | "secondary-bg"
-  // Primary & Secondary
+  // Semantic: Primary & Secondary
   | "foreground"
   | "primary"
   | "primary-hover"
@@ -17,26 +49,31 @@ export type SemanticColorTokens =
   | "secondary-active"
   | "secondary-light"
   | "secondary-foreground"
-  // Text
+  // Semantic: Text
   | "text"
   | "text-secondary"
+  | "text-muted"
   | "text-light"
   | "text-dark"
   | "text-link"
   | "text-feedback"
-  // Borders
+  // Semantic: Borders
   | "border"
   | "border-muted"
-  // Feedback (semantic)
+  // Semantic: Feedback colors
   | "success"
   | "success-light"
+  | "success-foreground"
   | "warning"
   | "warning-light"
+  | "warning-foreground"
   | "error"
   | "error-light"
+  | "error-foreground"
   | "info"
   | "info-light"
-  // Skeleton & Loading
+  | "info-foreground"
+  // Semantic: Skeleton & Loading
   | "skeleton";
 
 /** Spacing scale: xs (4px) to 5xl (64px) */
