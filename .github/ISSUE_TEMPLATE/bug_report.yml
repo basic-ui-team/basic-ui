@@ -1,0 +1,133 @@
+name: 🐛 Bug Report
+description: Report a bug or unexpected behavior in simple-ui components
+labels: ['bug', 'triage']
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve simple-ui! 🙏
+        Please provide as much detail as possible to help us understand and fix the issue.
+
+  - type: input
+    id: component
+    attributes:
+      label: Component(s)
+      description: Which component(s) are affected?
+      placeholder: 'e.g., Button, Dialog, Grid'
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: simple-ui Version
+      description: What version of simple-ui are you using?
+      placeholder: 'e.g., 0.1.0'
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is
+      placeholder: |
+        When I [action], the component [unexpected behavior].
+        This is unexpected because [reason].
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Steps to reproduce the behavior
+      placeholder: |
+        1. Import the Button component
+        2. Set the prop `disabled` to true
+        3. Observe that...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: A clear and concise description of what you expected to happen
+      placeholder: |
+        The component should...
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What actually happened instead
+      placeholder: |
+        Instead, the component...
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshots or code snippet
+      description: |
+        If applicable, add screenshots or a minimal code example
+        You can attach images by clicking this area to highlight it and then dragging files in.
+      placeholder: |
+        ```jsx
+        <Button disabled>Click me</Button>
+        ```
+
+  - type: input
+    id: browser
+    attributes:
+      label: Browser
+      description: Which browser(s) are affected?
+      placeholder: 'e.g., Chrome 120, Firefox 121, Safari 17'
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating System
+      description: What OS(s) are affected?
+      placeholder: 'e.g., Windows 11, macOS 14, Ubuntu 22.04'
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment Details
+      description: Any other relevant environment details
+      placeholder: |
+        - Node.js version: 18.x
+        - Package manager: pnpm 9
+        - React version: 18.x
+        - Tailwind version: 3.x
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Add any other context about the problem here
+      placeholder: |
+        This is a regression from version...
+        or This is related to issue #123
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Pre-submission checklist
+      options:
+        - label: I have searched existing issues to avoid duplicates
+          required: true
+        - label: I have provided a minimal reproduction case
+          required: true
+        - label: The bug is reproducible with the latest version
+          required: true

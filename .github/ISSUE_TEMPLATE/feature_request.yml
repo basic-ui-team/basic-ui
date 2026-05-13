@@ -1,0 +1,99 @@
+name: ✨ Feature Request
+description: Suggest an idea for improving simple-ui
+labels: ['enhancement', 'triage']
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for contributing ideas to simple-ui! 🎉
+        Please share your feature request and help us understand the use case.
+
+  - type: input
+    id: title
+    attributes:
+      label: Feature Title
+      description: A short title for your feature request
+      placeholder: 'e.g., Add loading state variant to Button component'
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Clear description of the feature you'd like
+      placeholder: |
+        I would like to see [feature] because [reason].
+        This would help with [use case].
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem it solves
+      description: What problem or pain point does this solve?
+      placeholder: |
+        Currently, developers have to...
+        This feature would allow...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: How do you envision this feature working?
+      placeholder: |
+        The API could look like:
+        ```jsx
+        <Button loading>Loading...</Button>
+        ```
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Any alternative approaches or workarounds?
+      placeholder: |
+        - Using a custom wrapper component
+        - Extending the existing component with CSS
+
+  - type: input
+    id: component
+    attributes:
+      label: Related Component(s)
+      description: Which component(s) does this relate to? (if applicable)
+      placeholder: 'e.g., Button, Dialog, Form'
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this feature?
+      options:
+        - 'Low (nice to have)'
+        - 'Medium (would improve DX)'
+        - 'High (blocking use case)'
+    validations:
+      required: false
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Any other context, links, or examples
+      placeholder: |
+        Similar to how [other library] implements this...
+        See example: [link]
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Pre-submission checklist
+      options:
+        - label: I have searched existing issues to avoid duplicates
+          required: true
+        - label: This aligns with simple-ui's core principles (simplicity, consistency, performance)
+          required: true

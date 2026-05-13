@@ -1,0 +1,157 @@
+name: 📦 Component Development
+description: Track development of a new component or major component update
+labels: ['component', 'roadmap']
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template to track the development of a new component or major component update.
+        This helps coordinate work and ensure all requirements are met before release.
+
+  - type: input
+    id: component_name
+    attributes:
+      label: Component Name
+      description: Name of the component being developed
+      placeholder: 'e.g., Dropdown, DatePicker, ComboBox'
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Component Description
+      description: Brief description of what the component does
+      placeholder: |
+        The Dropdown component is a customizable select menu that...
+    validations:
+      required: true
+
+  - type: textarea
+    id: requirements
+    attributes:
+      label: Requirements
+      description: Key requirements and features for this component
+      placeholder: |
+        - Support single and multi-select
+        - Keyboard navigation (arrow keys, Enter, Escape)
+        - Search/filter functionality
+        - Custom option rendering
+        - Form integration
+
+  - type: textarea
+    id: api
+    attributes:
+      label: Proposed API
+      description: How developers will use this component
+      placeholder: |
+        ```jsx
+        <Dropdown
+          options={[...]}
+          value={selected}
+          onChange={handleChange}
+          searchable
+        >
+          {(option) => <span>{option.label}</span>}
+        </Dropdown>
+        ```
+
+  - type: input
+    id: phase
+    attributes:
+      label: Roadmap Phase
+      description: Which phase should this be released in?
+      placeholder: 'e.g., Phase 2, Phase 3'
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: Component priority level
+      options:
+        - 'Critical (v1.0 blocker)'
+        - 'High (Phase target)'
+        - 'Medium (backlog)'
+        - 'Low (post-v1.0)'
+      validations:
+        required: true
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Checklist of requirements that must be met
+      placeholder: |
+        - [ ] Component implemented in TypeScript
+        - [ ] Full prop documentation with JSDoc
+        - [ ] Storybook stories with all variants
+        - [ ] Unit tests with >80% coverage
+        - [ ] Accessibility audit completed (WCAG 2.1 AA)
+        - [ ] Responsive design verified
+        - [ ] Documentation guide written
+        - [ ] Design tokens properly used
+        - [ ] Code review approved
+        - [ ] Ready for merge to main
+
+  - type: textarea
+    id: design_tokens
+    attributes:
+      label: Design Tokens Required
+      description: Any new design tokens needed for this component
+      placeholder: |
+        - dropdown.background
+        - dropdown.borderColor
+        - dropdown.hoverBackground
+        - etc.
+
+  - type: textarea
+    id: accessibility
+    attributes:
+      label: Accessibility Considerations
+      description: Keyboard, screen reader, and ARIA requirements
+      placeholder: |
+        - Keyboard: arrow keys to navigate, Enter to select, Escape to close
+        - ARIA: role="listbox", aria-expanded, aria-selected
+        - Screen readers: announce number of options, current selection
+        - Focus management: focus trap within dropdown when open
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: Any component or library dependencies
+      placeholder: |
+        - Depends on Popover component
+        - Uses Icon component for chevron
+        - Requires Portals for rendering
+
+  - type: textarea
+    id: related_issues
+    attributes:
+      label: Related Issues/PRs
+      description: Link to related issues or pull requests
+      placeholder: |
+        - Related to #123
+        - Blocks #456
+        - Similar to implementation in #789
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Development checklist
+      options:
+        - label: Component structure set up (TypeScript, variants, types, index)
+          required: false
+        - label: Component implementation complete
+          required: false
+        - label: Unit tests written (>80% coverage)
+          required: false
+        - label: Storybook stories created
+          required: false
+        - label: Accessibility audit completed
+          required: false
+        - label: Documentation written
+          required: false
+        - label: Code review scheduled
+          required: false
