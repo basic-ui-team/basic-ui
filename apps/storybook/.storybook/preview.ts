@@ -37,7 +37,7 @@ const preview: Preview = {
     a11y: {
       test: "todo",
     },
-    layout: "padded",
+    layout: "fullscreen",
   },
 };
 

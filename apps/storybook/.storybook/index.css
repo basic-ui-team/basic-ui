@@ -4,9 +4,17 @@
 @source "../../../packages/core/src";
 @source "../../../packages/icons/src";
 
-/* Apply theme background to preview body */
+/* Reset browser defaults and apply theme to preview */
+
 body {
   background-color: var(--color-bg);
   color: var(--color-text);
-  transition: background-color 0.2s, color 0.2s;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+
+#storybook-root {
+  width: 100%;
+  min-height: 100vh;
 }
