@@ -15,6 +15,9 @@ All notable changes to this project will be documented in this file.
 - Added feedback colors (success, warning, error, info) with light and foreground variants for both light and dark modes.
 - Added `filterPrimitiveTokens` function to exclude internal primitive colors from generated CSS output.
 - Added Storybook preview frame background styling to apply theme colors dynamically on mode toggle.
+- Added Pagination component stories with theme integration.
+- Added accent color ramps to light theme for expanded color palette.
+- Added comprehensive test suite for `themeToCustomProperties` utility with 7 focused QA tests covering single/multiple categories, numeric values, null handling, edge cases, and multi-word token keys.
 
 ### Changed
 
@@ -23,6 +26,10 @@ All notable changes to this project will be documented in this file.
 - Refactored dark theme preset to use direct HSL values instead of CSS variable references for better build-time resolution.
 - Enhanced theme type definitions to include all primitive color ramps (green, purple, gray) as available semantic tokens.
 - Updated theme token generation flow to support optional token filtering when producing CSS output.
+- Refactored theme system to use Tailwind CSS v4 integration.
+- Updated color variable naming conventions across light and dark themes for consistency and clarity.
+- Updated semantic tokens (background, foreground, border, feedback colors) to use new naming conventions and direct Tailwind color references where applicable.
+- Refactored theme utilities by removing `extractTokens` from public API and consolidating logic into `themeToCustomProperties` function for streamlined token processing and CSS variable generation.
 
 ### Fixed
 
@@ -34,6 +41,7 @@ All notable changes to this project will be documented in this file.
 - Cleaned up imports and re-exports in hooks and lib for better maintainability and clearer code structure.
 - Fixed pagination state calculation to correctly handle edge cases when total pages are less than the maximum visible pages.
 - Resolved issues with responsive icon sizing by ensuring proper use of `useResponsive` hook in the `Icon` component.
+- Resolved var() reference resolution in theme generation script to handle both direct and prefixed token names.
 
 ## [0.1.0] - 2024-06-01
 
