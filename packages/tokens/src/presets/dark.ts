@@ -41,14 +41,14 @@ export const darkTheme: ThemeConfig = {
     "color-border-muted": "var(--neutral-800)", // gray-800
 
     // ===== SEMANTIC: FEEDBACK COLORS =====
-    "color-success": "var(--green-400)", // green-400
-    "color-success-light": "var(--green-900)", // green-900
-    "color-warning": "var(--yellow-400)",
-    "color-warning-light": "var(--yellow-900)",
-    "color-error": "var(--red-400)",
-    "color-error-light": "var(--red-900)",
-    "color-info": "var(--blue-400)",
-    "color-info-light": "var(--blue-900)",
+    "color-success": "var(--color-green-400)", // green-400
+    "color-success-light": "var(--color-green-900)", // green-900
+    "color-warning": "var(--color-yellow-400)",
+    "color-warning-light": "var(--color-yellow-900)",
+    "color-error": "var(--color-red-400)",
+    "color-error-light": "var(--color-red-900)",
+    "color-info": "var(--color-blue-400)",
+    "color-info-light": "var(--color-blue-900)",
 
     // ===== SEMANTIC: SKELETON =====
     "color-skeleton": "var(--neutral-700)", // gray-700
