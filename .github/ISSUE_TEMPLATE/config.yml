@@ -1,0 +1,14 @@
+# Issue template configuration
+# This file controls which templates appear in the issue creation UI
+
+blank_issues_enabled: true
+contact_links:
+  - name: 💬 GitHub Discussions
+    url: https://github.com/leonard-theunis/basic-ui/discussions
+    about: Ask questions and share ideas in discussions
+  - name: 📖 Documentation
+    url: https://simple-ui-docs.example.com
+    about: Check out our comprehensive documentation
+  - name: 💡 Contributing Guide
+    url: https://github.com/leonard-theunis/basic-ui/blob/main/CONTRIBUTING.md
+    about: Learn how to contribute to simple-ui
