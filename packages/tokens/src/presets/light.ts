@@ -73,14 +73,14 @@ export const lightTheme: ThemeConfig = {
     "color-border-muted": "var(--neutral-100)", // gray-100
 
     // ===== SEMANTIC: FEEDBACK COLORS =====
-    "color-success": "var(--green-500)", // green-500
-    "color-success-light": "var(--green-50)", // green-50
-    "color-warning": "var(--yellow-500)", // yellow-500
-    "color-warning-light": "var(--yellow-50)", // yellow-50
-    "color-error": "var(--red-500)", // red-500
-    "color-error-light": "var(--red-50)", // red-50
-    "color-info": "var(--blue-500)", // blue-500
-    "color-info-light": "var(--blue-50)", // blue-50
+    "color-success": "var(--color-green-500)", // green-500
+    "color-success-light": "var(--color-green-300)", // green-300
+    "color-warning": "var(--color-yellow-500)", // yellow-500
+    "color-warning-light": "var(--color-yellow-300)", // yellow-300
+    "color-error": "var(--color-red-500)", // red-500
+    "color-error-light": "var(--color-red-300)", // red-300
+    "color-info": "var(--color-blue-500)", // blue-500
+    "color-info-light": "var(--color-blue-300)", // blue-300
 
     // ===== SEMANTIC: SKELETON =====
     "color-skeleton": "var(--neutral-200)", // gray-200
@@ -163,7 +163,7 @@ export const lightTheme: ThemeConfig = {
   },
   // TODO: Container queries are a relatively new css feature and we will support them soon.
   // container: {
-  //   sm: 
+  //   sm:
   // },
   breakpoint: {
     sm: "640px",

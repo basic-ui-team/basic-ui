@@ -1,5 +1,6 @@
 import type { Preview } from "@storybook/react";
 import { withThemeByClassName } from "@storybook/addon-themes";
+// ignore the fact that this import is not used directly, it's needed to initialize the themes
 import "./index.css";
 
 const preview: Preview = {
