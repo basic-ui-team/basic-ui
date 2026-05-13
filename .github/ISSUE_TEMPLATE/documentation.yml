@@ -1,89 +1,14 @@
 name: Documentation Issue
 description: Report missing, unclear, or outdated documentation
-labels: ['documentation', 'triage']
+labels: ['documentation']
 assignees: []
 body:
-  - type: markdown
-    attributes:
-      value: |
-        Help us improve simple-ui documentation!
-        Tell us what documentation is missing or needs improvement.
-
-  - type: dropdown
-    id: issue_type
-    attributes:
-      label: Documentation Issue Type
-      description: What kind of documentation issue is this?
-      options:
-        - 'Missing documentation'
-        - 'Unclear or confusing'
-        - 'Outdated or incorrect'
-        - 'Missing example'
-        - 'Missing guide'
-        - 'Broken link'
-        - 'API documentation incomplete'
-      validations:
-        required: true
-
-  - type: input
-    id: page
-    attributes:
-      label: Documentation Page/Section
-      description: Which page or section needs improvement?
-      placeholder: 'e.g., /docs/components/button or /guides/building-forms'
-    validations:
-      required: true
-
   - type: textarea
-    id: current
+    id: issue
     attributes:
-      label: Current Documentation
-      description: What is currently documented (or what's missing)?
+      label: What's the issue?
       placeholder: |
-        The Button component page doesn't mention...
-        or
-        The documentation is missing examples for...
-    validations:
-      required: true
-
-  - type: textarea
-    id: needed
-    attributes:
-      label: What's needed
-      description: What documentation should be added or improved?
-      placeholder: |
-        An example showing how to use Button with a loading state
-        or
-        A guide explaining how to customize component colors using design tokens
-    validations:
-      required: true
-
-  - type: textarea
-    id: example
-    attributes:
-      label: Suggested content or example
-      description: If applicable, provide suggested content or code examples
-      placeholder: |
-        ```jsx
-        <Button loading>Save Changes</Button>
-        ```
-
-  - type: textarea
-    id: context
-    attributes:
-      label: Additional context
-      description: Any other relevant information
-      placeholder: |
-        This is blocking developers from...
-        or
-        This would help developers understand...
-
-  - type: checkboxes
-    id: checklist
-    attributes:
-      label: Pre-submission checklist
-      options:
-        - label: I have checked existing documentation to confirm this is missing
-          required: true
-        - label: This would help other developers
-          required: true
+        Which page/section needs improvement?
+        What's missing or confusing?
+        What should be added?
+      description: Keep it brief and specific
