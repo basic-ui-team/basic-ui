@@ -49,6 +49,8 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
     {
       severity = "info",
       borderless = false,
+      icon,
+      iconMap,
       title,
       description,
       dismissible = false,
@@ -60,6 +62,13 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
     ref,
   ) => {
     const [isDismissed, setIsDismissed] = useState(false);
+
+    const mergedIconMap = { ...ICON_MAP, ...iconMap };
+    const iconNode = icon === false ? null : icon || mergedIconMap[severity];
+    const iconElement = typeof iconNode === "function" ? React.createElement(iconNode) : iconNode;
+
+
+
 
     const handleDismiss = () => {
       setIsDismissed(true);
@@ -76,8 +85,6 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
     // Semantic role: alert for urgent messages, status for polite notifications
     const role = severity === "error" || severity === "warning" ? "alert" : "status";
 
-    const IconComponent = ICON_MAP[severity];
-
     return (
       <div
         ref={ref}
@@ -87,7 +94,7 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
       >
         {/* Icon */}
         <div className={alertIconVariants()}>
-          <Icon icon={<IconComponent />} variant={severity} size="sm" />
+          {iconElement && <Icon icon={iconElement} variant={severity} size="sm" />}
         </div>
 
         {/* Content */}

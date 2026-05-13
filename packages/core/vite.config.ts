@@ -13,6 +13,7 @@ export default defineConfig({
       "@core": path.resolve(__dirname, "src"),
       "@tokens": path.resolve(__dirname, "../tokens/src"),
       "@icons": path.resolve(__dirname, "../icons/src"),
+      "@basic-ui/icons": path.resolve(__dirname, "../icons/src"),
       "@shared": path.resolve(__dirname, "../shared/src"),
     },
   },

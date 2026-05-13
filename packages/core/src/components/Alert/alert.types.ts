@@ -15,6 +15,12 @@ export interface AlertProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "
   /** Removes the default border and adjusts padding for a more compact look. @default false */
   borderless?: boolean;
 
+  /** Custom icon for the alert. Set to `false` to disable the icon. */
+  icon?: React.ReactNode | false;
+
+  /** Optional mapping of severity levels to custom icons. Overrides default icons when provided. */
+  iconMap?: Partial<Record<MessageSeverity, React.ReactNode>>;
+
   /** Alert title/heading text. Optional. Rendered above description. */
   title?: React.ReactNode;
 

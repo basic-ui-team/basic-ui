@@ -1,25 +1,22 @@
 import { cva } from "class-variance-authority";
 
-export const alertVariants = cva(
-  "flex gap-md rounded-lg border p-md",
-  {
-    variants: {
-      severity: {
-        success: "border-success bg-success-light/10 text-success-text",
-        error: "border-error bg-error-light/10 text-error-text",
-        warning: "border-warning bg-warning-light/10 text-warning-text",
-        info: "border-info bg-info-light/10 text-info-text",
-      },
-        borderless: {
-            true: "border-0 p-0",
-            false: "",
-        },
+export const alertVariants = cva("flex gap-md rounded-lg border p-md", {
+  variants: {
+    severity: {
+      success: "border-success bg-success-light/10 text-success-text",
+      error: "border-error bg-error-light/10 text-error-text",
+      warning: "border-warning bg-warning-light/10 text-warning-text",
+      info: "border-info bg-info-light/10 text-info-text",
     },
-    defaultVariants: {
-      severity: "info",
+    borderless: {
+      true: "border-0 p-0",
+      false: "",
     },
   },
-);
+  defaultVariants: {
+    severity: "info",
+  },
+});
 
 export const alertTitleVariants = cva("font-semibold text-sm");
 
