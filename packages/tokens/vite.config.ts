@@ -1,6 +1,9 @@
 import { defineConfig, type Plugin } from 'vite';
 import path from 'path';
 import { copyFileSync, mkdirSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const copyThemeCss = (): Plugin => ({
   name: 'copy-theme-css',
