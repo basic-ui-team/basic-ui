@@ -15,9 +15,7 @@ import { PREFIX_MAP } from "../constants";
  * //   "--spacing-md": "1rem",
  * // }
  */
-export function themeToCustomProperties(
-  theme: ThemeConfig,
-): Record<string, string | number> {
+export function themeToCustomProperties(theme: ThemeConfig): Record<string, string | number> {
   const props: Record<string, string | number> = {};
 
   Object.entries(theme).forEach(([category, values]) => {

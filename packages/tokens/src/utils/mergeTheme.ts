@@ -6,10 +6,10 @@ import { ThemeConfig } from "@tokens/types";
  */
 export function mergeTheme(base: ThemeConfig, override: Partial<ThemeConfig>): ThemeConfig {
   return {
-    colors: { ...base.colors, ...override.colors },
+    color: { ...base.color, ...override.color },
     spacing: { ...base.spacing, ...override.spacing },
     radius: { ...base.radius, ...override.radius },
-    shadows: { ...base.shadows, ...override.shadows },
+    shadow: { ...base.shadow, ...override.shadow },
     fontSize: { ...base.fontSize, ...override.fontSize },
     fontWeight: { ...base.fontWeight, ...override.fontWeight },
     lineHeight: { ...base.lineHeight, ...override.lineHeight },
@@ -18,6 +18,7 @@ export function mergeTheme(base: ThemeConfig, override: Partial<ThemeConfig>): T
     duration: { ...base.duration, ...override.duration },
     easing: { ...base.easing, ...override.easing },
     zIndex: { ...base.zIndex, ...override.zIndex },
+    // container: { ...base.container, ...override.container },
     breakpoint: { ...base.breakpoint, ...override.breakpoint },
     opacity: { ...base.opacity, ...override.opacity },
   };

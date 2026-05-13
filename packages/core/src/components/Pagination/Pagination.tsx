@@ -8,7 +8,7 @@ import {
 } from "./pagination.variants";
 import { generatePageNumbers } from "./lib/generatePageNumbers";
 import type { PaginationProps } from "./pagination.types";
-import { ChevronLeftIcon, ChevronRightIcon } from "@icons/Icons";
+import { ChevronLeftIcon, ChevronRightIcon } from "@basic-ui/icons";
 
 /**
  * Pagination

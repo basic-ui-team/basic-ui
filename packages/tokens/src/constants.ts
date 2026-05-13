@@ -1,10 +1,10 @@
 import type { ThemeConfig } from ".";
 
 export const PREFIX_MAP: Record<keyof ThemeConfig, string> = {
-  colors: "color",
+  color: "color",
   spacing: "spacing",
   radius: "radius",
-  shadows: "shadow",
+  shadow: "shadow",
   fontSize: "text",
   fontWeight: "font-weight",
   lineHeight: "leading",
@@ -14,5 +14,6 @@ export const PREFIX_MAP: Record<keyof ThemeConfig, string> = {
   easing: "ease",
   zIndex: "z",
   breakpoint: "breakpoint",
+  // container: "container",
   opacity: "opacity",
 };

@@ -5,94 +5,88 @@ import type { ThemeConfig } from "../types";
  * Default theme for light mode - used as base for light mode customizations
  */
 export const lightTheme: ThemeConfig = {
-  colors: {
-    // ===== PRIMITIVES: GREEN RAMP =====
+  color: {
+    // ===== PRIMITIVES: PRIMARY RAMP =====
     // Shared hue/saturation so the whole ramp scales together
-    "green-50": "hsl(119 43% 95%)",
-    "green-100": "hsl(119 43% 90%)",
-    "green-200": "hsl(119 43% 80%)",
-    "green-300": "hsl(119 43% 70%)",
-    "green-400": "hsl(119 43% 60%)",
-    "green-500": "hsl(119 43% 52%)", // #50bb4e – brand base
-    "green-600": "hsl(119 43% 45%)",
-    "green-700": "hsl(119 43% 35%)",
-    "green-800": "hsl(119 43% 25%)",
-    "green-900": "hsl(119 43% 15%)",
+    "primary-50": "hsl(119 43% 95%)",
+    "primary-100": "hsl(119 43% 90%)",
+    "primary-200": "hsl(119 43% 80%)",
+    "primary-300": "hsl(119 43% 70%)",
+    "primary-400": "hsl(119 43% 60%)",
+    "primary-500": "hsl(119 43% 52%)", // #50bb4e – brand base
+    "primary-600": "hsl(119 43% 45%)",
+    "primary-700": "hsl(119 43% 35%)",
+    "primary-800": "hsl(119 43% 25%)",
+    "primary-900": "hsl(119 43% 15%)",
 
-    // ===== PRIMITIVES: PURPLE RAMP =====
+    // ===== PRIMITIVES: SECONDARY RAMP =====
     // Saturation kept intentionally low (35%) so it complements without competing
-    "purple-50": "hsl(299 35% 95%)",
-    "purple-100": "hsl(299 35% 90%)",
-    "purple-200": "hsl(299 35% 80%)",
-    "purple-300": "hsl(299 35% 70%)",
-    "purple-400": "hsl(299 35% 60%)",
-    "purple-500": "hsl(299 35% 55%)",
-    "purple-600": "hsl(299 35% 45%)",
-    "purple-700": "hsl(299 35% 35%)",
+    "secondary-50": "hsl(299 35% 95%)",
+    "secondary-100": "hsl(299 35% 90%)",
+    "secondary-200": "hsl(299 35% 80%)",
+    "secondary-300": "hsl(299 35% 70%)",
+    "secondary-400": "hsl(299 35% 60%)",
+    "secondary-500": "hsl(299 35% 55%)",
+    "secondary-600": "hsl(299 35% 45%)",
+    "secondary-700": "hsl(299 35% 35%)",
+
+    // ===== PRIMITIVES: ACCENT RAMP =====
+    // Used sparingly for accents and feedback, so saturation is moderate (50%)
+    "accent-50": "hsl(48 50% 95%)",
+    "accent-100": "hsl(48 50% 90%)",
+    "accent-200": "hsl(48 50% 80%)",
+    "accent-300": "hsl(48 50% 70%)",
+    "accent-400": "hsl(48 50% 60%)",
+    "accent-500": "hsl(48 50% 50%)",
+    "accent-600": "hsl(48 50% 40%)",
+    "accent-700": "hsl(48 50% 30%)",
+    "accent-800": "hsl(48 50% 20%)",
+    "accent-900": "hsl(48 50% 10%)",
 
     // ===== PRIMITIVES: NEUTRAL GRAY RAMP =====
     // Slight cool tint (210°) avoids flat lifeless grays
-    "gray-50": "hsl(210 20% 97%)",
-    "gray-100": "hsl(210 20% 95%)",
-    "gray-200": "hsl(210 16% 90%)",
-    "gray-300": "hsl(210 12% 84%)",
-    "gray-400": "hsl(210 11% 68%)",
-    "gray-500": "hsl(210 10% 52%)",
-    "gray-600": "hsl(210 10% 42%)",
-    "gray-700": "hsl(210 10% 32%)",
-    "gray-800": "hsl(210 12% 18%)",
-    "gray-900": "hsl(210 18% 8%)",
+    "neutral-50": "hsl(210 20% 97%)",
+    "neutral-100": "hsl(210 20% 95%)",
+    "neutral-200": "hsl(210 16% 90%)",
+    "neutral-300": "hsl(210 12% 84%)",
+    "neutral-400": "hsl(210 11% 68%)",
+    "neutral-500": "hsl(210 10% 52%)",
+    "neutral-600": "hsl(210 10% 42%)",
+    "neutral-700": "hsl(210 10% 32%)",
+    "neutral-800": "hsl(210 12% 18%)",
+    "neutral-900": "hsl(210 18% 8%)",
 
     // ===== SEMANTIC: LIGHT MODE BACKGROUNDS & SURFACES =====
-    bg: "hsl(210 20% 97%)",
-    surface: "hsl(210 20% 100%)",
-    "surface-hover": "hsl(210 20% 97%)",
-    "surface-active": "hsl(210 20% 95%)",
-    "muted-bg": "hsl(210 20% 95%)",
-    "secondary-bg": "hsl(210 20% 95%)",
+    "background-primary": "var(--color-neutral-50)",
+    "background-secondary": "var(--color-neutral-100)",
+    "background-muted": "var(--color-neutral-100)",
+    "surface": "var(--color-neutral-50)",
+    "surface-hover": "var(--color-neutral-50)",
+    "surface-active": "var(--color-neutral-100)",
 
-    // ===== SEMANTIC: PRIMARY & SECONDARY =====
-    foreground: "hsl(210 18% 12%)",
-    primary: "hsl(119 43% 52%)", // green-500
-    "primary-hover": "hsl(119 43% 45%)", // green-600
-    "primary-active": "hsl(119 43% 35%)", // green-700
-    "primary-light": "hsl(119 43% 95%)", // green-50
-    "primary-foreground": "hsl(210 18% 12%)",
-    secondary: "hsl(299 35% 55%)", // purple-500
-    "secondary-hover": "hsl(299 35% 45%)", // purple-600
-    "secondary-active": "hsl(299 35% 35%)", // purple-700
-    "secondary-light": "hsl(299 35% 95%)", // purple-50
-    "secondary-foreground": "hsl(210 18% 12%)",
 
     // ===== SEMANTIC: TEXT =====
-    text: "hsl(210 10% 18%)",
-    "text-secondary": "hsl(210 10% 42%)",
-    "text-muted": "hsl(210 10% 52%)", // gray-500
-    "text-light": "hsl(210 10% 42%)", // gray-600
-    "text-dark": "hsl(210 18% 8%)", // gray-900
-    "text-link": "hsl(119 43% 35%)", // green-700
-    "text-feedback": "hsl(0 84% 35%)",
+    "foreground-primary": "var(--color-neutral-900)", // gray-900
+    "foreground-secondary": "var(--color-neutral-700)", // gray-700
+    "foreground-muted": "var(--color-neutral-500)", // gray-500
+    "foreground-link": "var(--color-primary-700)", // green-700
 
     // ===== SEMANTIC: BORDERS =====
-    border: "hsl(210 16% 90%)", // gray-200
-    "border-muted": "hsl(210 20% 95%)", // gray-100
+    "border": "var(--color-neutral-200)", // gray-200
+    "border-muted": "var(--color-neutral-100)", // gray-100
 
     // ===== SEMANTIC: FEEDBACK COLORS =====
-    success: "hsl(119 43% 52%)", // green-500
-    "success-light": "hsl(119 43% 95%)", // green-50
-    "success-foreground": "hsl(210 18% 12%)",
-    warning: "hsl(45 93% 56%)",
-    "warning-light": "hsl(45 93% 90%)",
-    "warning-foreground": "hsl(210 18% 12%)",
-    error: "hsl(0 84% 60%)",
-    "error-light": "hsl(0 100% 95%)",
-    "error-foreground": "hsl(210 18% 12%)",
-    info: "hsl(210 88% 56%)",
-    "info-light": "hsl(210 100% 95%)",
-    "info-foreground": "hsl(210 18% 12%)",
+    "success": "var(--color-green-500)", // green-500
+    "success-light": "var(--color-green-300)", // green-300
+    "warning": "var(--color-yellow-500)", // yellow-500
+    "warning-light": "var(--color-yellow-300)", // yellow-300
+    "error": "var(--color-red-500)", // red-500
+    "error-light": "var(--color-red-300)", // red-300
+    "info": "var(--color-blue-500)", // blue-500
+    "info-light": "var(--color-blue-300)", // blue-300
 
     // ===== SEMANTIC: SKELETON =====
-    skeleton: "hsl(210 16% 90%)", // gray-200
+    "skeleton": "var(--color-neutral-200)", // gray-200
   },
   spacing: {
     xs: "0.25rem",
@@ -114,13 +108,12 @@ export const lightTheme: ThemeConfig = {
     "2xl": "1rem",
     full: "9999px",
   },
-  shadows: {
-    sm: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
-    md: "0 1px 2px 0 rgb(0 0 0 / 0.05), 0 4px 6px -1px rgb(0 0 0 / 0.1)",
-    lg: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1), 0 10px 15px -3px rgb(0 0 0 / 0.1)",
-    xl: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.05), 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 20px 25px -5px rgb(0 0 0 / 0.1)",
-    "2xl":
-      "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.05), 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 25px 50px -12px rgb(0 0 0 / 0.25)",
+  shadow: {
+    s1: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+    s2: "0 1px 2px 0 rgb(0 0 0 / 0.05), 0 4px 6px -1px rgb(0 0 0 / 0.1)",
+    s3: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1), 0 10px 15px -3px rgb(0 0 0 / 0.1)",
+    s4: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.05), 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 20px 25px -5px rgb(0 0 0 / 0.1)",
+    s5: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.05), 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 25px 50px -12px rgb(0 0 0 / 0.25)",
   },
   fontSize: {
     xs: "0.75rem",
@@ -171,12 +164,16 @@ export const lightTheme: ThemeConfig = {
     toast: 50,
     tooltip: 50,
   },
+  // TODO: Container queries are a relatively new css feature and we will support them soon.
+  // container: {
+  //   sm:
+  // },
   breakpoint: {
-    sm: "28rem",
-    md: "42rem",
-    lg: "64rem",
-    xl: "80rem",
-    max: "96rem",
+    sm: "640px",
+    md: "768px",
+    lg: "1024px",
+    xl: "1280px",
+    "2xl": "1536px",
   },
   opacity: {
     disabled: 0.5,

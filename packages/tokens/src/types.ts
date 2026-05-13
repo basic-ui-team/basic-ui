@@ -1,78 +1,72 @@
 export type SemanticColorTokens =
-  // Primitives: Green ramp
-  | "green-50"
-  | "green-100"
-  | "green-200"
-  | "green-300"
-  | "green-400"
-  | "green-500"
-  | "green-600"
-  | "green-700"
-  | "green-800"
-  | "green-900"
-  // Primitives: Purple ramp
-  | "purple-50"
-  | "purple-100"
-  | "purple-200"
-  | "purple-300"
-  | "purple-400"
-  | "purple-500"
-  | "purple-600"
-  | "purple-700"
-  // Primitives: Gray ramp
-  | "gray-50"
-  | "gray-100"
-  | "gray-200"
-  | "gray-300"
-  | "gray-400"
-  | "gray-500"
-  | "gray-600"
-  | "gray-700"
-  | "gray-800"
-  | "gray-900"
+  // Primitives: Primary ramp
+  | "primary-50"
+  | "primary-100"
+  | "primary-200"
+  | "primary-300"
+  | "primary-400"
+  | "primary-500"
+  | "primary-600"
+  | "primary-700"
+  | "primary-800"
+  | "primary-900"
+  // Primitives: Secondary ramp
+  | "secondary-50"
+  | "secondary-100"
+  | "secondary-200"
+  | "secondary-300"
+  | "secondary-400"
+  | "secondary-500"
+  | "secondary-600"
+  | "secondary-700"
+  | "secondary-800"
+  | "secondary-900"
+  // Primitives: Accent ramp
+  | "accent-50"
+  | "accent-100"
+  | "accent-200"
+  | "accent-300"
+  | "accent-400"
+  | "accent-500"
+  | "accent-600"
+  | "accent-700"
+  | "accent-800"
+  | "accent-900"
+  // Primitives: Neutral ramp
+  | "neutral-50"
+  | "neutral-100"
+  | "neutral-200"
+  | "neutral-300"
+  | "neutral-400"
+  | "neutral-500"
+  | "neutral-600"
+  | "neutral-700"
+  | "neutral-800"
+  | "neutral-900"
   // Semantic: Backgrounds & surfaces
-  | "bg"
+  | "background-primary"
+  | "background-secondary"
+  | "background-muted"
   | "surface"
   | "surface-hover"
   | "surface-active"
-  | "muted-bg"
-  | "secondary-bg"
-  // Semantic: Primary & Secondary
-  | "foreground"
-  | "primary"
-  | "primary-hover"
-  | "primary-active"
-  | "primary-light"
-  | "primary-foreground"
-  | "secondary"
-  | "secondary-hover"
-  | "secondary-active"
-  | "secondary-light"
-  | "secondary-foreground"
-  // Semantic: Text
-  | "text"
-  | "text-secondary"
-  | "text-muted"
-  | "text-light"
-  | "text-dark"
-  | "text-link"
-  | "text-feedback"
+  // Semantic: Text/foreground
+  | "foreground-primary"
+  | "foreground-secondary"
+  | "foreground-muted"
+  | "foreground-link"
   // Semantic: Borders
   | "border"
   | "border-muted"
   // Semantic: Feedback colors
   | "success"
   | "success-light"
-  | "success-foreground"
   | "warning"
   | "warning-light"
-  | "warning-foreground"
   | "error"
   | "error-light"
-  | "error-foreground"
   | "info"
   | "info-light"
-  | "info-foreground"
   // Semantic: Skeleton & Loading
   | "skeleton";
 
@@ -83,7 +77,7 @@ export type SpacingTokens = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "
 export type RadiusTokens = "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "full";
 
 /** Shadow depth levels */
-export type ShadowTokens = "sm" | "md" | "lg" | "xl" | "2xl";
+export type ShadowTokens = "s1" | "s2" | "s3" | "s4" | "s5";
 
 /** Font size scale */
 export type FontSizeTokens = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl";
@@ -109,8 +103,11 @@ export type EasingTokens = "in" | "out" | "spring";
 /** Stacking context (z-index) for overlays */
 export type ZIndexTokens = "dropdown" | "modal" | "toast" | "tooltip";
 
-/** Breakpoint query breakpoints */
-export type ContainerTokens = "sm" | "md" | "lg" | "xl" | "max";
+/** Breakpoints for responsive design */
+export type BreakpointTokens = "sm" | "md" | "lg" | "xl" | "2xl";
+
+/** Container query breakpoints */
+// export type ContainerTokens = "sm" | "md" | "lg" | "xl" | "max";
 
 /** Opacity for disabled/muted states */
 export type OpacityTokens = "disabled" | "muted";
@@ -121,18 +118,19 @@ export type OpacityTokens = "disabled" | "muted";
  * Defaults will be provided by the library.
  */
 export interface ThemeConfig {
-  colors?: Partial<Record<SemanticColorTokens, string>>;
-  spacing?: Partial<Record<SpacingTokens, string>>;
-  radius?: Partial<Record<RadiusTokens, string>>;
-  shadows?: Partial<Record<ShadowTokens, string>>;
+  color?: Partial<Record<SemanticColorTokens, string>>;
+  fontFamily?: Partial<Record<FontFamilyTokens, string>>;
   fontSize?: Partial<Record<FontSizeTokens, string>>;
   fontWeight?: Partial<Record<FontWeightTokens, number | string>>;
-  lineHeight?: Partial<Record<LineHeightTokens, number | string>>;
   letterSpacing?: Partial<Record<LetterSpacingTokens, string>>;
-  fontFamily?: Partial<Record<FontFamilyTokens, string>>;
-  duration?: Partial<Record<DurationTokens, string>>;
+  lineHeight?: Partial<Record<LineHeightTokens, number | string>>;
+  breakpoint?: Partial<Record<BreakpointTokens, string>>;
+  // container?: Partial<Record<ContainerTokens, string>>;
+  spacing?: Partial<Record<SpacingTokens, string>>;
+  radius?: Partial<Record<RadiusTokens, string>>;
+  shadow?: Partial<Record<ShadowTokens, string>>;
   easing?: Partial<Record<EasingTokens, string>>;
+  duration?: Partial<Record<DurationTokens, string>>;
   zIndex?: Partial<Record<ZIndexTokens, number>>;
-  breakpoint?: Partial<Record<ContainerTokens, string>>;
   opacity?: Partial<Record<OpacityTokens, number | string>>;
 }

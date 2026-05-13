@@ -3,6 +3,7 @@ import { PREFIX_MAP } from "../constants";
 /**
  * Generate a CSS custom property name from category and key
  * @example tokenName("color", "primary") → "--color-primary"
+ * @internal
  */
 export function tokenName(category: string, key: string): string {
   const prefix = PREFIX_MAP[category as keyof typeof PREFIX_MAP] || convertToKebabCase(category);
@@ -12,6 +13,7 @@ export function tokenName(category: string, key: string): string {
 /**
  * Generate a CSS variable reference from category and key
  * @example cssVar("color", "primary") → "var(--color-primary)"
+ * @internal
  */
 export function cssVar(category: string, key: string): string {
   return `var(${tokenName(category, key)})`;

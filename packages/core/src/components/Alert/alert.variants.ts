@@ -3,10 +3,10 @@ import { cva } from "class-variance-authority";
 export const alertVariants = cva("flex gap-md rounded-lg border p-md", {
   variants: {
     severity: {
-      success: "border-success bg-success-light/10 text-success-text",
-      error: "border-error bg-error-light/10 text-error-text",
-      warning: "border-warning bg-warning-light/10 text-warning-text",
-      info: "border-info bg-info-light/10 text-info-text",
+      success: "border-success bg-success-light/10 text-success",
+      error: "border-error bg-error-light/10 text-error",
+      warning: "border-warning bg-warning-light/10 text-warning",
+      info: "border-info bg-info-light/10 text-info",
     },
     borderless: {
       true: "border-0 p-0",

@@ -1,14 +1,15 @@
+/* Import Tailwind theme with bui: prefix */
 @import "../../../packages/tokens/src/styles/theme.css";
 
 /* Scan workspace packages for class names */
 @source "../../../packages/core/src";
 @source "../../../packages/icons/src";
 
-/* Reset browser defaults and apply theme to preview */
-
+/* Apply theme to Storybook canvas using CSS variables (not utilities) */
+/* CSS variables work with .dark class switching */
 body {
-  background-color: var(--color-bg);
-  color: var(--color-text);
+  background-color: var(--color-background-primary);
+  color: var(--color-text-primary);
   transition:
     background-color 0.2s,
     color 0.2s;
