@@ -1,4 +1,3 @@
-/* Import Tailwind theme with bui: prefix */
 @import "../../../packages/tokens/src/styles/theme.css";
 
 /* Scan workspace packages for class names */
