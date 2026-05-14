@@ -8,6 +8,7 @@ import {
   alertTitleVariants,
   alertIconVariants,
   alertContentVariants,
+  alertActionVariants,
 } from "./alert.variants";
 import type { AlertProps } from "./alert.types";
 
@@ -52,8 +53,7 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
       icon,
       iconMap,
       title,
-      description,
-      dismissible = false,
+      action,
       onDismiss,
       isOpen = true,
       className,
@@ -100,19 +100,22 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
         {/* Content */}
         <div className={alertContentVariants()}>
           {title && <div className={alertTitleVariants()}>{title}</div>}
-          <div>{description}</div>
+          <div>{props.children}</div>
         </div>
 
-        {/* Dismiss button */}
-        {dismissible && (
-          <button
-            onClick={handleDismiss}
-            className="shrink-0 -mr-sm -my-sm p-sm hover:bg-black/5 rounded transition-colors"
-            aria-label="Dismiss alert"
+        <div className={alertActionVariants()}>
+          {action}
+          {/* Dismiss button */}
+          {onDismiss && (
+            <button
+              onClick={handleDismiss}
+              className="shrink-0 -mr-sm -my-sm p-sm hover:bg-black/5 rounded transition-colors"
+              aria-label="Dismiss alert"
           >
             <Icon icon={<XIcon />} size="sm" />
           </button>
         )}
+        </div>
       </div>
     );
   },

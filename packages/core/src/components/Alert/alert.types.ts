@@ -24,13 +24,11 @@ export interface AlertProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "
   /** Alert title/heading text. Optional. Rendered above description. */
   title?: React.ReactNode;
 
-  /** Alert message content. Semantic slot for the main message (required). */
-  description: React.ReactNode;
+  /** Custom action element to be rendered within the alert. */
+  action?: React.ReactNode;
 
-  /** Whether the alert can be dismissed by the user. @default false */
-  dismissible?: boolean;
-
-  /** Callback fired when the alert is dismissed (only when dismissible={true}) */
+  /** Callback fired when the alert is dismissed. If provided, the alert becomes dismissible.
+   * Can be set as a no-op to make the alert dismissible without any side effects (() => {}) */
   onDismiss?: () => void;
 
   /** Whether the alert content is currently visible. Use to control dismissal. @default true */

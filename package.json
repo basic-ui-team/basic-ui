@@ -33,6 +33,7 @@
     "apps/*"
   ],
   "devDependencies": {
+    "@changesets/cli": "^2.31.0",
     "@eslint/js": "^9.39.4",
     "@storybook/react-vite": "^10.3.5",
     "@tailwindcss/vite": "^4.3.0",
