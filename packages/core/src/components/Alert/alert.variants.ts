@@ -23,3 +23,5 @@ export const alertTitleVariants = cva("font-semibold text-sm");
 export const alertIconVariants = cva("flex-shrink-0 h-5 w-5");
 
 export const alertContentVariants = cva("flex-1 text-sm");
+
+export const alertActionVariants = cva("ml-auto flex items-center gap-sm");
