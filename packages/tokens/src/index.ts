@@ -33,8 +33,3 @@ export { lightTheme, darkTheme };
 // Utilities
 export { mergeTheme, themeToCustomProperties } from "./utils"; // cssVar and tokenName are now internal utilities, not exported
 export { PREFIX_MAP } from "./constants";
-
-// Auto-initialize light and dark themes on module load (browser environment only)
-if (typeof document !== "undefined") {
-  createTheme({ light: lightTheme, dark: darkTheme });
-}

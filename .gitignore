@@ -22,5 +22,3 @@ out/
 .eslintcache
 .vitest/
 *.tsbuildinfo
-packages/tokens/USAGE.md
-packages/tokens/SCAFFOLD_SUMMARY.md
