@@ -90,7 +90,7 @@ const _Alert = <As extends AllowedAlertElements = "div">(
 
   return (
     <Comp
-      ref={ref as any}
+      ref={ref}
       role={role}
       className={cn(alertVariants({ severity, borderless }), className)}
       {...(props as any)}
@@ -127,4 +127,4 @@ export const Alert = forwardRef(_Alert) as <Element extends AllowedAlertElements
   props: AlertProps<Element> & { ref?: PolymorphicRef<Element> },
 ) => React.ReactElement | null;
 
-(Alert as any).displayName = "Alert";
+(Alert as any).displayName = "Alert"; // any cast to avoid type issues with forwardRef and generics
