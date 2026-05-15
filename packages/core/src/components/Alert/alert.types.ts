@@ -3,12 +3,6 @@ import type { CommonProps, RestrictedPropsWithAs } from "../../types/props";
 
 type MessageSeverity = "success" | "error" | "warning" | "info";
 
-/**
- * Alert — Slot-based notification component
- *
- * Composes into two semantic content slots: `title` (optional heading) and `description` (required message).
- * Replaces role-based `children` naming with explicit slot props for clarity.
- */
 type AlertOwnProps = {
   /** Alert type/severity — determines color and icon semantics. @default "info" */
   severity?: MessageSeverity;
