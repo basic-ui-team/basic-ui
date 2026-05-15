@@ -132,18 +132,78 @@ describe("Alert", () => {
   });
 
   describe("ref forwarding", () => {
-    it("forwards ref to container div", () => {
+    it("forwards ref to container div by default", () => {
       const ref = React.createRef<HTMLDivElement>();
       render(<Alert ref={ref}>Test</Alert>);
       expect(ref.current).toBeInTheDocument();
       expect(ref.current?.tagName).toBe("DIV");
     });
+
+    it("forwards ref to span element when as='span'", () => {
+      const ref = React.createRef<HTMLSpanElement>();
+      render(
+        <Alert as="span" ref={ref}>
+          Test
+        </Alert>,
+      );
+      expect(ref.current).toBeInTheDocument();
+      expect(ref.current?.tagName).toBe("SPAN");
+    });
+
+    it("forwards ref to p element when as='p'", () => {
+      const ref = React.createRef<HTMLParagraphElement>();
+      render(
+        <Alert as="p" ref={ref}>
+          Test
+        </Alert>,
+      );
+      expect(ref.current).toBeInTheDocument();
+      expect(ref.current?.tagName).toBe("P");
+    });
   });
 
-  describe("html attributes", () => {
-    it("spreads additional props to container", () => {
-      const { container } = render(<Alert data-custom="value">Test</Alert>);
-      expect(container.firstChild).toHaveAttribute("data-custom", "value");
+  describe("polymorphic rendering", () => {
+    it("renders as div by default", () => {
+      const { container } = render(<Alert>Test</Alert>);
+      expect(container.firstChild?.nodeName).toBe("DIV");
+    });
+
+    it("renders as span when as='span'", () => {
+      const { container } = render(<Alert as="span">Test</Alert>);
+      expect(container.firstChild?.nodeName).toBe("SPAN");
+    });
+
+    it("renders as p when as='p'", () => {
+      const { container } = render(<Alert as="p">Test</Alert>);
+      expect(container.firstChild?.nodeName).toBe("P");
+    });
+
+    it("maintains component props regardless of as value", () => {
+      const { container: divContainer } = render(
+        <Alert severity="error" title="Error">
+          Div alert
+        </Alert>,
+      );
+      const { container: spanContainer } = render(
+        <Alert as="span" severity="error" title="Error">
+          Span alert
+        </Alert>,
+      );
+
+      expect(divContainer.firstChild).toHaveAttribute("role", "alert");
+      expect(spanContainer.firstChild).toHaveAttribute("role", "alert");
+      expect(screen.getAllByText("Error")).toHaveLength(2);
+    });
+
+    it("passes element-specific native props correctly", () => {
+      const { container } = render(
+        <Alert as="p" id="alert-para" data-testid="alert-element">
+          Paragraph alert
+        </Alert>,
+      );
+      const el = container.firstChild;
+      expect(el).toHaveAttribute("id", "alert-para");
+      expect(el).toHaveAttribute("data-testid", "alert-element");
     });
   });
 });

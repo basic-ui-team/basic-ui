@@ -1,4 +1,5 @@
 import type React from "react";
+import type { CommonProps, RestrictedPropsWithAs } from "../../types/props";
 
 type MessageSeverity = "success" | "error" | "warning" | "info";
 
@@ -8,7 +9,7 @@ type MessageSeverity = "success" | "error" | "warning" | "info";
  * Composes into two semantic content slots: `title` (optional heading) and `description` (required message).
  * Replaces role-based `children` naming with explicit slot props for clarity.
  */
-export interface AlertProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "title"> {
+type AlertOwnProps = {
   /** Alert type/severity — determines color and icon semantics. @default "info" */
   severity?: MessageSeverity;
 
@@ -27,10 +28,13 @@ export interface AlertProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "
   /** Custom action element to be rendered within the alert. */
   action?: React.ReactNode;
 
-  /** Callback fired when the alert is dismissed. If provided, the alert becomes dismissible.
-   * Can be set as a no-op to make the alert dismissible without any side effects (() => {}) */
+  /** Callback fired when the alert is dismissed. If provided, the alert becomes dismissible. */
   onDismiss?: () => void;
 
   /** Whether the alert content is currently visible. Use to control dismissal. @default true */
   isOpen?: boolean;
-}
+} & CommonProps;
+
+export type AllowedAlertElements = 'div' | 'span' | 'p';
+
+export type AlertProps<As extends AllowedAlertElements = 'div'> = RestrictedPropsWithAs<AlertOwnProps, As>;
