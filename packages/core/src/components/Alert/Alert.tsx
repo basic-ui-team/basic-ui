@@ -25,8 +25,8 @@ const ICON_MAP: Record<string, React.ComponentType> = {
 /**
  * Alert Component
  *
- * Displays persistent inline feedback with optional title and dismissal.
- * Uses semantic slots (`title` + `description`) for composition clarity.
+ * Displays persistent inline feedback with optional title, icon, and dismissal.
+ * The alert content is provided via `children`. An optional `title` prop can be used for a heading.
  *
  * Accessibility:
  * - Uses `role="alert"` for error/warning (time-sensitive)
@@ -35,7 +35,7 @@ const ICON_MAP: Record<string, React.ComponentType> = {
  * - Dismissible alerts include accessible close button
  *
  * @example
- * // Simple info alert (description slot)
+ * // Simple info alert
  * <Alert severity="info">This is an informational message</Alert>
  *
  * // Error alert with title and dismissible
@@ -123,7 +123,7 @@ const _Alert = <As extends AllowedAlertElements = "div">(
   );
 };
 
-export const Alert = forwardRef(_Alert) as <Element extends AllowedAlertElements = 'div'>(
+export const Alert = forwardRef(_Alert) as <Element extends AllowedAlertElements = "div">(
   props: AlertProps<Element> & { ref?: PolymorphicRef<Element> },
 ) => React.ReactElement | null;
 
