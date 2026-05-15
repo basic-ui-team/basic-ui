@@ -68,6 +68,7 @@ const _Alert = <As extends AllowedAlertElements = "div">(
   const [isDismissed, setIsDismissed] = useState(false);
 
   const Comp = (as || "div") as As;
+  const Child = Comp === "p" ? "span" : "div"; // Div cannot be a child of p for hydration consistency
   const mergedIconMap = { ...ICON_MAP, ...iconMap };
   const iconNode = icon === false ? null : icon || mergedIconMap[severity];
   const iconElement = typeof iconNode === "function" ? React.createElement(iconNode) : iconNode;
@@ -95,17 +96,17 @@ const _Alert = <As extends AllowedAlertElements = "div">(
       {...(props as any)}
     >
       {/* Icon */}
-      <div className={alertIconVariants()}>
+      <Child className={alertIconVariants()}>
         {iconElement && <Icon icon={iconElement} variant={severity} size="sm" />}
-      </div>
+      </Child>
 
       {/* Content */}
-      <div className={alertContentVariants()}>
-        {title && <div className={alertTitleVariants()}>{title}</div>}
-        <div>{children}</div>
-      </div>
+      <Child className={alertContentVariants()}>
+        {title && <Child className={alertTitleVariants()}>{title}</Child>}
+        <Child>{children}</Child>
+      </Child>
 
-      <div className={alertActionVariants()}>
+      <Child className={alertActionVariants()}>
         {action}
         {/* Dismiss button */}
         {onDismiss && (
@@ -117,7 +118,7 @@ const _Alert = <As extends AllowedAlertElements = "div">(
             <Icon icon={<XIcon />} size="sm" />
           </button>
         )}
-      </div>
+      </Child>
     </Comp>
   );
 };
