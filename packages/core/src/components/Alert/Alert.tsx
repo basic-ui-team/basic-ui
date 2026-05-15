@@ -40,7 +40,7 @@ const ICON_MAP: Record<string, React.ComponentType> = {
  *
  * // Error alert with title and dismissible
  * <Alert
- *   as="section"
+ *   as="div"
  *   severity="error"
  *   title="Error"
  *   onDismiss={() => setShowAlert(false)}
@@ -68,7 +68,7 @@ const _Alert = <As extends AllowedAlertElements = "div">(
   const [isDismissed, setIsDismissed] = useState(false);
 
   const Comp = (as || "div") as As;
-  const Child = Comp === "p" ? "span" : "div"; // Div cannot be a child of p for hydration consistency
+  const Child = Comp === "p" || Comp === "span" ? "span" : "div"; // Use inline wrappers for inline parents to avoid invalid nesting/hydration issues
   const mergedIconMap = { ...ICON_MAP, ...iconMap };
   const iconNode = icon === false ? null : icon || mergedIconMap[severity];
   const iconElement = typeof iconNode === "function" ? React.createElement(iconNode) : iconNode;

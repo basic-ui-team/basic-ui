@@ -447,7 +447,7 @@ export const Alert = forwardRef(_Alert) as <Element extends AllowedAlertElements
 - [TypeScript Generics](https://www.typescriptlang.org/docs/handbook/2/generics.html)
 - [React forwardRef](https://react.dev/reference/react/forwardRef)
 - [Radix UI's Polymorphic Approach](https://radix-ui.com/) (inspiration)
-- [Our Props Documentation](./ Props.md)
+- [Our Props Documentation](./Props.md)
 
 ---
 

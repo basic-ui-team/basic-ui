@@ -28,14 +28,15 @@ export type CommonProps = {
 export type MergeProps<P, T> = Omit<P, keyof T> & T;
 
 /**
- * Extract the ref type for a given element type.
+ * Extract the React `ref` prop type for a given element type.
  * 
- * Returns the correct ref type (e.g., HTMLButtonElement for 'button', HTMLAnchorElement for 'a').
+ * Returns the correct React ref type for the element/component (e.g., `React.Ref<HTMLButtonElement> | undefined`
+ * for `'button'`, `React.Ref<HTMLAnchorElement> | undefined` for `'a'`).
  * Used to type ref parameters correctly on polymorphic components.
  * 
  * @example
- * type ButtonRef = PolymorphicRef<'button'>;  // HTMLButtonElement | null
- * type AnchorRef = PolymorphicRef<'a'>;      // HTMLAnchorElement | null
+ * type ButtonRef = PolymorphicRef<'button'>;  // React.Ref<HTMLButtonElement> | undefined
+ * type AnchorRef = PolymorphicRef<'a'>;      // React.Ref<HTMLAnchorElement> | undefined
  */
 export type PolymorphicRef<As extends ElementType> = ComponentPropsWithRef<As>['ref'];
 
@@ -118,7 +119,3 @@ export type PolymorphicComponent<
 > = <Element extends As>(
   props: P & { ref?: PolymorphicRef<Element> },
 ) => React.ReactElement | null;
-
-export default {} as {
-  // placeholder default export so this file can be imported in non-typecheck scenarios
-};
