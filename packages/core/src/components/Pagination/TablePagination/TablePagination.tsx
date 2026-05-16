@@ -10,6 +10,24 @@ import { Icon } from "../../Icon";
 import { ChevronLeftIcon, ChevronRightIcon } from "@basic-ui/icons";
 import type { TablePaginationProps } from "./tablePagination.types";
 
+/**
+ * TablePagination
+ *
+ * Table/data-grid style pagination control. Use when the parent component
+ * manages which data slice is displayed. Supports controlled usage via
+ * `currentPage` + `onPageChange`, or uncontrolled usage with `initialPage`.
+ *
+ * Accessibility: renders a `nav` element with `aria-label="Pagination"` and
+ * provides appropriate `aria-current` on the active page buttons.
+ *
+ * Example:
+ * ```tsx
+ * // Controlled
+ * <TablePagination pageCount={20} currentPage={page} onPageChange={setPage} />
+ * // Uncontrolled
+ * <TablePagination pageCount={8} initialPage={2} />
+ * ```
+ */
 export const TablePagination = React.forwardRef<HTMLDivElement, TablePaginationProps>(
   (
     {

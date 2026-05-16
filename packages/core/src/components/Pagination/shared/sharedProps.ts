@@ -1,5 +1,20 @@
 import { CommonProps } from "@core/types/props";
 
+/**
+ * Shared pagination props used by both `TablePagination` and `LinkPagination`.
+ *
+ * Notes:
+ * - Components support both controlled (`currentPage` provided) and uncontrolled
+ *   (uses `initialPage`) modes. When `pageCount` is provided it will override
+ *   `totalItems/itemsPerPage` calculations.
+ * - Accessibility: both components render a `nav` with `aria-label="Pagination"`.
+ *
+ * Example:
+ * ```tsx
+ * <TablePagination pageCount={10} currentPage={1} onPageChange={setPage} />
+ * <LinkPagination pageCount={5} getPageHref={(p) => `/page/${p}`} />
+ * ```
+ */
 export interface SharedPaginationProps extends Omit<CommonProps, "children"> {
   /** Total number of items to paginate. */
   totalItems?: number;
@@ -7,7 +22,7 @@ export interface SharedPaginationProps extends Omit<CommonProps, "children"> {
   itemsPerPage?: number;
   /** Total number of pages (overrides totalItems/itemsPerPage if provided). */
   pageCount?: number;
-  /** Current active page (1-indexed). If omitted the component may manage state internally. */
+  /** Current active page (1-indexed). When provided the component is controlled. */
   currentPage?: number;
   /** Initial page to use for uncontrolled mode (1-indexed). */
   initialPage?: number;
@@ -29,6 +44,7 @@ export interface SharedPaginationProps extends Omit<CommonProps, "children"> {
   color?: "default" | "primary" | "secondary";
 }
 
+/** Icons used for the navigation controls (first/prev/next/last). */
 export interface PageNavigationIcons {
   previous: React.ReactNode;
   next: React.ReactNode;
