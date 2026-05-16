@@ -11,7 +11,7 @@ describe("themeToCustomProperties", () => {
     const result = themeToCustomProperties(theme);
 
     expect(result).toEqual({
-      "--color-primary": "hsl(119 43% 52%)",
+      "--color-primary-500": "hsl(119 43% 52%)",
     });
   });
 
@@ -25,7 +25,7 @@ describe("themeToCustomProperties", () => {
     const result = themeToCustomProperties(theme);
 
     expect(result).toEqual({
-      "--color-primary": "#FF0000",
+      "--color-primary-500": "#FF0000",
       "--spacing-md": "1rem",
       "--radius-lg": "0.5rem",
     });
