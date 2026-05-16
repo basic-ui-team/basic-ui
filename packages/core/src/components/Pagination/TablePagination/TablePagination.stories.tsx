@@ -58,7 +58,6 @@ export const Default: Story = {
   args: {
     totalItems: 100,
     itemsPerPage: 10,
-
   },
   render: (args) => {
     return (
@@ -68,7 +67,7 @@ export const Default: Story = {
         <TablePagination {...args} color="secondary" />
       </div>
     );
-  }
+  },
 };
 
 /** Custom shape and sibling/boundary button counts. */
@@ -100,7 +99,7 @@ export const OutlinedVariant: Story = {
         <TablePagination {...args} color="secondary" />
       </div>
     );
-  }
+  },
 };
 
 /** Sibling and boundary button variations. */
@@ -110,9 +109,18 @@ export const SiblingBoundaryButtons: Story = {
   },
   render: (args) => {
     return (
-      <div className="flex flex-col items-center gap-md">
+      <div className="flex flex-col items-center gap-lg">
+        <span className="text-sm text-foreground-muted p-md border border-foreground-muted rounded">
+          maxSiblingButtons=1, maxBoundaryButtons=2
+        </span>
         <TablePagination {...args} maxSiblingButtons={1} maxBoundaryButtons={2} />
+        <span className="text-sm text-foreground-muted p-md mt-md border border-foreground-muted rounded">
+          maxSiblingButtons=3, maxBoundaryButtons=0
+        </span>
         <TablePagination {...args} maxSiblingButtons={3} maxBoundaryButtons={0} />
+        <span className="text-sm text-foreground-muted p-md mt-md border border-foreground-muted rounded">
+          maxSiblingButtons=0, maxBoundaryButtons=3
+        </span>
         <TablePagination {...args} maxSiblingButtons={0} maxBoundaryButtons={3} />
       </div>
     );
