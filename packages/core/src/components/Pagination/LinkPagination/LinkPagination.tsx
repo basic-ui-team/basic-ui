@@ -26,7 +26,10 @@ import type { LinkPaginationProps } from "./linkPagination.types";
  * <LinkPagination pageCount={5} currentPage={2} getPageHref={(p) => `/page/${p}`} />
  * ```
  */
-export const LinkPagination = React.forwardRef<HTMLElement, LinkPaginationProps>(
+export const LinkPagination = React.forwardRef<
+  HTMLElement,
+  Omit<LinkPaginationProps, "initialPage">
+>(
   (
     {
       totalItems,
@@ -125,6 +128,7 @@ export const LinkPagination = React.forwardRef<HTMLElement, LinkPaginationProps>
                 shape,
                 variant,
                 color,
+                active: page === activeCurrentPage,
               })}
               aria-current={page === activeCurrentPage ? "page" : undefined}
               onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) =>

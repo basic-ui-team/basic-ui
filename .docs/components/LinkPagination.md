@@ -47,12 +47,11 @@ LinkPagination renders a navigation bar with links for each page. It is designed
 ## API
 
 | **Prop**           | Type                           | Default     | Description                                                |
-| ------------------ | ------------------------------ | ----------- | ---------------------------------------------------------- | ------------------------------- | ------------------------------------- |
+| ------------------ | ------------------------------ | ----------- | ---------------------------------------------------------- | 
 | totalItems         | `number`                       |             | Total number of items to paginate.                         |
 | itemsPerPage       | `number`                       |             | Number of items per page.                                  |
 | pageCount          | `number`                       |             | Total number of pages (overrides totalItems/itemsPerPage). |
 | currentPage        | `number`                       |             | Current active page (controlled).                          |
-| initialPage        | `number`                       |             | Initial page (uncontrolled).                               |
 | customIcons        | `Partial<PageNavigationIcons>` |             | Custom icons for navigation buttons.                       |
 | showFirstLast      | `boolean`                      | `true`      | Show "First" and "Last" buttons.                           |
 | showPrevNext       | `boolean`                      | `true`      | Show "Previous" and "Next" buttons.                        |
