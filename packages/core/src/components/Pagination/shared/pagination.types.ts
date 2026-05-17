@@ -55,6 +55,8 @@ export interface SharedPaginationProps extends Omit<CommonProps, "children"> {
   variant?: "default" | "outlined";
   /** Color style for page number buttons. Defaults to `default`. */
   color?: "default" | "primary" | "secondary";
+  /** Handler invoked when a page number is requested. */
+  onPageChange?: (page: number) => void;
 }
 
 /**

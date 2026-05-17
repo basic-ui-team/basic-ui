@@ -31,6 +31,7 @@ export const LinkPagination = React.forwardRef<
       itemsPerPage,
       pageCount,
       currentPage,
+      onPageChange,
       getPageHref,
       linkComponent: LinkComponent = "a",
       customIcons,
@@ -52,6 +53,7 @@ export const LinkPagination = React.forwardRef<
         itemsPerPage,
         pageCount,
         currentPage,
+        onPageChange,
         maxSiblingButtons,
         maxBoundaryButtons,
       });
