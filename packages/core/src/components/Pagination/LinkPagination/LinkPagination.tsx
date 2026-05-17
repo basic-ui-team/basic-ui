@@ -26,7 +26,7 @@ import type { LinkPaginationProps } from "./linkPagination.types";
  * <LinkPagination pageCount={5} currentPage={2} getPageHref={(p) => `/page/${p}`} />
  * ```
  */
-export const LinkPagination = React.forwardRef<HTMLDivElement, LinkPaginationProps>(
+export const LinkPagination = React.forwardRef<HTMLElement, LinkPaginationProps>(
   (
     {
       totalItems,

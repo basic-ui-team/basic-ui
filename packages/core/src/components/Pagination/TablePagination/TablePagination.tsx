@@ -28,7 +28,7 @@ import type { TablePaginationProps } from "./tablePagination.types";
  * <TablePagination pageCount={8} initialPage={2} />
  * ```
  */
-export const TablePagination = React.forwardRef<HTMLDivElement, TablePaginationProps>(
+export const TablePagination = React.forwardRef<HTMLElement, TablePaginationProps>(
   (
     {
       totalItems,
