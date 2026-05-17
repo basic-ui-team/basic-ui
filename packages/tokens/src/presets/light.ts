@@ -72,7 +72,7 @@ export const lightTheme: ThemeConfig = {
     "foreground-link": "var(--color-primary-700)", // green-700
 
     // ===== SEMANTIC: BORDERS =====
-    "border": "var(--color-neutral-200)", // gray-200
+    "border-base": "var(--color-neutral-200)", // gray-200
     "border-muted": "var(--color-neutral-100)", // gray-100
 
     // ===== SEMANTIC: FEEDBACK COLORS =====

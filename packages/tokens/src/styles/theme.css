@@ -54,7 +54,7 @@
   --color-foreground-secondary: hsl(210 10% 32%);
   --color-foreground-muted: hsl(210 10% 52%);
   --color-foreground-link: hsl(119 43% 35%);
-  --color-border: hsl(210 16% 90%);
+  --color-border-base: hsl(210 16% 90%);
   --color-border-muted: hsl(210 20% 95%);
   --color-success: oklch(72.3% .219 149.579);
   --color-success-light: oklch(87.1% .15 154.449);
@@ -141,7 +141,7 @@
   --color-foreground-secondary: hsl(210 12% 84%);
   --color-foreground-muted: hsl(210 11% 68%);
   --color-foreground-link: oklch(39.3% .095 152.535);
-  --color-border: hsl(210 10% 32%);
+  --color-border-base: hsl(210 10% 32%);
   --color-border-muted: hsl(210 12% 18%);
   --color-success: oklch(79.2% .209 151.711);
   --color-success-light: oklch(39.3% .095 152.535);

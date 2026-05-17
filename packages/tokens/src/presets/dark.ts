@@ -26,7 +26,7 @@ export const darkTheme: ThemeConfig = {
     "foreground-link": "var(--color-green-900)", // green-900
 
     // ===== SEMANTIC: BORDERS =====
-    "border": "var(--color-neutral-700)", // gray-700
+    "border-base": "var(--color-neutral-700)", // gray-700
     "border-muted": "var(--color-neutral-800)", // gray-800
 
     // ===== SEMANTIC: FEEDBACK COLORS =====

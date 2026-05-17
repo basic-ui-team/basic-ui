@@ -5,19 +5,19 @@ import type { ThemeConfig } from "../types";
 describe("themeToCustomProperties", () => {
   it("flattens a single category with correct CSS variable prefix", () => {
     const theme: ThemeConfig = {
-      color: { "primary": "hsl(119 43% 52%)" },
+      color: { "primary-500": "hsl(119 43% 52%)" },
     };
 
     const result = themeToCustomProperties(theme);
 
     expect(result).toEqual({
-      "--color-primary": "hsl(119 43% 52%)",
+      "--color-primary-500": "hsl(119 43% 52%)",
     });
   });
 
   it("flattens multiple categories with their respective prefixes", () => {
     const theme: ThemeConfig = {
-      color: { "primary": "#FF0000" },
+      color: { "primary-500": "#FF0000" },
       spacing: { "md": "1rem" },
       radius: { "lg": "0.5rem" },
     };
@@ -25,7 +25,7 @@ describe("themeToCustomProperties", () => {
     const result = themeToCustomProperties(theme);
 
     expect(result).toEqual({
-      "--color-primary": "#FF0000",
+      "--color-primary-500": "#FF0000",
       "--spacing-md": "1rem",
       "--radius-lg": "0.5rem",
     });
@@ -50,30 +50,30 @@ describe("themeToCustomProperties", () => {
   it("skips null and undefined values", () => {
     const theme: ThemeConfig = {
       color: {
-        "primary": "hsl(119 43% 52%)",
-        "secondary": null as any,
-        "tertiary": undefined as any,
+        "primary-500": "hsl(119 43% 52%)",
+        "secondary-500": null as any,
+        "accent-500": undefined as any,
       },
     };
 
     const result = themeToCustomProperties(theme);
 
     expect(result).toEqual({
-      "--color-primary": "hsl(119 43% 52%)",
+      "--color-primary-500": "hsl(119 43% 52%)",
     });
     expect(Object.keys(result)).toHaveLength(1);
   });
 
   it("ignores categories not in PREFIX_MAP", () => {
     const theme = {
-      color: { "primary": "red" },
+      color: { "primary-500": "red" },
       unknown: { "value": "ignored" }, // Not in PREFIX_MAP
     } as ThemeConfig;
 
     const result = themeToCustomProperties(theme);
 
     expect(result).toEqual({
-      "--color-primary": "red",
+      "--color-primary-500": "red",
     });
   });
 
@@ -87,7 +87,7 @@ describe("themeToCustomProperties", () => {
     const theme: ThemeConfig = {
       color: {
         "background-primary": "hsl(210 20% 97%)",
-        "text-link-hover": "hsl(119 43% 35%)",
+        "foreground-link": "hsl(119 43% 35%)",
       },
     };
 
@@ -95,7 +95,7 @@ describe("themeToCustomProperties", () => {
 
     expect(result).toEqual({
       "--color-background-primary": "hsl(210 20% 97%)",
-      "--color-text-link-hover": "hsl(119 43% 35%)",
+      "--color-foreground-link": "hsl(119 43% 35%)",
     });
   });
 });

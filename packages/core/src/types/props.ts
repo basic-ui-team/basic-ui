@@ -2,17 +2,16 @@ import type { ComponentPropsWithRef, ElementType } from "react";
 
 /**
  * Core props that all basic-ui components accept.
- *
- * These form the minimal, reusable foundation for component props.
- * - `className`: CSS class names for styling and customization
- * - `style`: Inline styles (used sparingly; prefer className with tailwindcss)
- * - `id`: HTML identifier for accessibility and testing
- * - `children`: Rendered content inside the component
+ * Provides a consistent set of common props for styling, accessibility, and content.
  */
 export type CommonProps = {
+  /** Optional CSS class name(s) for custom styling. */
   className?: string;
+  /** Optional inline styles. Use with caution; prefer className for styling. */
   style?: React.CSSProperties;
+  /** Optional HTML id attribute for accessibility and testing. */
   id?: string;
+  /** Content to be rendered inside the component. */
   children?: React.ReactNode;
 };
 

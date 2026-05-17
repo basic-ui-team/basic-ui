@@ -56,7 +56,7 @@ export type SemanticColorTokens =
   | "foreground-muted"
   | "foreground-link"
   // Semantic: Borders
-  | "border"
+  | "border-base"
   | "border-muted"
   // Semantic: Feedback colors
   | "success"

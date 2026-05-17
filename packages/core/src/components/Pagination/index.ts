@@ -1,3 +1,3 @@
-export { Pagination } from "./Pagination";
-export { paginationVariants, paginationButtonVariants, paginationEllipsisVariants } from "./pagination.variants";
-export type { PaginationProps, PageNavigationIcons as PaginationIcons } from "./pagination.types";
+export { TablePagination, type TablePaginationProps } from "./TablePagination";
+export { LinkPagination, type LinkPaginationProps } from "./LinkPagination";
+export { usePagination } from "./shared/usePagination";
