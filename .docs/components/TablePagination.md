@@ -1,66 +1,98 @@
-Table pagination component for table/data-grid style pagination. Provides page controls and delegates state to the parent when used in controlled mode; can also operate uncontrolled with `initialPage`.
+# Table Pagination
+
+TablePagination provides accessible pagination controls for tabular data, supporting both controlled and uncontrolled usage.
 
 ```tsx
-import { TablePagination } from "basic-ui/core";
-<TablePagination pageCount={10} currentPage={1} onPageChange={setPage} />;
+import { TablePagination } from "basic-ui/core"
+
+// Basic example
+<TablePagination pageCount={10} currentPage={1} onPageChange={setPage} />
 ```
 
-## Api Reference
+## Overview
 
-| **Prop**            | Type                         | Default                                         |
-| ------------------- | ---------------------------- | ----------------------------------------------- |
-| totalItems          | number                       | —                                               |
-| itemsPerPage        | number                       | —                                               |
-| pageCount           | number                       | — (optional; overrides totalItems/itemsPerPage) |
-| currentPage         | number                       | — (controlled mode)                             |
-| initialPage         | number                       | 1 (uncontrolled mode)                           |
-| onPageChange        | (page: number) => void       | —                                               |
-| icons / customIcons | Partial<PageNavigationIcons> | —                                               |
-| showFirstLast       | boolean                      | true                                            |
-| showPrevNext        | boolean                      | true                                            |
-| maxSiblingButtons   | number                       | 2                                               |
-| maxBoundaryButtons  | number                       | 1                                               |
-| shape               | "rounded"                    | "rounded"                                       |
+TablePagination renders a navigation bar for paginated data tables. It supports both controlled (`currentPage`) and uncontrolled (`initialPage`) usage, and notifies page changes via `onPageChange`. The component is highly customizable and integrates with theming and variants.
+
+## When to use
+
+- When paginating rows in a table or data grid.
+- When you need accessible, keyboard-navigable pagination controls.
+- Avoid for infinite-scroll or cursor-based pagination.
+
+## Variants / Appearance
+
+- `default` — standard appearance.
+- `outlined` — outlined style for page buttons.
+- `shape` — `rounded`, `square`, or `circular` page buttons.
 
 ## Examples
 
-### Controlled (table/data pagination)
+### Basic
 
-Parent owns the current page and slices data accordingly.
+```tsx
+<TablePagination pageCount={5} currentPage={2} onPageChange={setPage} />
+```
 
+### Advanced
+
+```tsx
+<TablePagination
+	totalItems={100}
+	itemsPerPage={10}
+	currentPage={page}
+	onPageChange={setPage}
+	showFirstLast
+	showPrevNext={false}
+	maxSiblingButtons={3}
+	variant="outlined"
+	shape="circular"
+/>
+```
+
+### Controlled vs Uncontrolled
+
+Controlled:
 ```tsx
 const [page, setPage] = useState(1);
-const data = allData.slice((page - 1) * 10, page * 10);
-<TablePagination pageCount={20} currentPage={page} onPageChange={setPage} />;
+<TablePagination pageCount={10} currentPage={page} onPageChange={setPage} />
 ```
 
-### Uncontrolled (self-managed)
-
-Let the component manage page state locally.
-
+Uncontrolled:
 ```tsx
-<TablePagination pageCount={8} initialPage={2} />
+<TablePagination pageCount={10} initialPage={2} />
 ```
 
-### Using `pageCount` from API
+## API
 
-If your API returns total pages, pass `pageCount` directly.
-
-```tsx
-<TablePagination pageCount={response.totalPages} currentPage={current} onPageChange={setCurrent} />
-```
+| **Prop**           | Type                                              | Default   | Description |
+|--------------------|---------------------------------------------------|-----------|-------------|
+| totalItems         | `number`                                          |           | Total number of items to paginate. |
+| itemsPerPage       | `number`                                          |           | Number of items per page. |
+| pageCount          | `number`                                          |           | Total number of pages (overrides totalItems/itemsPerPage). |
+| currentPage        | `number`                                          |           | Current active page (controlled). |
+| initialPage        | `number`                                          |           | Initial page (uncontrolled). |
+| customIcons        | `Partial<PageNavigationIcons>`                    |           | Custom icons for navigation buttons. |
+| showFirstLast      | `boolean`                                         | `true`    | Show "First" and "Last" buttons. |
+| showPrevNext       | `boolean`                                         | `true`    | Show "Previous" and "Next" buttons. |
+| maxSiblingButtons  | `number`                                          | `2`       | Max page buttons adjacent to current page. |
+| maxBoundaryButtons | `number`                                          | `1`       | Max page buttons at start/end. |
+| shape              | `'rounded' | 'square' | 'circular'`               | `'rounded'` | Border radius style for page buttons. |
+| variant            | `'default' | 'outlined'`                          | `'default'` | Style variant for page buttons. |
+| color              | `'default' | 'primary' | 'secondary'`             | `'default'` | Color style for page buttons. |
+| className          | `string`                                          |           | Custom class name. |
+| onPageChange       | `(page: number) => void`                          |           | Callback when page changes. |
 
 ## Accessibility
 
-- Uses a `nav` element with `role="navigation"` and `aria-label="Pagination"`.
-- Buttons include `aria-label` and the active page has `aria-current="page"`.
-- Disabled navigation buttons use the native `disabled` attribute.
+- Renders a `nav` with `aria-label="Pagination"`.
+- Active page button has `aria-current="page"`.
+- All controls are keyboard accessible.
 
-## Notes
+## Stories
 
-- Use `TablePagination` for table/data pagination where the parent typically manages data slicing.
-- For URL-driven page navigation (blog-style), use `LinkPagination` which renders links for each page.
+- See Storybook: `TablePagination/Basic`, `TablePagination/Variants` (if present).
 
----
+## Source
 
-For source and stories, see: https://github.com/basic-ui-team/basic-ui/tree/main/packages/core/src/components/Pagination
+Source: https://github.com/basic-ui-team/basic-ui/tree/main/packages/core/src/components/TablePagination
+
