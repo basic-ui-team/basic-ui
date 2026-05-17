@@ -85,17 +85,31 @@ const calculatePaginationState = (
   currentPage: number,
   pageCount?: number,
 ): PaginationState => {
-  const totalPages =
-    pageCount ?? (totalItems && itemsPerPage ? Math.ceil(totalItems / itemsPerPage) : 1);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = Math.min(startIndex + itemsPerPage - 1, totalItems - 1);
+  // Defensive normalization
+  const safeItemsPerPage = Math.max(1, itemsPerPage);
+  const totalPages = pageCount ?? (totalItems && safeItemsPerPage ? Math.ceil(totalItems / safeItemsPerPage) : 1);
+
+  // If there are no items, return a deterministic, empty state
+  if (totalItems <= 0) {
+    return {
+      totalPages,
+      startIndex: 0,
+      endIndex: 0,
+      hasPrev: false,
+      hasNext: false,
+    };
+  }
+
+  const current = clamp(currentPage, 1, totalPages);
+  const startIndex = clamp((current - 1) * safeItemsPerPage, 0, Math.max(totalItems - 1, 0));
+  const endIndex = clamp(startIndex + safeItemsPerPage - 1, 0, Math.max(totalItems - 1, 0));
 
   return {
     totalPages,
     startIndex,
     endIndex,
-    hasPrev: currentPage > 1,
-    hasNext: currentPage < totalPages,
+    hasPrev: current > 1,
+    hasNext: current < totalPages,
   };
 };
 

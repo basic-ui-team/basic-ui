@@ -38,6 +38,7 @@ export const Pagination = React.forwardRef<HTMLElement, PaginationViewProps>(
         className={cn(paginationVariants({}), className)}
         role="navigation"
         aria-label="Pagination"
+        tabIndex={0}
         onKeyDown={(e) => {
           if (!handlePageChange) return;
           switch (e.key) {
@@ -94,7 +95,7 @@ export const Pagination = React.forwardRef<HTMLElement, PaginationViewProps>(
               `Go to page ${pageNumber}`,
               handlePageChange ? () => handlePageChange(pageNumber as number) : undefined,
               pageNumber === activePage ? -1 : undefined,
-              (className = cn(
+              cn(
                 paginationButtonVariants({
                   size: "md",
                   shape,
@@ -102,7 +103,7 @@ export const Pagination = React.forwardRef<HTMLElement, PaginationViewProps>(
                   color,
                   active: pageNumber === activePage,
                 }),
-              )),
+              ),
             )
           ),
         )}

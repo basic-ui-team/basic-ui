@@ -52,9 +52,6 @@ export const LinkPagination = React.forwardRef<
         itemsPerPage,
         pageCount,
         currentPage,
-        onPageChange: (page) => {
-          getPageHref(page);
-        },
         maxSiblingButtons,
         maxBoundaryButtons,
       });
