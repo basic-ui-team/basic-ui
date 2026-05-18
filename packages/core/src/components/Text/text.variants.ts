@@ -20,8 +20,8 @@ export const textVariants = cva("font-sans", {
     color: {
       default: "text-foreground-primary",
       muted: "text-foreground-muted",
-      primary: "text-primary-500",
-      secondary: "text-secondary-500",
+      primary: "text-primary-700 dark:text-primary-300",
+      secondary: "text-secondary-700 dark:text-secondary-300",
       error: "text-error",
       success: "text-success",
       warning: "text-warning",
