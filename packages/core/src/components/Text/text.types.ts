@@ -18,7 +18,7 @@ interface TextOwnProps extends CommonProps {
   size?: ResponsiveValue<"xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl">;
   /** Font weight. @default "normal" */
   weight?: ResponsiveValue<"normal" | "medium" | "semibold" | "bold">;
-  /** Text color. @default "inherit" */
+  /** Text color. @default "default" */
   color?: ResponsiveValue<builtInColorUnion | string>;
   /** Text alignment. @default "left" */
   align?: ResponsiveValue<"left" | "center" | "right">;

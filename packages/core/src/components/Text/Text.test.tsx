@@ -86,6 +86,13 @@ describe("Text component", () => {
       expect(getByText("Accessible Text")).toBeInTheDocument();
     });
 
+    it("should auto-add title and aria-label when truncate is true and no label is provided", () => {
+      const { getByText } = renderWithProviders(<Text truncate>Truncated Text</Text>);
+      const el = getByText("Truncated Text");
+      expect(el).toHaveAttribute("title", "Truncated Text");
+      expect(el).toHaveAttribute("aria-label", "Truncated Text");
+    });
+
     it("should apply appropriate aria attributes when truncate is true", () => {
       const { getByText } = renderWithProviders(
         <Text truncate title="Full text">

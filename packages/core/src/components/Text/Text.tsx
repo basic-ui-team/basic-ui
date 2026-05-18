@@ -31,7 +31,6 @@ const _Text = <As extends AllowedTextElements = "p">(
 
   const isBuiltInColor = (
     [
-      "inherit",
       "default",
       "muted",
       "primary",
