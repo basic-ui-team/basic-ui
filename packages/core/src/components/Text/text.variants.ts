@@ -38,9 +38,9 @@ export const textVariants = cva("font-sans", {
       false: "",
     },
     wrap: {
-      nowrap: "whitespace-nowrap",
-      wrap: "whitespace-normal",
-      balance: "text-wrap",
+      nowrap: "text-nowrap",
+      wrap: "text-wrap",
+      balance: "text-balance",
       pretty: "text-pretty",
     },
   },
