@@ -7,11 +7,13 @@ import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 import { defineConfig, globalIgnores } from "eslint/config";
+import jsxA11y from "eslint-plugin-jsx-a11y";
 
 export default defineConfig([
   globalIgnores(["dist", "build", "coverage", "node_modules", ".next", "storybook-static"]),
   {
-    files: ["**/*.{js,jsx,ts,tsx}"],
+    files: ["**/*.{js,jsx,ts,tsx,mjs,cjs}"],
+    ...jsxA11y.configs.recommended,
     extends: [
       js.configs.recommended,
       tseslint.configs.recommended,
@@ -19,9 +21,13 @@ export default defineConfig([
       reactRefresh.configs.vite,
     ],
     languageOptions: {
+      ...jsxA11y.configs.recommended.languageOptions,
       ecmaVersion: 2020,
       sourceType: "module",
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+        ...globals.serviceworker,
+      },
       parserOptions: {
         ecmaFeatures: { jsx: true },
       },

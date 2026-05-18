@@ -2,14 +2,8 @@ import { describe, expect, it } from "vitest";
 import { textVariants } from "./text.variants";
 import { Text } from "./Text";
 import { renderWithProviders } from "@core/test-utils/renderWithProviders";
+import { axe } from "jest-axe";
 
-// Tests to write:
-// Paramterized tests for all variants (size, weight, color, align, truncate, wrap)
-// Test that custom colors (e.g. "text-red-500" or "text-[var(--my-color)]") are applied correctly
-// Test that the correct HTML element is rendered based on the "as" prop (e.g. "span", "p", "div")
-// Accessibility tests (e.g. that text is properly announced by screen readers, that truncation has appropriate aria attributes, etc.)
-
-describe("Text component", () => {
   describe("variants", () => {
     it.each([
       ["size", "xs"],
@@ -103,5 +97,14 @@ describe("Text component", () => {
       expect(truncatedElement).toHaveClass(textVariants({ truncate: true }));
       expect(truncatedElement).toHaveAttribute("title", "Full text");
     });
+
+    it("should pass an axe accessibility audit", async () => {
+      const { container } = renderWithProviders(
+        <Text size="lg" weight="bold" color="primary" align="center" truncate wrap="balance">
+          Accessibility Test Text
+        </Text>,
+      );
+      const result = await axe(container);
+      expect(result).toHaveNoViolations();
   });
 });
