@@ -1,11 +1,15 @@
-import '@testing-library/jest-dom';
-import { vi } from 'vitest';
+import "@testing-library/jest-dom";
+import { expect, vi } from "vitest";
+import { toHaveNoViolations } from "jest-axe";
+
+// `jest-axe` exports an object of matchers; pass it directly to `expect.extend`.
+expect.extend(toHaveNoViolations);
 
 /**
  * Mock window.matchMedia for responsive utilities in tests
  * Default to matching the base breakpoint (no breakpoint match)
  */
-Object.defineProperty(window, 'matchMedia', {
+Object.defineProperty(window, "matchMedia", {
   writable: true,
   value: vi.fn().mockImplementation((query: string) => ({
     matches: false,
