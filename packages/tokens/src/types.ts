@@ -80,7 +80,7 @@ export type RadiusTokens = "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "full";
 export type ShadowTokens = "s1" | "s2" | "s3" | "s4" | "s5";
 
 /** Font size scale */
-export type FontSizeTokens = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl";
+export type FontSizeTokens = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl";
 
 /** Font weight levels */
 export type FontWeightTokens = "normal" | "medium" | "semibold" | "bold";
