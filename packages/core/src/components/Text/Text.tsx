@@ -1,6 +1,11 @@
-import React from "react";
-import { cn, isBuiltInTextColor, normalizeProps } from "@core/lib";
-import type { AllowedTextElements, TextProps, builtInColorUnion } from "./text.types";
+import {
+  cn,
+  forwardRefWithAs,
+  getTruncateAccessibilityProps,
+  isBuiltInTextColor,
+  normalizeProps,
+} from "@core/lib";
+import type { AllowedTextElements, TextOwnProps, TextProps, builtInColorUnion } from "./text.types";
 import { textVariants } from "./text.variants";
 import { PolymorphicRef } from "@core/types/props";
 import { useResponsive } from "@core/hooks";
@@ -49,18 +54,10 @@ const _Text = <As extends AllowedTextElements = "p">(
   // Accessibility: if text is visually truncated and the consumer didn't provide
   // a `title` or `aria-label`, expose the full text to assistive tech via both
   // `title` (hover) and `aria-label` (screen readers) when `children` is a string.
-  const accessibilityProps: Record<string, unknown> = {};
+  const accessibilityProps = getTruncateAccessibilityProps(children, resolvedTruncate, rest);
 
   // Normalize props (non-mutating)
   const restAny = normalizeProps(rest as Record<string, unknown>);
-
-  const hasTitle = restAny.title !== undefined;
-  const hasAriaLabel = restAny["aria-label"] !== undefined;
-
-  if (resolvedTruncate && !hasTitle && !hasAriaLabel && typeof children === "string") {
-    accessibilityProps.title = children;
-    accessibilityProps["aria-label"] = children;
-  }
 
   return (
     <Comp ref={ref} className={resolvedStyles} {...accessibilityProps} {...(restAny as any)}>
@@ -69,8 +66,6 @@ const _Text = <As extends AllowedTextElements = "p">(
   );
 };
 
-export const Text = React.forwardRef(_Text) as <Element extends AllowedTextElements = "p">(
-  props: TextProps<Element> & { ref?: PolymorphicRef<Element> },
-) => React.ReactElement | null;
+export const Text = forwardRefWithAs<TextOwnProps, AllowedTextElements>(_Text);
 
 (Text as any).displayName = "Text";
