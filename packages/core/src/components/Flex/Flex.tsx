@@ -54,9 +54,10 @@ const _Flex = <As extends AllowedFlexElements = "div">(
       wrap: resolvedWrap,
       inline: resolvedInline,
     }),
-    `${className} ${isCustomGap ? String(resolvedGap) : ""} ${
-      isCustomPadding ? paddings.map(String).join(" ") : "" // cast to string to ensure tailwind can parse it if it's a custom value
-    }`,
+    className,
+    // pass custom gap/padding as separate args so `clsx`/`twMerge` can ignore falsy values
+    isCustomGap ? (String(resolvedGap) as unknown as string) : undefined,
+    isCustomPadding ? paddings.map(String) : undefined,
   );
 
   const restAny = normalizeProps(rest as Record<string, unknown>);

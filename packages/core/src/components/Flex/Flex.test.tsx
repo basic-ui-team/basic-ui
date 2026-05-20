@@ -61,6 +61,14 @@ describe("Flex", () => {
       expect(container.firstChild).toHaveClass("gap-md");
       expect(container.firstChild).toHaveClass("p-sm");
     });
+
+    it("resolves responsive objects to base when no breakpoint matches", () => {
+      const { container } = renderWithProviders(
+        <Flex direction={{ base: "column", md: "row" }}>Test</Flex>,
+      );
+      // vitest.setup.ts mocks matchMedia to no matches by default, so base should be used
+      expect(container.firstChild).toHaveClass("flex-col");
+    });
   });
 
   describe("custom values", () => {

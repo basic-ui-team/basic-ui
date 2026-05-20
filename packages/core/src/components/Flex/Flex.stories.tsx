@@ -74,6 +74,19 @@ export const Polymorphic: Story = {
   ),
 };
 
+export const Responsive: Story = {
+  render: () => (
+    <div className="flex flex-col gap-md">
+      <p className="text-sm">Resize the preview viewport to see layout change</p>
+      <Flex direction={{ base: "column", md: "row" }} gap={{ base: "sm", md: "md" }}>
+        <div className="border p-sm">A</div>
+        <div className="border p-sm">B</div>
+        <div className="border p-sm">C</div>
+      </Flex>
+    </div>
+  ),
+};
+
 export const Playground: Story = {
   args: {
     gap: "md",
