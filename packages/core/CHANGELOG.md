@@ -1,5 +1,28 @@
 # @basic-ui/core
 
+## 0.2.0
+
+### Minor Changes
+
+- ce32fac: [core/header] Add new Header component (polymorphic as prop) with responsive size, weight, color, align, truncate, and wrap variants; accessibility improvements (auto title / aria-label when truncated); includes Storybook stories and unit tests.
+
+  [core/lib] Export BUILT_IN_HEADER_COLORS, isBuiltInHeaderColor, and BuiltInHeaderColor type to support header colors.
+
+- 5bb6101: [core/flex] Implemented a fully polymorphic, responsive, and customizable Flex component.
+
+  [core/lib] Introduced the forwardRefWithAs helper (referenced in docs and used in components) to enable type-safe polymorphic components with proper ref forwarding and as prop support.
+
+  [core/lib/accessibility] add getTruncateAccessibilityProps function for improved accessibility handling.
+
+  [core/text] refactor Text component to use forwardRefWithAs and export TextOwnProps interface.
+
+  [core/header] refactor Header component to use forwardRefWithAs and export HeaderOwnProps interface.
+
+### Patch Changes
+
+- Updated dependencies [ce32fac]
+  - @basic-ui/tokens@0.2.0
+
 ## 0.1.0
 
 ### Minor Changes
