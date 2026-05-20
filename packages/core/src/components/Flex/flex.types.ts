@@ -1,22 +1,21 @@
 import { ResponsiveValue } from "@core/hooks";
 import { CommonProps, RestrictedPropsWithAs } from "@core/types/props";
 
-export const paddingValues = ["none", "xs", "sm", "md", "lg", "xl", "2xl", "3xl"] as const;
-export const gapValues = ["none", "xs", "sm", "md", "lg", "xl", "2xl", "3xl"] as const;
+export const paddingOptions = ["none", "xs", "sm", "md", "lg", "xl", "2xl", "3xl"] as const;
 
-export type gapSize = (typeof gapValues)[number];
-export type paddingSize = (typeof paddingValues)[number];
+export type gapSize = (typeof paddingOptions)[number];
+export type paddingSize = (typeof paddingOptions)[number];
 type flexWrap = "nowrap" | "wrap" | "wrap-reverse";
 type flexDirection = "row" | "column" | "row-reverse" | "column-reverse";
 type justifyContent = "start" | "end" | "center" | "between" | "around" | "evenly";
 type alignItems = "start" | "end" | "center" | "stretch" | "baseline";
 
-
-
-interface FlexOwnProps extends CommonProps {
+export interface FlexOwnProps extends CommonProps {
   direction?: ResponsiveValue<flexDirection>;
   gap?: ResponsiveValue<gapSize | string | number>;
   padding?: ResponsiveValue<paddingSize | string | number>;
+  paddingX?: ResponsiveValue<paddingSize | string | number>;
+  paddingY?: ResponsiveValue<paddingSize | string | number>;
   justify?: ResponsiveValue<justifyContent>;
   align?: ResponsiveValue<alignItems>;
   wrap?: ResponsiveValue<flexWrap>;

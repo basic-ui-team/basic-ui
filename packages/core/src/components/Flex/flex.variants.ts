@@ -1,6 +1,6 @@
 import { cva } from "class-variance-authority";
 
-export const flexVariants = cva("tansition-all duration-normal", {
+export const flexVariants = cva("transition-all duration-normal w-full", {
   variants: {
     direction: {
       row: "flex-row",
@@ -48,7 +48,29 @@ export const flexVariants = cva("tansition-all duration-normal", {
       xl: "p-xl",
       "2xl": "p-2xl",
       "3xl": "p-3xl",
-        custom: "",
+      custom: "",
+    },
+    paddingX: {
+      none: "px-0",
+      xs: "px-xs",
+      sm: "px-sm",
+      md: "px-md",
+      lg: "px-lg",
+      xl: "px-xl",
+      "2xl": "px-2xl",
+      "3xl": "px-3xl",
+      custom: "",
+    },
+    paddingY: {
+      none: "py-0",
+      xs: "py-xs",
+      sm: "py-sm",
+      md: "py-md",
+      lg: "py-lg",
+      xl: "py-xl",
+      "2xl": "py-2xl",
+      "3xl": "py-3xl",
+      custom: "",
     },
     inline: {
       true: "inline-flex",
