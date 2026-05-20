@@ -1,7 +1,7 @@
 import { ResponsiveValue } from "@core/hooks";
 import { CommonProps, RestrictedPropsWithAs } from "@core/types/props";
 
-interface HeaderOwnProps extends CommonProps {
+export interface HeaderOwnProps extends CommonProps {
   /** Size of the header. @default "h2" */
   size?: ResponsiveValue<"h1" | "h2" | "h3" | "h4" | "h5" | "h6">;
   /** Font weight. @default "normal" */

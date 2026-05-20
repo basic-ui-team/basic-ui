@@ -1,9 +1,14 @@
 import { useResponsive } from "@core/hooks";
-import { AllowedHeaderElements, HeaderProps } from "./header.types";
+import { AllowedHeaderElements, HeaderOwnProps, HeaderProps } from "./header.types";
 import { headerVariants } from "./header.variants";
-import { cn, getTruncateAccessibilityProps, isBuiltInHeaderColor, normalizeProps } from "@core/lib";
+import {
+  cn,
+  forwardRefWithAs,
+  getTruncateAccessibilityProps,
+  isBuiltInHeaderColor,
+  normalizeProps,
+} from "@core/lib";
 import { PolymorphicRef } from "@core/types/props";
-import React from "react";
 
 const _Header = <As extends AllowedHeaderElements = "h1">(
   {
@@ -59,8 +64,6 @@ const _Header = <As extends AllowedHeaderElements = "h1">(
   );
 };
 
-export const Header = React.forwardRef(_Header) as <As extends AllowedHeaderElements = "h1">(
-  props: HeaderProps<As> & { ref?: PolymorphicRef<As> },
-) => React.ReactElement;
+export const Header = forwardRefWithAs<HeaderOwnProps, AllowedHeaderElements>(_Header);
 
 (Header as any).displayName = "Header";
