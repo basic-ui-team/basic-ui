@@ -13,7 +13,7 @@ export type builtInColorUnion =
   | "warning"
   | "info";
 
-interface TextOwnProps extends CommonProps {
+export interface TextOwnProps extends CommonProps {
   /** Size of the text. @default "md" */
   size?: ResponsiveValue<"xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl">;
   /** Font weight. @default "normal" */

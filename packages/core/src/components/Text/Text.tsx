@@ -1,6 +1,12 @@
 import React from "react";
-import { cn, getTruncateAccessibilityProps, isBuiltInTextColor, normalizeProps } from "@core/lib";
-import type { AllowedTextElements, TextProps, builtInColorUnion } from "./text.types";
+import {
+  cn,
+  forwardRefWithAs,
+  getTruncateAccessibilityProps,
+  isBuiltInTextColor,
+  normalizeProps,
+} from "@core/lib";
+import type { AllowedTextElements, TextOwnProps, TextProps, builtInColorUnion } from "./text.types";
 import { textVariants } from "./text.variants";
 import { PolymorphicRef } from "@core/types/props";
 import { useResponsive } from "@core/hooks";
@@ -61,8 +67,6 @@ const _Text = <As extends AllowedTextElements = "p">(
   );
 };
 
-export const Text = React.forwardRef(_Text) as <Element extends AllowedTextElements = "p">(
-  props: TextProps<Element> & { ref?: PolymorphicRef<Element> },
-) => React.ReactElement | null;
+export const Text = forwardRefWithAs<TextOwnProps, AllowedTextElements>(_Text);
 
 (Text as any).displayName = "Text";
