@@ -27,7 +27,6 @@ export const flexVariants = cva("transition-all duration-normal w-full", {
       end: "items-end",
       center: "items-center",
       stretch: "items-stretch",
-      baseline: "items-baseline",
     },
     gap: {
       none: "gap-0",

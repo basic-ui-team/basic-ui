@@ -4,7 +4,7 @@ import { CommonProps, RestrictedPropsWithAs } from "@core/types/props";
 const spacingValues = ["none", "xs", "sm", "md", "lg", "xl", "2xl", "3xl"];
 const flexValues = ["row", "column", "row-reverse", "column-reverse"];
 const justifyValues = ["start", "end", "center", "between", "around", "evenly", "stretch"];
-const alignValues = ["start", "end", "center", "stretch", "baseline"];
+const alignValues = ["start", "end", "center", "stretch"];
 const wrapValues = ["nowrap", "wrap", "reverse"];
 
 type spacingType = (typeof spacingValues)[number];
