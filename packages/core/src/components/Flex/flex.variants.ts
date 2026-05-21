@@ -20,6 +20,7 @@ export const flexVariants = cva("transition-all duration-normal w-full", {
       between: "justify-between",
       around: "justify-around",
       evenly: "justify-evenly",
+      stretch: "justify-stretch",
     },
     align: {
       start: "items-start",
