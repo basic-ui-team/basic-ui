@@ -1,9 +1,10 @@
 import { PolymorphicRef } from "@core/types/props";
-import { AllowedFlexElements, FlexProps, gapSize, paddingSize, paddingOptions, FlexOwnProps } from "./flex.types";
-import { useResponsive } from "@core/hooks";
+import { AllowedFlexElements, FlexProps, FlexOwnProps, spacingType } from "./flex.types";
+import { useResponsiveProps } from "@core/hooks";
 import { flexVariants } from "./flex.variants";
 import { cn } from "@core/lib/cn/cn";
 import { forwardRefWithAs, normalizeProps } from "@core/lib";
+import { tokenResolver } from "@basic-ui/tokens";
 
 const _Flex = <As extends AllowedFlexElements = "div">(
   {
@@ -25,30 +26,44 @@ const _Flex = <As extends AllowedFlexElements = "div">(
 ) => {
   const Comp = (as || "div") as As;
 
-  const resolvedDirection = useResponsive(direction);
-  const resolvedGap = useResponsive(gap);
-  const resolvedPadding = useResponsive(padding);
-  const resolvedPaddingX = useResponsive(paddingX);
-  const resolvedPaddingY = useResponsive(paddingY);
-  const resolvedJustify = useResponsive(justify);
-  const resolvedAlign = useResponsive(align);
-  const resolvedWrap = useResponsive(wrap);
-  const resolvedInline = useResponsive(inline);
+  const {
+    direction: resolvedDirection,
+    gap: resolvedGap,
+    padding: resolvedPadding,
+    paddingX: resolvedPaddingX,
+    paddingY: resolvedPaddingY,
+    justify: resolvedJustify,
+    align: resolvedAlign,
+    wrap: resolvedWrap,
+    inline: resolvedInline,
+  } = useResponsiveProps({
+    direction,
+    gap,
+    padding,
+    paddingX,
+    paddingY,
+    justify,
+    align,
+    wrap,
+    inline,
+  });
 
-  const isCustomGap = resolvedGap !== undefined && !paddingOptions.includes(resolvedGap as any);
+  const isCustomGap = resolvedGap !== undefined && !tokenResolver.isToken("spacing", resolvedGap);
   const paddings = [resolvedPadding, resolvedPaddingX, resolvedPaddingY].filter(Boolean) as (
-    | paddingSize
+    | spacingType
     | string
   )[];
-  const isCustomPadding = paddings.some((p) => p !== undefined && !paddingOptions.includes(p as any));
+  const isCustomPadding = paddings.some(
+    (p) => p !== undefined && !tokenResolver.isToken("spacing", p),
+  );
 
   const resolvedStyles = cn(
     flexVariants({
       direction: resolvedDirection,
-      gap: isCustomGap ? "custom" : (resolvedGap as gapSize | undefined),
-      padding: isCustomPadding ? "custom" : (resolvedPadding as paddingSize | undefined),
-      paddingX: isCustomPadding ? "custom" : (resolvedPaddingX as paddingSize | undefined),
-      paddingY: isCustomPadding ? "custom" : (resolvedPaddingY as paddingSize | undefined),
+      gap: isCustomGap ? "custom" : (resolvedGap as spacingType | undefined),
+      padding: isCustomPadding ? "custom" : (resolvedPadding as spacingType | undefined),
+      paddingX: isCustomPadding ? "custom" : (resolvedPaddingX as spacingType | undefined),
+      paddingY: isCustomPadding ? "custom" : (resolvedPaddingY as spacingType | undefined),
       justify: resolvedJustify,
       align: resolvedAlign,
       wrap: resolvedWrap,

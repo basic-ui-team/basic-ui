@@ -11,7 +11,7 @@ export const flexVariants = cva("transition-all duration-normal w-full", {
     wrap: {
       nowrap: "flex-nowrap",
       wrap: "flex-wrap",
-      "wrap-reverse": "flex-wrap-reverse",
+      reverse: "flex-wrap-reverse",
     },
     justify: {
       start: "justify-start",
