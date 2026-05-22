@@ -1,4 +1,5 @@
 import type { Breakpoint, ResponsiveValue } from "./types";
+import { BREAKPOINTS } from "./constants";
 import { useBreakpoint } from "../useBreakpoint/useBreakpoint";
 
 /**
@@ -12,7 +13,6 @@ function isResponsiveObject<T>(
 ): value is { base: T } & Partial<Record<Exclude<Breakpoint, "base">, T>> {
   return typeof value === "object" && value !== null && !Array.isArray(value) && "base" in value;
 }
-
 
 /**
  * Hook that resolves responsive values to the current breakpoint.
@@ -35,7 +35,7 @@ export function useResponsive<T>(responsiveValue: ResponsiveValue<T>): T {
 
   // Cascade down to the largest defined breakpoint value
   // E.g., if at xxl but only xl is defined, use xl; if at xl but only lg is defined, use lg; if at lg but only base is defined, use base
-  const breakpointOrder: Breakpoint[] = ["base", "sm", "md", "lg", "xl", "xxl"];
+  const breakpointOrder: Breakpoint[] = Object.keys(BREAKPOINTS) as Breakpoint[];
   const currentIndex = breakpointOrder.indexOf(currentBreakpoint);
 
   for (let i = currentIndex; i >= 0; i--) {

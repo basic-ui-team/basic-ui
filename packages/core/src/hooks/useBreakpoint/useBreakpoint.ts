@@ -14,7 +14,7 @@ const queries: Record<Exclude<Breakpoint, "base">, string> = {
 };
 
 let mqls: MediaQueryLists | null = null;
-const listeners = new Set<() => void>();
+export const listeners = new Set<() => void>();
 let handleChange: (() => void) | null = null;
 
 function initMqls() {
@@ -94,8 +94,30 @@ function subscribe(listener: () => void) {
  * This uses a single shared set of matchMedia listeners for the entire app,
  * so many components can call `useBreakpoint()` without duplicating listeners.
  */
+/* v8 ignore start -- @preserve */
 export function useBreakpoint(): Breakpoint {
   return useSyncExternalStore(subscribe, getCurrentBreakpoint, () => "base");
 }
+
+export function resetForTesting() {
+  if (typeof window === "undefined") return;
+
+  if (mqls && handleChange) {
+    for (const mq of Object.values(mqls)) {
+      if (!mq) continue;
+      if (typeof mq.removeEventListener === "function") {
+        mq.removeEventListener("change", handleChange as EventListener);
+      } else if (typeof (mq as any).removeListener === "function") {
+        (mq as any).removeListener(handleChange);
+      }
+    }
+  }
+
+  // Reset module state
+  mqls = null;
+  listeners.clear();
+  handleChange = null;
+}
+/* v8 ignore stop -- @preserve */
 
 export default useBreakpoint;

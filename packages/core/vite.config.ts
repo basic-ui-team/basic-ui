@@ -31,6 +31,16 @@ export default defineConfig({
           lines: 90,
         },
       },
+      reporter: ["text", "json", "html", "lcov"],
+      exclude: [
+        "node_modules/",
+        "dist/",
+        "coverage/",
+        "**/*.d.ts",
+        "**/*.config.*",
+        "**/vitest.setup.ts",
+        "**/test-utils/**",
+      ],
     },
   },
   build: {
