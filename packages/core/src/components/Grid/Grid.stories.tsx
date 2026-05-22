@@ -170,3 +170,42 @@ export const AlignmentVariants: Story = {
     </div>
   ),
 };
+
+export const AutoFlowAutoColsRows: Story = {
+  render: () => (
+    <div className="space-y-md">
+      <section>
+        <h4 className="text-md text-foreground-secondary mb-sm">autoFlow: row</h4>
+        <Grid autoFlow="row" autoCols="min" gap="sm">
+          {Array.from({ length: 10 }, (_, i) => (
+            <PlaceholderItem key={i} label={`Item ${i + 1}`} />
+          ))}
+        </Grid>
+      </section>
+      <section>
+        <h4 className="text-md text-foreground-secondary mb-sm">autoFlow: column</h4>
+        <Grid autoFlow="column" autoRows="min" gap="sm" style={{ gridAutoColumns: "150px" }}>
+          {Array.from({ length: 10 }, (_, i) => (
+            <PlaceholderItem key={i} label={`Item ${i + 1}`} />
+          ))}
+        </Grid>
+      </section>
+      <section>
+        <h4 className="text-md text-foreground-secondary mb-sm">autoFlow: dense</h4>
+        <Grid autoFlow="dense" autoCols="min" gap="sm">
+          <PlaceholderItem label="Item 1" className="h-16" />
+          <PlaceholderItem label="Item 2" />
+          <PlaceholderItem label="Item 3" />
+          <PlaceholderItem label="Item 4" className="h-16" />
+          <PlaceholderItem label="Item 5" />
+          <PlaceholderItem label="Item 6" />
+          <PlaceholderItem label="Item 7" />
+          <PlaceholderItem label="Item 8" />
+          <PlaceholderItem label="Item 9" />
+          <PlaceholderItem label="Item 10" />
+        </Grid>
+      </section>
+    </div>
+  ),
+};
+  

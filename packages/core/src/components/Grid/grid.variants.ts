@@ -61,9 +61,9 @@ export const gridVariants = cva("grid", {
       "3xl": "column-gap-3xl",
     },
     autoFlow: {
-      row: "grid-auto-flow-row",
-      column: "grid-auto-flow-col",
-      dense: "grid-auto-flow-dense",
+      row: "grid-flow-row",
+      column: "grid-flow-col",
+      dense: "grid-flow-dense",
     },
     alignItems: {
       start: "items-start",
