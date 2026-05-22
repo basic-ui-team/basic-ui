@@ -2,7 +2,6 @@ import { ResponsiveValue } from "@core/hooks";
 import { CommonProps, RestrictedPropsWithAs } from "@core/types/props";
 
 export type AllowedGridElements = "div" | "section" | "article" | "main" | "aside" | "nav";
-export type AllowedGridItems = "div" | "article" | "section" | "main" | "aside" | "nav";
 
 const spacingValues = ["none", "xs", "sm", "md", "lg", "xl", "2xl", "3xl"] as const;
  const COL_ROW_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const;

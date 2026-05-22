@@ -34,19 +34,49 @@ export const Basic: Story = {
   ),
 };
 
-export const TemplateColumns: Story = {
+export const TemplatePreset: Story = {
   render: () => (
-    <Grid templateCols="200px 1fr" gap="md">
-      <PlaceholderItem label="Fixed 200px" />
-      <PlaceholderItem label="Takes remaining space" />
-    </Grid>
+    <div className="space-y-md">
+      <section>
+        <h4 className="text-md text-foreground-secondary mb-sm">Masonry</h4>
+        <Grid templatePreset="masonry" gap="md">
+          {Array.from({ length: 10 }, (_, i) => (
+            <PlaceholderItem key={i} label={`Item ${i + 1}`} className={`h-${20 + (i % 5) * 10}`} />
+          ))}
+        </Grid>
+      </section>
+      <section>
+        <h4 className="text-md text-foreground-secondary mb-sm">Card List</h4>
+        <Grid templatePreset="card-list" gap="md">
+          {Array.from({ length: 8 }, (_, i) => (
+            <PlaceholderItem key={i} label={`Card ${i + 1}`} className="h-40" />
+          ))}
+        </Grid>
+      </section>
+      <section>
+        <h4 className="text-md text-foreground-secondary mb-sm">Sidebar</h4>
+        <Grid templatePreset="sidebar" gap="md">
+          <PlaceholderItem label="Sidebar" className="h-40" />
+          <PlaceholderItem label="Main Content" className="h-40" />
+        </Grid>
+      </section>
+      <section>
+        <h4 className="text-md text-foreground-secondary mb-sm">Hero</h4>
+        <Grid templatePreset="hero" gap="md">
+          <PlaceholderItem label="Hero Image" className="h-40" />
+          <PlaceholderItem label="Hero Content" className="h-40" />
+        </Grid>
+      </section>
+    </div>
   ),
 };
 
 export const Responsive: Story = {
   render: () => (
     <div className="flex flex-col gap-md">
-      <p className="text-md text-foreground-secondary">Resize the preview viewport to see layout change</p>
+      <p className="text-md text-foreground-secondary">
+        Resize the preview viewport to see layout change
+      </p>
       <Grid cols={{ base: 1, md: 3 }} gap={{ base: "sm", md: "md" }}>
         <PlaceholderItem label="1" />
         <PlaceholderItem label="2" />
