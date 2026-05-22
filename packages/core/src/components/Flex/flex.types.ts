@@ -15,10 +15,10 @@ type flexWrap = (typeof wrapValues)[number];
 
 export interface FlexOwnProps extends CommonProps {
   direction?: ResponsiveValue<flexDirection>;
-  gap?: ResponsiveValue<spacingType | string | number>;
-  padding?: ResponsiveValue<spacingType | string | number>;
-  paddingX?: ResponsiveValue<spacingType | string | number>;
-  paddingY?: ResponsiveValue<spacingType | string | number>;
+  gap?: ResponsiveValue<spacingType>;
+  padding?: ResponsiveValue<spacingType>;
+  paddingX?: ResponsiveValue<spacingType>;
+  paddingY?: ResponsiveValue<spacingType>;
   justify?: ResponsiveValue<justifyContent>;
   align?: ResponsiveValue<alignItems>;
   wrap?: ResponsiveValue<flexWrap>;

@@ -4,7 +4,7 @@ import { useResponsiveProps } from "@core/hooks";
 import { flexVariants } from "./flex.variants";
 import { cn } from "@core/lib/cn/cn";
 import { forwardRefWithAs, normalizeProps } from "@core/lib";
-import { tokenResolver } from "@basic-ui/tokens";
+
 
 const _Flex = <As extends AllowedFlexElements = "div">(
   {
@@ -48,31 +48,21 @@ const _Flex = <As extends AllowedFlexElements = "div">(
     inline,
   });
 
-  const isCustomGap = resolvedGap !== undefined && !tokenResolver.isToken("spacing", resolvedGap);
-  const paddings = [resolvedPadding, resolvedPaddingX, resolvedPaddingY].filter(Boolean) as (
-    | spacingType
-    | string
-  )[];
-  const isCustomPadding = paddings.some(
-    (p) => p !== undefined && !tokenResolver.isToken("spacing", p),
-  );
+
 
   const resolvedStyles = cn(
     flexVariants({
       direction: resolvedDirection,
-      gap: isCustomGap ? "custom" : (resolvedGap as spacingType | undefined),
-      padding: isCustomPadding ? "custom" : (resolvedPadding as spacingType | undefined),
-      paddingX: isCustomPadding ? "custom" : (resolvedPaddingX as spacingType | undefined),
-      paddingY: isCustomPadding ? "custom" : (resolvedPaddingY as spacingType | undefined),
+      gap: resolvedGap as spacingType,
+      padding: resolvedPadding as spacingType,
+      paddingX: resolvedPaddingX as spacingType,
+      paddingY: resolvedPaddingY as spacingType,
       justify: resolvedJustify,
       align: resolvedAlign,
       wrap: resolvedWrap,
       inline: resolvedInline,
     }),
     className,
-    // pass custom gap/padding as separate args so `clsx`/`twMerge` can ignore falsy values
-    isCustomGap ? (String(resolvedGap) as unknown as string) : undefined,
-    isCustomPadding ? paddings.map(String) : undefined,
   );
 
   const restAny = normalizeProps(rest as Record<string, unknown>);
