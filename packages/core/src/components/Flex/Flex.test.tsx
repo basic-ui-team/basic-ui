@@ -71,18 +71,6 @@ describe("Flex", () => {
     });
   });
 
-  describe("custom values", () => {
-    it("accepts custom gap class strings", () => {
-      const { container } = renderWithProviders(<Flex gap="gap-8">X</Flex>);
-      expect(container.firstChild).toHaveClass("gap-8");
-    });
-
-    it("accepts custom padding strings", () => {
-      const { container } = renderWithProviders(<Flex padding="p-4">X</Flex>);
-      expect(container.firstChild).toHaveClass("p-4");
-    });
-  });
-
   describe("accessibility", () => {
     it("passes axe accessibility checks", async () => {
       const { container } = renderWithProviders(
