@@ -1,7 +1,7 @@
 import React from "react";
 import type { IconProps } from "./icon.types";
 import { cn } from "@core/lib";
-import { useResponsive } from "@core/hooks";
+import { useResponsiveProps } from "@core/hooks";
 import { iconVariants } from "./icon.variants";
 
 /**
@@ -39,7 +39,7 @@ export const Icon = React.forwardRef<HTMLSpanElement, IconProps>(
     },
     ref,
   ) => {
-    const resolvedSize = useResponsive(size);
+    const { size: resolvedSize } = useResponsiveProps({ size });
 
     return (
       <span

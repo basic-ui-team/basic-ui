@@ -1,4 +1,4 @@
-import { useResponsive } from "@core/hooks";
+import { useResponsiveProps } from "@core/hooks";
 import { AllowedHeaderElements, HeaderOwnProps, HeaderProps } from "./header.types";
 import { headerVariants } from "./header.variants";
 import {
@@ -27,12 +27,14 @@ const _Header = <As extends AllowedHeaderElements = "h1">(
 ) => {
   const Comp = (as || "h1") as As;
 
-  const resolvedSize = useResponsive(size);
-  const resolvedWeight = useResponsive(weight);
-  const resolvedAlign = useResponsive(align);
-  const resolvedTruncate = useResponsive(truncate);
-  const resolvedWrap = useResponsive(wrap);
-  const resolvedColor = useResponsive(color);
+  const {
+    size: resolvedSize,
+    weight: resolvedWeight,
+    align: resolvedAlign,
+    truncate: resolvedTruncate,
+    wrap: resolvedWrap,
+    color: resolvedColor,
+  } = useResponsiveProps({ size, weight, align, truncate, wrap, color });
 
   const isBuiltInColor = isBuiltInHeaderColor(resolvedColor);
 
@@ -52,7 +54,7 @@ const _Header = <As extends AllowedHeaderElements = "h1">(
   // Accessibility: if header is visually truncated and the consumer didn't provide
   // a `title` or `aria-label`, expose the full text to assistive tech via both
   // `title` (hover) and `aria-label` (screen readers) when `children` is a string.
-  const accessibilityProps = getTruncateAccessibilityProps(children, resolvedTruncate, rest);
+  const accessibilityProps = resolvedTruncate && getTruncateAccessibilityProps(children, resolvedTruncate, rest);
 
   // Normalize props (non-mutating)
   const restAny = normalizeProps(rest as Record<string, unknown>);
