@@ -42,11 +42,6 @@ export const GapAndPadding: Story = {
         <div className="border p-sm">A</div>
         <div className="border p-sm">B</div>
       </Flex>
-
-      <Flex gap="gap-8" padding="p-4">
-        <div className="border p-sm">A</div>
-        <div className="border p-sm">B</div>
-      </Flex>
     </div>
   ),
 };
@@ -113,12 +108,6 @@ export const Align: Story = {
         <div className="border p-sm">Stretch A</div>
         <div className="border p-sm">Stretch B</div>
         <div className="border p-sm">Stretch C</div>
-      </Flex>
-
-      <Flex align="baseline" gap="md" className="border p-sm">
-        <div className="border p-sm text-xs">Baseline A</div>
-        <div className="border p-sm text-lg">Baseline B</div>
-        <div className="border p-sm">Baseline C</div>
       </Flex>
     </div>
   ),
