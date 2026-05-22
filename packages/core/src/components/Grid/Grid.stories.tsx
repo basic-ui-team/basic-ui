@@ -1,0 +1,142 @@
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { Grid } from "./Grid";
+
+const meta: Meta<typeof Grid> = {
+  title: "Components/Grid",
+  component: Grid,
+  tags: ["autodocs"],
+} satisfies Meta<typeof Grid>;
+export default meta;
+
+type Story = StoryObj<typeof Grid>;
+
+const PlaceholderItem = ({ label = "Item", className }: { label?: string; className?: string }) => (
+  <div
+    className={`bg-background-secondary text-foreground-primary rounded px-md py-sm text-md ${className}`}
+  >
+    {label}
+  </div>
+);
+
+export const Basic: Story = {
+  render: () => (
+    <Grid cols={3} gap="md">
+      <PlaceholderItem label="A" />
+      <PlaceholderItem label="B" />
+      <PlaceholderItem label="C" />
+      <PlaceholderItem label="D" />
+      <PlaceholderItem label="E" />
+      <PlaceholderItem label="F" />
+      <PlaceholderItem label="G" />
+      <PlaceholderItem label="H" />
+      <PlaceholderItem label="I" />
+    </Grid>
+  ),
+};
+
+export const TemplateColumns: Story = {
+  render: () => (
+    <Grid templateCols="200px 1fr" gap="md">
+      <PlaceholderItem label="Fixed 200px" />
+      <PlaceholderItem label="Takes remaining space" />
+    </Grid>
+  ),
+};
+
+export const Responsive: Story = {
+  render: () => (
+    <div className="flex flex-col gap-md">
+      <p className="text-md text-foreground-secondary">Resize the preview viewport to see layout change</p>
+      <Grid cols={{ base: 1, md: 3 }} gap={{ base: "sm", md: "md" }}>
+        <PlaceholderItem label="1" />
+        <PlaceholderItem label="2" />
+        <PlaceholderItem label="3" />
+      </Grid>
+    </div>
+  ),
+};
+
+const ALIGN_ITEMS = ["start", "end", "center", "stretch"] as const;
+const JUSTIFY_ITEMS = ["start", "end", "center", "stretch"] as const;
+const ALIGN_CONTENT = ["start", "end", "center", "stretch", "between", "around", "evenly"] as const;
+const JUSTIFY_CONTENT = [
+  "start",
+  "end",
+  "center",
+  "between",
+  "around",
+  "evenly",
+  "stretch",
+] as const;
+
+export const AlignmentVariants: Story = {
+  render: () => (
+    <div className="space-y-md">
+      <section>
+        <h4 className="text-md text-foreground-secondary mb-sm">alignItems</h4>
+        {ALIGN_ITEMS.map((a) => (
+          <div key={`align-${a}`} className="mb-sm">
+            <Grid cols={3} gap="sm" className="h-40" alignItems={a as any}>
+              <PlaceholderItem label="1" />
+              <PlaceholderItem label="2 (taller)" className="h-16" />
+              <PlaceholderItem label="3" />
+            </Grid>
+          </div>
+        ))}
+      </section>
+
+      <section>
+        <h4 className="text-md text-foreground-secondary mb-sm">justifyItems</h4>
+        {JUSTIFY_ITEMS.map((j) => (
+          <div key={`justify-items-${j}`} className="mb-sm">
+            <Grid cols={3} gap="sm" className="h-100" justifyItems={j as any}>
+              <PlaceholderItem label="1" className="w-24" />
+              <PlaceholderItem label="2 (wider)" className="w-40" />
+              <PlaceholderItem label="3" className="w-24" />
+            </Grid>
+          </div>
+        ))}
+      </section>
+
+      <section>
+        <h4 className="text-md text-foreground-secondary mb-sm">alignContent</h4>
+        {ALIGN_CONTENT.map((c) => (
+          <div key={`align-content-${c}`} className="mb-sm">
+            <h5 className="text-sm text-foreground-secondary mb-xs">{c}</h5>
+            <Grid cols={3} rows={3} gap="sm" className="h-100" alignContent={c as any}>
+              <PlaceholderItem label="Content 1" />
+              <PlaceholderItem label="Content 2" />
+              <PlaceholderItem label="Content 3" />
+              <PlaceholderItem label="Content 4" />
+              <PlaceholderItem label="Content 5" />
+              <PlaceholderItem label="Content 6" />
+              <PlaceholderItem label="Content 7" />
+              <PlaceholderItem label="Content 8" />
+              <PlaceholderItem label="Content 9" />
+            </Grid>
+          </div>
+        ))}
+      </section>
+
+      <section>
+        <h4 className="text-md text-foreground-secondary mb-sm">justifyContent</h4>
+        {JUSTIFY_CONTENT.map((c) => (
+          <div key={`justify-content-${c}`} className="mb-sm">
+            <h5 className="text-sm text-foreground-secondary mb-xs">{c}</h5>
+            <Grid cols={3} rows={3} gap="sm" className="h-100" justifyContent={c as any}>
+              <PlaceholderItem label="Content 1" />
+              <PlaceholderItem label="Content 2" />
+              <PlaceholderItem label="Content 3" />
+              <PlaceholderItem label="Content 4" />
+              <PlaceholderItem label="Content 5" />
+              <PlaceholderItem label="Content 6" />
+              <PlaceholderItem label="Content 7" />
+              <PlaceholderItem label="Content 8" />
+              <PlaceholderItem label="Content 9" />
+            </Grid>
+          </div>
+        ))}
+      </section>
+    </div>
+  ),
+};

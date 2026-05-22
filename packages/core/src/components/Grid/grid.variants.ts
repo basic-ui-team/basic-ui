@@ -1,6 +1,6 @@
 import { cva } from "class-variance-authority";
 
-export const gridVariants = cva("grid h-full w-full", {
+export const gridVariants = cva("grid", {
   variants: {
     cols: {
       1: "grid-cols-1",
@@ -91,8 +91,29 @@ export const gridVariants = cva("grid h-full w-full", {
       end: "justify-end",
       center: "justify-center",
       stretch: "justify-stretch",
-      baseline: "justify-baseline",
-
+      between: "justify-between",
+      around: "justify-around",
+      evenly: "justify-evenly",
+    },
+    autoCols: {
+      min: "auto-cols-min",
+      max: "auto-cols-max",
+      fr: "auto-cols-fr",
+      true: "auto-cols-auto",
+    },
+    autoRows: {
+      min: "auto-rows-min",
+      max: "auto-rows-max",
+      fr: "auto-rows-fr",
+      true: "auto-rows-auto",
+    },
+    templatePreset: {
+      sidebar: "grid-cols-[200px_1fr]",
+      hero: "grid-cols-[1fr_400px]",
+      masonry: "grid-cols-[repeat(auto-fill,minmax(250px,1fr))]",
+      "card-list": "grid-cols-[repeat(auto-fill,minmax(300px,1fr))]",
+      symmetric: "grid-cols-[repeat(auto-fit,minmax(200px,1fr))]",
+      asymmetric: "grid-cols-[200px_1fr_300px]",
     },
   },
   defaultVariants: {
