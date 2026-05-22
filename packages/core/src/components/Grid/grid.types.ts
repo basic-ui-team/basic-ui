@@ -4,7 +4,7 @@ import { CommonProps, RestrictedPropsWithAs } from "@core/types/props";
 export type AllowedGridElements = "div" | "section" | "article" | "main" | "aside" | "nav";
 
 const spacingValues = ["none", "xs", "sm", "md", "lg", "xl", "2xl", "3xl"] as const;
- const COL_ROW_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const;
+const COL_ROW_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const;
 const justifyContentValues = [
   "start",
   "end",
@@ -27,7 +27,14 @@ const alignContentValues = [
 ] as const;
 const autoFlowValues = ["row", "column", "dense"] as const;
 const autoColsRowsValues = ["min", "max", "fr"] as const;
-const gridTemplatePresetValues = ["sidebar", "hero", "masonry", "card-list", "symmetric", "asymmetric"] as const;
+const gridTemplatePresetValues = [
+  "sidebar",
+  "hero",
+  "masonry",
+  "card-list",
+  "symmetric",
+  "asymmetric",
+] as const;
 
 export type SpacingType = (typeof spacingValues)[number];
 export type ColRowNumber = (typeof COL_ROW_NUMBERS)[number];
@@ -40,9 +47,9 @@ export type AutoColsRowsOption = (typeof autoColsRowsValues)[number];
 export type GridTemplatePresetOption = (typeof gridTemplatePresetValues)[number];
 
 export interface GridOwnProps extends CommonProps {
-  /** Number of columns in the grid (1-12). For custom templates use `templateCols` or `style`/`className`. */
+  /** Number of columns in the grid (1-12). For custom templates use `templatePreset` or `style`/`className`. */
   cols?: ResponsiveValue<ColRowNumber>;
-  /** Number of rows in the grid (1-12). For custom templates use `templateRows` or `style`/`className`. */
+  /** Number of rows in the grid (1-12). For custom templates use `templatePreset` or `style`/`className`. */
   rows?: ResponsiveValue<ColRowNumber>;
   /** gap controls the gap between grid items.*/
   gap?: ResponsiveValue<SpacingType>;
