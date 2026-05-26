@@ -11,7 +11,7 @@ export const flexVariants = cva("transition-all duration-normal w-full", {
     wrap: {
       nowrap: "flex-nowrap",
       wrap: "flex-wrap",
-      "wrap-reverse": "flex-wrap-reverse",
+      reverse: "flex-wrap-reverse",
     },
     justify: {
       start: "justify-start",
@@ -20,13 +20,13 @@ export const flexVariants = cva("transition-all duration-normal w-full", {
       between: "justify-between",
       around: "justify-around",
       evenly: "justify-evenly",
+      stretch: "justify-stretch",
     },
     align: {
       start: "items-start",
       end: "items-end",
       center: "items-center",
       stretch: "items-stretch",
-      baseline: "items-baseline",
     },
     gap: {
       none: "gap-0",

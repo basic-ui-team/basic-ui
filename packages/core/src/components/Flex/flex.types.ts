@@ -1,21 +1,24 @@
 import { ResponsiveValue } from "@core/hooks";
 import { CommonProps, RestrictedPropsWithAs } from "@core/types/props";
 
-export const paddingOptions = ["none", "xs", "sm", "md", "lg", "xl", "2xl", "3xl"] as const;
+export const spacingValues = ["none", "xs", "sm", "md", "lg", "xl", "2xl", "3xl"] as const;
+const flexValues = ["row", "column", "row-reverse", "column-reverse"] as const;
+const justifyValues = ["start", "end", "center", "between", "around", "evenly", "stretch"] as const;
+const alignValues = ["start", "end", "center", "stretch"] as const;
+const wrapValues = ["nowrap", "wrap", "reverse"] as const;
 
-export type gapSize = (typeof paddingOptions)[number];
-export type paddingSize = (typeof paddingOptions)[number];
-type flexWrap = "nowrap" | "wrap" | "wrap-reverse";
-type flexDirection = "row" | "column" | "row-reverse" | "column-reverse";
-type justifyContent = "start" | "end" | "center" | "between" | "around" | "evenly";
-type alignItems = "start" | "end" | "center" | "stretch" | "baseline";
+export type spacingType = (typeof spacingValues)[number];
+type flexDirection = (typeof flexValues)[number];
+type justifyContent = (typeof justifyValues)[number];
+type alignItems = (typeof alignValues)[number];
+type flexWrap = (typeof wrapValues)[number];
 
 export interface FlexOwnProps extends CommonProps {
   direction?: ResponsiveValue<flexDirection>;
-  gap?: ResponsiveValue<gapSize | string | number>;
-  padding?: ResponsiveValue<paddingSize | string | number>;
-  paddingX?: ResponsiveValue<paddingSize | string | number>;
-  paddingY?: ResponsiveValue<paddingSize | string | number>;
+  gap?: ResponsiveValue<spacingType>;
+  padding?: ResponsiveValue<spacingType>;
+  paddingX?: ResponsiveValue<spacingType>;
+  paddingY?: ResponsiveValue<spacingType>;
   justify?: ResponsiveValue<justifyContent>;
   align?: ResponsiveValue<alignItems>;
   wrap?: ResponsiveValue<flexWrap>;

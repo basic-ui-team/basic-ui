@@ -8,7 +8,7 @@ import {
 import type { AllowedTextElements, TextOwnProps, TextProps, builtInColorUnion } from "./text.types";
 import { textVariants } from "./text.variants";
 import { PolymorphicRef } from "@core/types/props";
-import { useResponsive } from "@core/hooks";
+import { useResponsiveProps } from "@core/hooks";
 
 const _Text = <As extends AllowedTextElements = "p">(
   {
@@ -27,12 +27,16 @@ const _Text = <As extends AllowedTextElements = "p">(
 ) => {
   const Comp = (as || "p") as As;
 
-  const resolvedSize = useResponsive(size);
-  const resolvedWeight = useResponsive(weight);
-  const resolvedAlign = useResponsive(align);
-  const resolvedTruncate = useResponsive(truncate);
-  const resolvedWrap = useResponsive(wrap);
-  const resolvedColor = useResponsive(color) as builtInColorUnion | string;
+  const {
+    size: resolvedSize,
+    weight: resolvedWeight,
+    align: resolvedAlign,
+    truncate: resolvedTruncate,
+    wrap: resolvedWrap,
+    color: resolvedColorRaw,
+  } = useResponsiveProps({ size, weight, align, truncate, wrap, color });
+
+  const resolvedColor = resolvedColorRaw as builtInColorUnion | string;
 
   const isBuiltInColor = isBuiltInTextColor(resolvedColor);
 
@@ -54,7 +58,8 @@ const _Text = <As extends AllowedTextElements = "p">(
   // Accessibility: if text is visually truncated and the consumer didn't provide
   // a `title` or `aria-label`, expose the full text to assistive tech via both
   // `title` (hover) and `aria-label` (screen readers) when `children` is a string.
-  const accessibilityProps = getTruncateAccessibilityProps(children, resolvedTruncate, rest);
+  const accessibilityProps =
+    resolvedTruncate && getTruncateAccessibilityProps(children, resolvedTruncate, rest);
 
   // Normalize props (non-mutating)
   const restAny = normalizeProps(rest as Record<string, unknown>);
