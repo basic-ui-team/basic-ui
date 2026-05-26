@@ -9,17 +9,14 @@ export interface LayoutOwnProps {
   // Layout object for easy access and reducing boilerplate. Allows us to pass layout to generateLayoutClassNames in one go, rather than each prop separately.
   layout: {
     /* Padding */
-    padding?: ResponsiveValue<SpacingType>;
-    paddingX?: ResponsiveValue<SpacingType>;
-    paddingY?: ResponsiveValue<SpacingType>;
+    padding?: ResponsiveValue<SpacingType | "unset">;
+    paddingX?: ResponsiveValue<SpacingType | "unset">;
+    paddingY?: ResponsiveValue<SpacingType | "unset">;
 
     /* Margin */
-    margin?: ResponsiveValue<SpacingType>;
-    marginX?: ResponsiveValue<SpacingType>;
-    marginY?: ResponsiveValue<SpacingType>;
-
-    /* Gaps (useful for grid/flex children spacing) */
-    gap?: ResponsiveValue<SpacingType>;
+    margin?: ResponsiveValue<SpacingType | "unset">;
+    marginX?: ResponsiveValue<SpacingType | "unset">;
+    marginY?: ResponsiveValue<SpacingType | "unset">;
 
     /* Positioning */
     position?: ResponsiveValue<PositionType>;

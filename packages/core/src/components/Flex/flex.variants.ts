@@ -28,6 +28,16 @@ export const flexVariants = cva("transition-all duration-normal w-full", {
       center: "items-center",
       stretch: "items-stretch",
     },
+    gap: {
+      none: "gap-0",
+      xs: "gap-xs",
+      sm: "gap-sm",
+      md: "gap-md",
+      lg: "gap-lg",
+      xl: "gap-xl",
+      "2xl": "gap-2xl",
+      "3xl": "gap-3xl",
+    },
     inline: {
       true: "inline-flex",
       false: "flex",
@@ -38,6 +48,6 @@ export const flexVariants = cva("transition-all duration-normal w-full", {
     wrap: "nowrap",
     justify: "start",
     align: "stretch",
-    // layout-related defaults are handled by layoutVariants
+    gap: "md",
   },
 });

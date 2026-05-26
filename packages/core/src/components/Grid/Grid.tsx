@@ -40,6 +40,7 @@ const _Grid = <As extends AllowedGridElements = "div">(
   const {
     cols: resolvedCols,
     rows: resolvedRows,
+    gap: resolvedGap,
     rowGap: resolvedRowGap,
     columnGap: resolvedColumnGap,
     autoFlow: resolvedAutoFlow,
@@ -73,6 +74,7 @@ const _Grid = <As extends AllowedGridElements = "div">(
     gridVariants({
       cols: templatePreset ? undefined : (resolvedCols as ColRowNumber),
       rows: templatePreset ? undefined : (resolvedRows as ColRowNumber),
+      gap: resolvedGap as SpacingType,
       rowGap: resolvedRowGap as SpacingType,
       columnGap: resolvedColumnGap as SpacingType,
       autoFlow: resolvedAutoFlow,

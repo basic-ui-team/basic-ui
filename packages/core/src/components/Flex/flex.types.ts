@@ -1,6 +1,6 @@
 import { ResponsiveValue } from "@core/hooks";
 import { CommonProps, RestrictedPropsWithAs } from "@core/types/props";
-import type { LayoutOwnProps } from "@core/components/Layout/layout.types";
+import type { LayoutOwnProps, SpacingType } from "@core/components/Layout/layout.types";
 
 const flexValues = ["row", "column", "row-reverse", "column-reverse"] as const;
 const justifyValues = ["start", "end", "center", "between", "around", "evenly", "stretch"] as const;
@@ -17,6 +17,7 @@ export interface FlexOwnProps extends LayoutOwnProps, CommonProps {
   justify?: ResponsiveValue<justifyContent>;
   align?: ResponsiveValue<alignItems>;
   wrap?: ResponsiveValue<flexWrap>;
+  gap?: ResponsiveValue<SpacingType>;
   inline?: ResponsiveValue<boolean>;
 }
 

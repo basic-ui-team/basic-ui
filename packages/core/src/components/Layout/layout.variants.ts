@@ -9,17 +9,6 @@ export const layoutVariants = cva("", {
       fixed: "fixed",
       sticky: "sticky",
     },
-    gap: {
-      none: "gap-0",
-      xs: "gap-xs",
-      sm: "gap-sm",
-      md: "gap-md",
-      lg: "gap-lg",
-      xl: "gap-xl",
-      "2xl": "gap-2xl",
-      "3xl": "gap-3xl",
-      custom: "",
-    },
     padding: {
       none: "p-0",
       xs: "p-xs",
@@ -29,7 +18,7 @@ export const layoutVariants = cva("", {
       xl: "p-xl",
       "2xl": "p-2xl",
       "3xl": "p-3xl",
-      custom: "",
+      unset: "",
     },
     paddingX: {
       none: "px-0",
@@ -40,7 +29,7 @@ export const layoutVariants = cva("", {
       xl: "px-xl",
       "2xl": "px-2xl",
       "3xl": "px-3xl",
-      custom: "",
+      unset: "",
     },
     paddingY: {
       none: "py-0",
@@ -51,7 +40,7 @@ export const layoutVariants = cva("", {
       xl: "py-xl",
       "2xl": "py-2xl",
       "3xl": "py-3xl",
-      custom: "",
+      unset: "",
     },
     margin: {
       none: "m-0",
@@ -62,7 +51,7 @@ export const layoutVariants = cva("", {
       xl: "m-xl",
       "2xl": "m-2xl",
       "3xl": "m-3xl",
-      custom: "",
+      unset: "",
     },
     marginX: {
       none: "mx-0",
@@ -73,7 +62,7 @@ export const layoutVariants = cva("", {
       xl: "mx-xl",
       "2xl": "mx-2xl",
       "3xl": "mx-3xl",
-      custom: "",
+      unset: "",
     },
     marginY: {
       none: "my-0",
@@ -84,19 +73,19 @@ export const layoutVariants = cva("", {
       xl: "my-xl",
       "2xl": "my-2xl",
       "3xl": "my-3xl",
-      custom: "",
+      unset: "",
     },
     height: {
       auto: "h-auto",
       full: "h-full",
       screen: "h-screen",
-      custom: "",
+      unset: "",
     },
     width: {
       auto: "w-auto",
       full: "w-full",
       screen: "w-screen",
-      custom: "",
+      unset: "",
     },
     overflow: {
       visible: "overflow-visible",
@@ -106,7 +95,6 @@ export const layoutVariants = cva("", {
     },
   },
   defaultVariants: {
-    gap: "none",
     padding: "none",
     margin: "none",
   },

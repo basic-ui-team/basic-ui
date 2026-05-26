@@ -5,13 +5,12 @@ import { layoutVariants } from "./layout.variants";
 
 export const generateLayoutClassNames = (layout: LayoutOwnProps["layout"]) => {
   const {
-    padding,
-    paddingX,
-    paddingY,
-    margin,
-    marginX,
-    marginY,
-    gap,
+    padding = "md",
+    paddingX = "unset",
+    paddingY = "unset",
+    margin = "unset",
+    marginX = "unset",
+    marginY = "unset",
     position,
     overflow,
   } = layout;
@@ -23,7 +22,6 @@ export const generateLayoutClassNames = (layout: LayoutOwnProps["layout"]) => {
     margin,
     marginX,
     marginY,
-    gap,
     position,
     overflow,
   });
@@ -36,7 +34,6 @@ export const generateLayoutClassNames = (layout: LayoutOwnProps["layout"]) => {
       margin: responsiveProps.margin,
       marginX: responsiveProps.marginX,
       marginY: responsiveProps.marginY,
-      gap: responsiveProps.gap,
       position: responsiveProps.position,
       overflow: responsiveProps.overflow,
     }),
