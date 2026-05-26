@@ -57,7 +57,11 @@ describe("Flex", () => {
     });
 
     it("applies gap and padding tokens", () => {
-      const { container } = renderWithProviders(<Flex gap="md" padding="sm">Test</Flex>);
+      const { container } = renderWithProviders(
+        <Flex gap="md" layout={{ padding: "sm" }}>
+          Test
+        </Flex>,
+      );
       expect(container.firstChild).toHaveClass("gap-md");
       expect(container.firstChild).toHaveClass("p-sm");
     });

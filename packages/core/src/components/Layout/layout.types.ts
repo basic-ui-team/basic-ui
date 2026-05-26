@@ -7,7 +7,7 @@ export type PositionType = "static" | "relative" | "absolute" | "fixed" | "stick
 
 export interface LayoutOwnProps {
   // Layout object for easy access and reducing boilerplate. Allows us to pass layout to generateLayoutClassNames in one go, rather than each prop separately.
-  layout: {
+  layout?: {
     /* Padding */
     padding?: ResponsiveValue<SpacingType | "unset">;
     paddingX?: ResponsiveValue<SpacingType | "unset">;
