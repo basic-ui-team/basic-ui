@@ -1,70 +1,55 @@
 import { PolymorphicRef } from "@core/types/props";
-import { AllowedFlexElements, FlexProps, FlexOwnProps, spacingType } from "./flex.types";
+import { AllowedFlexElements, FlexProps, FlexOwnProps } from "./flex.types";
 import { useResponsiveProps } from "@core/hooks";
 import { flexVariants } from "./flex.variants";
 import { cn } from "@core/lib/cn/cn";
 import { forwardRefWithAs, normalizeProps } from "@core/lib";
-
+import { generateLayoutClassNames } from "../Layout/layout";
 
 const _Flex = <As extends AllowedFlexElements = "div">(
   {
     as,
     direction,
-    gap,
-    padding,
-    paddingX,
-    paddingY,
     justify,
     align,
     wrap,
     inline,
+    layout,
     className,
+    style,
     children,
     ...rest
   }: FlexProps<As>,
   ref: PolymorphicRef<As>,
 ) => {
   const Comp = (as || "div") as As;
-
   const {
     direction: resolvedDirection,
-    gap: resolvedGap,
-    padding: resolvedPadding,
-    paddingX: resolvedPaddingX,
-    paddingY: resolvedPaddingY,
     justify: resolvedJustify,
     align: resolvedAlign,
     wrap: resolvedWrap,
     inline: resolvedInline,
   } = useResponsiveProps({
     direction,
-    gap,
-    padding,
-    paddingX,
-    paddingY,
     justify,
     align,
     wrap,
     inline,
   });
 
-
+  const resolvedLayoutProps = generateLayoutClassNames(layout);
 
   const resolvedStyles = cn(
+    resolvedLayoutProps,
     flexVariants({
       direction: resolvedDirection,
-      gap: resolvedGap as spacingType,
-      padding: resolvedPadding as spacingType,
-      paddingX: resolvedPaddingX as spacingType,
-      paddingY: resolvedPaddingY as spacingType,
       justify: resolvedJustify,
       align: resolvedAlign,
       wrap: resolvedWrap,
-      inline: resolvedInline,
+      inline: resolvedInline, // TODO: This is a bit awkward. Maybe we should have a separate "display" prop that can be set to "flex" or "inline-flex" instead of having an "inline" boolean?
     }),
     className,
   );
-
   const restAny = normalizeProps(rest as Record<string, unknown>);
 
   return (

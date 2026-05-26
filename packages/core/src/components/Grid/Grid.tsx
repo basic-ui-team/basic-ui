@@ -4,11 +4,12 @@ import {
   type AllowedGridElements,
   type GridOwnProps,
   ColRowNumber,
-  SpacingType,
 } from "./grid.types";
+import type { SpacingType } from "@core/components/Layout/layout.types";
 import { useResponsiveProps } from "@core/hooks";
 import { gridVariants } from "./grid.variants";
 import { cn, forwardRefWithAs, normalizeProps } from "@core/lib";
+import { generateLayoutClassNames } from "../Layout/layout";
 
 const _Grid = <As extends AllowedGridElements = "div">(
   {
@@ -26,6 +27,7 @@ const _Grid = <As extends AllowedGridElements = "div">(
     alignContent,
     justifyContent,
     templatePreset,
+    layout,
     className,
     children,
     style,
@@ -38,7 +40,6 @@ const _Grid = <As extends AllowedGridElements = "div">(
   const {
     cols: resolvedCols,
     rows: resolvedRows,
-    gap: resolvedGap,
     rowGap: resolvedRowGap,
     columnGap: resolvedColumnGap,
     autoFlow: resolvedAutoFlow,
@@ -65,11 +66,13 @@ const _Grid = <As extends AllowedGridElements = "div">(
     templatePreset,
   });
 
+  const resolvedLayoutProps = generateLayoutClassNames(layout);
+
   const resolvedStyles = cn(
+    resolvedLayoutProps,
     gridVariants({
       cols: templatePreset ? undefined : (resolvedCols as ColRowNumber),
       rows: templatePreset ? undefined : (resolvedRows as ColRowNumber),
-      gap: resolvedGap as SpacingType,
       rowGap: resolvedRowGap as SpacingType,
       columnGap: resolvedColumnGap as SpacingType,
       autoFlow: resolvedAutoFlow,

@@ -1,24 +1,19 @@
 import { ResponsiveValue } from "@core/hooks";
 import { CommonProps, RestrictedPropsWithAs } from "@core/types/props";
+import type { LayoutOwnProps } from "@core/components/Layout/layout.types";
 
-export const spacingValues = ["none", "xs", "sm", "md", "lg", "xl", "2xl", "3xl"] as const;
 const flexValues = ["row", "column", "row-reverse", "column-reverse"] as const;
 const justifyValues = ["start", "end", "center", "between", "around", "evenly", "stretch"] as const;
 const alignValues = ["start", "end", "center", "stretch"] as const;
 const wrapValues = ["nowrap", "wrap", "reverse"] as const;
 
-export type spacingType = (typeof spacingValues)[number];
 type flexDirection = (typeof flexValues)[number];
 type justifyContent = (typeof justifyValues)[number];
 type alignItems = (typeof alignValues)[number];
 type flexWrap = (typeof wrapValues)[number];
 
-export interface FlexOwnProps extends CommonProps {
+export interface FlexOwnProps extends LayoutOwnProps, CommonProps {
   direction?: ResponsiveValue<flexDirection>;
-  gap?: ResponsiveValue<spacingType>;
-  padding?: ResponsiveValue<spacingType>;
-  paddingX?: ResponsiveValue<spacingType>;
-  paddingY?: ResponsiveValue<spacingType>;
   justify?: ResponsiveValue<justifyContent>;
   align?: ResponsiveValue<alignItems>;
   wrap?: ResponsiveValue<flexWrap>;

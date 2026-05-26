@@ -30,16 +30,6 @@ export const gridVariants = cva("grid", {
       11: "grid-rows-11",
       12: "grid-rows-12",
     },
-    gap: {
-      none: "gap-0",
-      xs: "gap-xs",
-      sm: "gap-sm",
-      md: "gap-md",
-      lg: "gap-lg",
-      xl: "gap-xl",
-      "2xl": "gap-2xl",
-      "3xl": "gap-3xl",
-    },
     rowGap: {
       none: "row-gap-0",
       xs: "row-gap-xs",
@@ -117,7 +107,6 @@ export const gridVariants = cva("grid", {
     },
   },
   defaultVariants: {
-    gap: "none",
     autoFlow: "row",
     alignItems: "stretch",
     justifyItems: "stretch",
