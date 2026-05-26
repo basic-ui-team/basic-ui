@@ -9,7 +9,7 @@ import { generateLayoutClassNames } from "../Layout/layout";
 const _Flex = <As extends AllowedFlexElements = "div">(
   {
     as,
-    direction,
+    direction = "row",
     justify,
     align,
     wrap,

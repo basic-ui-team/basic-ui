@@ -1,6 +1,6 @@
 import { cva } from "class-variance-authority";
 
-export const flexVariants = cva("transition-all duration-normal w-full", {
+export const flexVariants = cva("flex", {
   variants: {
     direction: {
       row: "flex-row",
