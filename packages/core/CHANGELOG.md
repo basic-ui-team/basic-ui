@@ -1,5 +1,34 @@
 # @basic-ui/core
 
+## 0.2.0
+
+### Minor Changes
+
+- ce32fac: [core/header] Add new Header component (polymorphic as prop) with responsive size, weight, color, align, truncate, and wrap variants; accessibility improvements (auto title / aria-label when truncated); includes Storybook stories and unit tests.
+
+  [core/lib] Export BUILT_IN_HEADER_COLORS, isBuiltInHeaderColor, and BuiltInHeaderColor type to support header colors.
+
+- f998f4d: [core/grid] Add Grid layout component with responsive, tokenized spacing and alignment props, auto column and row support, and template presets for common layouts (masonry, card list, sidebar, hero).
+  [core/hooks] Add useBreakpoint and useResponsiveProps hooks for responsive prop handling, and deprecate useMediaQuery in favor of useBreakpoint for better SSR support and simpler API.
+  [core/hooks] Refactor responsive prop handling to use useBreakpoint and simplify logic in previous useMediaQuery implementation.
+  [core/flex] Refactor Flex prop types to use useResponsiveProps and add responsive support for all props, including gap and alignment.
+  [core/docs] Update Storybook and docs to reflect new Grid component and responsive prop handling changes.
+  [core/lib/accessibility] Add accessibility tests for getTruncateAccessibilityProps function and update documentation with usage examples.
+- 5bb6101: [core/flex] Implemented a fully polymorphic, responsive, and customizable Flex component.
+
+  [core/lib] Introduced the forwardRefWithAs helper (referenced in docs and used in components) to enable type-safe polymorphic components with proper ref forwarding and as prop support.
+
+  [core/lib/accessibility] add getTruncateAccessibilityProps function for improved accessibility handling.
+
+  [core/text] refactor Text component to use forwardRefWithAs and export TextOwnProps interface.
+
+  [core/header] refactor Header component to use forwardRefWithAs and export HeaderOwnProps interface.
+
+### Patch Changes
+
+- Updated dependencies [ce32fac]
+  - @basic-ui/tokens@0.2.0
+
 ## 0.1.0
 
 ### Minor Changes

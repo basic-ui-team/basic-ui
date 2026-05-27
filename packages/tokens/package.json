@@ -1,6 +1,6 @@
 {
   "name": "@basic-ui/tokens",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Design tokens and theming system for basic-ui",
   "type": "module",
   "main": "./dist/index.js",
