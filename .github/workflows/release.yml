@@ -17,6 +17,8 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
@@ -27,10 +29,14 @@ jobs:
           node-version: 26
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Build packages
         run: pnpm build && pnpm generate
 
       - name: Create release
+        id: changesets
         uses: changesets/action@v1.8.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          commitMode: github-api
