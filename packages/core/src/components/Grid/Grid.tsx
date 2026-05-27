@@ -9,7 +9,7 @@ import type { SpacingType } from "@core/components/Layout/layout.types";
 import { useResponsiveProps } from "@core/hooks";
 import { gridVariants } from "./grid.variants";
 import { cn, forwardRefWithAs, normalizeProps } from "@core/lib";
-import { generateLayoutClassNames } from "../Layout/layout";
+import { generateLayoutClassNames, splitLayoutProps } from "../Layout/layout";
 
 const _Grid = <As extends AllowedGridElements = "div">(
   {
@@ -27,7 +27,6 @@ const _Grid = <As extends AllowedGridElements = "div">(
     alignContent,
     justifyContent,
     templatePreset,
-    layout,
     className,
     children,
     style,
@@ -67,7 +66,10 @@ const _Grid = <As extends AllowedGridElements = "div">(
     templatePreset,
   });
 
-  const resolvedLayoutProps = generateLayoutClassNames(layout);
+  const { layout: layoutProps, rest: restProps } =
+    splitLayoutProps(rest as Record<string, unknown>);
+
+  const resolvedLayoutProps = generateLayoutClassNames(layoutProps);
 
   const resolvedStyles = cn(
     resolvedLayoutProps,
@@ -89,7 +91,7 @@ const _Grid = <As extends AllowedGridElements = "div">(
     className,
   );
 
-  const restAny = normalizeProps(rest as Record<string, unknown>);
+  const restAny = normalizeProps(restProps as Record<string, unknown>);
 
   return (
     <Comp ref={ref} className={resolvedStyles} style={style} {...(restAny as any)}>

@@ -58,7 +58,7 @@ describe("Flex", () => {
 
     it("applies gap and padding tokens", () => {
       const { container } = renderWithProviders(
-        <Flex gap="md" layout={{ padding: "sm" }}>
+        <Flex gap="md" p="sm">
           Test
         </Flex>,
       );

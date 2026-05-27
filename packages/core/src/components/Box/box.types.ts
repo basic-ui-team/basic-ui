@@ -1,5 +1,5 @@
 import { CommonProps, RestrictedPropsWithAs } from "@core/types/props";
-import type { LayoutOwnProps } from "@core/components/Layout/layout.types";
+import type { LayoutProps } from "@core/components/Layout/layout.types";
 import { ResponsiveValue } from "@core/hooks";
 
 export type AllowedBoxElements =
@@ -13,7 +13,7 @@ export type AllowedBoxElements =
   | "footer"
   | "span";
 
-export interface BoxOwnProps extends LayoutOwnProps, CommonProps {
+export interface BoxOwnProps extends LayoutProps, CommonProps {
   display?: ResponsiveValue<"block" | "inline-block" | "inline" | "none">;
 }
 

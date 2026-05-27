@@ -3,11 +3,11 @@ import type { AllowedBoxElements, BoxProps } from "./box.types";
 import { useResponsiveProps } from "@core/hooks";
 import { cn } from "@core/lib/cn/cn";
 import { forwardRefWithAs, normalizeProps } from "@core/lib";
-import { generateLayoutClassNames } from "../Layout/layout";
+import { generateLayoutClassNames, splitLayoutProps } from "../Layout/layout";
 import { boxVariants } from "./box.variants";
 
 const _Box = <As extends AllowedBoxElements = "div">(
-  { as, display, className, children, style, layout, ...rest }: BoxProps<As>,
+  { as, display, className, children, style, ...rest }: BoxProps<As>,
   ref: PolymorphicRef<As>,
 ) => {
   const Comp = (as || "div") as As;
@@ -16,7 +16,12 @@ const _Box = <As extends AllowedBoxElements = "div">(
     display,
   });
 
-  const resolvedLayoutProps = generateLayoutClassNames(layout);
+  const { layout: layoutProps, rest: restProps } = splitLayoutProps(
+    rest as Record<string, unknown>,
+  );
+
+
+  const resolvedLayoutProps = generateLayoutClassNames(layoutProps);
 
   const resolvedStyles = cn(
     resolvedLayoutProps,
@@ -26,7 +31,7 @@ const _Box = <As extends AllowedBoxElements = "div">(
     className,
   );
 
-  const restAny = normalizeProps(rest as Record<string, unknown>);
+  const restAny = normalizeProps(restProps as Record<string, unknown>);
 
   return (
     <Comp ref={ref} className={resolvedStyles} style={style} {...(restAny as any)}>

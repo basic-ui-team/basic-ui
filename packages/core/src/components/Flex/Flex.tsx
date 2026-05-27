@@ -4,7 +4,7 @@ import { useResponsiveProps } from "@core/hooks";
 import { flexVariants } from "./flex.variants";
 import { cn } from "@core/lib/cn/cn";
 import { forwardRefWithAs, normalizeProps } from "@core/lib";
-import { generateLayoutClassNames } from "../Layout/layout";
+import { generateLayoutClassNames, splitLayoutProps } from "../Layout/layout";
 
 const _Flex = <As extends AllowedFlexElements = "div">(
   {
@@ -15,7 +15,6 @@ const _Flex = <As extends AllowedFlexElements = "div">(
     wrap,
     gap,
     inline,
-    layout,
     className,
     style,
     children,
@@ -40,7 +39,11 @@ const _Flex = <As extends AllowedFlexElements = "div">(
     inline,
   });
 
-  const resolvedLayoutProps = generateLayoutClassNames(layout);
+  const { layout: layoutProps, rest: restProps } = splitLayoutProps(
+    rest as Record<string, unknown>,
+  );
+
+  const resolvedLayoutProps = generateLayoutClassNames(layoutProps);
 
   const resolvedStyles = cn(
     resolvedLayoutProps,
@@ -54,7 +57,7 @@ const _Flex = <As extends AllowedFlexElements = "div">(
     }),
     className,
   );
-  const restAny = normalizeProps(rest as Record<string, unknown>);
+  const restAny = normalizeProps(restProps as Record<string, unknown>);
 
   return (
     <Comp ref={ref} className={resolvedStyles} {...(restAny as any)}>
