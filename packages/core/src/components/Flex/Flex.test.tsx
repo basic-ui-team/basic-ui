@@ -51,8 +51,8 @@ describe("Flex", () => {
       expect(container.firstChild).toHaveClass("items-start");
     });
 
-    it("applies inline flex when inline={true}", () => {
-      const { container } = renderWithProviders(<Flex inline={true}>Test</Flex>);
+    it("applies display classes", () => {
+      const { container } = renderWithProviders(<Flex display="inline-flex">Test</Flex>);
       expect(container.firstChild).toHaveClass("inline-flex");
     });
 

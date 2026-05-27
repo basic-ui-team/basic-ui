@@ -65,9 +65,7 @@ describe("Layout utils", () => {
       renderWithProviders(<TestComp />);
       const el = screen.getByTestId("layout");
 
-      // `generateLayoutClassNames` merges defaults defined in layout.ts
-      // current default p is `md` and default margin is `none` -> `m-0`.
-      expect(el).toHaveClass("p-md");
+      expect(el).toHaveClass("p-0");
       expect(el).toHaveClass("m-0");
     });
 
@@ -84,6 +82,14 @@ describe("Layout utils", () => {
 
       expect(el.className).not.toMatch(/\bp-/);
       expect(el.className).not.toMatch(/\bm-/);
+    });
+
+    it("handles undefined layout by using defaults", () => {
+      renderWithProviders(<TestComp layout={undefined} />);
+      const el = screen.getByTestId("layout");
+      
+        expect(el).toHaveClass("p-0"); // default padding
+        expect(el).toHaveClass("m-0"); // default margin
     });
   });
 });

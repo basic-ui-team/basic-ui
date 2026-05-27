@@ -24,4 +24,9 @@ describe("normalizeProps", () => {
     expect(result).not.toBe(original);
     expect((original as any).ariaLabel).toBe("a");
   });
+
+  it("handles undefined input by returning an empty object", () => {
+    const result = normalizeProps(undefined);
+    expect(result).toEqual({});
+  });
 });

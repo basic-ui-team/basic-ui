@@ -38,9 +38,9 @@ export const flexVariants = cva("flex", {
       "2xl": "gap-2xl",
       "3xl": "gap-3xl",
     },
-    inline: {
-      true: "inline-flex",
-      false: "flex",
+    display: {
+      flex: "flex",
+      "inline-flex": "inline-flex",
     },
   },
   defaultVariants: {
@@ -49,5 +49,6 @@ export const flexVariants = cva("flex", {
     justify: "start",
     align: "stretch",
     gap: "md",
+    display: "flex",
   },
 });

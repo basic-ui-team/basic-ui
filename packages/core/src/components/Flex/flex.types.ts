@@ -18,7 +18,7 @@ export interface FlexOwnProps extends LayoutProps, CommonProps {
   align?: ResponsiveValue<alignItems>;
   wrap?: ResponsiveValue<flexWrap>;
   gap?: ResponsiveValue<SpacingType>;
-  inline?: ResponsiveValue<boolean>;
+  display?: ResponsiveValue<"flex" | "inline-flex">;
 }
 
 export type AllowedFlexElements = "div" | "section" | "article" | "nav" | "header" | "footer";

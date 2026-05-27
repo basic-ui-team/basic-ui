@@ -73,7 +73,7 @@ export const InlineExample: Story = {
       <Text as="span" size="2xl">
         This is some text with an inline flex container:
       </Text>
-      <Flex inline gap="sm" p="sm">
+      <Flex display="inline-flex" gap="sm" p="sm">
         <Text as="span" className="border p-sm rounded">
           Inline 1
         </Text>

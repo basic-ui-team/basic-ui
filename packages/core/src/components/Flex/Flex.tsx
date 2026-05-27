@@ -14,7 +14,7 @@ const _Flex = <As extends AllowedFlexElements = "div">(
     align,
     wrap,
     gap,
-    inline,
+    display,
     className,
     style,
     children,
@@ -29,14 +29,14 @@ const _Flex = <As extends AllowedFlexElements = "div">(
     align: resolvedAlign,
     wrap: resolvedWrap,
     gap: resolvedGap,
-    inline: resolvedInline,
+    display: resolvedDisplay,
   } = useResponsiveProps({
     direction,
     justify,
     align,
     wrap,
     gap,
-    inline,
+    display,
   });
 
   const { layout: layoutProps, rest: restProps } = splitLayoutProps(
@@ -53,7 +53,7 @@ const _Flex = <As extends AllowedFlexElements = "div">(
       align: resolvedAlign,
       wrap: resolvedWrap,
       gap: resolvedGap,
-      inline: resolvedInline, // TODO: This is a bit awkward. Maybe we should have a separate "display" prop that can be set to "flex" or "inline-flex" instead of having an "inline" boolean?
+      display: resolvedDisplay,
     }),
     className,
   );

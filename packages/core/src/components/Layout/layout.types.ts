@@ -15,10 +15,18 @@ export interface LayoutProps {
   p?: ResponsiveValue<SpacingType | "unset">;
   px?: ResponsiveValue<SpacingType | "unset">;
   py?: ResponsiveValue<SpacingType | "unset">;
+  pt?: ResponsiveValue<SpacingType | "unset">;
+  pr?: ResponsiveValue<SpacingType | "unset">;
+  pb?: ResponsiveValue<SpacingType | "unset">;
+  pl?: ResponsiveValue<SpacingType | "unset">;
 
   m?: ResponsiveValue<SpacingType | "unset">;
   mx?: ResponsiveValue<SpacingType | "unset">;
   my?: ResponsiveValue<SpacingType | "unset">;
+  mt?: ResponsiveValue<SpacingType | "unset">;
+  mr?: ResponsiveValue<SpacingType | "unset">;
+  mb?: ResponsiveValue<SpacingType | "unset">;
+  ml?: ResponsiveValue<SpacingType | "unset">;
 
   h?: ResponsiveValue<HeightType>;
   hMin?: ResponsiveValue<HeightType>;
@@ -32,7 +40,6 @@ export interface LayoutProps {
   overflow?: ResponsiveValue<OverflowType>;
   overflowX?: ResponsiveValue<OverflowType>;
   overflowY?: ResponsiveValue<OverflowType>;
-
 }
 
 export default LayoutProps;
