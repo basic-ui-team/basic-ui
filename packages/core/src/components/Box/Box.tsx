@@ -1,5 +1,5 @@
 import { PolymorphicRef } from "@core/types/props";
-import type { AllowedBoxElements, BoxProps } from "./box.types";
+import type { AllowedBoxElements, BoxOwnProps, BoxProps } from "./box.types";
 import { useResponsiveProps } from "@core/hooks";
 import { cn } from "@core/lib/cn/cn";
 import { forwardRefWithAs, normalizeProps } from "@core/lib";
@@ -40,7 +40,7 @@ const _Box = <As extends AllowedBoxElements = "div">(
   );
 };
 
-export const Box = forwardRefWithAs<BoxProps, AllowedBoxElements>(_Box as any);
+export const Box = forwardRefWithAs<BoxOwnProps, AllowedBoxElements>(_Box as any);
 (Box as any).displayName = "Box";
 
 export default Box;
