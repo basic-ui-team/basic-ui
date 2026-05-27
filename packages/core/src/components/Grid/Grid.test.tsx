@@ -41,6 +41,21 @@ describe("Grid", () => {
       expect(container.firstChild).toHaveClass("grid-rows-2");
     });
 
+    it("sets row and column counts to undefined when a templatePreset is used", () => {
+      const { container } = renderWithProviders(<Grid templatePreset="masonry">Test</Grid>);
+      expect(container.firstChild).not.toHaveClass("grid-cols-");
+      expect(container.firstChild).not.toHaveClass("grid-rows-");
+    });
+
+    it.each([
+      ["row", "row"],
+      ["column", "col"],
+      ["dense", "dense"],
+    ])("applies correct autoFlow class when autoFlow is %s", (flow, expected) => {
+      const { container } = renderWithProviders(<Grid autoFlow={flow as any}>Test</Grid>);
+      expect(container.firstChild).toHaveClass(`grid-flow-${expected}`);
+    });
+
     it("applies gap token classes", () => {
       const { container } = renderWithProviders(<Grid gap="md">Test</Grid>);
       expect(container.firstChild).toHaveClass("gap-md");

@@ -51,13 +51,17 @@ describe("Flex", () => {
       expect(container.firstChild).toHaveClass("items-start");
     });
 
-    it("applies inline flex when inline={true}", () => {
-      const { container } = renderWithProviders(<Flex inline={true}>Test</Flex>);
+    it("applies display classes", () => {
+      const { container } = renderWithProviders(<Flex display="inline-flex">Test</Flex>);
       expect(container.firstChild).toHaveClass("inline-flex");
     });
 
     it("applies gap and padding tokens", () => {
-      const { container } = renderWithProviders(<Flex gap="md" padding="sm">Test</Flex>);
+      const { container } = renderWithProviders(
+        <Flex gap="md" p="sm">
+          Test
+        </Flex>,
+      );
       expect(container.firstChild).toHaveClass("gap-md");
       expect(container.firstChild).toHaveClass("p-sm");
     });

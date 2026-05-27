@@ -117,7 +117,6 @@ export const gridVariants = cva("grid", {
     },
   },
   defaultVariants: {
-    gap: "none",
     autoFlow: "row",
     alignItems: "stretch",
     justifyItems: "stretch",

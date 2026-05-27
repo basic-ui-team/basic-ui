@@ -1,71 +1,63 @@
 import { PolymorphicRef } from "@core/types/props";
-import { AllowedFlexElements, FlexProps, FlexOwnProps, spacingType } from "./flex.types";
+import { AllowedFlexElements, FlexProps, FlexOwnProps } from "./flex.types";
 import { useResponsiveProps } from "@core/hooks";
 import { flexVariants } from "./flex.variants";
 import { cn } from "@core/lib/cn/cn";
 import { forwardRefWithAs, normalizeProps } from "@core/lib";
-
+import { generateLayoutClassNames, splitLayoutProps } from "../Layout/layout";
 
 const _Flex = <As extends AllowedFlexElements = "div">(
   {
     as,
-    direction,
-    gap,
-    padding,
-    paddingX,
-    paddingY,
+    direction = "row",
     justify,
     align,
     wrap,
-    inline,
+    gap,
+    display,
     className,
+    style,
     children,
     ...rest
   }: FlexProps<As>,
   ref: PolymorphicRef<As>,
 ) => {
   const Comp = (as || "div") as As;
-
   const {
     direction: resolvedDirection,
-    gap: resolvedGap,
-    padding: resolvedPadding,
-    paddingX: resolvedPaddingX,
-    paddingY: resolvedPaddingY,
     justify: resolvedJustify,
     align: resolvedAlign,
     wrap: resolvedWrap,
-    inline: resolvedInline,
+    gap: resolvedGap,
+    display: resolvedDisplay,
   } = useResponsiveProps({
     direction,
-    gap,
-    padding,
-    paddingX,
-    paddingY,
     justify,
     align,
     wrap,
-    inline,
+    gap,
+    display,
   });
 
+  const { layout: layoutProps, rest: restProps } = splitLayoutProps(
+    rest as Record<string, unknown>,
+  );
 
+  const resolvedLayoutProps = generateLayoutClassNames(layoutProps);
 
   const resolvedStyles = cn(
+    resolvedLayoutProps,
     flexVariants({
       direction: resolvedDirection,
-      gap: resolvedGap as spacingType,
-      padding: resolvedPadding as spacingType,
-      paddingX: resolvedPaddingX as spacingType,
-      paddingY: resolvedPaddingY as spacingType,
       justify: resolvedJustify,
       align: resolvedAlign,
       wrap: resolvedWrap,
-      inline: resolvedInline,
+      gap: resolvedGap,
+      display: resolvedDisplay,
     }),
     className,
   );
-
-  const restAny = normalizeProps(rest as Record<string, unknown>);
+  const restAny = normalizeProps(restProps as Record<string, unknown>);
 
   return (
     <Comp ref={ref} className={resolvedStyles} {...(restAny as any)}>

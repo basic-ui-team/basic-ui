@@ -1,9 +1,8 @@
 import { ResponsiveValue } from "@core/hooks";
 import { CommonProps, RestrictedPropsWithAs } from "@core/types/props";
+import type { LayoutProps, SpacingType } from "../Layout/layout.types";
 
 export type AllowedGridElements = "div" | "section" | "article" | "main" | "aside" | "nav";
-
-const spacingValues = ["none", "xs", "sm", "md", "lg", "xl", "2xl", "3xl"] as const;
 const COL_ROW_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const;
 const justifyContentValues = [
   "start",
@@ -36,7 +35,7 @@ const gridTemplatePresetValues = [
   "asymmetric",
 ] as const;
 
-export type SpacingType = (typeof spacingValues)[number];
+// Reuse shared spacing type from layout types
 export type ColRowNumber = (typeof COL_ROW_NUMBERS)[number];
 export type JustifyOption = (typeof justifyContentValues)[number];
 export type AlignOption = (typeof alignItemsValues)[number];
@@ -46,7 +45,7 @@ export type AutoFlowOption = (typeof autoFlowValues)[number];
 export type AutoColsRowsOption = (typeof autoColsRowsValues)[number];
 export type GridTemplatePresetOption = (typeof gridTemplatePresetValues)[number];
 
-export interface GridOwnProps extends CommonProps {
+export interface GridOwnProps extends LayoutProps, CommonProps {
   /** Number of columns in the grid (1-12). For custom templates use `templatePreset` or `style`/`className`. */
   cols?: ResponsiveValue<ColRowNumber>;
   /** Number of rows in the grid (1-12). For custom templates use `templatePreset` or `style`/`className`. */

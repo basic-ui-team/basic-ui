@@ -4,11 +4,12 @@ import {
   type AllowedGridElements,
   type GridOwnProps,
   ColRowNumber,
-  SpacingType,
 } from "./grid.types";
+import type { SpacingType } from "@core/components/Layout/layout.types";
 import { useResponsiveProps } from "@core/hooks";
 import { gridVariants } from "./grid.variants";
 import { cn, forwardRefWithAs, normalizeProps } from "@core/lib";
+import { generateLayoutClassNames, splitLayoutProps } from "../Layout/layout";
 
 const _Grid = <As extends AllowedGridElements = "div">(
   {
@@ -65,7 +66,13 @@ const _Grid = <As extends AllowedGridElements = "div">(
     templatePreset,
   });
 
+  const { layout: layoutProps, rest: restProps } =
+    splitLayoutProps(rest as Record<string, unknown>);
+
+  const resolvedLayoutProps = generateLayoutClassNames(layoutProps);
+
   const resolvedStyles = cn(
+    resolvedLayoutProps,
     gridVariants({
       cols: templatePreset ? undefined : (resolvedCols as ColRowNumber),
       rows: templatePreset ? undefined : (resolvedRows as ColRowNumber),
@@ -84,7 +91,7 @@ const _Grid = <As extends AllowedGridElements = "div">(
     className,
   );
 
-  const restAny = normalizeProps(rest as Record<string, unknown>);
+  const restAny = normalizeProps(restProps as Record<string, unknown>);
 
   return (
     <Comp ref={ref} className={resolvedStyles} style={style} {...(restAny as any)}>
