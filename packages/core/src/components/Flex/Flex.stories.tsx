@@ -46,7 +46,7 @@ export const Column: Story = {
 export const GapAndPadding: Story = {
   render: () => (
     <div className="flex flex-col gap-md">
-      <Flex gap="sm" layout={{ padding: "sm" }}>
+      <Flex gap="sm" p="sm">
         <Text as="span" className="border p-sm rounded flex-1">
           Small gap
         </Text>
@@ -55,7 +55,7 @@ export const GapAndPadding: Story = {
         </Text>
       </Flex>
 
-      <Flex gap="lg" layout={{ padding: "lg" }}>
+      <Flex gap="lg" p="lg">
         <Text as="span" className="border p-sm rounded flex-1">
           Large gap
         </Text>
@@ -73,7 +73,7 @@ export const InlineExample: Story = {
       <Text as="span" size="2xl">
         This is some text with an inline flex container:
       </Text>
-      <Flex inline gap="sm" layout={{ padding: "sm" }}>
+      <Flex inline gap="sm" p="sm">
         <Text as="span" className="border p-sm rounded">
           Inline 1
         </Text>
@@ -92,8 +92,12 @@ export const Polymorphic: Story = {
         This is a nav element using Flex with polymorphic "as" prop:
       </Text>
       <Flex as="nav" gap="md" aria-label="Main navigation">
-        <Text as="span"><a href="#">Home</a></Text>
-        <Text as="span"><a href="#">Docs</a></Text>
+        <Text as="span">
+          <a href="#">Home</a>
+        </Text>
+        <Text as="span">
+          <a href="#">Docs</a>
+        </Text>
       </Flex>
     </div>
   ),
@@ -102,7 +106,9 @@ export const Polymorphic: Story = {
 export const Responsive: Story = {
   render: () => (
     <div className="flex flex-col gap-md w-full">
-      <Text as="span" size="md">Resize the preview viewport to see layout change</Text>
+      <Text as="span" size="md">
+        Resize the preview viewport to see layout change
+      </Text>
       <Flex direction={{ base: "column", md: "row" }} gap={{ base: "sm", md: "md" }}>
         <Text className="border rounded p-sm flex-1">A</Text>
         <Text className="border rounded p-sm flex-1">B</Text>
