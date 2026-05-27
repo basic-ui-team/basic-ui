@@ -131,8 +131,12 @@ export const layoutVariants = cva("", {
     },
   },
   defaultVariants: {
-    padding: "md",
+    padding: "none",
+    paddingX: "unset",
+    paddingY: "unset",
     margin: "none",
+    marginX: "unset",
+    marginY: "unset",
     height: "auto",
     heightMin: "auto",
     heightMax: "auto",
