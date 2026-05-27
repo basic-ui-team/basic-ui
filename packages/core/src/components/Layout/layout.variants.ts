@@ -81,10 +81,34 @@ export const layoutVariants = cva("", {
       screen: "h-screen",
       unset: "",
     },
+    heightMin: {
+      auto: "min-h-auto",
+      full: "min-h-full",
+      screen: "min-h-screen",
+      unset: "",
+    },
+    heightMax: {
+      auto: "max-h-auto",
+      full: "max-h-full",
+      screen: "max-h-screen",
+      unset: "",
+    },
     width: {
       auto: "w-auto",
       full: "w-full",
       screen: "w-screen",
+      unset: "",
+    },
+    widthMin: {
+      auto: "min-w-auto",
+      full: "min-w-full",
+      screen: "min-w-screen",
+      unset: "",
+    },
+    widthMax: {
+      auto: "max-w-auto",
+      full: "max-w-full",
+      screen: "max-w-screen",
       unset: "",
     },
     overflow: {
@@ -93,10 +117,28 @@ export const layoutVariants = cva("", {
       auto: "overflow-auto",
       scroll: "overflow-scroll",
     },
+    overflowX: {
+      visible: "overflow-x-visible",
+      hidden: "overflow-x-hidden",
+      auto: "overflow-x-auto",
+      scroll: "overflow-x-scroll",
+    },
+    overflowY: {
+      visible: "overflow-y-visible",
+      hidden: "overflow-y-hidden",
+      auto: "overflow-y-auto",
+      scroll: "overflow-y-scroll",
+    },
   },
   defaultVariants: {
     padding: "md",
     margin: "none",
+    height: "auto",
+    heightMin: "auto",
+    heightMax: "auto",
+    width: "auto",
+    widthMin: "auto",
+    widthMax: "auto",
   },
 });
 

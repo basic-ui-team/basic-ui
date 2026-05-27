@@ -1,4 +1,4 @@
-import LayoutProps, { PositionType, SpacingType } from "./layout.types";
+import LayoutProps, { HeightType, OverflowType, PositionType, SpacingType, WidthType } from "./layout.types";
 import { cn } from "@core/lib";
 import { useResponsiveProps } from "@core/hooks";
 import { layoutVariants } from "./layout.variants";
@@ -10,8 +10,16 @@ export const LAYOUT_PROP_NAMES = [
   "m",
   "mx",
   "my",
+  "h",
+  "hMin",
+  "hMax",
+  "w",
+  "wMin",
+  "wMax",
   "position",
   "overflow",
+  "overflowX",
+  "overflowY",
 ] as const;
 
 export const generateLayoutClassNames = (layout: LayoutProps) => {
@@ -22,8 +30,16 @@ export const generateLayoutClassNames = (layout: LayoutProps) => {
     m: "none",
     mx: "unset",
     my: "unset",
+    h: "auto",
+    hMin: "auto",
+    hMax: "auto",
+    w: "auto",
+    wMin: "auto",
+    wMax: "auto",
     position: "static",
     overflow: "visible",
+    overflowX: "visible",
+    overflowY: "visible",
   } as LayoutProps;
 
   const mergedLayout = {
@@ -38,8 +54,16 @@ export const generateLayoutClassNames = (layout: LayoutProps) => {
     m: margin,
     mx: marginX,
     my: marginY,
+    h,
+    hMin,
+    hMax,
+    w,
+    wMin,
+    wMax,
     position,
     overflow,
+    overflowX,
+    overflowY,
   } = useResponsiveProps(mergedLayout, LAYOUT_PROP_NAMES as unknown as (keyof LayoutProps)[]); // Pass layout prop names as ordered keys to ensure consistent class name generation regardless of the order in which layout props are provided by the user
 
   return cn(
@@ -50,8 +74,16 @@ export const generateLayoutClassNames = (layout: LayoutProps) => {
       margin: margin as SpacingType | "unset",
       marginX: marginX as SpacingType | "unset",
       marginY: marginY as SpacingType | "unset",
+      height: h as HeightType,
+      heightMin: hMin as HeightType,
+      heightMax: hMax as HeightType,
+      width: w as WidthType,
+      widthMin: wMin as WidthType,
+      widthMax: wMax as WidthType,
       position: position as PositionType,
-      overflow: overflow as "visible" | "hidden" | "auto" | "scroll",
+      overflow: overflow as OverflowType,
+      overflowX: overflowX as OverflowType,
+      overflowY: overflowY as OverflowType,
     }),
   );
 };
