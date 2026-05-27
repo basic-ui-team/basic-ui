@@ -95,7 +95,7 @@ export const layoutVariants = cva("", {
     },
   },
   defaultVariants: {
-    padding: "none",
+    padding: "md",
     margin: "none",
   },
 });

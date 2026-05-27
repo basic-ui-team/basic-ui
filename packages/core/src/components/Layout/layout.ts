@@ -3,6 +3,17 @@ import { cn } from "@core/lib";
 import { useResponsiveProps } from "@core/hooks";
 import { layoutVariants } from "./layout.variants";
 
+export const LAYOUT_PROP_NAMES = [
+  "p",
+  "px",
+  "py",
+  "m",
+  "mx",
+  "my",
+  "position",
+  "overflow",
+] as const;
+
 export const generateLayoutClassNames = (layout: LayoutProps) => {
   const defaultLayout = {
     p: "md",
@@ -29,7 +40,7 @@ export const generateLayoutClassNames = (layout: LayoutProps) => {
     my: marginY,
     position,
     overflow,
-  } = useResponsiveProps(mergedLayout);
+  } = useResponsiveProps(mergedLayout, LAYOUT_PROP_NAMES as unknown as (keyof LayoutProps)[]); // Pass layout prop names as ordered keys to ensure consistent class name generation regardless of the order in which layout props are provided by the user
 
   return cn(
     layoutVariants({
@@ -45,17 +56,6 @@ export const generateLayoutClassNames = (layout: LayoutProps) => {
   );
 };
 
-export const LAYOUT_PROP_NAMES = [
-  "p",
-  "px",
-  "py",
-  "m",
-  "mx",
-  "my",
-  "position",
-  "overflow",
-] as const;
-
 export function splitLayoutProps<T extends Record<string, unknown> = Record<string, unknown>>(
   props?: T,
 ): { layout: Partial<LayoutProps>; rest: Omit<T, keyof LayoutProps> } {
@@ -64,10 +64,10 @@ export function splitLayoutProps<T extends Record<string, unknown> = Record<stri
 
   if (!props) return { layout, rest: rest as Omit<T, keyof LayoutProps> };
 
-  const layoutPropKeys = LAYOUT_PROP_NAMES as unknown as (keyof LayoutProps)[];
+  const layoutPropKeySet = new Set(LAYOUT_PROP_NAMES);
 
   for (const key of Object.keys(props)) {
-    if (layoutPropKeys.includes(key as keyof LayoutProps)) {
+    if (layoutPropKeySet.has(key as keyof LayoutProps)) {
       layout[key as keyof LayoutProps] = (props as any)[key];
     } else {
       rest[key] = (props as any)[key];
