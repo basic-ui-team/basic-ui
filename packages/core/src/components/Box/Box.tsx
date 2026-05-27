@@ -1,12 +1,13 @@
 import { PolymorphicRef } from "@core/types/props";
-import type { AllowedBoxElements, BoxOwnProps, BoxProps } from "./box.types";
+import type { BoxOwnProps, BoxProps } from "./box.types";
 import { useResponsiveProps } from "@core/hooks";
 import { cn } from "@core/lib/cn/cn";
 import { forwardRefWithAs, normalizeProps } from "@core/lib";
 import { generateLayoutClassNames, splitLayoutProps } from "../Layout/layout";
 import { boxVariants } from "./box.variants";
+import { ElementType } from "react";
 
-const _Box = <As extends AllowedBoxElements = "div">(
+const _Box = <As extends ElementType = "div">(
   { as, display, className, children, style, ...rest }: BoxProps<As>,
   ref: PolymorphicRef<As>,
 ) => {
@@ -19,7 +20,6 @@ const _Box = <As extends AllowedBoxElements = "div">(
   const { layout: layoutProps, rest: restProps } = splitLayoutProps(
     rest as Record<string, unknown>,
   );
-
 
   const resolvedLayoutProps = generateLayoutClassNames(layoutProps);
 
@@ -40,7 +40,7 @@ const _Box = <As extends AllowedBoxElements = "div">(
   );
 };
 
-export const Box = forwardRefWithAs<BoxOwnProps, AllowedBoxElements>(_Box as any);
+export const Box = forwardRefWithAs<BoxOwnProps, ElementType>(_Box as any);
 (Box as any).displayName = "Box";
 
 export default Box;
