@@ -28,13 +28,13 @@ describe("Alert", () => {
   });
 
   describe("semantic roles", () => {
-    it.each([
+    it.each<["error" | "warning" | "info" | "success", string]>([
       ["error", "alert"],
       ["warning", "alert"],
       ["info", "status"],
       ["success", "status"],
     ])("uses role='%s' for severity %s", (severity, expectedRole) => {
-      const { container } = renderWithProviders(<Alert severity={severity as any}>Test</Alert>);
+      const { container } = renderWithProviders(<Alert severity={severity}>Test</Alert>);
       expect(container.firstChild).toHaveAttribute("role", expectedRole);
     });
   });
@@ -113,13 +113,12 @@ describe("Alert", () => {
   });
 
   describe("styling variants", () => {
-    it.each(["success", "error", "warning", "info"])(
-      "renders with %s severity variant",
-      (severity) => {
-        const { container } = renderWithProviders(<Alert severity={severity as any}>Test</Alert>);
+    (["success", "error", "warning", "info"] as const).forEach((severity) => {
+      it(`renders with ${severity} severity variant`, () => {
+        const { container } = renderWithProviders(<Alert severity={severity}>Test</Alert>);
         expect(container.firstChild).toBeInTheDocument();
-      },
-    );
+      });
+    });
 
     it("applies borderless variant when borderless={true}", () => {
       const { container } = renderWithProviders(<Alert borderless>Test</Alert>);

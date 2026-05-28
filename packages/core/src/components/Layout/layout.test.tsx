@@ -21,8 +21,8 @@ describe("Layout utils", () => {
       expect(layout.position).toBe("relative");
       expect(layout.overflow).toBe("hidden");
 
-      expect((rest as any).id).toBe("my-id");
-      expect((rest as any)["data-test"]).toBe("x");
+      expect((rest as Record<string, unknown>).id).toBe("my-id");
+      expect((rest as Record<string, unknown>)["data-test"]).toBe("x");
     });
 
     it("returns empty objects when given undefined", () => {
@@ -41,7 +41,7 @@ describe("Layout utils", () => {
 
   describe("generateLayoutClassNames (via component render)", () => {
     const TestComp = ({ layout }: { layout?: Record<string, unknown> }) => {
-      const classes = generateLayoutClassNames((layout as any) || {});
+        const classes = generateLayoutClassNames((layout as Record<string, unknown>) || {});
       return (
         <div data-testid="layout" className={classes as string}>
           x

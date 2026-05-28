@@ -47,12 +47,12 @@ describe("Grid", () => {
       expect(container.firstChild).not.toHaveClass("grid-rows-");
     });
 
-    it.each([
+    it.each<["row" | "column" | "dense", string]>([
       ["row", "row"],
       ["column", "col"],
       ["dense", "dense"],
     ])("applies correct autoFlow class when autoFlow is %s", (flow, expected) => {
-      const { container } = renderWithProviders(<Grid autoFlow={flow as any}>Test</Grid>);
+      const { container } = renderWithProviders(<Grid autoFlow={flow}>Test</Grid>);
       expect(container.firstChild).toHaveClass(`grid-flow-${expected}`);
     });
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { renderHookWithProviders, waitFor } from "../../test-utils";
 import { act } from "@testing-library/react";
 import { vi, describe, it, expect, beforeEach, afterEach } from "vitest";

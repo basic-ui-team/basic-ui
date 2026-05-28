@@ -42,6 +42,9 @@ export default defineConfig([
         project: true,
       },
     },
+    rules: {
+      "@typescript-eslint/no-explicit-any": "error",
+    },
   },
   ...storybook.configs["flat/recommended"],
 ]);

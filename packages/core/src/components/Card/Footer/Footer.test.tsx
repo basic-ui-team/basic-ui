@@ -21,8 +21,15 @@ describe("Card.Footer", () => {
   });
 
   it("reflects disabled state from Card context", () => {
+    const ctxValue: React.ContextType<typeof CardContext> = {
+      variant: "default",
+      disabled: true,
+      selected: false,
+      isLink: false,
+    };
+
     const { container } = renderWithProviders(
-      <CardContext.Provider value={{ variant: "default", disabled: true, selected: false, isLink: false } as any}>
+      <CardContext.Provider value={ctxValue}>
         <CardFooter>F</CardFooter>
       </CardContext.Provider>,
     );

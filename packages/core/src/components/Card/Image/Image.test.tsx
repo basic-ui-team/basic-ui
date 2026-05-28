@@ -22,8 +22,15 @@ describe("Card.Image", () => {
   });
 
   it("reflects disabled state from Card context", () => {
-    const { container } = renderWithProviders(
-      <CardContext.Provider value={{ variant: "default", disabled: true, selected: false, isLink: false } as any}>
+      const ctxValue: React.ContextType<typeof CardContext> = {
+        variant: "default",
+        disabled: true,
+        selected: false,
+        isLink: false,
+      };
+
+      const { container } = renderWithProviders(
+        <CardContext.Provider value={ctxValue}>
         <CardImage src="/img.png" alt="i" />
       </CardContext.Provider>,
     );
