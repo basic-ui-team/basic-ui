@@ -19,7 +19,7 @@ const _Text = <As extends AllowedTextElements = "p">(
     color = "default",
     align = "left",
     truncate = false,
-    wrap = "nowrap",
+    wrap = "wrap",
     children,
     className,
     ...rest

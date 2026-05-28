@@ -4,6 +4,7 @@ import { useResponsiveProps } from "@core/hooks";
 import { cn } from "@core/lib";
 import { CardContext } from "../Card";
 import { cardImageVariants } from "../card.variants";
+import { Box } from "@core/components";
 
 export const CardImage = forwardRef<HTMLImageElement, CardImageProps>(
   ({ src, alt, objectFit = "cover", className, ...rest }, ref) => {
@@ -16,7 +17,8 @@ export const CardImage = forwardRef<HTMLImageElement, CardImageProps>(
     });
 
     return (
-      <img
+      <Box<"img">
+        as={"img" as any}
         ref={ref}
         src={src}
         alt={alt}

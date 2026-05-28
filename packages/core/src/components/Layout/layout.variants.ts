@@ -163,6 +163,17 @@ export const layoutVariants = cva("", {
       "3xl": "ml-3xl",
       unset: "",
     },
+    gap: {
+      none: "gap-0",
+      xs: "gap-xs",
+      sm: "gap-sm",
+      md: "gap-md",
+      lg: "gap-lg",
+      xl: "gap-xl",
+      "2xl": "gap-2xl",
+      "3xl": "gap-3xl",
+      unset: "",
+    },
     height: {
       auto: "h-auto",
       full: "h-full",
@@ -204,6 +215,7 @@ export const layoutVariants = cva("", {
       hidden: "overflow-hidden",
       auto: "overflow-auto",
       scroll: "overflow-scroll",
+      unset: "",
     },
     overflowX: {
       visible: "overflow-x-visible",
@@ -216,6 +228,7 @@ export const layoutVariants = cva("", {
       hidden: "overflow-y-hidden",
       auto: "overflow-y-auto",
       scroll: "overflow-y-scroll",
+      unset: "",
     },
   },
   defaultVariants: {

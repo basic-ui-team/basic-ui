@@ -28,6 +28,8 @@ export interface LayoutProps {
   mb?: ResponsiveValue<SpacingType | "unset">;
   ml?: ResponsiveValue<SpacingType | "unset">;
 
+  gap?: ResponsiveValue<SpacingType | "unset">;
+
   h?: ResponsiveValue<HeightType>;
   hMin?: ResponsiveValue<HeightType>;
   hMax?: ResponsiveValue<HeightType>;
@@ -38,8 +40,8 @@ export interface LayoutProps {
   position?: ResponsiveValue<PositionType>;
 
   overflow?: ResponsiveValue<OverflowType>;
-  overflowX?: ResponsiveValue<OverflowType>;
-  overflowY?: ResponsiveValue<OverflowType>;
+  overflowX?: ResponsiveValue<OverflowType | "unset">;
+  overflowY?: ResponsiveValue<OverflowType | "unset">;
 }
 
 export default LayoutProps;
