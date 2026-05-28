@@ -1,10 +1,9 @@
 import { AllowedCardElements, CardUnstyledProps } from "../card.types";
 import { Box } from "@core/components";
-import { cn } from "@core/lib";
+import { cn, forwardRefWithAs } from "@core/lib";
 import { PolymorphicRef } from "@core/types/props";
 import { CardContext } from "../Card";
 import { cardRootVariants } from "../card.variants";
-import { forwardRef } from "react";
 
 export const _Card = <As extends AllowedCardElements = "div">(
   {
@@ -51,7 +50,7 @@ export const _Card = <As extends AllowedCardElements = "div">(
   const onKeyDown = (event: React.KeyboardEvent<HTMLButtonElement | HTMLAnchorElement>) => {
     if (isClickable && (event.key === "Enter" || event.key === " ")) {
       event.preventDefault();
-      onClick?.(event as any);
+      onClick?.(event as unknown as React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>);
     }
   };
 
@@ -94,10 +93,6 @@ export const _Card = <As extends AllowedCardElements = "div">(
   );
 };
 
-export const CardUnstyled = forwardRef(_Card as any) as <
-  Element extends AllowedCardElements = "div",
->(
-  props: CardUnstyledProps & { as?: Element; ref?: PolymorphicRef<Element> },
-) => React.ReactElement;
+export const CardUnstyled = forwardRefWithAs<CardUnstyledProps, AllowedCardElements>(_Card);
 
-(CardUnstyled as any).displayName = "CardUnstyled";
+(CardUnstyled as unknown as { displayName?: string }).displayName = "CardUnstyled";

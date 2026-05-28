@@ -6,7 +6,7 @@ import { cn } from "@core/lib";
 import { cardImageVariants } from "../card.variants";
 
 export const CardImage = forwardRef<HTMLImageElement, CardImageProps>(
-  ({ as, className, ...rest }: CardImageProps, ref) => {
+  ({ className, ...rest }: CardImageProps, ref) => {
     const ctx = useContext(CardContext);
 
     const disabled = ctx?.disabled || false;
@@ -17,15 +17,8 @@ export const CardImage = forwardRef<HTMLImageElement, CardImageProps>(
         disabled,
       }),
       className,
-    )
-
-    return (
-      <Image
-        as={as}
-        ref={ref}
-        className={resolvedStyle}
-        {...rest}
-      />
     );
+
+    return <Image as="img" ref={ref} className={resolvedStyle} {...rest} />;
   },
 );

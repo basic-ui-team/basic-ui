@@ -18,4 +18,4 @@ export const CardTitle = forwardRef(_Title) as <Element extends AllowedHeaderEle
   props: CardTitleProps<Element> & { ref?: PolymorphicRef<Element> },
 ) => React.ReactElement;
 
-(CardTitle as any).displayName = "CardTitle";
+(CardTitle as unknown as { displayName?: string }).displayName = "CardTitle";

@@ -18,4 +18,4 @@ export const CardDescription = forwardRef(_Description) as <
   props: CardDescriptionProps<Element> & { ref?: PolymorphicRef<Element> },
 ) => React.ReactElement;
 
-(CardDescription as any).displayName = "CardDescription";
+(CardDescription as unknown as { displayName?: string }).displayName = "CardDescription";

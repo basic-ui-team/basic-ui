@@ -20,4 +20,4 @@ export const CardModule = Object.assign(CardRoot, {
 
 export const Card: CardComponent = CardModule as CardComponent;
 
-(Card as any).displayName = "Card";
+(Card as unknown as { displayName?: string }).displayName = "Card";

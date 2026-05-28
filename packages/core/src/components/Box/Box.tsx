@@ -41,6 +41,6 @@ const _Box = <As extends ElementType = "div">(
 };
 
 export const Box = forwardRefWithAs<BoxOwnProps, ElementType>(_Box as any);
-(Box as any).displayName = "Box";
+(Box as unknown as { displayName?: string }).displayName = "Box";
 
 export default Box;

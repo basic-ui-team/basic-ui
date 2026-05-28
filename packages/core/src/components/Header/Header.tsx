@@ -77,4 +77,4 @@ const _Header = <As extends AllowedHeaderElements = "h1">(
 
 export const Header = forwardRefWithAs<HeaderOwnProps, AllowedHeaderElements>(_Header);
 
-(Header as any).displayName = "Header";
+(Header as unknown as { displayName?: string }).displayName = "Header";

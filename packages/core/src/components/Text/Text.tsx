@@ -80,4 +80,4 @@ const _Text = <As extends AllowedTextElements = "p">(
 
 export const Text = forwardRefWithAs<TextOwnProps, AllowedTextElements>(_Text);
 
-(Text as any).displayName = "Text";
+(Text as unknown as { displayName?: string }).displayName = "Text";

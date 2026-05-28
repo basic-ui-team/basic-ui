@@ -55,7 +55,7 @@ const _Flex = <As extends AllowedFlexElements = "div">(
       ref={ref}
       className={cn(flexClasses, className)}
       style={style}
-      {...(rest as BoxProps<As>)} // Cast rest to BoxProps to ensure it accepts the correct props for the rendered element
+      {...(rest as BoxProps<As>)}
     >
       {children}
     </Box>
@@ -63,4 +63,4 @@ const _Flex = <As extends AllowedFlexElements = "div">(
 };
 
 export const Flex = forwardRefWithAs<FlexOwnProps, AllowedFlexElements>(_Flex);
-(Flex as any).displayName = "Flex";
+(Flex as unknown as { displayName?: string }).displayName = "Flex";

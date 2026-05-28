@@ -101,6 +101,6 @@ const _Grid = <As extends AllowedGridElements = "div">(
 };
 
 export const Grid = forwardRefWithAs<GridOwnProps, AllowedGridElements>(_Grid);
-(Grid as any).displayName = "Grid";
+(Grid as unknown as { displayName?: string }).displayName = "Grid";
 
 export default Grid;

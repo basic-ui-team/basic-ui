@@ -61,7 +61,7 @@ export const _Card = <As extends AllowedCardElements = "div">(
   );
 
   const isDraggable = interaction === "draggable" || interaction === "both";
-  const isClickable = interaction === "clickable" || interaction === "both";
+  const isClickable = !!href || interaction === "clickable" || interaction === "both";
   const onKeyDown = (event: React.KeyboardEvent<HTMLButtonElement | HTMLAnchorElement>) => {
     if (isClickable && (event.key === "Enter" || event.key === " ")) {
       event.preventDefault();
@@ -110,4 +110,4 @@ export const _Card = <As extends AllowedCardElements = "div">(
 
 export const Card = forwardRefWithAs<CardRootProps, AllowedCardElements>(_Card);
 
-(Card as any).displayName = "Card";
+(Card as unknown as { displayName?: string }).displayName = "Card.Root";
