@@ -138,7 +138,7 @@ export const Composition: Story = {
           <Card.Title>Profile</Card.Title>
           <Card.Description as="span">@username</Card.Description>
         </Card.Header>
-        <Card.Image src="https://placehold.co/600x400" alt="banner" objectFit="cover" />
+        <Card.Image p="md" src="https://placehold.co/600x400" alt="banner" objectFit="cover" />
         <Card.Body>
           <Text>
             This is an example of a composed Card using Header, Image, Body and Footer
