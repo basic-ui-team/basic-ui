@@ -5,7 +5,7 @@ import { AllowedTextElements, TextProps } from "../Text";
 import { PropsWithAs } from "@core/types/props";
 
 export type AllowedCardElements = "div" | "button" | "a";
-export type CardVariant = "default" | "elevated" | "outlined";
+export type CardVariant = "default" | "elevated" | "outlined" | "unstyled";
 type CardInteraction = "static" | "clickable" | "draggable" | "both";
 
 /**
@@ -123,7 +123,7 @@ export type CardDescriptionProps<As extends AllowedTextElements = "p"> = TextPro
 export interface CardImageProps extends BoxProps {
   src: string;
   alt: string;
-  objectFit: "cover" | "contain" | "fill" | "none";
+  objectFit: ResponsiveValue<"cover" | "contain" | "fill" | "none">;
 }
 
 /**

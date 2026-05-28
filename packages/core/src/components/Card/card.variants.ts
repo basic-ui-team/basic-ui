@@ -12,6 +12,7 @@ export const cardRootVariants = cva(
         default: "hover:shadow-s3 active:shadow-s1",
         elevated: "shadow-s2 hover:shadow-s4 active:shadow-s3",
         outlined: "border border-border-base hover:shadow-s1 active:shadow-s0",
+        unstyled: "",
       },
       isLink: {
         true: "no-underline text-inherit decoration-transparent",
@@ -60,6 +61,25 @@ export const cardSectionVariants = cva("", {
   defaultVariants: {
     variant: "default",
     sticky: false,
+    disabled: false,
+  },
+});
+
+export const cardImageVariants = cva("", {
+  variants: {
+    objectFit: {
+      cover: "object-cover",
+      contain: "object-contain",
+      fill: "object-fill",
+      none: "object-none",
+    },
+    disabled: {
+      true: "opacity-50 pointer-events-none",
+      false: "",
+    },
+  },
+  defaultVariants: {
+    objectFit: "cover",
     disabled: false,
   },
 });

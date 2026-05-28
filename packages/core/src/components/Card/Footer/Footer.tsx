@@ -6,7 +6,7 @@ import { cardSectionVariants } from "../card.variants";
 import { cn } from "@core/lib";
 import { useResponsiveProps } from "@core/hooks";
 
-export const Footer = forwardRef<HTMLElement, CardFooterProps>(
+export const CardFooter = forwardRef<HTMLElement, CardFooterProps>(
   ({ variant = "default", className, ...rest }, ref) => {
     const ctx = useContext(CardContext);
 
@@ -33,4 +33,4 @@ export const Footer = forwardRef<HTMLElement, CardFooterProps>(
   },
 );
 
-(Footer as any).displayName = "Card.Footer";
+CardFooter.displayName = "Card.Footer";
