@@ -24,6 +24,7 @@
     "generate": "tsx scripts/generate-theme-css.ts",
     "build": "pnpm generate && vite build",
     "preview": "vite preview",
+    "type-check": "tsc -p tsconfig.json --noEmit",
     "test": "vitest",
     "test:watch": "vitest --watch"
   },

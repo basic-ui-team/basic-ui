@@ -30,7 +30,8 @@
       "@storybook/*": ["./apps/storybook/src/*"],
     }
   },
-  "include": ["packages", "apps"],
+  "include": ["packages/*/src", "apps/*/src"],
+  "exclude": ["**/dist", "**/node_modules"],
   "references": [
     { "path": "./packages/core" },
     { "path": "./packages/tokens" },

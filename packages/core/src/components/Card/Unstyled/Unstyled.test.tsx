@@ -1,5 +1,4 @@
 import { describe, it, expect, vi } from "vitest";
-import React from "react";
 import { CardUnstyled } from "./Unstyled";
 import { renderWithProviders, screen, setupUser, fireEvent } from "../../../test-utils";
 
