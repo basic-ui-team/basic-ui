@@ -71,7 +71,7 @@ export const _Card = <As extends AllowedCardElements = "div">(
       <Box
         ref={ref}
         as={resolvedAs as AllowedCardElements}
-        {...(anchorProps as any)}
+        {...anchorProps}
         className={cardClassName}
         role={resolvedAs !== "a" && resolvedAs !== "button" && isClickable ? "button" : undefined}
         aria-label={ariaLabel}
@@ -94,7 +94,9 @@ export const _Card = <As extends AllowedCardElements = "div">(
   );
 };
 
-export const CardUnstyled = forwardRef(_Card as any) as <Element extends AllowedCardElements = "div">(
+export const CardUnstyled = forwardRef(_Card as any) as <
+  Element extends AllowedCardElements = "div",
+>(
   props: CardUnstyledProps & { as?: Element; ref?: PolymorphicRef<Element> },
 ) => React.ReactElement;
 

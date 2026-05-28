@@ -9,7 +9,7 @@ import type { AllowedTextElements, TextOwnProps, TextProps, builtInColorUnion } 
 import { textVariants } from "./text.variants";
 import { PolymorphicRef } from "@core/types/props";
 import { useResponsiveProps } from "@core/hooks";
-import { Box } from "../Box";
+import { Box, BoxProps } from "../Box";
 
 const _Text = <As extends AllowedTextElements = "p">(
   {
@@ -71,7 +71,7 @@ const _Text = <As extends AllowedTextElements = "p">(
       ref={ref}
       className={resolvedStyles}
       {...accessibilityProps}
-      {...(normalizedRest as any)}
+      {...(normalizedRest as BoxProps<As>)}
     >
       {children}
     </Box>

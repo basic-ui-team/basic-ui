@@ -9,7 +9,7 @@ import {
   normalizeProps,
 } from "@core/lib";
 import { PolymorphicRef } from "@core/types/props";
-import { Box } from "../Box";
+import { Box, BoxProps } from "../Box";
 
 const _Header = <As extends AllowedHeaderElements = "h1">(
   {
@@ -68,7 +68,7 @@ const _Header = <As extends AllowedHeaderElements = "h1">(
       ref={ref}
       className={resolvedStyles}
       {...accessibilityProps}
-      {...(normalizedRest as any)}
+      {...(normalizedRest as BoxProps<As>)}
     >
       {children}
     </Box>

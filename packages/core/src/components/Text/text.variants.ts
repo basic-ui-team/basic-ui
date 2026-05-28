@@ -49,6 +49,6 @@ export const textVariants = cva("font-sans", {
     weight: "normal",
     align: "left",
     truncate: false,
-    wrap: "nowrap",
+    wrap: "wrap",
   },
 });

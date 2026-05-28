@@ -3,8 +3,8 @@ import { AllowedFlexElements, FlexProps, FlexOwnProps } from "./flex.types";
 import { useResponsiveProps } from "@core/hooks";
 import { flexVariants } from "./flex.variants";
 import { cn } from "@core/lib/cn/cn";
-import { forwardRefWithAs, normalizeProps } from "@core/lib";
-import { generateLayoutClassNames, splitLayoutProps } from "../Layout/layout";
+import { forwardRefWithAs } from "@core/lib"; // Removed normalizeProps
+import { Box, BoxProps } from "@core/components"; // Import Box
 
 const _Flex = <As extends AllowedFlexElements = "div">(
   {
@@ -23,6 +23,7 @@ const _Flex = <As extends AllowedFlexElements = "div">(
   ref: PolymorphicRef<As>,
 ) => {
   const Comp = (as || "div") as As;
+
   const {
     direction: resolvedDirection,
     justify: resolvedJustify,
@@ -39,30 +40,25 @@ const _Flex = <As extends AllowedFlexElements = "div">(
     display,
   });
 
-  const { layout: layoutProps, rest: restProps } = splitLayoutProps(
-    rest as Record<string, unknown>,
-  );
-
-  const resolvedLayoutProps = generateLayoutClassNames(layoutProps);
-
-  const resolvedStyles = cn(
-    resolvedLayoutProps,
-    flexVariants({
-      direction: resolvedDirection,
-      justify: resolvedJustify,
-      align: resolvedAlign,
-      wrap: resolvedWrap,
-      gap: resolvedGap,
-      display: resolvedDisplay,
-    }),
-    className,
-  );
-  const restAny = normalizeProps(restProps as Record<string, unknown>);
+  const flexClasses = flexVariants({
+    direction: resolvedDirection,
+    justify: resolvedJustify,
+    align: resolvedAlign,
+    wrap: resolvedWrap,
+    gap: resolvedGap,
+    display: resolvedDisplay,
+  });
 
   return (
-    <Comp ref={ref} className={resolvedStyles} {...(restAny as any)}>
+    <Box
+      as={Comp}
+      ref={ref}
+      className={cn(flexClasses, className)}
+      style={style}
+      {...(rest as BoxProps<As>)} // Cast rest to BoxProps to ensure it accepts the correct props for the rendered element
+    >
       {children}
-    </Comp>
+    </Box>
   );
 };
 

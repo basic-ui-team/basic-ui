@@ -65,11 +65,13 @@ export const _Card = <As extends AllowedCardElements = "div">(
   const onKeyDown = (event: React.KeyboardEvent<HTMLButtonElement | HTMLAnchorElement>) => {
     if (isClickable && (event.key === "Enter" || event.key === " ")) {
       event.preventDefault();
-      onClick?.(event as any);
+      onClick?.(event as unknown as React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>);
     }
   };
 
-  const anchorProps = href ? ({ href } as Record<string, unknown>) : ({} as Record<string, unknown>);
+  const anchorProps = href
+    ? ({ href } as Record<string, unknown>)
+    : ({} as Record<string, unknown>);
 
   return (
     <CardContext.Provider
@@ -83,7 +85,7 @@ export const _Card = <As extends AllowedCardElements = "div">(
       <Box
         ref={ref}
         as={resolvedAs as AllowedCardElements}
-        {...(anchorProps as any)}
+        {...anchorProps}
         className={cardClassName}
         role={resolvedAs !== "a" && resolvedAs !== "button" && isClickable ? "button" : undefined}
         aria-label={ariaLabel}
