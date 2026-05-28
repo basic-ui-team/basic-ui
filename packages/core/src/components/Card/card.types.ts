@@ -137,8 +137,8 @@ export interface CardComponent extends React.FC<CardRootProps> {
   Header: React.FC<CardHeaderProps>;
   Body: React.FC<CardBodyProps>;
   Footer: React.FC<CardFooterProps>;
-  Title: React.FC<CardTitleProps<"h3">>;
-  Description: React.FC<CardDescriptionProps<"p">>;
+  Title: React.FC<CardTitleProps<AllowedHeaderElements>>;
+  Description: React.FC<CardDescriptionProps<AllowedTextElements>>;
   Image: React.FC<CardImageProps>;
   Unstyled: React.FC<CardUnstyledProps>;
 }
