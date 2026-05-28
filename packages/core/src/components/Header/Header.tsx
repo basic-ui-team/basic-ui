@@ -14,7 +14,7 @@ import { Box } from "../Box";
 const _Header = <As extends AllowedHeaderElements = "h1">(
   {
     as,
-    size = "h2",
+    size,
     weight = "normal",
     color = "default",
     align = "left",
@@ -26,7 +26,7 @@ const _Header = <As extends AllowedHeaderElements = "h1">(
   }: HeaderProps<As>,
   ref: PolymorphicRef<As>,
 ) => {
-  const Comp = (as || "h2") as As;
+  const Comp = (as || "h1") as As;
 
   const {
     size: resolvedSize,

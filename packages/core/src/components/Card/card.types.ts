@@ -123,12 +123,13 @@ export type CardDescriptionProps<As extends AllowedTextElements = "p"> = TextPro
 export interface CardImageProps extends BoxProps {
   src: string;
   alt: string;
-  objectFit: ResponsiveValue<"cover" | "contain" | "fill" | "none">;
+  objectFit?: ResponsiveValue<"cover" | "contain" | "fill" | "none">;
 }
 
 /**
  * Props for the unstyled version of the Card component.
  * This allows users to use the Card's functionality without any default styles, giving them full control over the appearance.
+ * It should be used in place of the main Card component not as a child of it, and supports all the same props except for the 'variant' which is fixed to 'unstyled' in the implementation.
  */
 export interface CardUnstyledProps extends Omit<CardRootProps, "variant"> {}
 

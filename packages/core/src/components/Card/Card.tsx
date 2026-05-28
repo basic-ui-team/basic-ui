@@ -81,6 +81,7 @@ export const _Card = <As extends AllowedCardElements = "div">(
       <Box
         ref={ref}
         as={resolvedAs as AllowedCardElements}
+        href={href}
         className={cardClassName}
         role={resolvedAs !== "a" && resolvedAs !== "button" && isClickable ? "button" : undefined}
         aria-label={ariaLabel}
