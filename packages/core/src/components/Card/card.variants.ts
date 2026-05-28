@@ -52,9 +52,14 @@ export const cardSectionVariants = cva("", {
       true: "sticky bottom-0 z-dropdown bg-surface/95 backdrop-blur-sm",
       false: "",
     },
+    disabled: {
+      true: "opacity-50 pointer-events-none",
+      false: "",
+    },
   },
   defaultVariants: {
     variant: "default",
     sticky: false,
+    disabled: false,
   },
 });

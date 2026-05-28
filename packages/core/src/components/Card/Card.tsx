@@ -13,7 +13,7 @@ type CardContextValue = {
   isLink: boolean;
 } | null;
 
-const CardContext = createContext<CardContextValue>(null);
+export const CardContext = createContext<CardContextValue>(null);
 
 export const _Card = <As extends AllowedCardElements = "div">(
   {
