@@ -17,18 +17,23 @@ export const CardHeader = forwardRef<HTMLElement, CardHeaderProps>(
 
     const disabled = ctx?.disabled || false;
 
-    const headerClassName = cn(
-      cardSectionVariants({
-        variant: resolvedProps.variant,
-        disabled,
-      }),
-      className,
-    );
-
     // 2. Hardcode 'as' to "header".
     // If you want to allow 'as' prop override, you'd need to pass props.as here,
     // but for a static component, we enforce the semantic tag.
-    return <Box as="header" ref={ref} className={headerClassName} {...rest} />;
+    return (
+      <Box
+        as="header"
+        ref={ref}
+        className={cn(
+          cardSectionVariants({
+            variant: resolvedProps.variant,
+            disabled,
+          }),
+          className,
+        )}
+        {...rest}
+      />
+    );
   },
 );
 
