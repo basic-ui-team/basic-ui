@@ -8,9 +8,12 @@ export const cardRootVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-surface border border-border-base rounded-lg shadow-s2 hover:shadow-s3 active:shadow-s1",
-        elevated: "bg-surface border border-border-base rounded-lg shadow-s2 shadow-s2 hover:shadow-s4 active:shadow-s3",
-        outlined: "bg-surface border border-border-base rounded-lg shadow-s2 border border-border-base hover:shadow-s1 active:shadow-s0", // duplication so we don't set a base styling.
+        default:
+          "bg-surface border border-border-base rounded-lg shadow-s2 hover:shadow-s3 active:shadow-s1",
+        elevated:
+          "bg-surface border border-border-base rounded-lg shadow-s2 shadow-s2 hover:shadow-s4 active:shadow-s3",
+        outlined:
+          "bg-surface border border-border-base rounded-lg shadow-s2 border border-border-base hover:shadow-s1 active:shadow-s0", // duplication so we don't set a base styling.
         unstyled: "",
       },
       isLink: {
@@ -66,19 +69,12 @@ export const cardSectionVariants = cva("", {
 
 export const cardImageVariants = cva("", {
   variants: {
-    objectFit: {
-      cover: "object-cover",
-      contain: "object-contain",
-      fill: "object-fill",
-      none: "object-none",
-    },
     disabled: {
       true: "opacity-50 pointer-events-none",
       false: "",
     },
   },
   defaultVariants: {
-    objectFit: "cover",
     disabled: false,
   },
 });
