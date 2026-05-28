@@ -1,35 +1,25 @@
 import { forwardRef, useContext } from "react";
 import { CardImageProps } from "../card.types";
-import { useResponsiveProps } from "@core/hooks";
-import { cn } from "@core/lib";
 import { CardContext } from "../Card";
-import { cardImageVariants } from "../card.variants";
-import { Box } from "@core/components";
+import { Image } from "@core/components/Image";
 
 export const CardImage = forwardRef<HTMLImageElement, CardImageProps>(
-  ({ src, alt, objectFit = "cover", className, ...rest }, ref) => {
+  ({ as, className, ...rest }: CardImageProps, ref) => {
     const ctx = useContext(CardContext);
 
     const disabled = ctx?.disabled || false;
 
-    const { objectFit: resolvedObjectFit } = useResponsiveProps({
-      objectFit,
-    });
-
     return (
-      <Box<"img">
-        as={"img" as any}
+      <Image
+        as={as}
         ref={ref}
-        src={src}
-        alt={alt}
-        className={cn(
-          cardImageVariants({
-            objectFit: resolvedObjectFit,
-            disabled,
-          }),
-          className,
-        )}
+        className={className}
         {...rest}
+        // If the card is disabled, we want to apply a grayscale filter to the image to visually indicate the disabled state. This is a common UI pattern for disabled images.
+        style={{
+          filter: disabled ? "grayscale(100%)" : undefined,
+          ...rest.style, // Allow overriding the filter via the style prop if needed
+        }}
       />
     );
   },

@@ -3,6 +3,7 @@ import { BoxProps } from "../Box";
 import { HeaderProps, AllowedHeaderElements } from "../Header";
 import { AllowedTextElements, TextProps } from "../Text";
 import { PropsWithAs } from "@core/types/props";
+import { AllowedImageElements, ImageProps } from "../Image";
 
 export type AllowedCardElements = "div" | "button" | "a";
 export type CardVariant = "default" | "elevated" | "outlined" | "unstyled";
@@ -120,11 +121,7 @@ export type CardDescriptionProps<As extends AllowedTextElements = "p"> = TextPro
  * Props for the CardImage component, which is a subcomponent of Card.
  * Extends BoxProps to allow for spacing and layout control.
  */
-export interface CardImageProps extends BoxProps {
-  src: string;
-  alt: string;
-  objectFit?: ResponsiveValue<"cover" | "contain" | "fill" | "none">;
-}
+export type CardImageProps<As extends AllowedImageElements = "img"> = ImageProps<As>; // type instead of interface to allow for generic extension of ImageProps with the 'as' prop
 
 /**
  * Props for the unstyled version of the Card component.
