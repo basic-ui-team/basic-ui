@@ -55,6 +55,10 @@ export const _Card = <As extends AllowedCardElements = "div">(
     }
   };
 
+  const anchorProps = href
+    ? ({ href } as Record<string, unknown>)
+    : ({} as Record<string, unknown>);
+
   return (
     <CardContext.Provider
       value={{
@@ -67,6 +71,7 @@ export const _Card = <As extends AllowedCardElements = "div">(
       <Box
         ref={ref}
         as={resolvedAs as AllowedCardElements}
+        {...(anchorProps as any)}
         className={cardClassName}
         role={resolvedAs !== "a" && resolvedAs !== "button" && isClickable ? "button" : undefined}
         aria-label={ariaLabel}

@@ -7,11 +7,12 @@ import { cn } from "@core/lib";
 import { useResponsiveProps } from "@core/hooks";
 
 export const CardFooter = forwardRef<HTMLElement, CardFooterProps>(
-  ({ variant = "default", className, ...rest }, ref) => {
+  ({ variant = "default", sticky = false, className, ...rest }, ref) => {
     const ctx = useContext(CardContext);
 
-    const { variant: resolvedVariant } = useResponsiveProps({
+    const resolved = useResponsiveProps({
       variant,
+      sticky,
     });
 
     const disabled = ctx?.disabled || false;
@@ -22,7 +23,8 @@ export const CardFooter = forwardRef<HTMLElement, CardFooterProps>(
         ref={ref}
         className={cn(
           cardSectionVariants({
-            variant: resolvedVariant,
+            variant: resolved.variant,
+            sticky: resolved.sticky,
             disabled,
           }),
           className,
