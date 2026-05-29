@@ -3,6 +3,7 @@ import { usePagination } from "../shared/usePagination.tsx";
 import { Pagination } from "../shared/Pagination.tsx";
 import { Icon } from "../../Icon";
 import type { TablePaginationProps } from "./tablePagination.types";
+import { Box } from "@core/components";
 
 /**
  * TablePagination
@@ -67,7 +68,8 @@ export const TablePagination = React.forwardRef<HTMLElement, TablePaginationProp
       if ((type === "prev" || type === "next") && !showPrevNext) return null;
 
       return (
-        <button
+        <Box          
+        as="button"
           key={`control-${type}`}
           type="button"
           onClick={onClick}
@@ -77,7 +79,7 @@ export const TablePagination = React.forwardRef<HTMLElement, TablePaginationProp
           className={className}
         >
           <Icon icon={icon} size={type === "prev" || type === "next" ? "sm" : "md"} />
-        </button>
+        </Box>
       );
     };
 
@@ -91,7 +93,8 @@ export const TablePagination = React.forwardRef<HTMLElement, TablePaginationProp
       className?: string,
     ) => {
       return (
-        <button
+        <Box
+          as="button"
           key={page}
           onClick={onClick}
           disabled={isDisabled}
@@ -103,7 +106,7 @@ export const TablePagination = React.forwardRef<HTMLElement, TablePaginationProp
           type="button"
         >
           {page}
-        </button>
+        </Box>
       );
     };
 

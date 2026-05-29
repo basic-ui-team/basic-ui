@@ -4,6 +4,7 @@ import type { LinkPaginationProps } from "./linkPagination.types";
 import { usePagination } from "../shared/usePagination.tsx";
 import { Pagination } from "../shared/Pagination.tsx";
 import { clamp } from "../shared/paginationUtils.ts";
+import { Box } from "@core/components";
 
 /**
  * LinkPagination
@@ -87,7 +88,8 @@ export const LinkPagination = React.forwardRef<
       };
 
       return (
-        <LinkComponent
+        <Box
+          as={LinkComponent}
           key={`control-${type}`}
           href={href}
           onClick={handleAnchorClick}
@@ -97,7 +99,7 @@ export const LinkPagination = React.forwardRef<
           tabIndex={disabled ? -1 : undefined}
         >
           <Icon icon={icon} size={type === "prev" || type === "next" ? "sm" : "md"} />
-        </LinkComponent>
+        </Box>
       );
     };
 
@@ -122,7 +124,8 @@ export const LinkPagination = React.forwardRef<
       };
 
       return (
-        <LinkComponent
+        <Box
+          as={LinkComponent}
           key={page}
           href={href}
           aria-label={ariaLabel}
@@ -133,7 +136,7 @@ export const LinkPagination = React.forwardRef<
           aria-current={isActive ? "page" : undefined}
         >
           {page}
-        </LinkComponent>
+        </Box>
       );
     };
 
