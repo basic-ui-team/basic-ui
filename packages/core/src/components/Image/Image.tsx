@@ -1,12 +1,9 @@
 import { useResponsiveProps } from "@core/hooks";
-import { cn, forwardRefWithAs, normalizeProps } from "@core/lib";
+import { cn, forwardRefWithAs } from "@core/lib";
 import { Box, BoxProps } from "@core/components";
 import { imageVariants } from "./image.variants";
 import { AllowedImageElements, ImageOwnProps, ImageProps } from "./image.props";
 import { PolymorphicRef } from "@core/types/props";
-import { splitLayoutProps, generateLayoutClassNames } from "../Layout/layout";
-import type { LayoutProps } from "../Layout/layout.types";
-import type { SyntheticEvent } from "react";
 
 export const _Image = <As extends AllowedImageElements = "img">(
   {
@@ -34,30 +31,21 @@ export const _Image = <As extends AllowedImageElements = "img">(
 
   const isPicture = Comp === "picture";
 
-  // Separate layout props from other props so we can apply layout classes to
-  // the wrapper (picture) and keep image-specific attributes on the <img>.
-  const { layout: layoutProps, rest: restProps } = splitLayoutProps(
-    rest as Record<string, unknown>,
-  );
-  const layoutClassNames = generateLayoutClassNames(layoutProps as LayoutProps);
-
+  // Split styles: Wrapper gets layout, Inner gets object-fit
   const wrapperClasses = cn(
-    layoutClassNames,
     resolvedAspectRatio ? imageVariants({ aspectRatio: resolvedAspectRatio }) : "",
     resolvedRounded ? imageVariants({ rounded: resolvedRounded }) : "",
     className,
   );
 
-  const innerImgClasses = cn(imageVariants({ objectFit: resolvedObjectFit }), "w-full h-full");
-
-  const normalizedRest = normalizeProps(restProps as Record<string, unknown>);
+  const innerImgClasses = cn(
+    imageVariants({ objectFit: resolvedObjectFit }),
+    "w-full h-full", // Critical for picture element
+  );
 
   if (isPicture) {
-    // Extract common image event handlers so they can be attached to the real <img>
-    const { onLoad, onError, ...wrapperOnly } = normalizedRest as Record<string, unknown>;
-
     return (
-      <Box as={Comp} ref={ref} className={wrapperClasses} {...(wrapperOnly as BoxProps<As>)}>
+      <Box as={Comp} ref={ref} className={wrapperClasses} {...(rest as BoxProps<As>)}>
         {sources?.map((s, i) => (
           <source key={i} srcSet={s.srcSet} media={s.media} type={s.type} sizes={s.sizes} />
         ))}
@@ -68,8 +56,6 @@ export const _Image = <As extends AllowedImageElements = "img">(
           loading={loading}
           decoding={decoding}
           className={innerImgClasses}
-          onLoad={onLoad as unknown as (e: SyntheticEvent<HTMLImageElement>) => void}
-          onError={onError as unknown as (e: SyntheticEvent<HTMLImageElement>) => void}
         />
       </Box>
     );
@@ -89,13 +75,12 @@ export const _Image = <As extends AllowedImageElements = "img">(
           aspectRatio: resolvedAspectRatio,
           rounded: resolvedRounded,
         }),
-        layoutClassNames,
         className,
       )}
-      {...(normalizedRest as BoxProps<As>)}
+      {...(rest as BoxProps<As>)} 
     />
   );
 };
 
 export const Image = forwardRefWithAs<ImageOwnProps, AllowedImageElements>(_Image);
-(Image as unknown as { displayName?: string }).displayName = "Image";
+(Image as any).displayName = "Image";
