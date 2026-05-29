@@ -17,6 +17,7 @@
   ],
   "scripts": {
     "build": "tsc",
+    "lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\" --cache",
     "type-check": "tsc -p tsconfig.json --noEmit"
   },
   "devDependencies": {
