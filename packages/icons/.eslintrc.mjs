@@ -5,11 +5,22 @@ export default {
     node: true,
     es2021: true,
   },
-  extends: ["eslint:recommended"],
+  extends: [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:jsx-a11y/recommended",
+    "plugin:react-hooks/recommended",
+  ],
+  parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: 2020,
     sourceType: "module",
     ecmaFeatures: { jsx: true },
+    project: "./tsconfig.json",
   },
-  rules: {},
+  plugins: ["@typescript-eslint", "jsx-a11y", "react-hooks"],
+  rules: {
+    "@typescript-eslint/no-explicit-any": "error",
+  },
 };
