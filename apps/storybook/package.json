@@ -8,7 +8,7 @@
     "build": "storybook build",
     "preview": "storybook dev -p 6006",
     "lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\" --cache",
-    "type-check": "tsc -p tsconfig.json --noEmit"
+    "type-check": "tsc -b tsconfig.json --noEmit"
   },
   "dependencies": {
     "@basic-ui/core": "workspace:*",
