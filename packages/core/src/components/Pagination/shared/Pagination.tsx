@@ -9,6 +9,7 @@ import {
   paginationVariants,
 } from "./pagination.variants";
 import { ChevronLeftIcon, ChevronRightIcon } from "@basic-ui/icons";
+import { Box } from "@core/components/Box";
 
 export const Pagination = React.forwardRef<HTMLElement, PaginationViewProps>(
   (
@@ -33,7 +34,8 @@ export const Pagination = React.forwardRef<HTMLElement, PaginationViewProps>(
     if (totalPages <= 1) return null;
 
     return (
-      <nav
+      <Box
+        as="nav"
         ref={ref}
         className={cn(paginationVariants({}), className)}
         role="navigation"
@@ -123,7 +125,7 @@ export const Pagination = React.forwardRef<HTMLElement, PaginationViewProps>(
           handlePageChange ? () => handlePageChange(totalPages) : undefined,
           customIcons?.last || <ChevronRightIcon />,
         )}
-      </nav>
+      </Box>
     );
   },
 );

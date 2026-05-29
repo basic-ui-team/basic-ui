@@ -3,6 +3,7 @@ import type { IconProps } from "./icon.types";
 import { cn } from "@core/lib";
 import { useResponsiveProps } from "@core/hooks";
 import { iconVariants } from "./icon.variants";
+import { Box } from "../Box";
 
 /**
  * Icon — Pure presentational icon component
@@ -42,7 +43,8 @@ export const Icon = React.forwardRef<HTMLSpanElement, IconProps>(
     const { size: resolvedSize } = useResponsiveProps({ size });
 
     return (
-      <span
+      <Box
+        as="span"
         ref={ref}
         className={cn(
           "flex items-center justify-center",
@@ -55,7 +57,7 @@ export const Icon = React.forwardRef<HTMLSpanElement, IconProps>(
         {...props}
       >
         {icon}
-      </span>
+      </Box>
     );
   },
 );

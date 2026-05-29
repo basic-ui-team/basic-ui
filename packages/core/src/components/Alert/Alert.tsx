@@ -13,6 +13,7 @@ import {
   alertContentVariants,
   alertActionVariants,
 } from "./alert.variants";
+import { Box } from "../Box";
 
 // Map alert severities to icon components
 const ICON_MAP: Record<string, React.ComponentType> = {
@@ -89,24 +90,25 @@ const _Alert = <As extends AllowedAlertElements = "div">(
   const role = severity === "error" || severity === "warning" ? "alert" : "status";
 
   return (
-    <Comp
+    <Box
+      as={Comp}
       ref={ref}
       role={role}
       className={cn(alertVariants({ severity, borderless }), className)}
       {...(props as any)}
     >
       {/* Icon */}
-      <Child className={alertIconVariants()}>
+      <Box as={Child} className={alertIconVariants()}>
         {iconElement && <Icon icon={iconElement} variant={severity} size="sm" />}
-      </Child>
+      </Box>
 
       {/* Content */}
-      <Child className={alertContentVariants()}>
-        {title && <Child className={alertTitleVariants()}>{title}</Child>}
-        <Child>{children}</Child>
-      </Child>
+      <Box as={Child} className={alertContentVariants()}>
+        {title && <Box className={alertTitleVariants()}>{title}</Box>}
+        <Box>{children}</Box>
+      </Box>
 
-      <Child className={alertActionVariants()}>
+      <Box as={Child} className={alertActionVariants()}>
         {action}
         {/* Dismiss button */}
         {onDismiss && (
@@ -118,8 +120,8 @@ const _Alert = <As extends AllowedAlertElements = "div">(
             <Icon icon={<XIcon />} size="sm" />
           </button>
         )}
-      </Child>
-    </Comp>
+      </Box>
+    </Box>
   );
 };
 
