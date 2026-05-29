@@ -18,6 +18,7 @@ export const LAYOUT_PROP_NAMES = [
   "mr",
   "mb",
   "ml",
+  "gap",
   "h",
   "hMin",
   "hMax",
@@ -46,6 +47,7 @@ export const generateLayoutClassNames = (layout: LayoutProps) => {
     mr: "unset",
     mb: "unset",
     ml: "unset",
+    "gap": "unset",
     h: "auto",
     hMin: "auto",
     hMax: "auto",
@@ -54,8 +56,8 @@ export const generateLayoutClassNames = (layout: LayoutProps) => {
     wMax: "auto",
     position: "static",
     overflow: "visible",
-    overflowX: "visible",
-    overflowY: "visible",
+    overflowX: "unset",
+    overflowY: "unset",
   } as LayoutProps;
 
   const mergedLayout = {
@@ -78,6 +80,7 @@ export const generateLayoutClassNames = (layout: LayoutProps) => {
     mr: marginRight,
     mb: marginBottom,
     ml: marginLeft,
+    gap,
     h,
     hMin,
     hMax,
@@ -106,6 +109,7 @@ export const generateLayoutClassNames = (layout: LayoutProps) => {
       marginRight: marginRight as SpacingType | "unset",
       marginBottom: marginBottom as SpacingType | "unset",
       marginLeft: marginLeft as SpacingType | "unset",
+      gap: gap as SpacingType | "unset",
       height: h as HeightType,
       heightMin: hMin as HeightType,
       heightMax: hMax as HeightType,

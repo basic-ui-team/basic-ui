@@ -18,6 +18,7 @@
 
     /* Strict type-checking */
     "strict": true,
+    "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
@@ -30,7 +31,8 @@
       "@storybook/*": ["./apps/storybook/src/*"],
     }
   },
-  "include": ["packages", "apps"],
+  "include": ["packages/*/src", "apps/*/src"],
+  "exclude": ["**/dist", "**/node_modules"],
   "references": [
     { "path": "./packages/core" },
     { "path": "./packages/tokens" },

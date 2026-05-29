@@ -23,7 +23,9 @@
   "scripts": {
     "generate": "tsx scripts/generate-theme-css.ts",
     "build": "pnpm generate && vite build",
+    "lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\" --cache",
     "preview": "vite preview",
+    "type-check": "tsc -b tsconfig.json",
     "test": "vitest",
     "test:watch": "vitest --watch"
   },

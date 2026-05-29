@@ -15,7 +15,6 @@ export function usePagination({
   if (currentPage === 0 || initialPage === 0) {
     // Don't throw in runtime — clamp/normalize instead. Warn developers about 0-indexed usage.
     // Tests and some consumers may pass 0 accidentally; prefer a soft warning and clamp behavior.
-    // eslint-disable-next-line no-console
     console.warn(
       "usePagination: currentPage and initialPage should be 1-indexed. Received 0 — value will be clamped to 1.",
     );

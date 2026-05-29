@@ -16,7 +16,9 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\" --cache",
+    "type-check": "tsc -b tsconfig.json"
   },
   "devDependencies": {
     "typescript": "^5.9.0"

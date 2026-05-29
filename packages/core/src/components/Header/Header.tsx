@@ -9,11 +9,12 @@ import {
   normalizeProps,
 } from "@core/lib";
 import { PolymorphicRef } from "@core/types/props";
+import { Box, BoxProps } from "../Box";
 
 const _Header = <As extends AllowedHeaderElements = "h1">(
   {
     as,
-    size = "h2",
+    size,
     weight = "normal",
     color = "default",
     align = "left",
@@ -48,24 +49,32 @@ const _Header = <As extends AllowedHeaderElements = "h1">(
       truncate: resolvedTruncate,
       wrap: resolvedWrap,
     }),
-    `${className} ${!isBuiltInColor && resolvedColor ? resolvedColor : ""}`,
+    className,
+    !isBuiltInColor && resolvedColor ? resolvedColor : null, // If it's a custom color (not one of the built-in options), apply it directly as a className (which should be a valid CSS color value)
   );
 
   // Accessibility: if header is visually truncated and the consumer didn't provide
   // a `title` or `aria-label`, expose the full text to assistive tech via both
   // `title` (hover) and `aria-label` (screen readers) when `children` is a string.
-  const accessibilityProps = resolvedTruncate && getTruncateAccessibilityProps(children, resolvedTruncate, rest);
+  const accessibilityProps =
+    resolvedTruncate && getTruncateAccessibilityProps(children, resolvedTruncate, rest);
 
   // Normalize props (non-mutating)
-  const restAny = normalizeProps(rest as Record<string, unknown>);
+  const normalizedRest = normalizeProps(rest);
 
   return (
-    <Comp ref={ref} className={resolvedStyles} {...accessibilityProps} {...(restAny as any)}>
+    <Box<As>
+      as={Comp}
+      ref={ref}
+      className={resolvedStyles}
+      {...accessibilityProps}
+      {...(normalizedRest as BoxProps<As>)}
+    >
       {children}
-    </Comp>
+    </Box>
   );
 };
 
 export const Header = forwardRefWithAs<HeaderOwnProps, AllowedHeaderElements>(_Header);
 
-(Header as any).displayName = "Header";
+(Header as unknown as { displayName?: string }).displayName = "Header";

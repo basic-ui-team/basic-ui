@@ -55,7 +55,6 @@ export const WithCustomLinkComponent: Story = {
     ...Default.args,
     // simple custom link component that prevents navigation so the story remains interactive
     linkComponent: ({ href, children, ...rest }: any) => (
-      // eslint-disable-next-line jsx-a11y/anchor-is-valid
       <a {...rest} href={String(href)} onClick={(e) => e.preventDefault()}>
         {children}
       </a>

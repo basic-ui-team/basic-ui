@@ -65,24 +65,48 @@ describe("variants", () => {
     ["wrap", "balance"],
     ["wrap", "pretty"],
   ])("should apply the correct classes for %s variant with value %s", (variant, value) => {
-    const props: Record<string, unknown> = { [variant]: value, as: "h1" as const };
-    const { container } = renderWithProviders(<Header {...(props as any)}>Test</Header>);
+    let element: React.ReactElement;
+
+    switch (variant) {
+      case "size":
+        element = <Header as="h1" size={value as "h1" | "h2" | "h3" | "h4" | "h5" | "h6"}>Test</Header>;
+        break;
+      case "weight":
+        element = <Header as="h1" weight={value as "normal" | "medium" | "semibold" | "bold"}>Test</Header>;
+        break;
+      case "color":
+        element = <Header as="h1" color={value as "default" | "primary" | "secondary"}>Test</Header>;
+        break;
+      case "align":
+        element = <Header as="h1" align={value as "left" | "center" | "right"}>Test</Header>;
+        break;
+      case "truncate":
+        element = <Header as="h1" truncate={value as boolean}>Test</Header>;
+        break;
+      case "wrap":
+        element = <Header as="h1" wrap={value as "nowrap" | "wrap" | "balance" | "pretty"}>Test</Header>;
+        break;
+      default:
+        element = <Header as="h1">Test</Header>;
+    }
+
+    const { container } = renderWithProviders(element);
     const el = container.querySelector("h1");
     if (!el) throw new Error("Expected heading element to be rendered");
 
     if (variant === "size") {
-      expect(el).toHaveClass(sizeMap[value as string]);
+      expect(el).toHaveClass(sizeMap[String(value)]);
     } else if (variant === "weight") {
-      expect(el).toHaveClass(weightMap[value as string]);
+      expect(el).toHaveClass(weightMap[String(value)]);
     } else if (variant === "color") {
-      expect(el).toHaveClass(colorMap[value as string]);
+      expect(el).toHaveClass(colorMap[String(value)]);
     } else if (variant === "align") {
-      expect(el).toHaveClass(alignMap[value as string]);
+      expect(el).toHaveClass(alignMap[String(value)]);
     } else if (variant === "truncate") {
       if (value) expect(el).toHaveClass("truncate");
       else expect(el).not.toHaveClass("truncate");
     } else if (variant === "wrap") {
-      expect(el).toHaveClass(wrapMap[value as string]);
+      expect(el).toHaveClass(wrapMap[String(value)]);
     }
   });
 });
@@ -95,7 +119,7 @@ describe("custom colors", () => {
 
   it("should not apply built-in color classes when a custom color is provided", () => {
     const { container } = renderWithProviders(<Header color="text-red-500">Test</Header>);
-    expect(container.firstChild).not.toHaveClass(headerVariants({ color: "primary" } as any));
+    expect(container.firstChild).not.toHaveClass(headerVariants({ color: "primary" }));
   });
 });
 

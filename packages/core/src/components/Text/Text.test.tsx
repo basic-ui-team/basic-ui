@@ -37,23 +37,31 @@ import { axe } from "jest-axe";
     ])("should apply the correct classes for %s variant with value %s", (variant, value) => {
       const props = { [variant]: value, as: "p" as const };
       const { container } = renderWithProviders(<Text {...props}>Test</Text>);
-      expect(container.querySelector("p")).toHaveClass(textVariants({ [variant]: value }));
+      const el = container.querySelector("p");
+      expect(el).toBeInTheDocument();
+      expect(el).toHaveClass(textVariants({ [variant]: value }));
     });
   });
 
   describe("custom colors", () => {
     it("should apply custom color classes", () => {
       const { container } = renderWithProviders(<Text color="text-red-500">Test</Text>);
-      expect(container.firstChild).toHaveClass("text-red-500");
+      const el = container.firstChild;
+      expect(el).toBeInTheDocument();
+      expect(el).toHaveClass("text-red-500");
     });
     it("should apply custom color classes with arbitrary values", () => {
       const { container } = renderWithProviders(<Text color="text-[var(--my-color)]">Test</Text>);
-      expect(container.firstChild).toHaveClass("text-[var(--my-color)]");
+      const el = container.firstChild;
+      expect(el).toBeInTheDocument();
+      expect(el).toHaveClass("text-[var(--my-color)]");
     });
 
     it("should not apply built-in color classes when a custom color is provided", () => {
       const { container } = renderWithProviders(<Text color="text-red-500">Test</Text>);
-      expect(container.firstChild).not.toHaveClass(textVariants({ color: "primary" }));
+      const el = container.firstChild;
+      expect(el).toBeInTheDocument();
+      expect(el).not.toHaveClass(textVariants({ color: "primary" }));
     });
   });
 

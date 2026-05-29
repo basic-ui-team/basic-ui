@@ -9,6 +9,7 @@ import type { AllowedTextElements, TextOwnProps, TextProps, builtInColorUnion } 
 import { textVariants } from "./text.variants";
 import { PolymorphicRef } from "@core/types/props";
 import { useResponsiveProps } from "@core/hooks";
+import { Box, BoxProps } from "../Box";
 
 const _Text = <As extends AllowedTextElements = "p">(
   {
@@ -18,7 +19,7 @@ const _Text = <As extends AllowedTextElements = "p">(
     color = "default",
     align = "left",
     truncate = false,
-    wrap = "nowrap",
+    wrap = "wrap",
     children,
     className,
     ...rest
@@ -62,15 +63,21 @@ const _Text = <As extends AllowedTextElements = "p">(
     resolvedTruncate && getTruncateAccessibilityProps(children, resolvedTruncate, rest);
 
   // Normalize props (non-mutating)
-  const restAny = normalizeProps(rest as Record<string, unknown>);
+  const normalizedRest = normalizeProps(rest as Record<string, unknown>);
 
   return (
-    <Comp ref={ref} className={resolvedStyles} {...accessibilityProps} {...(restAny as any)}>
+    <Box<As>
+      as={Comp}
+      ref={ref}
+      className={resolvedStyles}
+      {...accessibilityProps}
+      {...(normalizedRest as BoxProps<As>)}
+    >
       {children}
-    </Comp>
+    </Box>
   );
 };
 
 export const Text = forwardRefWithAs<TextOwnProps, AllowedTextElements>(_Text);
 
-(Text as any).displayName = "Text";
+(Text as unknown as { displayName?: string }).displayName = "Text";
