@@ -1,5 +1,6 @@
 import { ResponsiveValue } from "@core/hooks";
 import { CommonProps, RestrictedPropsWithAs } from "@core/types/props";
+import { LayoutProps } from "../Layout";
 
 export type AllowedTextElements = "span" | "p" | "div";
 
@@ -13,7 +14,7 @@ export type builtInColorUnion =
   | "warning"
   | "info";
 
-export interface TextOwnProps extends CommonProps {
+export interface TextOwnProps extends CommonProps, LayoutProps {
   /** Size of the text. @default "md" */
   size?: ResponsiveValue<"xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl">;
   /** Font weight. @default "normal" */
