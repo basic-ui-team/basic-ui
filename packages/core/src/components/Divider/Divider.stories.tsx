@@ -85,3 +85,13 @@ export const Labeled: Story = {
     </Flex>
   ),
 };
+
+export const InsetExample: Story = {
+  render: () => (
+    <Flex direction="column" gap="md">
+      <Divider inset="sm" />
+      <Divider inset="md" />
+      <Divider inset="lg" />
+    </Flex>
+  ),
+};

@@ -22,10 +22,10 @@ export interface DividerOwnProps extends CommonProps {
   /** Thickness of the divider line. "thin" for 1px, "medium" for 2px, "thick" for 4px, "none" for no line. Supports responsive values. @default "medium" */
   thickness?: ResponsiveValue<DividerThickness>;
 
-  /** Inset spacing from the edges. For horizontal dividers, this controls left/right padding; for vertical dividers, it controls top/bottom padding. Supports responsive values. @default 0 */
+  /** Inset spacing from the edges. For horizontal dividers, this controls left/right padding; for vertical dividers, it controls top/bottom padding. Supports responsive values. @default "none" */
   inset?: ResponsiveValue<SpacingType>;
 
-  /** Color of the divider line. Supports responsive values. Accepts built-in semantic tokens or a custom CSS color string. @default "muted" */
+  /** Color of the divider line. Supports responsive values. Accepts built-in semantic tokens or a custom CSS color string. @default "base" */
   color?: ResponsiveValue<DividerColor>;
 
   /** Optional label for the divider, used for accessibility purposes. If provided, the divider will have `role="separator"` and the label will be announced by screen readers. */

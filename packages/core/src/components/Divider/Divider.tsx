@@ -52,18 +52,13 @@ const _Divider = <As extends AllowedDividerElements = "hr">(
     inset: resolvedInset,
   } = useResponsiveProps({ direction, thickness, appearance, color, inset });
 
-  const insetClass =
-    resolvedInset !== "none"
-      ? resolvedDirection === "horizontal"
-        ? `px-${resolvedInset}`
-        : `py-${resolvedInset}`
-      : "";
-
   return (
     <Box
       as={Comp}
       m={m}
       p={p}
+      px={resolvedDirection === "horizontal" ? resolvedInset : undefined}
+      py={resolvedDirection === "vertical" ? resolvedInset : undefined}
       ref={ref}
       role={isDecorative ? "presentation" : "separator"}
       aria-label={isSemantic && label ? label : undefined}
@@ -75,7 +70,6 @@ const _Divider = <As extends AllowedDividerElements = "hr">(
           color: resolvedColor,
           thickness: resolvedThickness,
         }),
-        insetClass,
         className,
       )}
       style={style}
