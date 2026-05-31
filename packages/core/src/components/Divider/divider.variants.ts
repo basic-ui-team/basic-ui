@@ -3,7 +3,7 @@ import { cva } from "class-variance-authority";
 export const dividerVariants = cva("flex-shrink-0", {
   variants: {
     direction: {
-      horizontal: "h-px w-full",
+      horizontal: "h-px",
       vertical: "w-px h-full",
     },
     appearance: {

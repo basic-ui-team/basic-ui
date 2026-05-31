@@ -88,10 +88,22 @@ export const Labeled: Story = {
 
 export const InsetExample: Story = {
   render: () => (
-    <Flex direction="column" gap="md">
-      <Divider inset="sm" />
-      <Divider inset="md" />
-      <Divider inset="lg" />
-    </Flex>
+    <Box>
+      <Text mb="md">Horizontal Insets</Text>
+      <Flex direction="column" gap="md">
+        <Divider inset="sm" />
+        <Divider inset="md" />
+        <Divider inset="lg" />
+      </Flex>
+
+      <Text mt="lg" mb="md">
+        Vertical Insets
+      </Text>
+      <Flex direction="row" align="center" gap="xl" className="h-40">
+        <Divider direction="vertical" inset="sm" />
+        <Divider direction="vertical" inset="md" />
+        <Divider direction="vertical" inset="lg" />
+      </Flex>
+    </Box>
   ),
 };
