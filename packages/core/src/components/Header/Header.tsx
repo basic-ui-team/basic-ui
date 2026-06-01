@@ -5,11 +5,11 @@ import {
   cn,
   forwardRefWithAs,
   getTruncateAccessibilityProps,
-  isBuiltInHeaderColor,
   normalizeProps,
 } from "@core/lib";
 import { PolymorphicRef } from "@core/types/props";
 import { Box, BoxProps } from "../Box";
+import { BuiltInSemanticColors, isBuiltInSemanticColor } from "@core/theme";
 
 const _Header = <As extends AllowedHeaderElements = "h1">(
   {
@@ -37,13 +37,13 @@ const _Header = <As extends AllowedHeaderElements = "h1">(
     color: resolvedColor,
   } = useResponsiveProps({ size, weight, align, truncate, wrap, color });
 
-  const isBuiltInColor = isBuiltInHeaderColor(resolvedColor);
+  const isBuiltInColor = isBuiltInSemanticColor(resolvedColor);
 
   const resolvedStyles = cn(
     headerVariants({
       size: resolvedSize,
       weight: resolvedWeight,
-      color: isBuiltInColor ? resolvedColor : "custom",
+      color: isBuiltInColor ? (resolvedColor as BuiltInSemanticColors) : "custom",
       // Only apply align styles to block-level elements since text-align doesn't apply to inline elements
       align: resolvedAlign,
       truncate: resolvedTruncate,

@@ -20,6 +20,11 @@ export const headerVariants = cva("font-sans font-normal leading-tight", {
       default: "text-foreground-primary",
       primary: "text-primary-700 dark:text-primary-300",
       secondary: "text-secondary-700 dark:text-secondary-300",
+      muted: "text-foreground-muted",
+      error: "text-error",
+      success: "text-success",
+      warning: "text-warning",
+      info: "text-info",
       custom: "",
     },
     align: {

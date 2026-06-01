@@ -40,6 +40,11 @@ export const ColorVariants: Story = {
       <Header color="default">Default color</Header>
       <Header color="primary">Primary color</Header>
       <Header color="secondary">Secondary color</Header>
+      <Header color="muted">Muted color</Header>
+      <Header color="error">Error color</Header>
+      <Header color="success">Success color</Header>
+      <Header color="warning">Warning color</Header>
+      <Header color="info">Info color</Header>
       <Header color="text-red-500">Custom tailwind color</Header>
     </div>
   ),
@@ -159,7 +164,7 @@ export const Clickable: Story = {
     docs: {
       description: {
         story:
-          'When making headers interactive, place a semantic interactive element (`<a>` or `<button>`) inside the heading and ensure a visible focus indicator plus appropriate ARIA (e.g., `aria-expanded`). Avoid making the heading the interactive element itself.',
+          "When making headers interactive, place a semantic interactive element (`<a>` or `<button>`) inside the heading and ensure a visible focus indicator plus appropriate ARIA (e.g., `aria-expanded`). Avoid making the heading the interactive element itself.",
       },
     },
   },

@@ -1,6 +1,7 @@
 import { ResponsiveValue } from "@core/hooks";
 import { type CommonProps, RestrictedPropsWithAs } from "@core/types/props";
 import type { LayoutProps } from "../Layout";
+import { BuiltInSemanticColors } from "@core/theme";
 
 export interface HeaderOwnProps extends CommonProps, LayoutProps {
   /** Size of the header. @default "h2" */
@@ -8,7 +9,7 @@ export interface HeaderOwnProps extends CommonProps, LayoutProps {
   /** Font weight. @default "normal" */
   weight?: ResponsiveValue<"normal" | "medium" | "semibold" | "bold">;
   /** Color of the header. @default "default" */
-  color?: ResponsiveValue<"default" | "primary" | "secondary" | string>;
+  color?: ResponsiveValue<BuiltInSemanticColors | string>;
   /** Text alignment. @default "left" */
   align?: ResponsiveValue<"left" | "center" | "right">;
   /** Truncate the text. @default false */
