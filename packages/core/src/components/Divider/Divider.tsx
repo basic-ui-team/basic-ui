@@ -1,5 +1,5 @@
 import { PolymorphicRef } from "@core/types/props";
-import { AllowedDividerElements, DividerProps, DividerOwnProps } from "./divider.props";
+import { AllowedDividerElements, DividerProps, DividerOwnProps } from "./divider.types";
 import { useResponsiveProps } from "@core/hooks";
 import { Box, BoxProps } from "../Box";
 import { cn, forwardRefWithAs } from "@core/lib";

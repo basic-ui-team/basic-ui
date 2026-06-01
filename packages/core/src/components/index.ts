@@ -13,3 +13,5 @@ export { Text } from "./Text";
 export type { TextProps } from "./Text";
 export { Box } from "./Box";
 export type { BoxProps } from "./Box";
+export { Divider } from "./Divider";
+export type { DividerProps } from "./Divider";
