@@ -90,23 +90,13 @@ export const InsetExample: Story = {
   render: () => (
     <Box>
       <Text mb="md">Horizontal Insets</Text>
-      <Flex direction="column" gap="md">
+      <Flex direction="column" gap="md" pb="lg">
         <Divider inset="sm" />
         <Divider inset="md" />
         <Divider inset="lg" />
       </Flex>
-
-      <Text mt="lg" mb="md">
-        Vertical Insets
-      </Text>
-      <Flex direction="row" align="center" gap="xl" p="sm" className="border border-sm border-border-base h-40">
-        <Text>Top</Text>
-        <Divider direction="vertical" inset="sm" />
-        <Text>Middle</Text>
-        <Divider direction="vertical" inset="md" />
-        <Text>Bottom</Text>
-        <Divider direction="vertical" inset="lg" />
-      </Flex>
+      <Divider />
+      <Text mb="md" mt="sm">Note: Inset is not currently supported for vertical dividers.</Text>
     </Box>
   ),
 };
