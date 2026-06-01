@@ -15,3 +15,5 @@ export { Box } from "./Box";
 export type { BoxProps } from "./Box";
 export { Divider } from "./Divider";
 export type { DividerProps } from "./Divider";
+export { Spinner } from "./Spinner";
+export type { SpinnerProps, SpinnerColor, SpinnerSizes } from "./Spinner";
