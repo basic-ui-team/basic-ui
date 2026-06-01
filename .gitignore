@@ -24,3 +24,4 @@ out/
 *.tsbuildinfo
 .docs/temp-changeset.md
 packages/core/scripts/contrast.js
+.internal/
