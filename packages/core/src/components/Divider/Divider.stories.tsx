@@ -99,9 +99,12 @@ export const InsetExample: Story = {
       <Text mt="lg" mb="md">
         Vertical Insets
       </Text>
-      <Flex direction="row" align="center" gap="xl" className="h-40">
+      <Flex direction="row" align="center" gap="xl" p="sm" className="border border-sm border-border-base h-40">
+        <Text>Top</Text>
         <Divider direction="vertical" inset="sm" />
+        <Text>Middle</Text>
         <Divider direction="vertical" inset="md" />
+        <Text>Bottom</Text>
         <Divider direction="vertical" inset="lg" />
       </Flex>
     </Box>

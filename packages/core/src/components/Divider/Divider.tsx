@@ -58,7 +58,6 @@ const _Divider = <As extends AllowedDividerElements = "hr">(
       m={m}
       p={p}
       mx={resolvedDirection === "horizontal" ? resolvedInset : undefined}
-      my={resolvedDirection === "vertical" ? resolvedInset : undefined}
       ref={ref}
       role={isDecorative ? "presentation" : "separator"}
       aria-label={isSemantic && label ? label : undefined}

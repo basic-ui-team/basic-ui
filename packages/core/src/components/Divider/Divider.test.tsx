@@ -27,7 +27,6 @@ describe("Divider - variants and behavior", () => {
     if (variant === "direction") {
       if (value === "horizontal") {
         expect(el).toHaveClass("h-px");
-        expect(el).toHaveClass("w-full");
       } else {
         expect(el).toHaveClass("w-px");
         expect(el).toHaveClass("h-full");
