@@ -1,18 +1,9 @@
 import { ResponsiveValue } from "@core/hooks";
 import { CommonProps, RestrictedPropsWithAs } from "@core/types/props";
 import { LayoutProps } from "../Layout";
+import { BuiltInSemanticColors } from "@core/theme/colors";
 
 export type AllowedTextElements = "span" | "p" | "div";
-
-export type builtInColorUnion =
-  | "default"
-  | "muted"
-  | "primary"
-  | "secondary"
-  | "error"
-  | "success"
-  | "warning"
-  | "info";
 
 export interface TextOwnProps extends CommonProps, LayoutProps {
   /** Size of the text. @default "md" */
@@ -20,7 +11,7 @@ export interface TextOwnProps extends CommonProps, LayoutProps {
   /** Font weight. @default "normal" */
   weight?: ResponsiveValue<"normal" | "medium" | "semibold" | "bold">;
   /** Text color. @default "default" */
-  color?: ResponsiveValue<builtInColorUnion | string>;
+  color?: ResponsiveValue<BuiltInSemanticColors | string>;
   /** Text alignment. @default "left" */
   align?: ResponsiveValue<"left" | "center" | "right">;
   /** Truncate text with ellipsis. @default false */

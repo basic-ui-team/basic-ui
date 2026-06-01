@@ -30,12 +30,12 @@ export interface LayoutProps {
 
   gap?: ResponsiveValue<SpacingType | "unset">;
 
-  h?: ResponsiveValue<HeightType>;
-  hMin?: ResponsiveValue<HeightType>;
-  hMax?: ResponsiveValue<HeightType>;
-  w?: ResponsiveValue<WidthType>;
-  wMin?: ResponsiveValue<WidthType>;
-  wMax?: ResponsiveValue<WidthType>;
+  h?: ResponsiveValue<HeightType | "unset">;
+  hMin?: ResponsiveValue<HeightType | "unset">;
+  hMax?: ResponsiveValue<HeightType | "unset">;
+  w?: ResponsiveValue<WidthType | "unset">;
+  wMin?: ResponsiveValue<WidthType | "unset">;
+  wMax?: ResponsiveValue<WidthType | "unset">;
 
   position?: ResponsiveValue<PositionType>;
 

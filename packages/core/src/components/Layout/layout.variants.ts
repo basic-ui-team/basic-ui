@@ -222,6 +222,7 @@ export const layoutVariants = cva("", {
       hidden: "overflow-x-hidden",
       auto: "overflow-x-auto",
       scroll: "overflow-x-scroll",
+      unset: "",
     },
     overflowY: {
       visible: "overflow-y-visible",
@@ -246,12 +247,12 @@ export const layoutVariants = cva("", {
     marginRight: "unset",
     marginBottom: "unset",
     marginLeft: "unset",
-    height: "auto",
-    heightMin: "auto",
-    heightMax: "auto",
-    width: "auto",
-    widthMin: "auto",
-    widthMax: "auto",
+    height: "unset",
+    heightMin: "unset",
+    heightMax: "unset",
+    width: "unset",
+    widthMin: "unset",
+    widthMax: "unset",
   },
 });
 

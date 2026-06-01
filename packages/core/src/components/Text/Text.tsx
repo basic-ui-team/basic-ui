@@ -2,14 +2,14 @@ import {
   cn,
   forwardRefWithAs,
   getTruncateAccessibilityProps,
-  isBuiltInTextColor,
   normalizeProps,
 } from "@core/lib";
-import type { AllowedTextElements, TextOwnProps, TextProps, builtInColorUnion } from "./text.types";
+import type { AllowedTextElements, TextOwnProps, TextProps } from "./text.types";
 import { textVariants } from "./text.variants";
 import { PolymorphicRef } from "@core/types/props";
 import { useResponsiveProps } from "@core/hooks";
 import { Box, BoxProps } from "../Box";
+import { BuiltInSemanticColors, isBuiltInSemanticColor } from "@core/theme";
 
 const _Text = <As extends AllowedTextElements = "p">(
   {
@@ -37,15 +37,15 @@ const _Text = <As extends AllowedTextElements = "p">(
     color: resolvedColorRaw,
   } = useResponsiveProps({ size, weight, align, truncate, wrap, color });
 
-  const resolvedColor = resolvedColorRaw as builtInColorUnion | string;
+  const resolvedColor = resolvedColorRaw as BuiltInSemanticColors | string;
 
-  const isBuiltInColor = isBuiltInTextColor(resolvedColor);
+  const isBuiltInColor = isBuiltInSemanticColor(resolvedColor);
 
   const resolvedStyles = cn(
     textVariants({
       size: resolvedSize,
       weight: resolvedWeight,
-      color: isBuiltInColor ? (resolvedColor as builtInColorUnion) : "custom",
+      color: isBuiltInColor ? (resolvedColor as BuiltInSemanticColors) : "custom",
       // Only apply align styles to block-level elements since text-align doesn't apply to inline elements
       align: Comp === "span" ? undefined : resolvedAlign,
       truncate: resolvedTruncate,
