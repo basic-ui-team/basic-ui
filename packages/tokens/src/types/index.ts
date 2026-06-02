@@ -26,52 +26,52 @@ type SemanticState =
   | "info";
 
 /** Spacing scale: xs (4px) to 5xl (64px) */
-type SpacingTokens = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl";
+export type SpacingTokens = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl";
 
 /** Border radius: from sharp (0px) to full (9999px) */
-type RadiusTokens = "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "full";
+export type RadiusTokens = "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "full";
 
 /** Shadow depth levels */
-type ShadowTokens = "s1" | "s2" | "s3" | "s4" | "s5";
+export type ShadowTokens = "s1" | "s2" | "s3" | "s4" | "s5";
 
 /** Font size scale */
-type FontSizeTokens = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl";
+export type FontSizeTokens = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl";
 
 /** Font weight levels */
-type FontWeightTokens = "normal" | "medium" | "semibold" | "bold";
+export type FontWeightTokens = "normal" | "medium" | "semibold" | "bold";
 
 /** Line height for text */
-type LineHeightTokens = "tight" | "snug" | "normal" | "relaxed" | "loose";
+export type LineHeightTokens = "tight" | "snug" | "normal" | "relaxed" | "loose";
 
 /** Letter spacing (tracking) */
-type LetterSpacingTokens = "tight" | "normal" | "wide";
+export type LetterSpacingTokens = "tight" | "normal" | "wide";
 
 /** Font family names (map to CSS custom props that hold the actual stack) */
-type FontFamilyTokens = "sans" | "heading" | "mono";
+export type FontFamilyTokens = "sans" | "heading" | "mono";
 
 /** Motion/animation durations */
-type DurationTokens = "fast" | "normal" | "slow";
+export type DurationTokens = "fast" | "normal" | "slow";
 
 /** Animation easing functions */
-type EasingTokens = "in" | "out" | "spring";
+export type EasingTokens = "in" | "out" | "spring";
 
 /** Stacking context (z-index) for overlays */
-type ZIndexTokens = "dropdown" | "modal" | "toast" | "tooltip";
+export type ZIndexTokens = "dropdown" | "modal" | "toast" | "tooltip";
 
 /** Breakpoints for responsive design */
-type BreakpointTokens = "sm" | "md" | "lg" | "xl" | "2xl";
+export type BreakpointTokens = "sm" | "md" | "lg" | "xl" | "2xl";
 
 /** Container query breakpoints */
-//  type ContainerTokens = "sm" | "md" | "lg" | "xl" | "max";
+//  export type ContainerTokens = "sm" | "md" | "lg" | "xl" | "max";
 
 /** Opacity for various states */
-type OpacityTokens = "base" | "muted" | "disabled" | "hover" | "overlay";
+export type OpacityTokens = "base" | "muted" | "disabled" | "hover" | "overlay";
 
-type RampColors = {
+export type RampColors = {
   [role in ColorRampRole]: Partial<Record<ColorRampShade, string>>; // use Partial Record to allow missing shades
 };
 
-type SemanticColors = {
+export type SemanticColors = {
   [role in SemanticRole]: Partial<Record<SemanticState, string>>; // use Partial Record to allow missing states
 };
 
@@ -82,7 +82,7 @@ type SemanticColors = {
  * The color category is further structured into ramps and semantic roles for clarity.
  * All properties ultimately map to CSS custom properties for use in styling.
  */
-export interface ThemeConfig {
+export default interface ThemeConfig {
   color?: Partial<RampColors> & Partial<SemanticColors> & { white?: string; black?: string }; // Include base colors
   spacing?: Partial<Record<SpacingTokens, string>>;
   radius?: Partial<Record<RadiusTokens, string>>;
@@ -97,5 +97,5 @@ export interface ThemeConfig {
   zIndex?: Partial<Record<ZIndexTokens, number>>;
   breakpoint?: Partial<Record<BreakpointTokens, string>>;
   // container?: Partial<Record<ContainerTokens, string>>;
-  opacity?: Partial<Record<OpacityTokens, string>>;
+  opacity?: Partial<Record<OpacityTokens, string | number>>;
 }

@@ -36,4 +36,10 @@ export const TAILWIND_COLORS: Record<string, string> = {
   "--color-red-400": "oklch(70.4% 0.191 22.216)",
   "--color-red-500": "oklch(63.7% 0.237 25.331)",
   "--color-red-900": "oklch(39.6% 0.141 25.723)",
+
+  "--color-yellow-50": "oklch(98.7% 0.026 102.212)",
+  "--color-yellow-100": "oklch(97.3% 0.071 103.193)",
+  "--color-yellow-400": "oklch(85.2% 0.199 91.936)",
+  "--color-yellow-500": "oklch(79.5% 0.184 86.047)",
+  "--color-yellow-900": "oklch(42.1% 0.095 57.708)",
 };

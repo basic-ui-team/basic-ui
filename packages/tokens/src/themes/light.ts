@@ -1,4 +1,4 @@
-import { ThemeConfig } from "@tokens/types/index";
+import  ThemeConfig  from "@tokens/types/index";
 
 export const lightTheme: ThemeConfig = {
   color: {

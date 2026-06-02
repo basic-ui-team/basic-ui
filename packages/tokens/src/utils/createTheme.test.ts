@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createTheme } from "./createTheme";
-import type { ThemeConfig } from "./types";
+import type { ThemeConfig } from "../types";
 
 describe("createTheme", () => {
   let mockRoot: HTMLElement;
