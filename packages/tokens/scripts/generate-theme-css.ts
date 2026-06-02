@@ -111,11 +111,6 @@ export const darkTokens = ${JSON.stringify(darkThemeObj.tokens, null, 2)};
   mkdirSync(dirname(cssOutPath), { recursive: true });
   writeFileSync(cssOutPath, css, "utf-8");
 
-  // Also update the legacy path still used by the build copy step.
-  const legacyCssOutPath = resolve(__dirname, "../src/styles/theme.css");
-  mkdirSync(dirname(legacyCssOutPath), { recursive: true });
-  writeFileSync(legacyCssOutPath, css, "utf-8");
-
   const relPath = relative(process.cwd(), cssOutPath);
   console.log(`✓ Generated ${relPath}`);
   const tokensOutPath = resolve(baseOutPath, "tokens.ts");

@@ -11,10 +11,10 @@
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
-    "./styles/theme.css": "./dist/styles/theme.css",
-    "./presets": {
-      "import": "./dist/presets/index.js",
-      "types": "./dist/presets/index.d.ts"
+    "./styles/theme.css": "./dist/pkg/styles/theme.css",
+    "./pkg": {
+      "import": "./dist/pkg/index.js",
+      "types": "./dist/pkg/index.d.ts"
     }
   },
   "files": [
@@ -22,7 +22,7 @@
   ],
   "scripts": {
     "generate": "tsx scripts/generate-theme-css.ts",
-    "build": "pnpm generate && vite build",
+    "build": "pnpm generate && vite build && pnpm exec tsc -p tsconfig.build.json && node scripts/copy-css.mjs",
     "lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\" --cache",
     "preview": "vite preview",
     "type-check": "tsc -b tsconfig.json",

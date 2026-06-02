@@ -1,6 +1,9 @@
 // Tokens package — Complete token system with themes and utilities
 export const version = "0.2.1";
 
+// Token objects
+export { tokens, darkTokens } from "./pkg/tokens";
+
 // Types
 export type {
   RampColors,
