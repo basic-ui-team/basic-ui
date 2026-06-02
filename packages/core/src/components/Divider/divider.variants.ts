@@ -12,8 +12,14 @@ export const dividerVariants = cva("flex-shrink-0", {
       dotted: "border-t border-t-border-base border-dotted",
     },
     color: {
-      base: "border-border-base",
+      default: "border-border-base",
       muted: "border-border-muted",
+      primary: "border-primary-700 dark:border-primary-300",
+      secondary: "border-secondary-700 dark:border-secondary-300",
+      error: "border-border-error",
+      success: "border-border-success",
+      warning: "border-border-warning",
+      info: "border-border-info",
     },
     thickness: {
       thin: "border-t-[1px]",
@@ -57,7 +63,7 @@ export const dividerVariants = cva("flex-shrink-0", {
   defaultVariants: {
     direction: "horizontal",
     thickness: "medium",
-    color: "base",
+    color: "default",
     appearance: "solid",
   },
 });

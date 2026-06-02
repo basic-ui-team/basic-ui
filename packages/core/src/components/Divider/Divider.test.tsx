@@ -14,8 +14,14 @@ describe("Divider - variants and behavior", () => {
     ["appearance", "solid"],
     ["appearance", "dashed"],
     ["appearance", "dotted"],
-    ["color", "base"],
+    ["color", "default"],
     ["color", "muted"],
+    ["color", "primary"],
+    ["color", "secondary"],
+    ["color", "error"],
+    ["color", "success"],
+    ["color", "warning"],
+    ["color", "info"],
   ])("should apply the correct classes for %s variant with value %s", (variant, value) => {
     const props = { [variant]: value } as any;
     const { container } = renderWithProviders(<Divider {...props} />);
@@ -39,8 +45,14 @@ describe("Divider - variants and behavior", () => {
       if (value === "dashed") expect(el.className.includes("border-dashed")).toBe(true);
       if (value === "dotted") expect(el.className.includes("border-dotted")).toBe(true);
     } else if (variant === "color") {
-      if (value === "base") expect(el.className.includes("border-border-base")).toBe(true);
+      if (value === "default") expect(el.className.includes("border-border-base")).toBe(true);
       if (value === "muted") expect(el.className.includes("border-border-muted")).toBe(true);
+      if (value === "primary") expect(el.className.includes("border-primary-700")).toBe(true);
+      if (value === "secondary") expect(el.className.includes("border-secondary-700")).toBe(true);
+      if (value === "error") expect(el.className.includes("border-border-error")).toBe(true);
+      if (value === "success") expect(el.className.includes("border-border-success")).toBe(true);
+      if (value === "warning") expect(el.className.includes("border-border-warning")).toBe(true);
+      if (value === "info") expect(el.className.includes("border-border-info")).toBe(true);
     }
   });
 

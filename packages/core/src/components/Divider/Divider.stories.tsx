@@ -43,6 +43,45 @@ export const AppearanceVariants: Story = {
   ),
 };
 
+export const ColorVariants: Story = {
+  render: () => (
+    <Flex direction="column" gap="md">
+      <Box p="md">
+        <Text mb="md">Base Color</Text>
+        <Divider color="default" />
+      </Box>
+      <Box p="md">
+        <Text mb="md">Muted Color</Text>
+        <Divider color="muted" />
+      </Box>
+      <Box p="md">
+        <Text mb="md">Primary Color</Text>
+        <Divider color="primary" />
+      </Box>
+      <Box p="md">
+        <Text mb="md">Secondary Color</Text>
+        <Divider color="secondary" />
+      </Box>
+      <Box p="md">
+        <Text mb="md">Error Color</Text>
+        <Divider color="error" />
+      </Box>
+      <Box p="md">
+        <Text mb="md">Success Color</Text>
+        <Divider color="success" />
+      </Box>
+      <Box p="md">
+        <Text mb="md">Warning Color</Text>
+        <Divider color="warning" />
+      </Box>
+      <Box p="md">
+        <Text mb="md">Info Color</Text>
+        <Divider color="info" />
+      </Box>
+    </Flex>
+  ),
+};
+
 export const ThicknessVariants: Story = {
   render: () => (
     <Flex direction="column" gap="md">
@@ -96,7 +135,9 @@ export const InsetExample: Story = {
         <Divider inset="lg" />
       </Flex>
       <Divider />
-      <Text mb="md" mt="sm">Note: Inset is not currently supported for vertical dividers.</Text>
+      <Text mb="md" mt="sm">
+        Note: Inset is not currently supported for vertical dividers.
+      </Text>
     </Box>
   ),
 };
