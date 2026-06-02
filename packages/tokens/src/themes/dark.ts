@@ -1,0 +1,63 @@
+import { lightTheme } from "./light";
+import { ThemeConfig } from "@tokens/types/index";
+
+export const darkTheme: ThemeConfig = {
+  ...lightTheme,
+  color: {
+    ...lightTheme.color,
+    bg: {
+      base: "var(--color-black)",
+      muted: "var(--color-neutral-900)",
+      hover: "var(--color-neutral-800)",
+      active: "var(--color-neutral-700)",
+      disabled: "var(--color-neutral-900)",
+      inverted: "var(--color-white)",
+      error: "var(--color-red-900)",
+      success: "var(--color-green-900)",
+      warning: "var(--color-yellow-900)",
+      info: "var(--color-blue-900)",
+    },
+    fg: {
+      base: "var(--color-white)",
+      muted: "var(--color-neutral-300)",
+      hover: "var(--color-neutral-100)",
+      active: "var(--color-neutral-100)",
+      disabled: "var(--color-neutral-500)",
+      inverted: "var(--color-black)",
+      error: "var(--color-red-400)",
+      success: "var(--color-green-400)",
+      warning: "var(--color-yellow-400)",
+      info: "var(--color-blue-400)",
+    },
+    surface: {
+      base: "var(--color-neutral-900)",
+      hover: "var(--color-neutral-800)",
+      active: "var(--color-neutral-700)",
+      disabled: "var(--color-neutral-900)",
+      inverted: "var(--color-neutral-50)",
+      error: "var(--color-red-900)",
+      success: "var(--color-green-900)",
+      warning: "var(--color-yellow-900)",
+      info: "var(--color-blue-900)",
+    },
+    border: {
+      base: "var(--color-neutral-700)",
+      muted: "var(--color-neutral-800)",
+      hover: "var(--color-neutral-600)",
+      active: "var(--color-neutral-500)",
+      disabled: "var(--color-neutral-900)",
+      inverted: "var(--color-neutral-100)",
+      error: "var(--color-red-400)",
+      success: "var(--color-green-400)",
+      warning: "var(--color-yellow-400)",
+      info: "var(--color-blue-400)",
+    },
+  },
+  shadow: {
+    s1: "0 1px 2px 0 hsl(0 0% 100% / 0.1)",
+    s2: "0 1px 2px 0 hsl(0 0% 100% / 0.08), 0 4px 6px -1px hsl(0 0% 100% / 0.12)",
+    s3: "0 1px 3px 0 hsl(0 0% 100% / 0.1), 0 4px 6px -2px hsl(0 0% 100% / 0.1), 0 10px 15px -3px hsl(0 0% 100% / 0.12)",
+    s4: "0 1px 3px 0 hsl(0 0% 100% / 0.1), 0 4px 6px -2px hsl(0 0% 100% / 0.05), 0 10px 15px -3px hsl(0 0% 100% / 0.12), 0 20px 25px -5px hsl(0 0% 100% / 0.12)",
+    s5: "0 1px 3px 0 hsl(0 0% 100% / 0.1), 0 4px 6px -2px hsl(0 0% 100% / 0.05), 0 10px 15px -3px hsl(0 0% 100% / 0.12), 0 20px 25px -5px hsl(0 0% 100% / 0.12), 0 25px 50px -12px hsl(0 0% 100% / 0.15)",
+  },
+};
