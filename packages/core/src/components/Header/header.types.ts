@@ -1,6 +1,6 @@
 import { ResponsiveValue } from "@core/hooks";
 import { type CommonProps, RestrictedPropsWithAs } from "@core/types/props";
-import type { LayoutProps } from "../Layout";
+import type { LayoutProps } from "../../lib/layout";
 import { BuiltInSemanticColors } from "@core/theme";
 
 export interface HeaderOwnProps extends CommonProps, LayoutProps {

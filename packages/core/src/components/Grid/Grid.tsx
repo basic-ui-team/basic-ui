@@ -5,7 +5,7 @@ import {
   type GridOwnProps,
   ColRowNumber,
 } from "./grid.types";
-import type { SpacingType } from "@core/components/Layout/layout.types";
+import type { SpacingType } from "@core/lib/layout/layout.types";
 import { useResponsiveProps } from "@core/hooks";
 import { gridVariants } from "./grid.variants";
 import { cn, forwardRefWithAs, normalizeProps } from "@core/lib";

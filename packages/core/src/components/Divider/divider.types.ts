@@ -1,6 +1,6 @@
 import { ResponsiveValue } from "@core/hooks";
 import { CommonProps, RestrictedPropsWithAs } from "@core/types/props";
-import { SpacingType } from "../Layout/layout.types";
+import { SpacingType } from "../../lib/layout/layout.types";
 
 export type DividerDirection = "horizontal" | "vertical";
 export type DividerAppearance = "solid" | "dashed" | "dotted";

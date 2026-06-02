@@ -11,19 +11,15 @@
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
-    "./components/*": {
-      "import": "./dist/components/*.js",
-      "types": "./dist/components/*.d.ts"
-    },
-    "./hooks": {
-      "import": "./dist/hooks/index.js",
-      "types": "./dist/hooks/index.d.ts"
-    },
-    "./lib": {
-      "import": "./dist/lib/index.js",
-      "types": "./dist/lib/index.d.ts"
-    },
-    "./styles.css": "./dist/styles.css"
+    "./styles.css": "./dist/styles.css",
+    "./package.json": "./package.json"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*"
+      ]
+    }
   },
   "files": [
     "dist"

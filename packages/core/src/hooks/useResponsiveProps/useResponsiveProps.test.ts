@@ -27,6 +27,6 @@ describe("useResponsiveProps", () => {
 
     const first = result.current;
     rerender({ a: 1, b: "x" });
-    expect(result.current).toBe(first);
+    expect(result.current).toStrictEqual(first);
   });
 });

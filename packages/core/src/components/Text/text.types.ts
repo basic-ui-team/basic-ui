@@ -1,6 +1,6 @@
 import { ResponsiveValue } from "@core/hooks";
 import { CommonProps, RestrictedPropsWithAs } from "@core/types/props";
-import { LayoutProps } from "../Layout";
+import { LayoutProps } from "../../lib/layout";
 import { BuiltInSemanticColors } from "@core/theme/colors";
 
 export type AllowedTextElements = "span" | "p" | "div";

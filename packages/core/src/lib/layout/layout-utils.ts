@@ -1,7 +1,13 @@
-import LayoutProps, { HeightType, OverflowType, PositionType, SpacingType, WidthType } from "./layout.types";
+import LayoutProps, {
+  HeightType,
+  OverflowType,
+  PositionType,
+  SpacingType,
+  WidthType,
+} from "./layout.types";
 import { cn } from "@core/lib";
 import { useResponsiveProps } from "@core/hooks";
-import { layoutVariants } from "./layout.variants";
+import layoutVariants from "./layout.variants";
 
 export const LAYOUT_PROP_NAMES = [
   "p",
@@ -47,7 +53,7 @@ export const generateLayoutClassNames = (layout: LayoutProps) => {
     mr: "unset",
     mb: "unset",
     ml: "unset",
-    "gap": "unset",
+    gap: "unset",
     h: "unset",
     hMin: "unset",
     hMax: "unset",

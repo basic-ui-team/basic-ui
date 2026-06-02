@@ -1,6 +1,6 @@
 import { ResponsiveValue } from "@core/hooks";
 import { CommonProps, RestrictedPropsWithAs } from "@core/types/props";
-import type { LayoutProps, SpacingType } from "@core/components/Layout/layout.types";
+import type { LayoutProps, SpacingType } from "@core/lib/layout/layout.types";
 
 const flexValues = ["row", "column", "row-reverse", "column-reverse"] as const;
 const justifyValues = ["start", "end", "center", "between", "around", "evenly", "stretch"] as const;
