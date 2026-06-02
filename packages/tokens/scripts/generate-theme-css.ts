@@ -22,9 +22,9 @@ function resolveVariableReference(
   const varName = varMatch[1];
 
   // Check if the variable name exists in our Tailwind colors mapping
-  if (TAILWIND_COLORS[varName]) {
-    return TAILWIND_COLORS[varName];
-  }
+  // if (TAILWIND_COLORS[varName]) {
+  //   return TAILWIND_COLORS[varName];
+  // }
 
   // if it doesn't, check if it exists in the theme properties and if not, return the original value and log a warning
   const resolvedValue = allProps[varName];
