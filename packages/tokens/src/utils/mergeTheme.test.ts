@@ -45,14 +45,14 @@ describe("mergeTheme", () => {
 
     // Check merged values are applied
     Object.entries(overrideValues).forEach(([key, value]) => {
-      expect((result[categoryName] as any)[key]).toBe(value);
+      expect((result[categoryName] as any)[key]).toStrictEqual(value);
     });
 
     // Check base values are preserved
     if (baseValues) {
       Object.keys(baseValues).forEach((key) => {
         if (!(key in overrideValues)) {
-          expect((result[categoryName] as any)[key]).toBe(baseValues[key]);
+          expect((result[categoryName] as any)[key]).toStrictEqual(baseValues[key]);
         }
       });
     }
@@ -78,5 +78,21 @@ describe("mergeTheme", () => {
     expect(result.color?.primary?.[50]).toBe("#0066FF");
     expect(result.spacing?.md).toBe("2rem");
     expect(result.fontSize?.md).toBe("1.125rem");
+  });
+
+  it("deep merges nested objects without clobbering sibling keys", () => {
+    const baseNested: ThemeConfig = {
+      color: {
+        primary: { 50: "#AAAAAA", 100: "#BBBBBB" },
+      },
+    };
+
+    const overrideNested: Partial<ThemeConfig> = {
+      color: { primary: { 50: "#FF0000" } },
+    };
+
+    const result = mergeTheme(baseNested, overrideNested);
+    expect(result.color?.primary?.[50]).toBe("#FF0000");
+    expect(result.color?.primary?.[100]).toBe("#BBBBBB");
   });
 });

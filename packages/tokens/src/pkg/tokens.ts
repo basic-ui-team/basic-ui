@@ -1,7 +1,7 @@
 /* Auto-generated — run `pnpm generate` in packages/tokens to regenerate */
 /**
- * Exported tokens that map to the tailwind theme variable names for use in programatic contexts.
- * 
+ * Exported tokens that map to the tailwind theme variable names for use in programmatic contexts.
+ *
  * E.g., tokens.color.bg.base → "bg-base" which can be used in tailwind classes in variant files like: "bg-(tokens.color.bg.base)" which resolves to "bg-bg-base" and then to the actual color value in the theme.
  * This allows us to maintain a single source of truth for token names that can be used both in CSS and in JS/TS contexts without hardcoding strings.
  */
@@ -398,4 +398,4 @@ export const darkTokens = {
     "hover": "hover",
     "overlay": "overlay"
   }
-}; // 
+};
