@@ -1,5 +1,5 @@
 // Tokens package — Complete token system with themes and utilities
-export const version = "0.0.1";
+export const version = "0.2.1";
 
 // Types
 export type {
