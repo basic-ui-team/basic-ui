@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import type { ResponsiveValue } from "../useResponsive/types";
-import { useBreakpoint } from "..";
+import { useBreakpoint } from "../useBreakpoint/useBreakpoint";
 
 /**
  * Hook to resolve a set of responsive props in a single call.
@@ -18,7 +18,7 @@ export function useResponsiveProps<T extends Record<string, ResponsiveValue<any>
     [orderedKeys, props],
   );
 
-  // Call useResponsive for each prop in a deterministic order
+  // Resolve responsive props in a deterministic order
   return useMemo(() => {
     const result = {} as any;
 
@@ -27,7 +27,7 @@ export function useResponsiveProps<T extends Record<string, ResponsiveValue<any>
       if (value === undefined) continue;
 
       // Resolve responsive value inline (no extra hook calls)
-      if (typeof value === "object" && value !== null && !Array.isArray(value)) {
+      if (typeof value === "object" && value !== null && !Array.isArray(value) && "base" in value) {
         // Walk down from current breakpoint to base
         result[key] = resolveBreakpointValue(value, currentBreakpoint);
       } else {
