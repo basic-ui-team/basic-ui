@@ -25,7 +25,12 @@ export default defineConfig([
     languageOptions: {
       parser: tsParser,
       parserOptions: {
-        project: true,
+        project: [
+          "./tsconfig.json",
+          "./packages/*/tsconfig.json",
+          "./packages/*/tsconfig.scripts.json",
+          "./apps/*/tsconfig.json"
+        ],
       },
     },
     rules: {},

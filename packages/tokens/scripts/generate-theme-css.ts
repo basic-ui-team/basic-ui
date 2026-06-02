@@ -1,110 +1,76 @@
-/**
- * Generate theme.css from TypeScript preset sources.
- * Run with: pnpm generate
- *
- * This script reads light.ts and dark.ts presets and writes
- * packages/tokens/src/styles/theme.css with @theme block for Tailwind CSS 4.
- * 
- * Approach:
- * - Primitives (color ramps, spacing, etc.) defined in @theme
- * - Semantic tokens resolved to actual values (no var() in @theme for proper utility generation)
- * - Dark mode overrides in .dark selector
- * - Prefix utilities with "bui:" to prevent conflicts
- */
-
-import { lightTheme } from "../src/presets/light.ts";
-import { darkTheme } from "../src/presets/dark.ts";
-import { themeToCustomProperties } from "../src/utils/themeToCustomProperties.ts";
+import { lightTheme } from "../src/themes/light";
+import { darkTheme } from "../src/themes/dark";
+import { TAILWIND_COLORS } from "../src/constants";
+import { themeToCSSVariables } from "../src/utils/themeToCSSVariables";
 import { writeFileSync, mkdirSync } from "node:fs";
 import { resolve, dirname, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-type ThemeObj = Record<string, Record<string, string | number>>;
-
-/** Tailwind's built-in color palette (subset we use) */
-const TAILWIND_COLORS: Record<string, string> = {
-  "--color-red-300": "oklch(80.8% .114 19.571)",
-  "--color-red-400": "oklch(70.4% .191 22.216)",
-  "--color-red-500": "oklch(63.7% .237 25.331)",
-  "--color-red-900": "oklch(39.6% .141 25.723)",
-  "--color-green-300": "oklch(87.1% .15 154.449)",
-  "--color-green-400": "oklch(79.2% .209 151.711)",
-  "--color-green-500": "oklch(72.3% .219 149.579)",
-  "--color-green-900": "oklch(39.3% .095 152.535)",
-  "--color-yellow-300": "oklch(90.5% .182 98.111)",
-  "--color-yellow-400": "oklch(85.2% .199 91.936)",
-  "--color-yellow-500": "oklch(79.5% .184 86.047)",
-  "--color-yellow-900": "oklch(42.1% .095 57.708)",
-  "--color-blue-300": "oklch(80.9% .105 251.813)",
-  "--color-blue-400": "oklch(70.7% .165 254.624)",
-  "--color-blue-500": "oklch(62.3% .214 259.815)",
-  "--color-blue-900": "oklch(37.9% .146 265.522)",
-  // Non-prefixed variants (for backward compatibility)
-  "--green-900": "oklch(39.3% .095 152.535)",
-};
-
-/** 
- * Resolves var() references to actual values.
- * E.g., "var(--neutral-50)" -> "hsl(210 20% 97%)"
- */
-function resolveVarReferences(
+// NOTE: Can move this to utils so we can also use it in custom theme resolution at runtime.
+function resolveVariableReference(
   value: string | number,
-  allProps: Record<string, string | number>
+  allProps: Record<string, string | number>,
 ): string | number {
+  // If it's not a string, return as is (e.g., numbers for fontWeight)
   if (typeof value !== "string") return value;
 
+  // first check if it's a var() reference
   const varMatch = value.match(/^var\((--[a-z0-9-]+)\)$/);
-  if (!varMatch) return value;
+  if (!varMatch) return value; // not a var() reference, return as is
 
-  const refName = varMatch[1];
+  // it's a var() reference, extract the variable name
+  const varName = varMatch[1];
 
-  // Check Tailwind built-in colors first
-  if (TAILWIND_COLORS[refName]) {
-    return TAILWIND_COLORS[refName];
+  // Check if the variable name exists in our Tailwind colors mapping
+  if (TAILWIND_COLORS[varName]) {
+    return TAILWIND_COLORS[varName];
   }
 
-  // Resolve from our primitives
-  const resolvedValue = allProps[refName];
+  // if it doesn't, check if it exists in the theme properties and if not, return the original value and log a warning
+  const resolvedValue = allProps[varName];
   if (resolvedValue === undefined) {
-    console.warn(`⚠️  Cannot resolve ${refName}`);
+    console.warn(`⚠️  Cannot resolve ${varName}`);
     return value;
   }
 
-  // Recursively resolve if the resolved value is also a var()
-  return resolveVarReferences(resolvedValue, allProps);
+  // if it resolves to another var() reference, recursively resolve it (handle nested references)
+  return resolveVariableReference(resolvedValue, allProps);
 }
 
-const light = lightTheme as unknown as ThemeObj;
-const lightProps = themeToCustomProperties(light) as Record<string, string | number>;
-const dark = darkTheme as unknown as ThemeObj;
-const darkPropsRaw = themeToCustomProperties(dark as any) as Record<string, string | number>;
+function generateTheme() {
+  const lightThemeObj = themeToCSSVariables(lightTheme);
+  const darkThemeObj = themeToCSSVariables(darkTheme);
 
-// Resolve all var() references in light theme
-const resolvedLightProps: Record<string, string | number> = {};
-for (const [varName, value] of Object.entries(lightProps)) {
-  resolvedLightProps[varName] = resolveVarReferences(value, lightProps);
-}
+  const lightProps = lightThemeObj.customProperties;
+  const darkProps = darkThemeObj.customProperties;
 
-// Resolve all var() references in dark theme and compute diff
-const resolvedDarkProps: Record<string, string | number> = {};
-for (const [varName, value] of Object.entries(darkPropsRaw)) {
-  const resolved = resolveVarReferences(value, { ...lightProps, ...darkPropsRaw });
-  if (resolvedLightProps[varName] !== resolved) {
-    resolvedDarkProps[varName] = resolved;
-  }
-}
+  // Resolve var() references in light theme properties
+  const resolvedLightProps: Record<string, string | number> = {};
+  Object.entries(lightProps).forEach(([key, value]) => {
+    resolvedLightProps[key] = resolveVariableReference(value, lightProps);
+  });
 
-const themeCSSVars = Object.entries(resolvedLightProps)
-  .map(([varName, value]) => `  ${varName}: ${value};`)
-  .join("\n");
+  // Resolve var() references in dark theme properties
+  const resolvedDarkProps: Record<string, string | number> = {};
+  Object.entries(darkProps).forEach(([key, value]) => {
+    resolvedDarkProps[key] = resolveVariableReference(value, {
+      ...resolvedLightProps,
+      ...darkProps,
+    });
+  });
 
-const darkCSSVars = Object.entries(resolvedDarkProps)
-  .map(([varName, value]) => `  ${varName}: ${value};`)
-  .join("\n");
+  // Generate CSS string for light theme
+  const lightCSS = Object.entries(resolvedLightProps)
+    .map(([key, value]) => `  ${key}: ${value};`)
+    .join("\n");
 
-const css = `/* Auto-generated — run \`pnpm generate\` in packages/tokens to regenerate */
+  // Generate CSS string for dark theme (only include overrides that differ from light theme)
+  const darkCSS = Object.entries(resolvedDarkProps)
+    .filter(([key, value]) => resolvedLightProps[key] !== value) // only include if different from light theme
+    .map(([key, value]) => `  ${key}: ${value};`)
+    .join("\n");
+
+  const css = `/* Auto-generated — run \`pnpm generate\` in packages/tokens to regenerate */
 
 @import "tailwindcss";
 
@@ -112,19 +78,59 @@ const css = `/* Auto-generated — run \`pnpm generate\` in packages/tokens to r
 /* All design tokens with resolved values for Tailwind utility generation */
 /* Utilities will be prefixed with "bui:" (e.g., bui:bg-background-primary) */
 @theme {
-${themeCSSVars}
+${lightCSS}
 }
 
 /* ===== DARK MODE OVERRIDES ===== */
 /* Apply these overrides when .dark class is present on html/body */
 .dark {
-${darkCSSVars}
+${darkCSS}
 }
 `;
 
-const outPath = resolve(__dirname, "../src/styles/theme.css");
-mkdirSync(dirname(outPath), { recursive: true });
-writeFileSync(outPath, css, "utf-8");
+  // We will also write the resolved tokens to a TypeScript file for programmatic access (e.g., in styled-components, CVA variants, or vanilla CSS)
+  const tokens = `/* Auto-generated — run \`pnpm generate\` in packages/tokens to regenerate */
+/**
+ * Exported tokens that map to the tailwind theme variable names for use in programmatic contexts.
+ *
+ * E.g., tokens.color.bg.base → "bg-base" which can be used in tailwind classes in variant files like: "bg-(tokens.color.bg.base)" which resolves to "bg-bg-base" and then to the actual color value in the theme.
+ * This allows us to maintain a single source of truth for token names that can be used both in CSS and in JS/TS contexts without hardcoding strings.
+ */
 
-const relPath = relative(process.cwd(), outPath);
-console.log(`✓ Generated ${relPath}`);
+export const tokens = ${JSON.stringify(lightThemeObj.tokens, null, 2)};
+
+export const darkTokens = ${JSON.stringify(darkThemeObj.tokens, null, 2)};
+`;
+
+  // Write generated CSS to src/pkg (new generated artifacts location)
+  const __dirname = dirname(fileURLToPath(import.meta.url));
+  const baseOutPath = resolve(__dirname, "../src/pkg");
+  mkdirSync(baseOutPath, { recursive: true });
+
+  const cssOutPath = resolve(baseOutPath, "styles/theme.css");
+  mkdirSync(dirname(cssOutPath), { recursive: true });
+  writeFileSync(cssOutPath, css, "utf-8");
+
+  // Also update the legacy path still used by the build copy step.
+  const legacyCssOutPath = resolve(__dirname, "../src/styles/theme.css");
+  mkdirSync(dirname(legacyCssOutPath), { recursive: true });
+  writeFileSync(legacyCssOutPath, css, "utf-8");
+
+  const relPath = relative(process.cwd(), cssOutPath);
+  console.log(`✓ Generated ${relPath}`);
+  const tokensOutPath = resolve(baseOutPath, "tokens.ts");
+  writeFileSync(tokensOutPath, tokens, "utf-8");
+  const relTokensPath = relative(process.cwd(), tokensOutPath);
+  console.log(`✓ Generated ${relTokensPath}`);
+
+  // we generate an index.ts file that re-exports the tokens for easier imports in other packages
+  const indexOutPath = resolve(baseOutPath, "index.ts");
+  const indexContent = `/* Auto-generated — run \`pnpm generate\` in packages/tokens to regenerate */
+export { tokens, darkTokens } from "./tokens";
+`;
+  writeFileSync(indexOutPath, indexContent, "utf-8");
+  const relIndexPath = relative(process.cwd(), indexOutPath);
+  console.log(`✓ Generated ${relIndexPath}`);
+}
+
+generateTheme();

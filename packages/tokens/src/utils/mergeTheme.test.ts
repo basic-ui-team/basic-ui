@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { mergeTheme } from "./mergeTheme";
-import type { ThemeConfig } from "../types";
+import type ThemeConfig from "../types/index";
 
 const baseTheme: ThemeConfig = {
   color: {
-    "background-secondary": "hsl(210 20% 97%)",
-    "primary-50": "hsl(119 43% 52%)",
-    "foreground-primary": "hsl(210 10% 18%)",
+    bg: { base: "hsl(210 20% 97%)" },
+    primary: { 50: "hsl(119 43% 52%)" },
+    fg: { base: "hsl(210 10% 18%)" },
   },
   spacing: { md: "1rem", sm: "0.5rem", lg: "1.5rem" },
   radius: { md: "0.375rem", sm: "0.25rem" },
@@ -25,7 +25,7 @@ const baseTheme: ThemeConfig = {
 
 describe("mergeTheme", () => {
   it.each<[string, Partial<ThemeConfig>]>([
-    ["color", { color: { "primary-50": "#FF0000" } }],
+    ["color", { color: { primary: { 50: "#FF0000" } } }],
     ["spacing", { spacing: { md: "1.5rem" } }],
     ["fontSize", { fontSize: { md: "1.125rem" } }],
     ["fontWeight", { fontWeight: { bold: 800 } }],
@@ -45,14 +45,14 @@ describe("mergeTheme", () => {
 
     // Check merged values are applied
     Object.entries(overrideValues).forEach(([key, value]) => {
-      expect((result[categoryName] as any)[key]).toBe(value);
+      expect((result[categoryName] as any)[key]).toStrictEqual(value);
     });
 
     // Check base values are preserved
     if (baseValues) {
       Object.keys(baseValues).forEach((key) => {
         if (!(key in overrideValues)) {
-          expect((result[categoryName] as any)[key]).toBe(baseValues[key]);
+          expect((result[categoryName] as any)[key]).toStrictEqual(baseValues[key]);
         }
       });
     }
@@ -63,20 +63,36 @@ describe("mergeTheme", () => {
   });
 
   it("preserves base values across multiple categories", () => {
-    const result = mergeTheme(baseTheme, { color: { "primary-50": "#FF0000" } });
+    const result = mergeTheme(baseTheme, { color: { primary: { 50: "#FF0000" } } });
     expect(result.spacing).toEqual(baseTheme.spacing);
     expect(result.radius).toEqual(baseTheme.radius);
   });
 
   it("merges multiple categories simultaneously", () => {
     const override = {
-      color: { "primary-50": "#0066FF" },
+      color: { primary: { 50: "#0066FF" } },
       spacing: { md: "2rem" },
       fontSize: { md: "1.125rem" },
     };
     const result = mergeTheme(baseTheme, override);
-    expect(result.color?.["primary-50"]).toBe("#0066FF");
+    expect(result.color?.primary?.[50]).toBe("#0066FF");
     expect(result.spacing?.md).toBe("2rem");
     expect(result.fontSize?.md).toBe("1.125rem");
+  });
+
+  it("deep merges nested objects without clobbering sibling keys", () => {
+    const baseNested: ThemeConfig = {
+      color: {
+        primary: { 50: "#AAAAAA", 100: "#BBBBBB" },
+      },
+    };
+
+    const overrideNested: Partial<ThemeConfig> = {
+      color: { primary: { 50: "#FF0000" } },
+    };
+
+    const result = mergeTheme(baseNested, overrideNested);
+    expect(result.color?.primary?.[50]).toBe("#FF0000");
+    expect(result.color?.primary?.[100]).toBe("#BBBBBB");
   });
 });

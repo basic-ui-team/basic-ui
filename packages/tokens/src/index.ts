@@ -3,8 +3,8 @@ export const version = "0.2.1";
 
 // Types
 export type {
-  ThemeConfig,
-  SemanticColorTokens,
+  RampColors,
+  SemanticColors,
   SpacingTokens,
   RadiusTokens,
   ShadowTokens,
@@ -19,17 +19,18 @@ export type {
   // ContainerTokens,
   BreakpointTokens,
   OpacityTokens,
-} from "./types";
+} from "./types/index";
+
+import type ThemeConfig from "./types/index";
+export type { ThemeConfig };
 
 // Core functions
-import { createTheme } from "./createTheme";
-export { createTheme };
-export type { ThemeInput } from "./createTheme";
+export type { ThemeInput } from "./utils/createTheme";
 
 // Presets & Themes
-import { lightTheme, darkTheme } from "./presets";
+import { lightTheme, darkTheme } from "./themes";
 export { lightTheme, darkTheme };
 
 // Utilities
-export { mergeTheme, themeToCustomProperties } from "./utils"; // cssVar and tokenName are now internal utilities, not exported
+export { mergeTheme, themeToCSSVariables, createTheme, type ThemeObj } from "./utils";
 export { PREFIX_MAP } from "./constants";

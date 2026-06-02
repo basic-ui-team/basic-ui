@@ -1,3 +1,4 @@
 export { mergeTheme } from "./mergeTheme";
-export { tokenName, cssVar, convertToKebabCase } from "./utils";
-export { themeToCustomProperties } from "./themeToCustomProperties";
+export { createTheme } from "./createTheme";
+export { tokenName } from "./utils";
+export { themeToCSSVariables, type ThemeObj } from "./themeToCSSVariables";

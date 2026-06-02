@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createTheme } from "./createTheme";
-import type { ThemeConfig } from "./types";
+import type  ThemeConfig from "../types/index";
 
 describe("createTheme", () => {
   let mockRoot: HTMLElement;
@@ -26,7 +26,7 @@ describe("createTheme", () => {
 
   describe("light theme injection", () => {
     it.each<[string, Partial<ThemeConfig>]>([
-      ["colors", { color: { "primary-50": "#FF0000", "foreground-primary": "#CC0000" } }],
+      ["colors", { color: { primary: {50: "#FF0000"}, fg: { base: "#CC0000" } } }],
       ["spacing", { spacing: { md: "2rem", lg: "3rem" } }],
       ["radius", { radius: { md: "0.5rem" } }],
       ["fontSize", { fontSize: { md: "1.125rem" } }],
@@ -39,8 +39,15 @@ describe("createTheme", () => {
       const values = Object.entries((config as any)[category]);
       values.forEach(([key, value]) => {
         let varName;
+        let finalValue = value;
         if (category === "color") {
-          varName = `--color-${key}`;
+          // Special case for color to handle nested tokens like primary-50 and fg-base
+          if (typeof value === "object" && value !== null) {
+            varName = `--color-${key}-${Object.keys(value)[0]}`;
+            finalValue = Object.values(value)[0];
+          } else {
+            varName = `--color-${key}`;
+          }
         } else if (category === "spacing") {
           varName = `--spacing-${key}`;
         } else if (category === "radius") {
@@ -54,14 +61,14 @@ describe("createTheme", () => {
         } else {
           varName = `--${category}-${key}`;
         }
-        expect(mockRoot.style.setProperty).toHaveBeenCalledWith(varName, String(value));
+        expect(mockRoot.style.setProperty).toHaveBeenCalledWith(varName, String(finalValue));
       });
     });
 
     it("injects multiple token categories at once", () => {
       createTheme({
         light: {
-          color: { "primary-50": "#0066FF" },
+          color: { primary: {50: "#0066FF"} },
           spacing: { md: "1.5rem" },
           radius: { md: "0.5rem" },
         },
@@ -75,7 +82,7 @@ describe("createTheme", () => {
 
   describe("dark theme injection", () => {
     it("creates style element with correct id", () => {
-      createTheme({ dark: { color: { "primary-50": "#4D94FF" } } });
+      createTheme({ dark: { color: { primary: {50: "#4D94FF"} } } });
 
       expect(document.createElement).toHaveBeenCalledWith("style");
       expect(mockStyleElement.id).toBe("simple-ui-dark-theme");
@@ -84,26 +91,26 @@ describe("createTheme", () => {
 
     it("injects dark theme with :root.dark selector", () => {
       createTheme({
-        dark: { color: { "primary-50": "#4D94FF", "background-primary": "#1A1A1A" } },
+        dark: { color: { primary: {50: "#4D94FF"}, bg: { base: "#1A1A1A" } } },
       });
 
       expect(mockStyleElement.textContent).toContain(":root.dark {");
       expect(mockStyleElement.textContent).toContain("--color-primary-50: #4D94FF");
-      expect(mockStyleElement.textContent).toContain("--color-background-primary: #1A1A1A");
+      expect(mockStyleElement.textContent).toContain("--color-bg-base: #1A1A1A");
     });
 
     it("removes existing dark theme before creating new one", () => {
       const existingStyle = { remove: vi.fn() };
       vi.mocked(document.getElementById).mockReturnValue(existingStyle as any);
 
-      createTheme({ dark: { color: { "primary-50": "#4D94FF" } } });
+      createTheme({ dark: { color: { primary: {50: "#4D94FF"} } } });
 
       expect(document.getElementById).toHaveBeenCalledWith("simple-ui-dark-theme");
       expect(existingStyle.remove).toHaveBeenCalled();
     });
 
     it.each<[string, Partial<ThemeConfig>, string]>([
-      ["color", { color: { "primary-50": "#4D94FF" } }, "color"],
+      ["color", { color: { primary: {50: "#4D94FF"} } }, "color"],
       ["spacing", { spacing: { md: "1.25rem" } }, "spacing"],
       ["shadow", { shadow: { s1: "0 2px 4px rgba(0,0,0,0.2)" } }, "shadow"],
       ["duration", { duration: { fast: "50ms" } }, "duration"],
@@ -121,8 +128,8 @@ describe("createTheme", () => {
   describe("light + dark themes", () => {
     it("injects both themes correctly", () => {
       createTheme({
-        light: { color: { "primary-50": "#FF6B00" } },
-        dark: { color: { "primary-50": "#FFB380" } },
+        light: { color: { primary: {50: "#FF6B00"} } },
+        dark: { color: { primary: {50: "#FFB380"} } },
       });
 
       expect(mockRoot.style.setProperty).toHaveBeenCalledWith("--color-primary-50", "#FF6B00");
@@ -136,7 +143,7 @@ describe("createTheme", () => {
     });
 
     it("handles partial theme config", () => {
-      createTheme({ light: { color: { "primary-50": "#FF0000" } } });
+      createTheme({ light: { color: { primary: {50: "#FF0000"} } } });
       expect(mockRoot.style.setProperty).toHaveBeenCalledWith("--color-primary-50", "#FF0000");
     });
 
@@ -154,7 +161,7 @@ describe("createTheme", () => {
     it("uses correct prefixes for all token categories", () => {
       createTheme({
         dark: {
-          color: { "primary-50": "#000" },
+          color: { primary: {50: "#000"} },
           spacing: { md: "1rem" },
           radius: { sm: "0.25rem" },
           shadow: { s2: "shadow" },
