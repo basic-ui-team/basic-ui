@@ -38,7 +38,7 @@ export function createTheme(config: ThemeInput): void {
 
   // Helper to inject theme to a target element
   const injectTheme = (theme: ThemeConfig, target: HTMLElement = root) => {
-    const props = themeToCSSVariables(theme);
+    const props = themeToCSSVariables(theme).customProperties;
     Object.entries(props).forEach(([varName, value]) => {
       target.style.setProperty(varName, String(value));
     });
@@ -69,7 +69,7 @@ function injectDarkThemeStyles(theme: ThemeConfig): void {
   }
 
   // Create CSS rules for :root.dark
-  const props = themeToCSSVariables(theme);
+  const props = themeToCSSVariables(theme).customProperties;
   let darkCSS = ":root.dark {\n";
   Object.entries(props).forEach(([varName, value]) => {
     darkCSS += `  ${varName}: ${String(value)};\n`;

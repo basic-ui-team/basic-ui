@@ -10,7 +10,7 @@ describe("themeToCSSVariables", () => {
 
     const result = themeToCSSVariables(theme);
 
-    expect(result).toEqual({
+    expect(result.customProperties).toEqual({
       "--color-primary-500": "hsl(119 43% 52%)",
     });
   });
@@ -24,7 +24,7 @@ describe("themeToCSSVariables", () => {
 
     const result = themeToCSSVariables(theme);
 
-    expect(result).toEqual({
+    expect(result.customProperties).toEqual({
       "--color-primary-500": "#FF0000",
       "--spacing-md": "1rem",
       "--radius-lg": "0.5rem",
@@ -40,7 +40,7 @@ describe("themeToCSSVariables", () => {
 
     const result = themeToCSSVariables(theme);
 
-    expect(result).toEqual({
+    expect(result.customProperties).toEqual({
       "--font-weight-bold": 700,
       "--z-modal": 45,
       "--opacity-disabled": 0.5,
@@ -58,10 +58,10 @@ describe("themeToCSSVariables", () => {
 
     const result = themeToCSSVariables(theme);
 
-    expect(result).toEqual({
+    expect(result.customProperties).toEqual({
       "--color-primary-500": "hsl(119 43% 52%)",
     });
-    expect(Object.keys(result)).toHaveLength(1);
+    expect(Object.keys(result.customProperties)).toHaveLength(1);
   });
 
   it("ignores categories not in PREFIX_MAP", () => {
@@ -72,7 +72,7 @@ describe("themeToCSSVariables", () => {
 
     const result = themeToCSSVariables(theme);
 
-    expect(result).toEqual({
+    expect(result.customProperties).toEqual({
       "--color-primary-500": "red",
     });
   });
@@ -80,7 +80,7 @@ describe("themeToCSSVariables", () => {
   it("returns empty object for empty theme", () => {
     const result = themeToCSSVariables({});
 
-    expect(result).toEqual({});
+    expect(result.customProperties).toEqual({});
   });
 
   it("handles multi-word token keys correctly", () => {
@@ -93,7 +93,7 @@ describe("themeToCSSVariables", () => {
 
     const result = themeToCSSVariables(theme);
 
-    expect(result).toEqual({
+    expect(result.customProperties).toEqual({
       "--color-bg-base": "hsl(210 20% 97%)",
       "--color-fg-base": "hsl(119 43% 35%)",
     });
