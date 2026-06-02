@@ -29,7 +29,7 @@ export const lightTheme: ThemeConfig = {
       info: "var(--color-blue-600)",
     },
     surface: {
-      base: "var(--color-neutral-50)",
+      base: "var(--color-neutral-100)",
       hover: "var(--color-neutral-100)",
       active: "var(--color-neutral-200)",
       disabled: "var(--color-neutral-100)",
