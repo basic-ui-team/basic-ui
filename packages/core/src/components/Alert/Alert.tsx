@@ -1,8 +1,8 @@
-import React, { useState, forwardRef } from "react";
-import { cn } from "@core/lib";
+import React, { useState } from "react";
+import { cn, forwardRefWithAs } from "@core/lib";
 import { Icon } from "../Icon";
 import { CheckCircleIcon, XCircleIcon, AlertTriangleIcon, InfoIcon, XIcon } from "@basic-ui/icons";
-import type { AlertProps } from "./alert.types";
+import type { AlertOwnProps, AlertProps } from "./alert.types";
 import type { PolymorphicRef } from "../../types/props";
 import type { AllowedAlertElements } from "./alert.types";
 
@@ -64,7 +64,7 @@ const _Alert = <As extends AllowedAlertElements = "div">(
     children,
     ...props
   }: AlertProps<As>,
-  ref?: PolymorphicRef<As>,
+  ref: PolymorphicRef<As>,
 ) => {
   const [isDismissed, setIsDismissed] = useState(false);
 
@@ -125,8 +125,6 @@ const _Alert = <As extends AllowedAlertElements = "div">(
   );
 };
 
-export const Alert = forwardRef(_Alert) as <Element extends AllowedAlertElements = "div">(
-  props: AlertProps<Element> & { ref?: PolymorphicRef<Element> },
-) => React.ReactElement | null;
+export const Alert = forwardRefWithAs<AlertOwnProps, AllowedAlertElements>(_Alert);
 
-(Alert as any).displayName = "Alert"; // any cast to avoid type issues with forwardRef and generics
+(Alert as unknown as { displayName?: string }).displayName = "Alert";

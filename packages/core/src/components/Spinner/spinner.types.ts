@@ -1,6 +1,6 @@
 import { CommonProps, RestrictedPropsWithAs } from "@core/types/props";
 import { ResponsiveValue } from "@core/hooks";
-import LayoutProps from "../Layout/layout.types";
+import LayoutProps from "../../lib/layout/layout.types";
 import { BuiltInSemanticColors } from "@core/theme";
 
 export type SpinnerColor = BuiltInSemanticColors;

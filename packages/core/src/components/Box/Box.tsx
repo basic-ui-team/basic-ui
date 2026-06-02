@@ -3,7 +3,7 @@ import type { BoxOwnProps, BoxProps } from "./box.types";
 import { useResponsiveProps } from "@core/hooks";
 import { cn } from "@core/lib/cn/cn";
 import { forwardRefWithAs, normalizeProps } from "@core/lib";
-import { generateLayoutClassNames, splitLayoutProps } from "../Layout/layout";
+import { generateLayoutClassNames, splitLayoutProps } from "../../lib/layout/layout-utils";
 import { boxVariants } from "./box.variants";
 import { ElementType } from "react";
 

@@ -1,5 +1,5 @@
 import { CommonProps, PropsWithAs } from "@core/types/props";
-import type { LayoutProps } from "@core/components/Layout/layout.types";
+import type { LayoutProps } from "@core/lib/layout/layout.types";
 import { ResponsiveValue } from "@core/hooks";
 import { ElementType } from "react";
 

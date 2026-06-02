@@ -1,27 +1,55 @@
 import { useMemo } from "react";
-import { useResponsive } from "../useResponsive/useResponsive";
 import type { ResponsiveValue } from "../useResponsive/types";
+import { useBreakpoint } from "..";
 
 /**
  * Hook to resolve a set of responsive props in a single call.
  *
  * IMPORTANT: the set and order of keys passed must be stable across renders.
  */
-export function useResponsiveProps<
-  T extends Record<string, ResponsiveValue<any> | undefined>,
->(props: T, orderedKeys?: (keyof T)[]) {
-  const keys = (orderedKeys ?? (Object.keys(props) as (keyof T)[])) as (keyof T)[];
+export function useResponsiveProps<T extends Record<string, ResponsiveValue<any> | undefined>>(
+  props: T,
+  orderedKeys?: (keyof T)[],
+) {
+  const currentBreakpoint = useBreakpoint();
+
+  const keys = useMemo(
+    () => orderedKeys ?? (Object.keys(props) as (keyof T)[]),
+    [orderedKeys, props],
+  );
 
   // Call useResponsive for each prop in a deterministic order
-  const resolvedValues = keys.map((k) => useResponsive(props[k] as any));
-
   return useMemo(() => {
-    const out = {} as { [K in keyof T]: T[K] extends ResponsiveValue<infer U> ? U | undefined : never };
-    keys.forEach((k, i) => {
-      (out as any)[k] = resolvedValues[i];
-    });
-    return out;
-  }, [...resolvedValues]);
+    const result = {} as any;
+
+    for (const key of keys) {
+      const value = props[key];
+      if (value === undefined) continue;
+
+      // Resolve responsive value inline (no extra hook calls)
+      if (typeof value === "object" && value !== null && !Array.isArray(value)) {
+        // Walk down from current breakpoint to base
+        result[key] = resolveBreakpointValue(value, currentBreakpoint);
+      } else {
+        result[key] = value;
+      }
+    }
+
+    return result;
+  }, [props, currentBreakpoint, keys]);
 }
 
-export default useResponsiveProps;
+// Helper function (pure, no hooks)
+function resolveBreakpointValue<T>(responsiveObj: Record<string, T>, currentBreakpoint: string): T {
+  const breakpointOrder = ["base", "sm", "md", "lg", "xl", "xxl"];
+  const currentIndex = breakpointOrder.indexOf(currentBreakpoint);
+
+  for (let i = currentIndex; i >= 0; i--) {
+    const bp = breakpointOrder[i];
+    if (bp in responsiveObj && responsiveObj[bp] !== undefined) {
+      return responsiveObj[bp];
+    }
+  }
+
+  return responsiveObj.base;
+}

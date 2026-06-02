@@ -3,7 +3,7 @@ import type { CommonProps, RestrictedPropsWithAs } from "../../types/props";
 
 type MessageSeverity = "success" | "error" | "warning" | "info";
 
-type AlertOwnProps = {
+export type AlertOwnProps = {
   /** Alert type/severity — determines color and icon semantics. @default "info" */
   severity?: MessageSeverity;
 

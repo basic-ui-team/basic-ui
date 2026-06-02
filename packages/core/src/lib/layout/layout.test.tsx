@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { renderWithProviders, screen } from "../../test-utils";
-import { generateLayoutClassNames, splitLayoutProps, LAYOUT_PROP_NAMES } from "./layout";
+import { generateLayoutClassNames, splitLayoutProps, LAYOUT_PROP_NAMES } from "./layout-utils";
 
 describe("Layout utils", () => {
   describe("splitLayoutProps", () => {

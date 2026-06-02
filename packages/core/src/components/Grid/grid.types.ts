@@ -1,6 +1,6 @@
 import { ResponsiveValue } from "@core/hooks";
 import { CommonProps, RestrictedPropsWithAs } from "@core/types/props";
-import type { LayoutProps, SpacingType } from "../Layout/layout.types";
+import type { LayoutProps, SpacingType } from "../../lib/layout/layout.types";
 
 export type AllowedGridElements = "div" | "section" | "article" | "main" | "aside" | "nav";
 const COL_ROW_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const;
