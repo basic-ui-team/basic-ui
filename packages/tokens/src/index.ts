@@ -31,5 +31,10 @@ import { lightTheme, darkTheme } from "./presets";
 export { lightTheme, darkTheme };
 
 // Utilities
-export { mergeTheme, themeToCustomProperties } from "./utils"; // cssVar and tokenName are now internal utilities, not exported
+export {
+  mergeTheme,
+  themeToCustomProperties,
+  newThemeToCustomProperties,
+  type ThemeObj,
+} from "./utils"; // cssVar and tokenName are now internal utilities, not exported
 export { PREFIX_MAP } from "./constants";
