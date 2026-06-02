@@ -98,4 +98,45 @@ describe("themeToCSSVariables", () => {
       "--color-fg-base": "hsl(119 43% 35%)",
     });
   });
+
+  describe("tokens mirror & cache", () => {
+    it("returns a tokens mirror and caches results by theme object identity", () => {
+      const theme: ThemeConfig = {
+        color: { primary: { "500": "#FF0000" } },
+        spacing: { md: "1rem" },
+      };
+
+      const first = themeToCSSVariables(theme);
+
+      // tokens mirror should contain compact token names
+      expect(first.tokens).toEqual({
+        color: { primary: { "500": "primary-500" } },
+        spacing: { md: "md" },
+      });
+
+      // second call with the same object should return the cached object (same reference)
+      const second = themeToCSSVariables(theme);
+      expect(second).toBe(first);
+
+      // but a deep-equal clone (different identity) should not return the same cached reference
+      const clone = JSON.parse(JSON.stringify(theme)) as ThemeConfig;
+      const third = themeToCSSVariables(clone);
+      expect(third).not.toBe(first);
+      // values should still be equivalent
+      expect(third.customProperties).toEqual(first.customProperties);
+    });
+
+    it("preserves nested token naming for multi-word keys in tokens mirror", () => {
+      const theme: ThemeConfig = {
+        color: {
+          bg: { base: "hsl(210 20% 97%)" },
+          fg: { base: "hsl(119 43% 35%)" },
+        },
+      };
+
+      const result = themeToCSSVariables(theme);
+      expect(result.tokens.color.bg.base).toBe("bg-base");
+      expect(result.tokens.color.fg.base).toBe("fg-base");
+    });
+  });
 });
