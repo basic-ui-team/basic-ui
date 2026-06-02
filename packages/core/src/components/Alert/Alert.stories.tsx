@@ -97,7 +97,7 @@ export const WithAction: Story = {
     severity: "info",
     title: "Alert with Action",
     children: "This alert includes a custom action element.",
-    action: <button className="text-sm text-blue-600 hover:underline">Take Action</button>,
+    action: <button className="text-sm text-fg-info hover:underline">Take Action</button>,
   },
 };
 
@@ -106,7 +106,7 @@ export const WithActionAndDismiss: Story = {
     severity: "info",
     title: "Alert with Action and Dismiss",
     children: "This alert includes both a custom action and a dismiss button.",
-    action: <button className="text-sm text-blue-600 hover:underline">Take Action</button>,
+    action: <button className="text-sm text-fg-info hover:underline">Take Action</button>,
     onDismiss: () => alert("Alert dismissed!"),
   },
 };
@@ -120,7 +120,7 @@ export const ControlledDismissal: Story = {
       <div className="flex flex-col gap-md">
         <button
           onClick={() => setIsOpen(true)}
-          className="self-start px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+          className="self-start px-4 py-2 bg-bg-info text-white rounded hover:bg-bg-info/80 transition-colors"
         >
           Show Alert
         </button>
