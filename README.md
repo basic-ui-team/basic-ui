@@ -37,16 +37,19 @@ basic-ui/
 ### Install Dependencies
 
 **With pnpm (recommended):**
+
 ```bash
 pnpm install
 ```
 
 **With npm:**
+
 ```bash
 npm install
 ```
 
 **With yarn:**
+
 ```bash
 yarn install
 ```
@@ -136,6 +139,7 @@ Icon registry with tree-shakeable exports.
 - **[Component APIs](./apps/docs/docs/components)** — Prop reference for all components
 - **[Recipes](./apps/docs/docs/recipes)** — Common patterns and examples
 - **[Accessibility](./apps/docs/docs/accessibility)** — WCAG compliance and best practices
+- **[Conventions](./.docs/guides/CONVENTIONS.md)** — Coding and file naming conventions
 
 ## License
 
