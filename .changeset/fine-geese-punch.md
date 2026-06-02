@@ -2,7 +2,7 @@
 "@basic-ui/tokens": minor
 ---
 
-[tokens/themeConfig] Refactored theme config. Color themes are no written as nested objects generated directly from types.
+[tokens/themeConfig] Refactored theme config. Color themes are now written as nested objects generated directly from types.
 
 [tokens] refactored themeToCustomProperties (Renamed to themeToCSSVariables) to handle nested color objects properly.
 

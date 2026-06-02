@@ -91,18 +91,18 @@ ${darkCSS}
   // We will also write the resolved tokens to a TypeScript file for programmatic access (e.g., in styled-components, CVA variants, or vanilla CSS)
   const tokens = `/* Auto-generated — run \`pnpm generate\` in packages/tokens to regenerate */
 /**
- * Exported tokens that map to the tailwind theme variable names for use in programatic contexts.
- * 
+ * Exported tokens that map to the tailwind theme variable names for use in programmatic contexts.
+ *
  * E.g., tokens.color.bg.base → "bg-base" which can be used in tailwind classes in variant files like: "bg-(tokens.color.bg.base)" which resolves to "bg-bg-base" and then to the actual color value in the theme.
  * This allows us to maintain a single source of truth for token names that can be used both in CSS and in JS/TS contexts without hardcoding strings.
  */
 
 export const tokens = ${JSON.stringify(lightThemeObj.tokens, null, 2)};
 
-export const darkTokens = ${JSON.stringify(darkThemeObj.tokens, null, 2)}; // 
+export const darkTokens = ${JSON.stringify(darkThemeObj.tokens, null, 2)};
 `;
 
-  // write css file to packages/tokens/src/public/theme.css
+  // Write generated CSS to src/pkg (new generated artifacts location)
   const __dirname = dirname(fileURLToPath(import.meta.url));
   const baseOutPath = resolve(__dirname, "../src/pkg");
   mkdirSync(baseOutPath, { recursive: true });
@@ -110,9 +110,14 @@ export const darkTokens = ${JSON.stringify(darkThemeObj.tokens, null, 2)}; //
   const cssOutPath = resolve(baseOutPath, "styles/theme.css");
   mkdirSync(dirname(cssOutPath), { recursive: true });
   writeFileSync(cssOutPath, css, "utf-8");
+
+  // Also update the legacy path still used by the build copy step.
+  const legacyCssOutPath = resolve(__dirname, "../src/styles/theme.css");
+  mkdirSync(dirname(legacyCssOutPath), { recursive: true });
+  writeFileSync(legacyCssOutPath, css, "utf-8");
+
   const relPath = relative(process.cwd(), cssOutPath);
   console.log(`✓ Generated ${relPath}`);
-
   const tokensOutPath = resolve(baseOutPath, "tokens.ts");
   writeFileSync(tokensOutPath, tokens, "utf-8");
   const relTokensPath = relative(process.cwd(), tokensOutPath);

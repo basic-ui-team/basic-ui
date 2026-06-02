@@ -1,4 +1,4 @@
-import  ThemeConfig  from "@tokens/types/index";
+import type ThemeConfig from "../types/index";
 
 export const lightTheme: ThemeConfig = {
   color: {
@@ -84,11 +84,11 @@ export const lightTheme: ThemeConfig = {
       300: "oklch(87.9% 0.169 91.605)",
       400: "oklch(82.8% 0.189 84.429)",
       500: "oklch(76.9% 0.188 70.08)",
-      600: " oklch(66.6% 0.179 58.318)",
-      700: " oklch(55.5% 0.163 48.998)",
-      800: " oklch(47.3% 0.137 46.201)",
-      900: " oklch(41.4% 0.112 45.904)",
-      950: " oklch(27.9% 0.077 45.635)",
+      600: "oklch(66.6% 0.179 58.318)",
+      700: "oklch(55.5% 0.163 48.998)",
+      800: "oklch(47.3% 0.137 46.201)",
+      900: "oklch(41.4% 0.112 45.904)",
+      950: "oklch(27.9% 0.077 45.635)",
     },
     neutral: {
       50: "oklch(98.5% 0.002 247.839)",

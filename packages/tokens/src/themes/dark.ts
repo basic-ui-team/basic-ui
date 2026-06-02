@@ -1,5 +1,5 @@
 import { lightTheme } from "./light";
-import ThemeConfig from "@tokens/types/index";
+import type ThemeConfig from "../types/index";
 
 export const darkTheme: ThemeConfig = {
   ...lightTheme,

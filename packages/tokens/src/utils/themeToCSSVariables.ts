@@ -1,4 +1,4 @@
-import ThemeConfig from "../types/index";
+import type ThemeConfig from "../types/index";
 import { PREFIX_MAP } from "../constants";
 
 export interface ThemeObj {

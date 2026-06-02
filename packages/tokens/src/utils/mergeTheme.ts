@@ -1,4 +1,4 @@
-import ThemeConfig from "../types/index";
+import type ThemeConfig from "../types/index";
 
 /**
  * Deep merge two theme configurations, with the override taking precedence.
