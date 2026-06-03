@@ -30,8 +30,8 @@ export const lightTheme: ThemeConfig = {
     },
     surface: {
       base: "var(--color-neutral-100)",
-      hover: "var(--color-neutral-100)",
-      active: "var(--color-neutral-200)",
+      hover: "var(--color-neutral-200)",
+      active: "var(--color-neutral-300)",
       disabled: "var(--color-neutral-100)",
       inverted: "var(--color-neutral-800)",
       error: "var(--color-red-100)",

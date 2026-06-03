@@ -23,7 +23,9 @@ function resolveVariableReference(
   // if it doesn't, check if it exists in the theme properties and if not, return the original value and log a warning
   const resolvedValue = allProps[varName];
   if (resolvedValue === undefined) {
-    console.warn(`⚠️  Cannot resolve ${varName}. This might be because it is not defined or because it is a built-in tailwind color that is not included in the theme properties. Returning original value: ${value}`);
+    console.warn(
+      `⚠️  Cannot resolve ${varName}. This might be because it is not defined or because it is a built-in tailwind color that is not included in the theme properties. Returning original value: ${value}`,
+    );
     return value;
   }
 
@@ -67,6 +69,7 @@ function generateTheme() {
   const css = `/* Auto-generated — run \`pnpm generate\` in packages/tokens to regenerate */
 
 @import "tailwindcss";
+
 
 /* ===== THEME CONFIGURATION ===== */
 /* All design tokens with resolved values for Tailwind utility generation */

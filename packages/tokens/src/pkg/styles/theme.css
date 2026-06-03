@@ -2,6 +2,7 @@
 
 @import "tailwindcss";
 
+
 /* ===== THEME CONFIGURATION ===== */
 /* All design tokens with resolved values for Tailwind utility generation */
 /* Utilities will be prefixed with "bui:" (e.g., bui:bg-background-primary) */
@@ -29,8 +30,8 @@
   --color-fg-warning: var(--color-yellow-700);
   --color-fg-info: var(--color-blue-600);
   --color-surface-base: oklch(96.7% 0.003 264.542);
-  --color-surface-hover: oklch(96.7% 0.003 264.542);
-  --color-surface-active: oklch(92.8% 0.006 264.531);
+  --color-surface-hover: oklch(92.8% 0.006 264.531);
+  --color-surface-active: oklch(87.2% 0.01 258.338);
   --color-surface-disabled: oklch(96.7% 0.003 264.542);
   --color-surface-inverted: oklch(27.8% 0.033 256.848);
   --color-surface-error: var(--color-red-100);
