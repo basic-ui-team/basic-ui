@@ -46,6 +46,8 @@ export const LayoutProps: Story = {
     <Flex direction="column" gap="md" className="w-full text-foreground-primary">
       <Box p="md" m="sm" className="border rounded">Padding MD & Margin SM</Box>
       <Box px="lg" py="sm" className="border rounded">Padding X LG, Y SM</Box>
+      <Box mt="lg" ml="sm" mr="xl" mb="xs" className="border rounded">Margin Top LG, Left SM, Right XL, Bottom XS</Box>
+      <Box pt="lg" pl="sm" pr="xl" pb="xs" className="border rounded">Padding Top LG, Left SM, Right XL, Bottom XS</Box>
     </Flex>
   ),
 };
