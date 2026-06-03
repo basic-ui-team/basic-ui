@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { LinkPagination } from "./LinkPagination";
+import { Flex } from "../../Flex";
 
 const meta = {
   title: "Components/Pagination/LinkPagination",
@@ -27,11 +28,11 @@ export const Default: Story = {
     getPageHref: (p: number) => `/${p}`,
   },
   render: (args) => (
-    <div className="flex flex-col items-center gap-md">
+    <Flex direction="column" align="center" gap="md">
       <LinkPagination {...args} />
       <LinkPagination {...args} color="primary" />
       <LinkPagination {...args} color="secondary" />
-    </div>
+    </Flex>
   ),
 };
 

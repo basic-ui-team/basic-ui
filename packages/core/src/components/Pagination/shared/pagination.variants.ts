@@ -10,7 +10,7 @@ export const paginationButtonVariants = cva(
     "transition-colors duration-normal ease-out",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary",
     "disabled:opacity-disabled disabled:cursor-not-allowed",
-    "text-foreground-primary disabled:text-foreground-muted",
+    "text-fg-base disabled:text-fg-muted",
     "focus-visible:ring-neutral-200",
   ].join(" "),
   {
@@ -18,7 +18,7 @@ export const paginationButtonVariants = cva(
       variant: {
         default: "",
         outlined: [
-          "border border-foreground-muted",
+          "border border-border-base",
         ].join(" "),
       },
       size: {
@@ -32,7 +32,7 @@ export const paginationButtonVariants = cva(
         circular: "rounded-full",
       },
       color: {
-        default: "bg-neutral-200/10 hover:bg-neutral-300 active:bg-neutral-400",
+        default: "bg-surface-base hover:bg-surface-hover active:bg-surface-active",
         primary: "bg-primary-500/10 hover:bg-primary-600 active:bg-primary-700",
         secondary: "bg-secondary-500/10 hover:bg-secondary-600 active:bg-secondary-700",
       },
@@ -45,7 +45,7 @@ export const paginationButtonVariants = cva(
       {
         color: "default",
         active: true,
-        className: "bg-neutral-400/60 hover:bg-neutral-400",
+        className: "bg-surface-active hover:bg-surface-hover",
       },
       {
         color: "primary",
@@ -60,7 +60,7 @@ export const paginationButtonVariants = cva(
       {
         variant: "outlined",
         color: "default",
-        className: "border-neutral-400/50",
+        className: "border-border-base",
       },
       {
         variant: "outlined",
@@ -84,5 +84,5 @@ export const paginationButtonVariants = cva(
 );
 
 export const paginationEllipsisVariants = cva(
-  ["flex items-center justify-center", "text-foreground-primary", "px-xs"].join(" "),
+  ["flex items-center justify-center", "text-fg-base", "px-xs"].join(" "),
 );
