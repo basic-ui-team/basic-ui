@@ -33,7 +33,7 @@ export const headerVariants = cva("font-sans font-normal leading-tight", {
       right: "text-right",
     },
     truncate: {
-      true: "truncate",
+      true: "text-ellipsis",
       false: "",
     },
     wrap: {

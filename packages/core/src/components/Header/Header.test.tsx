@@ -23,7 +23,7 @@ describe("variants", () => {
   };
 
   const colorMap: Record<string, string> = {
-    default: "text-foreground-primary",
+    default: "text-fg-base",
     primary: "text-primary-700",
     secondary: "text-secondary-700",
   };

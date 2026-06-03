@@ -1,12 +1,7 @@
 import { useResponsiveProps } from "@core/hooks";
 import { AllowedHeaderElements, HeaderOwnProps, HeaderProps } from "./header.types";
 import { headerVariants } from "./header.variants";
-import {
-  cn,
-  forwardRefWithAs,
-  getTruncateAccessibilityProps,
-  normalizeProps,
-} from "@core/lib";
+import { cn, forwardRefWithAs, getTruncateAccessibilityProps, normalizeProps } from "@core/lib";
 import { PolymorphicRef } from "@core/types/props";
 import { Box, BoxProps } from "../Box";
 import { BuiltInSemanticColors, isBuiltInSemanticColor } from "@core/theme";
@@ -32,8 +27,8 @@ const _Header = <As extends AllowedHeaderElements = "h1">(
     size: resolvedSize,
     weight: resolvedWeight,
     align: resolvedAlign,
-    truncate: resolvedTruncate,
     wrap: resolvedWrap,
+    truncate: resolvedTruncate,
     color: resolvedColor,
   } = useResponsiveProps({ size, weight, align, truncate, wrap, color });
 
@@ -66,6 +61,7 @@ const _Header = <As extends AllowedHeaderElements = "h1">(
     <Box<As>
       as={Comp}
       ref={ref}
+      overflow={resolvedTruncate ? "hidden" : undefined} // Ensure overflow hidden is applied when truncation is enabled
       className={resolvedStyles}
       {...accessibilityProps}
       {...(normalizedRest as BoxProps<As>)}
