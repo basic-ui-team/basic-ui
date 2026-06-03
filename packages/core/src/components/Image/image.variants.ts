@@ -24,15 +24,10 @@ export const imageVariants = cva("inline-block overflow-hidden", {
       xl: "rounded-xl",
       full: "rounded-full",
     },
-    disabled: {
-      true: "opacity-50 grayscale",
-      false: "",
-    },
   },
   defaultVariants: {
     objectFit: "cover",
     aspectRatio: "auto",
     rounded: "none",
-    disabled: false,
   },
 });

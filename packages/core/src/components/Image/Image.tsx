@@ -2,7 +2,7 @@ import { useResponsiveProps } from "@core/hooks";
 import { cn, forwardRefWithAs } from "@core/lib";
 import { Box, BoxProps } from "@core/components";
 import { imageVariants } from "./image.variants";
-import { AllowedImageElements, ImageOwnProps, ImageProps } from "./image.props";
+import { AllowedImageElements, ImageOwnProps, ImageProps } from "./image.types";
 import { PolymorphicRef } from "@core/types/props";
 
 export const _Image = <As extends AllowedImageElements = "img">(
@@ -82,5 +82,38 @@ export const _Image = <As extends AllowedImageElements = "img">(
   );
 };
 
+/**
+ * Image component for rendering responsive images with art-direction support.
+ * 
+ * Supports both `img` and `picture` elements for flexible image rendering with:
+ * - Responsive sizing through aspect-ratio presets
+ * - Object-fit variants (cover, contain, fill, none, scale-down)
+ * - Art-direction sources for responsive images
+ * - Rounded corners with responsive values
+ * - Performance optimizations (lazy loading, async decoding)
+ * 
+ * @example
+ * // Basic image
+ * <Image src="/photo.jpg" alt="A photo" />
+ * 
+ * @example
+ * // Responsive picture element
+ * <Image
+ *   as="picture"
+ *   src="/fallback.jpg"
+ *   alt="Responsive"
+ *   sources={[{ srcSet: "/small.jpg", media: "(max-width: 600px)" }]}
+ * />
+ * 
+ * @example
+ * // With aspect ratio and object-fit
+ * <Image
+ *   src="/photo.jpg"
+ *   alt="A photo"
+ *   aspectRatio="video"
+ *   objectFit="cover"
+ *   rounded="lg"
+ * />
+ */
 export const Image = forwardRefWithAs<ImageOwnProps, AllowedImageElements>(_Image);
 (Image as any).displayName = "Image";

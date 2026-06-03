@@ -33,6 +33,15 @@ describe("Image", () => {
     expect(img).toHaveClass("object-contain");
   });
 
+  it("applies all objectFit variants", () => {
+    const variants = ["cover", "contain", "fill", "none", "scale-down"] as const;
+    variants.forEach((fit) => {
+      const { container } = renderWithProviders(<Image src="/i" alt="a" objectFit={fit} />);
+      const img = container.querySelector("img");
+      expect(img).toHaveClass(`object-${fit}`);
+    });
+  });
+
   it("accepts loading and decoding props", () => {
     const { container } = renderWithProviders(
       <Image src="/x" alt="x" loading="eager" decoding="sync" />,
@@ -42,8 +51,108 @@ describe("Image", () => {
     expect(img).toHaveAttribute("decoding", "sync");
   });
 
+  it("applies aspectRatio classes", () => {
+    const { container } = renderWithProviders(<Image src="/i" alt="a" aspectRatio="video" />);
+    const img = container.querySelector("img");
+    expect(img).toHaveClass("aspect-video");
+  });
+
+  it("applies all aspectRatio variants", () => {
+    const ratios = ["square", "video", "landscape", "portrait"] as const;
+    ratios.forEach((ratio) => {
+      const { container } = renderWithProviders(<Image src="/i" alt="a" aspectRatio={ratio} />);
+      const img = container.querySelector("img");
+      if (ratio === "landscape") {
+        expect(img).toHaveClass("aspect-[4/3]");
+      } else if (ratio === "portrait") {
+        expect(img).toHaveClass("aspect-[3/4]");
+      } else {
+        expect(img).toHaveClass(`aspect-${ratio}`);
+      }
+    });
+  });
+
+  it("applies rounded classes", () => {
+    const { container } = renderWithProviders(<Image src="/i" alt="a" rounded="full" />);
+    const img = container.querySelector("img");
+    expect(img).toHaveClass("rounded-full");
+  });
+
+  it("applies all rounded variants", () => {
+    const roundeds = ["none", "sm", "md", "lg", "xl", "full"] as const;
+    roundeds.forEach((rounded) => {
+      const { container } = renderWithProviders(<Image src="/i" alt="a" rounded={rounded} />);
+      const img = container.querySelector("img");
+      if (rounded === "none") {
+        expect(img).toHaveClass("rounded-none");
+      } else {
+        expect(img).toHaveClass(`rounded-${rounded}`);
+      }
+    });
+  });
+
+  it("combines aspectRatio with objectFit", () => {
+    const { container } = renderWithProviders(
+      <Image src="/i" alt="a" aspectRatio="square" objectFit="cover" />,
+    );
+    const img = container.querySelector("img");
+    expect(img).toHaveClass("aspect-square");
+    expect(img).toHaveClass("object-cover");
+  });
+
+  it("applies custom className alongside variants", () => {
+    const { container } = renderWithProviders(
+      <Image src="/i" alt="a" objectFit="contain" className="custom-class" />,
+    );
+    const img = container.querySelector("img");
+    expect(img).toHaveClass("object-contain");
+    expect(img).toHaveClass("custom-class");
+  });
+
+  it("picture element applies aspectRatio to wrapper", () => {
+    const sources = [{ srcSet: "/small.jpg", media: "(max-width:600px)" }];
+    const { container } = renderWithProviders(
+      <Image as="picture" src="/fallback.jpg" alt="test" sources={sources} aspectRatio="video" />,
+    );
+    const picture = container.querySelector("picture");
+    expect(picture).toHaveClass("aspect-video");
+  });
+
+  it("picture element applies rounded to wrapper", () => {
+    const sources = [{ srcSet: "/small.jpg", media: "(max-width:600px)" }];
+    const { container } = renderWithProviders(
+      <Image as="picture" src="/fallback.jpg" alt="test" sources={sources} rounded="lg" />,
+    );
+    const picture = container.querySelector("picture");
+    expect(picture).toHaveClass("rounded-lg");
+  });
+
+  it("picture element applies objectFit to inner img", () => {
+    const sources = [{ srcSet: "/small.jpg", media: "(max-width:600px)" }];
+    const { container } = renderWithProviders(
+      <Image as="picture" src="/fallback.jpg" alt="test" sources={sources} objectFit="contain" />,
+    );
+    const img = container.querySelector("picture img");
+    expect(img).toHaveClass("object-contain");
+  });
+
+  it("forwards ref correctly", () => {
+    const ref = { current: null };
+    renderWithProviders(<Image ref={ref} src="/i" alt="a" />);
+    expect(ref.current).toBeInstanceOf(HTMLImageElement);
+  });
+
   it("passes basic axe accessibility checks", async () => {
     const { container } = renderWithProviders(<Image src="/a" alt="a" />);
+    const result = await axe(container);
+    expect(result).toHaveNoViolations();
+  });
+
+  it("passes axe accessibility checks with picture element", async () => {
+    const sources = [{ srcSet: "/small.jpg", media: "(max-width:600px)" }];
+    const { container } = renderWithProviders(
+      <Image as="picture" src="/fallback.jpg" alt="test" sources={sources} />,
+    );
     const result = await axe(container);
     expect(result).toHaveNoViolations();
   });
