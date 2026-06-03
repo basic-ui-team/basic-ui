@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Text } from "./Text";
+import { Flex } from "../Flex";
 
 const meta: Meta<typeof Text> = {
   title: "Components/Text",
@@ -113,7 +114,7 @@ export const ColorVariants: Story = {
 
 export const AlignmentVariants: Story = {
   render: () => (
-    <div className="flex flex-col gap-md">
+    <Flex direction="column" gap="md">
       <Text align="left">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
         ut labore et dolore magna aliqua. (Left Aligned)
@@ -126,7 +127,7 @@ export const AlignmentVariants: Story = {
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
         ut labore et dolore magna aliqua. (Right Aligned)
       </Text>
-    </div>
+    </Flex>
   ),
 };
 
@@ -143,7 +144,7 @@ export const TruncateVariant: Story = {
 
 export const WrapVariants: Story = {
   render: () => (
-    <div className="flex flex-col items-center gap-md">
+    <Flex direction="column" align="center" gap="md">
       <div className="w-128 border p-2 border-gray-300 rounded">
         <Text wrap="nowrap">
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
@@ -184,7 +185,7 @@ export const WrapVariants: Story = {
           est laborum." (Pretty)
         </Text>
       </div>
-    </div>
+    </Flex>
   ),
 };
 
