@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { TablePagination } from "./TablePagination";
+import { Flex } from "../../Flex";
+import { Text } from "../../Text";
 
 const meta = {
   title: "Components/Pagination/TablePagination",
@@ -61,11 +63,11 @@ export const Default: Story = {
   },
   render: (args) => {
     return (
-      <div className="flex flex-col items-center gap-md">
+      <Flex direction="column" align="center" gap="md">
         <TablePagination {...args} />
         <TablePagination {...args} color="primary" />
         <TablePagination {...args} color="secondary" />
-      </div>
+      </Flex>
     );
   },
 };
@@ -77,11 +79,11 @@ export const PaginationShapes: Story = {
   },
   render: (args) => {
     return (
-      <div className="flex flex-col items-center gap-md">
+      <Flex direction="column" align="center" gap="md">
         <TablePagination {...args} shape="rounded" />
         <TablePagination {...args} shape="square" />
         <TablePagination {...args} shape="circular" />
-      </div>
+      </Flex>
     );
   },
 };
@@ -93,11 +95,11 @@ export const OutlinedVariant: Story = {
   },
   render: (args) => {
     return (
-      <div className="flex flex-col items-center gap-md">
+      <Flex direction="column" align="center" gap="md">
         <TablePagination {...args} />
         <TablePagination {...args} color="primary" />
         <TablePagination {...args} color="secondary" />
-      </div>
+      </Flex>
     );
   },
 };
@@ -109,20 +111,14 @@ export const SiblingBoundaryButtons: Story = {
   },
   render: (args) => {
     return (
-      <div className="flex flex-col items-center gap-lg">
-        <span className="text-sm text-foreground-muted p-md border border-foreground-muted rounded">
-          maxSiblingButtons=1, maxBoundaryButtons=2
-        </span>
+      <Flex direction="column" align="center" gap="lg">
+        <Text>maxSiblingButtons=1, maxBoundaryButtons=2</Text>
         <TablePagination {...args} maxSiblingButtons={1} maxBoundaryButtons={2} />
-        <span className="text-sm text-foreground-muted p-md mt-md border border-foreground-muted rounded">
-          maxSiblingButtons=3, maxBoundaryButtons=0
-        </span>
+        <Text>maxSiblingButtons=3, maxBoundaryButtons=0</Text>
         <TablePagination {...args} maxSiblingButtons={3} maxBoundaryButtons={0} />
-        <span className="text-sm text-foreground-muted p-md mt-md border border-foreground-muted rounded">
-          maxSiblingButtons=0, maxBoundaryButtons=3
-        </span>
+        <Text>maxSiblingButtons=0, maxBoundaryButtons=3</Text>
         <TablePagination {...args} maxSiblingButtons={0} maxBoundaryButtons={3} />
-      </div>
+      </Flex>
     );
   },
 };
@@ -159,8 +155,8 @@ export const Controlled: Story = {
   render: (args) => {
     const [currentPage, setCurrentPage] = useState(1);
     return (
-      <div className="flex flex-col items-center gap-md">
-        <div className="flex gap-md">
+      <Flex direction="column" align="center" gap="md">
+        <Flex gap="md">
           <button
             className="px-md py-sm bg-primary-500 rounded-md border-foreground-primary border-2"
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
@@ -173,8 +169,8 @@ export const Controlled: Story = {
           >
             Next
           </button>
-        </div>
-        <span className="text-lg font-medium">Current Page: {currentPage}</span>
+        </Flex>
+        <Text>Current Page: {currentPage}</Text>
         <TablePagination
           {...args}
           currentPage={currentPage}
@@ -182,7 +178,7 @@ export const Controlled: Story = {
           maxBoundaryButtons={1}
           maxSiblingButtons={1}
         />
-      </div>
+      </Flex>
     );
   },
   args: {

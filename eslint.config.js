@@ -21,16 +21,11 @@ export default defineConfig([
   },
   {
     files: ["**/*.{ts,tsx}"],
-    ignores: ["**/*.config.{ts,tsx}", "**/*.d.ts", "vitest.setup.ts"],
+    ignores: ["**/*.config.{ts,tsx}", "**/*.d.ts", "vitest.setup.ts", "**/.storybook/**"],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
-        project: [
-          "./tsconfig.json",
-          "./packages/*/tsconfig.json",
-          "./packages/*/tsconfig.scripts.json",
-          "./apps/*/tsconfig.json"
-        ],
+        projectService: true,
       },
     },
     rules: {},

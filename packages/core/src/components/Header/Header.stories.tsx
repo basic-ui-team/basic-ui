@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Header } from "./Header";
+import { Flex } from "../Flex";
 
 const meta: Meta<typeof Header> = {
   title: "Components/Header",
@@ -12,31 +13,31 @@ type Story = StoryObj<typeof Header>;
 
 export const SizeVariants: Story = {
   render: () => (
-    <div className="flex flex-col gap-md">
+    <Flex direction="column" gap="md">
       <Header size="h1">Heading H1</Header>
       <Header size="h2">Heading H2</Header>
       <Header size="h3">Heading H3</Header>
       <Header size="h4">Heading H4</Header>
       <Header size="h5">Heading H5</Header>
       <Header size="h6">Heading H6</Header>
-    </div>
+    </Flex>
   ),
 };
 
 export const WeightVariants: Story = {
   render: () => (
-    <div className="flex flex-col gap-md">
+    <Flex direction="column" gap="md">
       <Header weight="normal">Normal weight</Header>
       <Header weight="medium">Medium weight</Header>
       <Header weight="semibold">Semibold weight</Header>
       <Header weight="bold">Bold weight</Header>
-    </div>
+    </Flex>
   ),
 };
 
 export const ColorVariants: Story = {
   render: () => (
-    <div className="flex flex-col gap-md">
+    <Flex direction="column" gap="md">
       <Header color="default">Default color</Header>
       <Header color="primary">Primary color</Header>
       <Header color="secondary">Secondary color</Header>
@@ -46,23 +47,23 @@ export const ColorVariants: Story = {
       <Header color="warning">Warning color</Header>
       <Header color="info">Info color</Header>
       <Header color="text-red-500">Custom tailwind color</Header>
-    </div>
+    </Flex>
   ),
 };
 
 export const AlignmentVariants: Story = {
   render: () => (
-    <div className="flex flex-col gap-md">
+    <Flex direction="column" gap="md">
       <Header align="left">Left aligned</Header>
       <Header align="center">Center aligned</Header>
       <Header align="right">Right aligned</Header>
-    </div>
+    </Flex>
   ),
 };
 
 export const TruncateVariant: Story = {
   render: () => (
-    <div className="w-64 border p-2 border-gray-300 rounded">
+    <div className="w-100 border p-md border-gray-300 rounded">
       <Header truncate>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
         labore et dolore magna aliqua. (Truncated)
@@ -73,7 +74,7 @@ export const TruncateVariant: Story = {
 
 export const WrapVariants: Story = {
   render: () => (
-    <div className="flex flex-col items-center gap-md">
+    <Flex direction="column" align="center" gap="md">
       <div className="w-128 border p-2 border-gray-300 rounded">
         <Header wrap="nowrap">No wrap header example with long text that overflows.</Header>
       </div>
@@ -86,30 +87,30 @@ export const WrapVariants: Story = {
       <div className="w-128 border p-2 border-gray-300 rounded">
         <Header wrap="pretty">Pretty-wrapped header example with long text for demo.</Header>
       </div>
-    </div>
+    </Flex>
   ),
 };
 
 export const PolymorphicVariants: Story = {
   render: () => (
-    <div className="flex flex-col gap-md">
+    <Flex direction="column" gap="md">
       <Header as="h1">This is an H1 element (default)</Header>
       <Header as="h2">This is an H2 element</Header>
       <Header as="h3">This is an H3 element</Header>
       <Header as="h4">This is an H4 element</Header>
       <Header as="h5">This is an H5 element</Header>
       <Header as="h6">This is an H6 element</Header>
-    </div>
+    </Flex>
   ),
 };
 
 export const CombinedVariants: Story = {
   render: () => (
-    <div className="flex flex-col gap-md">
+    <Flex direction="column" gap="md">
       <Header size="h2" weight="bold" color="primary" align="center" wrap="balance">
         Combined header variants example
       </Header>
-    </div>
+    </Flex>
   ),
 };
 
@@ -137,7 +138,7 @@ export const Playground: Story = {
 
 export const Clickable: Story = {
   render: () => (
-    <div className="flex flex-col gap-md">
+    <Flex direction="column" gap="md">
       <Header as="h2">
         <a
           href="#"
@@ -158,7 +159,7 @@ export const Clickable: Story = {
           Clickable header — button (aria-expanded example)
         </button>
       </Header>
-    </div>
+    </Flex>
   ),
   parameters: {
     docs: {

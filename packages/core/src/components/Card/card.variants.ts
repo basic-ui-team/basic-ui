@@ -8,12 +8,10 @@ export const cardRootVariants = cva(
   {
     variants: {
       variant: {
-        default:
-          "bg-surface border border-border-base rounded-lg shadow-s2 hover:shadow-s3 active:shadow-s1",
-        elevated:
-          "bg-surface border border-border-base rounded-lg shadow-s2 shadow-s2 hover:shadow-s4 active:shadow-s3",
+        default: "bg-surface-base rounded-lg shadow-s2 hover:shadow-s3 active:shadow-s1",
+        elevated: "bg-surface-base rounded-lg shadow-s4 hover:shadow-s5 active:shadow-s3",
         outlined:
-          "bg-surface border border-border-base rounded-lg shadow-s2 border border-border-base hover:shadow-s1 active:shadow-s0", // duplication so we don't set a base styling.
+          "bg-surface-base border border-border-base rounded-lg shadow-s2 hover:shadow-s3 active:shadow-s1", // duplication so we don't set a base styling.
         unstyled: "",
       },
       isLink: {
@@ -27,7 +25,7 @@ export const cardRootVariants = cva(
         both: "cursor-move",
       },
       selected: {
-        true: "border-primary-500 shadow-s3",
+        true: "border border-2 border-border-success",
         false: "",
       },
       disabled: {
@@ -52,7 +50,7 @@ export const cardSectionVariants = cva("", {
       compact: "p-sm",
     },
     sticky: {
-      true: "sticky bottom-0 z-dropdown bg-surface/95 backdrop-blur-sm",
+      true: "sticky bottom-0 z-dropdown bg-surface-base/5 backdrop-blur-xs",
       false: "",
     },
     disabled: {

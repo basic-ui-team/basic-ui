@@ -19,7 +19,7 @@ const _Divider = <As extends AllowedDividerElements = "hr">(
     decorative = true,
     appearance = "solid",
     thickness = "medium",
-    color = "base",
+    color = "default",
     inset = "none",
     label,
     m = "none",

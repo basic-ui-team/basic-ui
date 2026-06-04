@@ -39,7 +39,7 @@ export interface LayoutProps {
 
   position?: ResponsiveValue<PositionType>;
 
-  overflow?: ResponsiveValue<OverflowType>;
+  overflow?: ResponsiveValue<OverflowType | "unset">;
   overflowX?: ResponsiveValue<OverflowType | "unset">;
   overflowY?: ResponsiveValue<OverflowType | "unset">;
 }

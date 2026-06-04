@@ -1,6 +1,5 @@
 import { lightTheme } from "../src/themes/light";
 import { darkTheme } from "../src/themes/dark";
-import { TAILWIND_COLORS } from "../src/constants";
 import { themeToCSSVariables } from "../src/utils/themeToCSSVariables";
 import { writeFileSync, mkdirSync } from "node:fs";
 import { resolve, dirname, relative } from "node:path";
@@ -21,15 +20,12 @@ function resolveVariableReference(
   // it's a var() reference, extract the variable name
   const varName = varMatch[1];
 
-  // Check if the variable name exists in our Tailwind colors mapping
-  if (TAILWIND_COLORS[varName]) {
-    return TAILWIND_COLORS[varName];
-  }
-
   // if it doesn't, check if it exists in the theme properties and if not, return the original value and log a warning
   const resolvedValue = allProps[varName];
   if (resolvedValue === undefined) {
-    console.warn(`⚠️  Cannot resolve ${varName}`);
+    console.warn(
+      `⚠️  Cannot resolve ${varName}. This might be because it is not defined or because it is a built-in tailwind color that is not included in the theme properties. Returning original value: ${value}`,
+    );
     return value;
   }
 
@@ -74,6 +70,7 @@ function generateTheme() {
 
 @import "tailwindcss";
 
+
 /* ===== THEME CONFIGURATION ===== */
 /* All design tokens with resolved values for Tailwind utility generation */
 /* Utilities will be prefixed with "bui:" (e.g., bui:bg-background-primary) */
@@ -110,11 +107,6 @@ export const darkTokens = ${JSON.stringify(darkThemeObj.tokens, null, 2)};
   const cssOutPath = resolve(baseOutPath, "styles/theme.css");
   mkdirSync(dirname(cssOutPath), { recursive: true });
   writeFileSync(cssOutPath, css, "utf-8");
-
-  // Also update the legacy path still used by the build copy step.
-  const legacyCssOutPath = resolve(__dirname, "../src/styles/theme.css");
-  mkdirSync(dirname(legacyCssOutPath), { recursive: true });
-  writeFileSync(legacyCssOutPath, css, "utf-8");
 
   const relPath = relative(process.cwd(), cssOutPath);
   console.log(`✓ Generated ${relPath}`);

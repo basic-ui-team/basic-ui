@@ -61,7 +61,7 @@ export const generateLayoutClassNames = (layout: LayoutProps) => {
     wMin: "unset",
     wMax: "unset",
     position: "static",
-    overflow: "visible",
+    overflow: "unset",
     overflowX: "unset",
     overflowY: "unset",
   } as LayoutProps;
@@ -123,7 +123,7 @@ export const generateLayoutClassNames = (layout: LayoutProps) => {
       widthMin: wMin as WidthType,
       widthMax: wMax as WidthType,
       position: position as PositionType,
-      overflow: overflow as OverflowType,
+      overflow: overflow as OverflowType ,
       overflowX: overflowX as OverflowType,
       overflowY: overflowY as OverflowType,
     }),

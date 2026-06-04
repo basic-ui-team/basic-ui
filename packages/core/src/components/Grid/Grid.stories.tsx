@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Grid } from "./Grid";
+import { Header } from "../Header";
+import { Card } from "../Card";
 
 const meta: Meta<typeof Grid> = {
   title: "Components/Grid",
@@ -11,11 +13,11 @@ export default meta;
 type Story = StoryObj<typeof Grid>;
 
 const PlaceholderItem = ({ label = "Item", className }: { label?: string; className?: string }) => (
-  <div
-    className={`bg-background-secondary text-foreground-primary rounded px-md py-sm text-md ${className}`}
-  >
-    {label}
-  </div>
+  <Card className={className}>
+    <Card.Header>
+      <Card.Title>{label}</Card.Title>
+    </Card.Header>
+  </Card>
 );
 
 export const Basic: Story = {
@@ -38,7 +40,7 @@ export const TemplatePreset: Story = {
   render: () => (
     <div className="space-y-md">
       <section>
-        <h4 className="text-md text-foreground-secondary mb-sm">Masonry</h4>
+        <Header as="h4" py="md">Masonry</Header>
         <Grid templatePreset="masonry" gap="md">
           {Array.from({ length: 10 }, (_, i) => (
             <PlaceholderItem key={i} label={`Item ${i + 1}`} className={`h-${20 + (i % 5) * 10}`} />
@@ -46,7 +48,7 @@ export const TemplatePreset: Story = {
         </Grid>
       </section>
       <section>
-        <h4 className="text-md text-foreground-secondary mb-sm">Card List</h4>
+        <Header as="h4" py="md">Card List</Header>
         <Grid templatePreset="card-list" gap="md">
           {Array.from({ length: 8 }, (_, i) => (
             <PlaceholderItem key={i} label={`Card ${i + 1}`} className="h-40" />
@@ -54,14 +56,14 @@ export const TemplatePreset: Story = {
         </Grid>
       </section>
       <section>
-        <h4 className="text-md text-foreground-secondary mb-sm">Sidebar</h4>
+        <Header as="h4" py="md">Sidebar</Header>
         <Grid templatePreset="sidebar" gap="md">
           <PlaceholderItem label="Sidebar" className="h-40" />
           <PlaceholderItem label="Main Content" className="h-40" />
         </Grid>
       </section>
       <section>
-        <h4 className="text-md text-foreground-secondary mb-sm">Hero</h4>
+        <Header as="h4" py="md">Hero</Header>
         <Grid templatePreset="hero" gap="md">
           <PlaceholderItem label="Hero Image" className="h-40" />
           <PlaceholderItem label="Hero Content" className="h-40" />
@@ -129,10 +131,10 @@ export const AlignmentVariants: Story = {
       </section>
 
       <section>
-        <h4 className="text-md text-foreground-secondary mb-sm">alignContent</h4>
+        <Header as="h4" py="md">alignContent</Header>
         {ALIGN_CONTENT.map((c) => (
           <div key={`align-content-${c}`} className="mb-sm">
-            <h5 className="text-sm text-foreground-secondary mb-xs">{c}</h5>
+            <Header as="h5" py="xs">{c}</Header>
             <Grid cols={3} rows={3} gap="sm" className="h-100" alignContent={c as any}>
               <PlaceholderItem label="Content 1" />
               <PlaceholderItem label="Content 2" />
@@ -149,10 +151,10 @@ export const AlignmentVariants: Story = {
       </section>
 
       <section>
-        <h4 className="text-md text-foreground-secondary mb-sm">justifyContent</h4>
+        <Header as="h4" py="md">justifyContent</Header>
         {JUSTIFY_CONTENT.map((c) => (
           <div key={`justify-content-${c}`} className="mb-sm">
-            <h5 className="text-sm text-foreground-secondary mb-xs">{c}</h5>
+            <Header as="h5" py="xs">{c}</Header>
             <Grid cols={3} rows={3} gap="sm" className="h-100" justifyContent={c as any}>
               <PlaceholderItem label="Content 1" />
               <PlaceholderItem label="Content 2" />
@@ -175,7 +177,7 @@ export const AutoFlowAutoColsRows: Story = {
   render: () => (
     <div className="space-y-md">
       <section>
-        <h4 className="text-md text-foreground-secondary mb-sm">autoFlow: row</h4>
+        <Header as="h4" py="md">autoFlow: row</Header>
         <Grid autoFlow="row" autoCols="min" gap="sm">
           {Array.from({ length: 10 }, (_, i) => (
             <PlaceholderItem key={i} label={`Item ${i + 1}`} />
@@ -183,7 +185,7 @@ export const AutoFlowAutoColsRows: Story = {
         </Grid>
       </section>
       <section>
-        <h4 className="text-md text-foreground-secondary mb-sm">autoFlow: column</h4>
+        <Header as="h4" py="md">autoFlow: column</Header>
         <Grid autoFlow="column" autoRows="min" gap="sm" style={{ gridAutoColumns: "150px" }}>
           {Array.from({ length: 10 }, (_, i) => (
             <PlaceholderItem key={i} label={`Item ${i + 1}`} />
@@ -191,7 +193,7 @@ export const AutoFlowAutoColsRows: Story = {
         </Grid>
       </section>
       <section>
-        <h4 className="text-md text-foreground-secondary mb-sm">autoFlow: dense</h4>
+        <Header as="h4" py="md">autoFlow: dense</Header>
         <Grid autoFlow="dense" autoCols="min" gap="sm">
           <PlaceholderItem label="Item 1" className="h-16" />
           <PlaceholderItem label="Item 2" />

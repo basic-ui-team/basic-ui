@@ -1,4 +1,4 @@
-@import "../../../packages/tokens/src/styles/theme.css";
+@import "../../../packages/tokens/src/pkg/styles/theme.css";
 
 /* Scan workspace packages for class names */
 @source "../../../packages/core/src";
@@ -7,11 +7,9 @@
 /* Apply theme to Storybook canvas using CSS variables (not utilities) */
 /* CSS variables work with .dark class switching */
 body {
-  background-color: var(--color-background-primary);
-  color: var(--color-text-primary);
-  transition:
-    background-color 0.2s,
-    color 0.2s;
+  background-color: var(--color-bg-base);
+  color: var(--color-text-base);
+  transition: background-color 0.2s, color 0.2s;
 }
 
 #storybook-root {

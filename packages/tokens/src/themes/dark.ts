@@ -24,10 +24,10 @@ export const darkTheme: ThemeConfig = {
       active: "var(--color-neutral-100)",
       disabled: "var(--color-neutral-500)",
       inverted: "var(--color-black)",
-      error: "var(--color-red-400)",
+      error: "var(--color-red-200)",
       success: "var(--color-green-400)",
       warning: "var(--color-yellow-400)",
-      info: "var(--color-blue-400)",
+      info: "var(--color-blue-200)",
     },
     surface: {
       base: "var(--color-neutral-900)",

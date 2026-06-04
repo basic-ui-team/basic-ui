@@ -1,10 +1,11 @@
 import { ResponsiveValue } from "@core/hooks";
 import { CommonProps, RestrictedPropsWithAs } from "@core/types/props";
 import { SpacingType } from "../../lib/layout/layout.types";
+import { BuiltInSemanticColors } from "@core/theme";
 
 export type DividerDirection = "horizontal" | "vertical";
 export type DividerAppearance = "solid" | "dashed" | "dotted";
-export type DividerColor = "base" | "muted";
+export type DividerColor = BuiltInSemanticColors;
 export type DividerThickness = "thin" | "medium" | "thick" | "none";
 
 export interface DividerOwnProps extends CommonProps {

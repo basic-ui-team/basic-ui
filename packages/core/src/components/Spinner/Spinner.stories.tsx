@@ -1,7 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Spinner } from "./Spinner";
 import { Flex } from "../Flex";
+import { Text } from "../Text";
 import { useState } from "react";
+import { Box } from "../Box";
+import { Divider } from "../Divider";
 
 const sizes = ["xs", "sm", "md", "lg", "xl"] as const;
 
@@ -36,22 +39,28 @@ export const AllSizes: Story = {
 export const AllColors: Story = {
   render: () => (
     <Flex gap="lg" wrap="wrap" align="start" className="h-full">
-        {sizes.map((size) => (
-          <Flex key={size} direction="column" gap="md" align="center" justify="center" className="h-full">
-            <Spinner size={size} color="default" />
-            <Spinner size={size} color="muted" />
-            <Spinner size={size} color="primary" />
-            <Spinner size={size} color="secondary" />
-            <Spinner size={size} color="success" />
-            <Spinner size={size} color="error" />
-            <Spinner size={size} color="warning" />
-            <Spinner size={size} color="info" />
-          </Flex>
-        ))}
+      {sizes.map((size) => (
+        <Flex
+          key={size}
+          direction="column"
+          gap="md"
+          align="center"
+          justify="center"
+          className="h-full"
+        >
+          <Spinner size={size} color="default" />
+          <Spinner size={size} color="muted" />
+          <Spinner size={size} color="primary" />
+          <Spinner size={size} color="secondary" />
+          <Spinner size={size} color="success" />
+          <Spinner size={size} color="error" />
+          <Spinner size={size} color="warning" />
+          <Spinner size={size} color="info" />
+        </Flex>
+      ))}
     </Flex>
   ),
 };
-
 
 export const Visibility: Story = {
   render: () => {
@@ -74,18 +83,18 @@ export const Visibility: Story = {
 export const WithCustomAriaLabel: Story = {
   render: () => (
     <Flex gap="lg" direction="column" align="start">
-      <div>
-        <div className="text-sm font-medium mb-sm">Default label "Loading"</div>
+      <Box>
+        <Text>Default label "Loading"</Text>
         <Spinner />
-      </div>
-      <div>
-        <div className="text-sm font-medium mb-sm">Custom label "Processing data"</div>
+      </Box>
+      <Box>
+        <Text>Custom label "Processing data"</Text>
         <Spinner ariaLabel="Processing data" />
-      </div>
-      <div>
-        <div className="text-sm font-medium mb-sm">Custom label "Saving"</div>
+      </Box>
+      <Box>
+        <Text>Custom label "Saving"</Text>
         <Spinner ariaLabel="Saving" />
-      </div>
+      </Box>
     </Flex>
   ),
 };
@@ -93,21 +102,21 @@ export const WithCustomAriaLabel: Story = {
 export const PolymorphicElement: Story = {
   render: () => (
     <Flex gap="lg" direction="column" align="start">
-      <div>
-        <div className="text-sm font-medium mb-sm">As div (default)</div>
+      <Box>
+        <Text>As div (default)</Text>
         <Spinner />
-      </div>
-      <div>
-        <div className="text-sm font-medium mb-sm">As span</div>
+      </Box>
+      <Box>
+        <Text>As span</Text>
         <Spinner as="span" color="secondary" />
-      </div>
+      </Box>
     </Flex>
   ),
 };
 
 export const SizeAndColorCombinations: Story = {
   render: () => (
-    <Flex gap="lg" wrap="wrap" >
+    <Flex gap="lg" wrap="wrap">
       <Spinner size="sm" color="primary" />
       <Spinner size="md" color="secondary" />
       <Spinner size="lg" color="success" />
@@ -123,15 +132,27 @@ export const SizeAndColorCombinations: Story = {
 export const WithSpacing: Story = {
   render: () => (
     <Flex direction="column" gap="md">
-      <div>
-        <div className="text-sm font-medium mb-sm">With margin bottom</div>
-        <Spinner color="primary" mb="lg" />
-        <div className="bg-gray-100 p-md">Content below spinner</div>
-      </div>
-      <div>
-        <div className="text-sm font-medium mb-sm">With margin</div>
-        <Spinner color="secondary" m="lg" />
-      </div>
+      <Box>
+        <Text>Spinner with margin</Text>
+        <Box className="border border-border-base w-max">
+          <Spinner color="primary" m="md" />
+        </Box>
+      </Box>
+      <Divider />
+      <Box>
+        <Text>Spinner with horizontal margin</Text>
+        <Box className="border border-border-base w-max">
+          <Spinner color="secondary" mx="md" />
+        </Box>
+      </Box>
+      <Divider />
+      <Box>
+        <Text>Spinner with vertical margin</Text>
+        <Box className="border border-border-base w-max">
+          <Spinner color="success" my="md" />
+        </Box>
+      </Box>
+      <Divider />
     </Flex>
   ),
 };
@@ -139,16 +160,22 @@ export const WithSpacing: Story = {
 export const InlineWithText: Story = {
   render: () => (
     <Flex direction="column" gap="md">
-      <div className="text-sm font-medium">Small spinner inline with text</div>
+      <Text size="sm" weight="normal">
+        Small spinner inline with text
+      </Text>
       <Flex gap="sm" align="center">
         <Spinner size="sm" color="primary" />
-        <span>Loading data...</span>
+        <Text as="span">Loading data...</Text>
       </Flex>
 
-      <div className="text-sm font-medium mt-lg">Medium spinner with larger text</div>
+      <Text size="sm" weight="normal" mt="lg">
+        Medium spinner with larger text
+      </Text>
       <Flex gap="md" align="center">
         <Spinner size="md" color="secondary" />
-        <span className="text-lg">Processing your request...</span>
+        <Text as="span" size="lg">
+          Processing your request...
+        </Text>
       </Flex>
     </Flex>
   ),

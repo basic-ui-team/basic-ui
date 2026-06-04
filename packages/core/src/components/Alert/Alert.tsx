@@ -23,32 +23,6 @@ const ICON_MAP: Record<string, React.ComponentType> = {
   info: InfoIcon,
 };
 
-/**
- * Alert Component
- *
- * Displays persistent inline feedback with optional title, icon, and dismissal.
- * The alert content is provided via `children`. An optional `title` prop can be used for a heading.
- *
- * Accessibility:
- * - Uses `role="alert"` for error/warning (time-sensitive)
- * - Uses `role="status"` for info/success (polite notifications)
- * - Includes semantic icons and title support
- * - Dismissible alerts include accessible close button
- *
- * @example
- * // Simple info alert
- * <Alert severity="info">This is an informational message</Alert>
- *
- * // Error alert with title and dismissible
- * <Alert
- *   as="div"
- *   severity="error"
- *   title="Error"
- *   onDismiss={() => setShowAlert(false)}
- * >
- *   Something went wrong. Please try again.
- * </Alert>
- */
 const _Alert = <As extends AllowedAlertElements = "div">(
   {
     as,
@@ -125,6 +99,32 @@ const _Alert = <As extends AllowedAlertElements = "div">(
   );
 };
 
+/**
+ * Alert Component
+ *
+ * Displays persistent inline feedback with optional title, icon, and dismissal.
+ * The alert content is provided via `children`. An optional `title` prop can be used for a heading.
+ *
+ * Accessibility:
+ * - Uses `role="alert"` for error/warning (time-sensitive)
+ * - Uses `role="status"` for info/success (polite notifications)
+ * - Includes semantic icons and title support
+ * - Dismissible alerts include accessible close button
+ *
+ * @example
+ * // Simple info alert
+ * <Alert severity="info">This is an informational message</Alert>
+ *
+ * // Error alert with title and dismissible
+ * <Alert
+ *   as="div"
+ *   severity="error"
+ *   title="Error"
+ *   onDismiss={() => setShowAlert(false)}
+ * >
+ *   Something went wrong. Please try again.
+ * </Alert>
+ */
 export const Alert = forwardRefWithAs<AlertOwnProps, AllowedAlertElements>(_Alert);
 
 (Alert as unknown as { displayName?: string }).displayName = "Alert";

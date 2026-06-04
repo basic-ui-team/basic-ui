@@ -15,8 +15,8 @@ describe("Card", () => {
     const { container } = renderWithProviders(<Card variant="elevated">Elevated</Card>);
     const root = container.firstChild as HTMLElement | null;
     expect(root).toBeInTheDocument();
-    // elevated variant adds a hover:shadow-s4 token
-    expect(root).toHaveClass("hover:shadow-s4");
+    // elevated variant adds a hover:shadow-s5 token
+    expect(root).toHaveClass("hover:shadow-s5");
   });
 
   it("renders as an anchor when href is provided", () => {

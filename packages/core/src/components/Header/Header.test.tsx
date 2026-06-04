@@ -23,7 +23,7 @@ describe("variants", () => {
   };
 
   const colorMap: Record<string, string> = {
-    default: "text-foreground-primary",
+    default: "text-fg-base",
     primary: "text-primary-700",
     secondary: "text-secondary-700",
   };
@@ -103,8 +103,8 @@ describe("variants", () => {
     } else if (variant === "align") {
       expect(el).toHaveClass(alignMap[String(value)]);
     } else if (variant === "truncate") {
-      if (value) expect(el).toHaveClass("truncate");
-      else expect(el).not.toHaveClass("truncate");
+      if (value) expect(el).toHaveClass("overflow-hidden");
+      else expect(el).not.toHaveClass("overflow-hidden");
     } else if (variant === "wrap") {
       expect(el).toHaveClass(wrapMap[String(value)]);
     }

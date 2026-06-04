@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Alert } from "./Alert";
 import { BriefcaseIcon } from "@basic-ui/icons";
 import { useState } from "react";
+import { Flex } from "../Flex";
 
 const meta: Meta<typeof Alert> = {
   title: "Components/Alert",
@@ -17,18 +18,18 @@ type Story = StoryObj<typeof Alert>;
 
 export const AllSeverities: Story = {
   render: () => (
-    <div className="flex flex-col gap-md">
+    <Flex direction="column" gap="md">
       <Alert severity="info">This is an info alert.</Alert>
       <Alert severity="success">This is a success alert.</Alert>
       <Alert severity="warning">This is a warning alert.</Alert>
       <Alert severity="error">This is an error alert.</Alert>
-    </div>
+    </Flex>
   ),
 };
 
 export const Borderless: Story = {
   render: () => (
-    <div className="flex flex-col gap-md">
+    <Flex direction="column" gap="md">
       <Alert severity="info" borderless>
         This is an info alert.
       </Alert>
@@ -41,13 +42,13 @@ export const Borderless: Story = {
       <Alert severity="error" borderless>
         This is an error alert.
       </Alert>
-    </div>
+    </Flex>
   ),
 };
 
 export const WithTitle: Story = {
   render: () => (
-    <div className="flex flex-col gap-md">
+    <Flex direction="column" gap="md">
       <Alert severity="info" title="Info Alert">
         This is an info alert.
       </Alert>
@@ -60,13 +61,13 @@ export const WithTitle: Story = {
       <Alert severity="error" title="Error Alert">
         This is an error alert.
       </Alert>
-    </div>
+    </Flex>
   ),
 };
 
 export const WithIcon: Story = {
   render: () => (
-    <div className="flex flex-col gap-md">
+    <Flex direction="column" gap="md">
       <Alert severity="info" title="Info Alert" icon={<BriefcaseIcon />}>
         This is an info alert.
       </Alert>
@@ -79,7 +80,7 @@ export const WithIcon: Story = {
       <Alert severity="error" title="Error Alert" icon={<BriefcaseIcon />}>
         This is an error alert.
       </Alert>
-    </div>
+    </Flex>
   ),
 };
 
@@ -97,7 +98,7 @@ export const WithAction: Story = {
     severity: "info",
     title: "Alert with Action",
     children: "This alert includes a custom action element.",
-    action: <button className="text-sm text-blue-600 hover:underline">Take Action</button>,
+    action: <button className="text-sm text-fg-info hover:underline">Take Action</button>,
   },
 };
 
@@ -106,7 +107,7 @@ export const WithActionAndDismiss: Story = {
     severity: "info",
     title: "Alert with Action and Dismiss",
     children: "This alert includes both a custom action and a dismiss button.",
-    action: <button className="text-sm text-blue-600 hover:underline">Take Action</button>,
+    action: <button className="text-sm text-fg-info hover:underline">Take Action</button>,
     onDismiss: () => alert("Alert dismissed!"),
   },
 };
@@ -117,10 +118,10 @@ export const ControlledDismissal: Story = {
     const [isOpen, setIsOpen] = useState(true);
 
     return (
-      <div className="flex flex-col gap-md">
+      <Flex direction="column" gap="md">
         <button
           onClick={() => setIsOpen(true)}
-          className="self-start px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+          className="self-start px-4 py-2 bg-surface-info text-fg-info font-bold rounded hover:bg-surface-base/80 transition-colors"
         >
           Show Alert
         </button>
@@ -135,20 +136,20 @@ export const ControlledDismissal: Story = {
             display it again.
           </Alert>
         )}
-      </div>
+      </Flex>
     );
   },
 };
 
 export const AsDifferentElement: Story = {
   render: () => (
-    <div className="flex flex-col gap-md">
+    <Flex direction="column" gap="md">
       <Alert as="span" severity="info">
         This alert is rendered as a &lt;span&gt; element.
       </Alert>
       <Alert as="p" severity="success">
         This alert is rendered as a &lt;p&gt; element.
       </Alert>
-    </div>
+    </Flex>
   ),
 };

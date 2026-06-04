@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Flex } from "./Flex";
 import { Text } from "../Text/Text";
+import { Card } from "../Card";
+import { Header } from "../Header";
 
 const meta: Meta<typeof Flex> = {
   title: "Components/Flex",
@@ -11,18 +13,20 @@ export default meta;
 
 type Story = StoryObj<typeof Flex>;
 
+const PlaceholderItem = ({ label = "Item", className }: { label?: string; className?: string }) => (
+  <Card variant="outlined" className={className}>
+    <Card.Header>
+      <Card.Title>{label}</Card.Title>
+    </Card.Header>
+  </Card>
+);
+
 export const Row: Story = {
   render: () => (
     <Flex gap="md" align="center" className="w-full ">
-      <Text as="span" className="border p-sm rounded">
-        Column 1
-      </Text>
-      <Text as="span" className="border p-sm rounded">
-        Column 2
-      </Text>
-      <Text as="span" className="border p-sm rounded">
-        Column 3
-      </Text>
+      <PlaceholderItem label="Column 1" />
+      <PlaceholderItem label="Column 2" />
+      <PlaceholderItem label="Column 3" />
     </Flex>
   ),
 };
@@ -30,98 +34,82 @@ export const Row: Story = {
 export const Column: Story = {
   render: () => (
     <Flex direction="column" gap="md">
-      <Text as="span" className="border p-sm rounded">
-        Row 1
-      </Text>
-      <Text as="span" className="border p-sm rounded">
-        Row 2
-      </Text>
-      <Text as="span" className="border p-sm rounded">
-        Row 3
-      </Text>
+      <PlaceholderItem label="Row 1" />
+      <PlaceholderItem label="Row 2" />
+      <PlaceholderItem label="Row 3" />
     </Flex>
   ),
 };
 
 export const GapAndPadding: Story = {
   render: () => (
-    <div className="flex flex-col gap-md">
+    <Flex direction="column" w="full" gap="md">
       <Flex gap="sm" p="sm">
-        <Text as="span" className="border p-sm rounded flex-1">
-          Small gap
-        </Text>
-        <Text as="span" className="border p-sm rounded flex-1">
-          Small gap
-        </Text>
+        <PlaceholderItem label="Small gap 1 and padding" className="flex-1" />
+        <PlaceholderItem label="Small gap 2 and padding" className="flex-1" />
       </Flex>
 
       <Flex gap="lg" p="lg">
-        <Text as="span" className="border p-sm rounded flex-1">
-          Large gap
-        </Text>
-        <Text as="span" className="border p-sm rounded flex-1">
-          Large gap
-        </Text>
+        <PlaceholderItem label="Large gap 1 and padding" className="flex-1" />
+        <PlaceholderItem label="Large gap 2 and padding" className="flex-1" />
       </Flex>
-    </div>
+    </Flex>
   ),
 };
 
 export const InlineExample: Story = {
   render: () => (
-    <div className="flex items-center gap-md">
+    <Flex align="center" gap="md">
       <Text as="span" size="2xl">
         This is some text with an inline flex container:
       </Text>
       <Flex display="inline-flex" gap="sm" p="sm">
-        <Text as="span" className="border p-sm rounded">
-          Inline 1
-        </Text>
-        <Text as="span" className="border p-sm rounded">
-          Inline 2
-        </Text>
+        <PlaceholderItem label="Inline 1" className="flex-1" />
+        <PlaceholderItem label="Inline 2" className="flex-1" />
       </Flex>
-    </div>
+    </Flex>
   ),
 };
 
 export const Polymorphic: Story = {
   render: () => (
-    <div className="flex flex-col gap-sm">
+    <Flex direction="column" gap="sm">
+      <Header size="h4">Polymorphic example</Header>
       <Text as="span" size="lg">
         This is a nav element using Flex with polymorphic "as" prop:
       </Text>
       <Flex as="nav" gap="md" aria-label="Main navigation">
-        <Text as="span">
-          <a href="#">Home</a>
+        <Text as="span" className="border border-transparent border-b-border-base">
+          <a  href="#">Home</a>
         </Text>
-        <Text as="span">
-          <a href="#">Docs</a>
+        <Text as="span" className="border border-transparent border-b-border-base">
+          <a  href="#">Docs</a>
         </Text>
       </Flex>
-    </div>
+    </Flex>
   ),
 };
 
 export const Responsive: Story = {
   render: () => (
-    <div className="flex flex-col gap-md w-full">
+    <Flex direction="column" w="full" gap="md">
+      <Header size="h4">Responsive example</Header>
       <Text as="span" size="md">
         Resize the preview viewport to see layout change
       </Text>
       <Flex direction={{ base: "column", md: "row" }} gap={{ base: "sm", md: "md" }}>
-        <Text className="border rounded p-sm flex-1">A</Text>
-        <Text className="border rounded p-sm flex-1">B</Text>
-        <Text className="border rounded p-sm flex-1">C</Text>
+        <PlaceholderItem label="1" className="flex-1" />
+        <PlaceholderItem label="2" className="flex-1" />
+        <PlaceholderItem label="3" className="flex-1" />
       </Flex>
-    </div>
+    </Flex>
   ),
 };
 
 export const Align: Story = {
   render: () => (
-    <div className="flex flex-col gap-md">
-      <Text>Align variants</Text>
+    <Flex direction="column" gap="md">
+      <Header size="h4">Align variants</Header>
       <Flex align="start" gap="md" className="border border-border-base p-sm">
         <Text className="border p-sm h-8">Start A</Text>
         <Text className="border p-sm h-16">Start B (tall)</Text>
@@ -145,14 +133,14 @@ export const Align: Story = {
         <Text className="border p-sm">Stretch B</Text>
         <Text className="border p-sm">Stretch C</Text>
       </Flex>
-    </div>
+    </Flex>
   ),
 };
 
 export const Justify: Story = {
   render: () => (
-    <div className="flex flex-col gap-md">
-      <Text>Justify variants</Text>
+    <Flex direction="column" gap="md">
+      <Header size="h4">Justify variants</Header>
 
       <Flex justify="start" gap="md" className="border border-border-base p-sm">
         <Text className="border p-sm">Start 1</Text>
@@ -189,6 +177,6 @@ export const Justify: Story = {
         <Text className="border p-sm">Evenly 2</Text>
         <Text className="border p-sm">Evenly 3</Text>
       </Flex>
-    </div>
+    </Flex>
   ),
 };
