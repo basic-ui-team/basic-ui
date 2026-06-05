@@ -182,7 +182,7 @@ describe("Badge", () => {
 
   it("applies ariaLive when provided", () => {
     const { container } = renderWithProviders(
-      <Badge content="5" ariaLive="polite">
+      <Badge content="5" ariaHidden={false} ariaLive="polite">
         Test
       </Badge>,
     );

@@ -54,8 +54,8 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
           })}
           style={style}
           aria-label={ariaLabel}
-          aria-hidden={ariaHidden && !ariaLabel ? true : undefined}
-          aria-live={ariaLive}
+          aria-hidden={ariaLabel ? undefined : ariaHidden}
+          aria-live={ariaHidden ? undefined : ariaLive || "polite"}
           {...rest}
         >
           {variant === "dot" ? null : displayContent}

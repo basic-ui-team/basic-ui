@@ -41,6 +41,7 @@ export interface BadgeProps extends CommonProps {
   /** Hide badge from screen readers. Set to false for announcements (e.g., status updates). @default true */
   ariaHidden?: boolean;
 
-  /** Indicate polite or assertive ARIA live region announcements for dynamic content. */
+  /** Indicate polite or assertive ARIA live region announcements for dynamic content. 
+   * ariaHidden must be set to false for announcements to be made (providing ariaLabel sets ariaHidden to false automatically) */
   ariaLive?: "polite" | "assertive" | "off";
 }
