@@ -14,6 +14,7 @@ export function normalizeProps<T extends Record<string, unknown> = Record<string
     ariaLabelledBy: "aria-labelledby",
     ariaHidden: "aria-hidden",
     ariaLive: "aria-live",
+    ariaRequired: "aria-required",
     htmlFor: "for",
   };
 
@@ -23,12 +24,21 @@ export function normalizeProps<T extends Record<string, unknown> = Record<string
     if (camel in out && !(dashed in out)) {
       out[dashed] = out[camel];
       delete out[camel];
-    } else {
-      // warning should be devtime only, if we're passing in a prop that isn't in propMapping, we should warn the user that it won't be normalized
-      if (process.env.NODE_ENV === "development" && camel in out) {
+    }
+  }
+
+  // Dev-time warning: if callers pass camelCase props that aren't recognized
+  // (and therefore won't be normalized), warn them so they can correct usage
+  // or add a mapping. This iterates the original `props` keys rather than the
+  // mapping itself so we can detect unknown camelCase aliases.
+  if (process.env.NODE_ENV === "development" && props) {
+    for (const key of Object.keys(props as Record<string, unknown>)) {
+      // Treat keys containing uppercase letters as camelCase aliases (e.g., ariaLabel, htmlFor)
+      if (/[A-Z]/.test(key) && !(key in propMapping)) {
         console.warn(
-          `Warning: Prop "${camel}" is not a recognized attribute and will not be normalized. 
-          Please use the correct HTML attribute name if applicable  or update the propMapping.`,
+          `Warning: Prop "${key}" will not be normalized. Recognized aliases: ${Object.keys(
+            propMapping,
+          ).join(", ")}. Use dashed attribute names (e.g. \"aria-label\") or add a mapping.`,
         );
       }
     }
