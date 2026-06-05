@@ -102,9 +102,7 @@ export const WithCustomContent: Story = {
 export const AllColors: Story = {
   render: () => (
     <Flex gap="lg" wrap="wrap">
-      {(
-        ["primary", "secondary", "success", "warning", "error", "info"] as const
-      ).map((color) => (
+      {(["primary", "secondary", "success", "warning", "error", "info"] as const).map((color) => (
         <Box key={color} className="relative w-12 h-12">
           <Badge content={color.charAt(0).toUpperCase()} color={color}>
             <Box className="w-12 h-12 bg-surface-base rounded-lg flex items-center justify-center">
@@ -189,7 +187,9 @@ export const AllPositions: Story = {
         <Box key={position} className="relative w-12 h-12">
           <Badge content="5" position={position} color="primary">
             <Box className="w-12 h-12 bg-surface-base rounded-lg flex items-center justify-center">
-              <Text className="text-xs">{position.charAt(0).toUpperCase() + position.slice(1).replace("-", " ")}</Text>
+              <Text className="text-xs">
+                {position.charAt(0).toUpperCase() + position.slice(1).replace("-", " ")}
+              </Text>
             </Box>
           </Badge>
         </Box>
