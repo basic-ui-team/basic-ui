@@ -1,3 +1,4 @@
+import { ResponsiveValue } from "@core/hooks";
 import { BuiltInSemanticColors } from "@core/theme";
 import { CommonProps } from "@core/types/props";
 
@@ -20,7 +21,7 @@ export interface BadgeProps extends CommonProps {
   variant?: BadgeVariant;
 
   /** The size of the badge. @default "medium" */
-  size?: BadgeSize;
+  size?: ResponsiveValue<BadgeSize>;
 
   /** The shape of the badge. @default "circular" */
   shape?: BadgeShape;

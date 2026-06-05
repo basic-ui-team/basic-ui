@@ -30,17 +30,9 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
       typeof content === "number" && max !== undefined && content > max ? `${max}+` : content;
 
     const {
-      variant: responsiveVariant,
       size: responsiveSize,
-      shape: responsiveShape,
-      position: responsivePosition,
-      ping: responsivePing,
     } = useResponsiveProps({
-      variant,
       size,
-      shape,
-      position,
-      ping,
     });
 
     return (
@@ -51,12 +43,13 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
           ref={ref}
           data-visible={visible}
           className={badgeVariants({
-            variant: responsiveVariant,
+            variant,
             size: responsiveSize,
-            shape: responsiveShape,
+            shape,
             color: color as BadgeColor,
-            position: responsivePosition,
-            ping: responsivePing,
+            position,
+            ping,
+
             className,
           })}
           style={style}
@@ -67,15 +60,15 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
         >
           {variant === "dot" ? null : displayContent}
         </Box>
-        {responsivePing && (
+        {ping && (
           <Box
             as="span"
             className={badgeVariants({
               variant: "dot",
               size: responsiveSize,
-              shape: responsiveShape,
+              shape,
               color: color as BadgeColor,
-              position: responsivePosition,
+              position,
               ping: false,
             })}
           />
