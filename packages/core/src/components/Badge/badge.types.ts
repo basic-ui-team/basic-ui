@@ -14,7 +14,7 @@ export interface BadgeProps extends CommonProps {
   /** The maximum value to display. If the content is a number and exceeds this value, it will be displayed as "max+". */
   max?: number;
 
-  /** The color of the badge. Can be a predefined color name or a custom CSS color value. @default "primary" */
+  /** The color of the badge. @default "primary" */
   color?: BadgeColor;
 
   /** The variant of the badge. @default "standard" */
