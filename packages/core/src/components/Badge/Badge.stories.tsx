@@ -18,7 +18,7 @@ const meta: Meta<typeof Badge> = {
     },
     color: {
       control: "select",
-      options: ["default", "muted", "primary", "secondary", "success", "warning", "error", "info"],
+      options: ["primary", "secondary", "success", "warning", "error", "info"],
       description: "The color of the badge",
     },
     variant: {
