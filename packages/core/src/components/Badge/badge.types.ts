@@ -5,6 +5,7 @@ export type BadgeVariant = "standard" | "dot";
 export type BadgeSize = "small" | "medium" | "large";
 export type BadgeShape = "rounded" | "square" | "circular";
 export type BadgePosition = "top-left" | "top-right" | "bottom-left" | "bottom-right";
+export type BadgeColor = Exclude<BuiltInSemanticColors, "default" | "muted">;
 
 export interface BadgeProps extends CommonProps {
   /** The content to be displayed within the badge. Can be a string, number, or any React node. */
@@ -12,8 +13,8 @@ export interface BadgeProps extends CommonProps {
   /** The maximum value to display. If the content is a number and exceeds this value, it will be displayed as "max+". */
   max?: number;
 
-  /** The color of the badge. Can be a predefined color name or a custom CSS color value. @default "default" */
-  color?: BuiltInSemanticColors;
+  /** The color of the badge. Can be a predefined color name or a custom CSS color value. @default "primary" */
+  color?: BadgeColor;
 
   /** The variant of the badge. @default "standard" */
   variant?: BadgeVariant;

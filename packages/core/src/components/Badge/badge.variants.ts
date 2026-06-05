@@ -25,8 +25,6 @@ export const badgeVariants = cva(
         square: "rounded-none",
       },
       color: {
-        default: "bg-surface-base text-fg-base",
-        muted: "bg-bg-muted text-fg-muted",
         primary: "bg-primary-500 text-fg-base",
         secondary: "bg-secondary-500 text-fg-base",
         success: "bg-bg-success text-fg-success",
@@ -65,7 +63,7 @@ export const badgeVariants = cva(
     defaultVariants: {
       variant: "standard",
       size: "medium",
-      color: "info",
+      color: "primary",
       shape: "circular",
       position: "top-right",
       ping: false,

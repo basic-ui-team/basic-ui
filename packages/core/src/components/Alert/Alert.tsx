@@ -42,11 +42,18 @@ const _Alert = <As extends AllowedAlertElements = "div">(
 ) => {
   const [isDismissed, setIsDismissed] = useState(false);
 
-  const Comp = (as || "div") as As;
+  let Comp = (as || "div") as As;
   const Child = Comp === "p" || Comp === "span" ? "span" : "div"; // Use inline wrappers for inline parents to avoid invalid nesting/hydration issues
   const mergedIconMap = { ...ICON_MAP, ...iconMap };
   const iconNode = icon === false ? null : icon || mergedIconMap[severity];
   const iconElement = typeof iconNode === "function" ? React.createElement(iconNode) : iconNode;
+
+  if (ref && ref instanceof HTMLDivElement) {
+    Comp = "div" as As;
+    console.warn(
+      "Using a div ref, forcing Alert to render as div to prevent react hydration issues. Please provide a ref compatible with the 'as' prop if you want to render a different element.",
+    );
+  }
 
   const handleDismiss = () => {
     setIsDismissed(true);

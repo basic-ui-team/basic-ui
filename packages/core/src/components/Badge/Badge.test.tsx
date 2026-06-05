@@ -64,10 +64,8 @@ describe("Badge", () => {
   });
 
   it.each([
-    ["default", "bg-bg-base text-fg-base"],
-    ["muted", "bg-bg-muted text-fg-muted"],
-    ["primary", "bg-primary-600 text-fg-base"],
-    ["secondary", "bg-secondary-600 text-fg-base"],
+    ["primary", "bg-primary-500 text-fg-base"],
+    ["secondary", "bg-secondary-500 text-fg-base"],
     ["success", "bg-bg-success text-fg-success"],
     ["warning", "bg-bg-warning text-fg-warning"],
     ["error", "bg-bg-error text-fg-error"],

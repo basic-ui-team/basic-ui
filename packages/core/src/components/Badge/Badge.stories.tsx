@@ -103,7 +103,7 @@ export const AllColors: Story = {
   render: () => (
     <Flex gap="lg" wrap="wrap">
       {(
-        ["default", "muted", "primary", "secondary", "success", "warning", "error", "info"] as const
+        ["primary", "secondary", "success", "warning", "error", "info"] as const
       ).map((color) => (
         <Box key={color} className="relative w-12 h-12">
           <Badge content={color.charAt(0).toUpperCase()} color={color}>

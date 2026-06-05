@@ -23,10 +23,6 @@ export function normalizeProps<T extends Record<string, unknown> = Record<string
     if (camel in out && !(dashed in out)) {
       out[dashed] = out[camel];
       delete out[camel];
-    } else if (camel in out && dashed in out) {
-      // If both camelCase and dashed versions are present, we can choose to either keep the dashed version or throw a warning.
-      // For now, we'll keep the dashed version and ignore the camelCase version.
-      delete out[camel];
     } else {
       // warning should be devtime only, if we're passing in a prop that isn't in propMapping, we should warn the user that it won't be normalized
       if (process.env.NODE_ENV === "development" && camel in out) {

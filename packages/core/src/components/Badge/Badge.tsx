@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "@core/components/Box";
-import { BadgeProps } from "./badge.types";
+import { BadgeColor, BadgeProps } from "./badge.types";
 import { badgeVariants } from "./badge.variants";
 import { useResponsiveProps } from "@core/hooks";
 
@@ -9,7 +9,7 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
     {
       content,
       max,
-      color = "default",
+      color = "primary",
       variant = "standard",
       size = "medium",
       shape = "circular",
@@ -54,7 +54,7 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
             variant: responsiveVariant,
             size: responsiveSize,
             shape: responsiveShape,
-            color,
+            color: color as BadgeColor,
             position: responsivePosition,
             ping: responsivePing,
             className,
@@ -74,7 +74,7 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
               variant: "dot",
               size: responsiveSize,
               shape: responsiveShape,
-              color,
+              color: color as BadgeColor,
               position: responsivePosition,
               ping: false,
             })}
