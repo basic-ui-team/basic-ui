@@ -67,7 +67,7 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
         >
           {variant === "dot" ? null : displayContent}
         </Box>
-        {ping && (
+        {responsivePing && (
           <Box
             as="span"
             className={badgeVariants({
