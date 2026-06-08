@@ -1,4 +1,4 @@
-import { AllowedSkeletonComponent, SkeletonProps } from "./skeleton.types";
+import { AllowedSkeletonComponent, SkeletonOwnProps, SkeletonProps } from "./skeleton.types";
 import { cn, forwardRefWithAs } from "@core/lib";
 import { PolymorphicRef } from "@core/types/props";
 import { skeletonVariants } from "./skeleton.variants";
@@ -19,5 +19,5 @@ export const _Skeleton = <As extends AllowedSkeletonComponent = "div">(
 /**
  * Skeleton component for displaying loading placeholders. Supports text, rectangular, and circular variants, with optional animation.
  */
-export const Skeleton = forwardRefWithAs<SkeletonProps, AllowedSkeletonComponent>(_Skeleton as any);
+export const Skeleton = forwardRefWithAs<SkeletonOwnProps, AllowedSkeletonComponent>(_Skeleton);
 (Skeleton as unknown as { displayName?: string }).displayName = "Skeleton";
