@@ -28,6 +28,7 @@ export const darkTheme: ThemeConfig = {
       success: "var(--color-green-400)",
       warning: "var(--color-yellow-400)",
       info: "var(--color-blue-200)",
+      skeleton: "var(--color-neutral-700)",
     },
     surface: {
       base: "var(--color-neutral-900)",

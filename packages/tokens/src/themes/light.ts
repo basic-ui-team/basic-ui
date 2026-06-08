@@ -27,6 +27,7 @@ export const lightTheme: ThemeConfig = {
       success: "var(--color-green-700)",
       warning: "var(--color-yellow-700)",
       info: "var(--color-blue-600)",
+      skeleton: "var(--color-neutral-200)",
     },
     surface: {
       base: "var(--color-neutral-100)",

@@ -32,7 +32,8 @@ export const tokens = {
       "error": "fg-error",
       "success": "fg-success",
       "warning": "fg-warning",
-      "info": "fg-info"
+      "info": "fg-info",
+      "skeleton": "fg-skeleton"
     },
     "surface": {
       "base": "surface-base",
@@ -229,7 +230,8 @@ export const darkTokens = {
       "error": "fg-error",
       "success": "fg-success",
       "warning": "fg-warning",
-      "info": "fg-info"
+      "info": "fg-info",
+      "skeleton": "fg-skeleton"
     },
     "surface": {
       "base": "surface-base",

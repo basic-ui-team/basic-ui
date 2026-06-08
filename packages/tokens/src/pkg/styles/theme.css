@@ -29,6 +29,7 @@
   --color-fg-success: var(--color-green-700);
   --color-fg-warning: var(--color-yellow-700);
   --color-fg-info: var(--color-blue-600);
+  --color-fg-skeleton: oklch(92.8% 0.006 264.531);
   --color-surface-base: oklch(96.7% 0.003 264.542);
   --color-surface-hover: oklch(92.8% 0.006 264.531);
   --color-surface-active: oklch(87.2% 0.01 258.338);
@@ -181,6 +182,7 @@
   --color-fg-success: var(--color-green-400);
   --color-fg-warning: var(--color-yellow-400);
   --color-fg-info: var(--color-blue-200);
+  --color-fg-skeleton: oklch(37.3% 0.034 259.733);
   --color-surface-base: oklch(21% 0.034 264.665);
   --color-surface-hover: oklch(27.8% 0.033 256.848);
   --color-surface-active: oklch(37.3% 0.034 259.733);

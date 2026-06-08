@@ -23,7 +23,8 @@ type SemanticState =
   | "error"
   | "warning"
   | "success"
-  | "info";
+  | "info"
+  | "skeleton"
 
 /** Spacing scale: xs (4px) to 5xl (64px) */
 export type SpacingTokens = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl";
