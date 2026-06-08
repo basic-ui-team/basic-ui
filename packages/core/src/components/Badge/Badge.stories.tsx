@@ -309,7 +309,7 @@ export const StatusIndicator: Story = {
   render: () => (
     <Box className="relative w-16 h-16">
       <Badge content="" variant="dot" color="success" position="bottom-right">
-        <Box className="w-16 h-16 bg-gradient-to-br from-gray-200 to-gray-100 rounded-full flex items-center justify-center border-2 border-gray-300">
+        <Box className="w-16 h-16 bg-linear-to-br from-gray-200 to-gray-100 rounded-full flex items-center justify-center border-2 border-gray-300">
           <Text className="text-2xl">👤</Text>
         </Box>
       </Badge>
