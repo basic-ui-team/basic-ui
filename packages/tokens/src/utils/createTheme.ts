@@ -63,7 +63,7 @@ export function createTheme(config: ThemeInput): void {
  */
 function injectDarkThemeStyles(theme: ThemeConfig): void {
   // Remove existing dark theme style if present
-  const existingStyle = document.getElementById("simple-ui-dark-theme");
+  const existingStyle = document.getElementById("basic-ui-dark-theme");
   if (existingStyle) {
     existingStyle.remove();
   }
@@ -78,7 +78,7 @@ function injectDarkThemeStyles(theme: ThemeConfig): void {
 
   // Inject as style element
   const style = document.createElement("style");
-  style.id = "simple-ui-dark-theme";
+  style.id = "basic-ui-dark-theme";
   style.textContent = darkCSS;
   document.head.appendChild(style);
 }

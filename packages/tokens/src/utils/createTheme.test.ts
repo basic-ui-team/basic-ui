@@ -85,7 +85,7 @@ describe("createTheme", () => {
       createTheme({ dark: { color: { primary: {50: "#4D94FF"} } } });
 
       expect(document.createElement).toHaveBeenCalledWith("style");
-      expect(mockStyleElement.id).toBe("simple-ui-dark-theme");
+      expect(mockStyleElement.id).toBe("basic-ui-dark-theme");
       expect(mockHead.appendChild).toHaveBeenCalledWith(mockStyleElement);
     });
 
@@ -105,7 +105,7 @@ describe("createTheme", () => {
 
       createTheme({ dark: { color: { primary: {50: "#4D94FF"} } } });
 
-      expect(document.getElementById).toHaveBeenCalledWith("simple-ui-dark-theme");
+      expect(document.getElementById).toHaveBeenCalledWith("basic-ui-dark-theme");
       expect(existingStyle.remove).toHaveBeenCalled();
     });
 

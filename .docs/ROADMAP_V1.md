@@ -1,7 +1,7 @@
-# simple-ui v1.0 Roadmap
+# basic-ui v1.0 Roadmap
 
 ## Vision
-Launch simple-ui as a production-ready, accessible React component library focused on **core functionality, excellent documentation, and intuitive user guides**. v1.0 will establish the foundation for future expansion while maintaining the library's core principles: simplicity, consistency, performance, customizability, and accessibility.
+Launch basic-ui as a production-ready, accessible React component library focused on **core functionality, excellent documentation, and intuitive user guides**. v1.0 will establish the foundation for future expansion while maintaining the library's core principles: simplicity, consistency, performance, customizability, and accessibility.
 
 ## Release Timeline
 **Target Release**: Q3 2026
@@ -37,7 +37,7 @@ Launch simple-ui as a production-ready, accessible React component library focus
 - [ ] Comprehensive Storybook stories for each component
 - [ ] Unit tests with >80% coverage
 - [ ] Accessibility audit completed for all components
-- [ ] Design tokens documented in `@simple-ui/tokens`
+- [ ] Design tokens documented in `@basic-ui/tokens`
 
 ### Documentation
 - [ ] Create component API documentation template
@@ -340,7 +340,7 @@ docs/
 - Component development (Storybook)
 - Testing (Vitest)
 - Documentation (Astro + Starlight)
-- Design tokens system (@simple-ui/tokens)
+- Design tokens system (@basic-ui/tokens)
 
 ---
 

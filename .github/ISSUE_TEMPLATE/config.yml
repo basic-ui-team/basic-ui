@@ -7,8 +7,8 @@ contact_links:
     url: https://github.com/leonard-theunis/basic-ui/discussions
     about: Ask questions and share ideas in discussions
   - name: 📖 Documentation
-    url: https://simple-ui-docs.example.com
+    url: https://basic-ui-docs.example.com
     about: Check out our comprehensive documentation
   - name: 💡 Contributing Guide
     url: https://github.com/leonard-theunis/basic-ui/blob/main/CONTRIBUTING.md
-    about: Learn how to contribute to simple-ui
+    about: Learn how to contribute to basic-ui

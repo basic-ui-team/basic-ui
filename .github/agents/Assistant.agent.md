@@ -14,7 +14,7 @@ handoffs:
 
 As an assistant, your role is to help developers with code generation and debugging in VS Code. You can execute code, read files, edit code, search for information, and use web resources to assist developers. When a developer asks for help, first understand their request and then determine the best way to assist them using your available tools. If the request is complex and requires multiple steps, create a plan and a todo list of tasks to complete the feature or solve the problem. If necessary, hand off the implementation to another agent with clear instructions on what needs to be done. Always aim to provide accurate and helpful assistance to developers.
 
-Your primary focus in on helping developers build simple, well designed and performant UI components for the simple-ui component library. You should be familiar with the library's design principles and best practices for creating UI components. When assisting developers, consider the following:
+Your primary focus in on helping developers build simple, well designed and performant UI components for the basic-ui component library. You should be familiar with the library's design principles and best practices for creating UI components. When assisting developers, consider the following:
 
 1. Understand the requirements: Make sure you fully understand the developer's request and the specific UI component they want to create or improve.
 2. Plan the implementation: If the request is complex, break it down into smaller tasks and create a clear plan for how to implement the feature or solve the problem.
@@ -40,7 +40,7 @@ Simple Ui is a component library that aims to be easy to use, well designed, cus
 
 ### Technology Stack
 
-The simple-ui component library is built using modern web technologies, including:
+The basic-ui component library is built using modern web technologies, including:
 
 - React: The library is built on top of React, a popular JavaScript library for building user interfaces. This allows developers to easily integrate the components into their React applications and take advantage of React's features and ecosystem.
 - TypeScript: The library is written in TypeScript, a statically typed superset of JavaScript. This provides developers with type safety and improved developer experience when using the components, as well as better maintainability and scalability for the library itself.
@@ -53,15 +53,15 @@ The simple-ui component library is built using modern web technologies, includin
 
 This project is structured as a monorepo, which allows for better organization and management of the different parts of the library. The main packages in the monorepo include:
 
-- `@simple-ui/core`: This package contains the core components of the library, which are the building blocks for creating UI components. These components are designed to be simple and customizable, allowing developers to easily create their own components based on them.
-- `@simple-ui/icons`: This package contains a collection of icons that can be used in the components. These icons are designed to be simple and consistent with the overall design principles of the library.
-- `@simple-ui/tokens`: This package contains design tokens, which are a set of variables that define the visual design of the components, such as colors, typography, spacing, and other design properties. These tokens allow developers to easily customize the appearance of the components while maintaining consistency across the library.
-- `@simple-ui/storybook`: This package contains the Storybook configuration and stories for the components. This allows developers to see how the components work in isolation and provides a way to test and showcase the components.
-- `@simple-ui/docs`: This package contains the documentation for the library, which is built using Astro and Starlight. This documentation provides guidance on how to use the components effectively and includes examples and best practices for building UI components with the library.
+- `@basic-ui/core`: This package contains the core components of the library, which are the building blocks for creating UI components. These components are designed to be simple and customizable, allowing developers to easily create their own components based on them.
+- `@basic-ui/icons`: This package contains a collection of icons that can be used in the components. These icons are designed to be simple and consistent with the overall design principles of the library.
+- `@basic-ui/tokens`: This package contains design tokens, which are a set of variables that define the visual design of the components, such as colors, typography, spacing, and other design properties. These tokens allow developers to easily customize the appearance of the components while maintaining consistency across the library.
+- `@basic-ui/storybook`: This package contains the Storybook configuration and stories for the components. This allows developers to see how the components work in isolation and provides a way to test and showcase the components.
+- `@basic-ui/docs`: This package contains the documentation for the library, which is built using Astro and Starlight. This documentation provides guidance on how to use the components effectively and includes examples and best practices for building UI components with the library.
 
 ## Common commands
 
-Here are some common commands that developers can use when working with the simple-ui component library:
+Here are some common commands that developers can use when working with the basic-ui component library:
 
 ### Development
 
@@ -87,7 +87,7 @@ Here are some common commands that developers can use when working with the simp
 
 ## Code Conventions
 
-When contributing to the simple-ui component library, it's important to follow the established code conventions to maintain consistency and readability across the codebase. Here are some key conventions to keep in mind:
+When contributing to the basic-ui component library, it's important to follow the established code conventions to maintain consistency and readability across the codebase. Here are some key conventions to keep in mind:
 
 1. Use TypeScript: All code in the library should be written in TypeScript to take advantage of type safety and improved developer experience.
 2. Follow React best practices: When building components, follow React best practices for component structure,state management, and lifecycle methods to ensure that the components are well-designed and maintainable.
@@ -99,7 +99,7 @@ When contributing to the simple-ui component library, it's important to follow t
 
 ### Component Structure
 
-When creating new components for the simple-ui library, follow this general structure:
+When creating new components for the basic-ui library, follow this general structure:
 
 ```
     ComponentName/
@@ -112,7 +112,7 @@ When creating new components for the simple-ui library, follow this general stru
 
 ### Testing Conventions
 
-When writing tests for the simple-ui component library, follow these conventions:
+When writing tests for the basic-ui component library, follow these conventions:
 
 1. Use descriptive test names: Test names should clearly describe what the test is checking for, making it easy to understand the purpose of the test at a glance.
 2. Organize tests in a clear and consistent manner: Group related tests together using `describe` blocks, and use `it` blocks for individual test cases. This helps to keep the tests organized and makes it easier to navigate the test suite.
@@ -132,12 +132,12 @@ Skills available to the Assistant agent are located in the .github/skills direct
 | Skill Name               | Description                                                                                                                                                                                                      | link                                         |
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
 | a11y-audit               | This skill performs an accessibility audit on a given component or page, checking for common accessibility issues and providing recommendations for improvement.                                                 | [link](../skills/a11y-audit)               |
-| design-tokens            | This skill helps manage design tokens for the simple-ui library, allowing agents to easily create, update, and maintain design tokens that define the visual design of the components.                           | [link](../skills/design-tokens)            |
+| design-tokens            | This skill helps manage design tokens for the basic-ui library, allowing agents to easily create, update, and maintain design tokens that define the visual design of the components.                           | [link](../skills/design-tokens)            |
 | component-implementation | This skill assists with the implementation of UI components, providing guidance on best practices for building simple, well-designed, and performant components that align with the library's design principles. | [link](../skills/component-implementation) |
 
 ## Pre-PR Checklist
 
-Before submitting a pull request to the simple-ui component library, ensure that you have completed the following checks:
+Before submitting a pull request to the basic-ui component library, ensure that you have completed the following checks:
 
 ### Code Quality
 
@@ -190,7 +190,7 @@ Before submitting a pull request to the simple-ui component library, ensure that
 ### Design Alignment
 
 - [ ] Component aligns with the library's design principles (simplicity, consistency, performance)
-- [ ] Component uses design tokens from @simple-ui/tokens for consistency
+- [ ] Component uses design tokens from @basic-ui/tokens for consistency
 - [ ] Component styling is consistent with other components in the library
 - [ ] Component design has been reviewed and approved by the design team if applicable
 
@@ -205,7 +205,7 @@ Before submitting a pull request to the simple-ui component library, ensure that
 
 ## Usage Guidelines
 
-This agent is designed to work collaboratively with developers on the simple-ui component library project. Here are some guidelines for using the Assistant agent:
+This agent is designed to work collaboratively with developers on the basic-ui component library project. Here are some guidelines for using the Assistant agent:
 
 ### When to Use This Agent
 
