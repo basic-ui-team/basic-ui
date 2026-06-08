@@ -3,14 +3,30 @@ import { ResponsiveValue } from "@core/hooks";
 export const spacingValues = ["none", "xs", "sm", "md", "lg", "xl", "2xl", "3xl"] as const;
 export type SpacingType = (typeof spacingValues)[number];
 
-export const heightWidthValues = ["auto", "full"] as const;
-export type HeightType = (typeof heightWidthValues)[number];
-export type WidthType = (typeof heightWidthValues)[number];
+export const SizingValues = ["unset", "auto", "full", "min", "max", "fit", "screen"] as const;
+export type SizingType = (typeof SizingValues)[number];
 
 export type PositionType = "static" | "relative" | "absolute" | "fixed" | "sticky";
 
 export type OverflowType = "visible" | "hidden" | "auto" | "scroll";
 
+/**
+ * Layout props for responsive spacing, sizing, positioning, and overflow control.
+ *
+ * **Responsive Support:**
+ * All props accept ResponsiveValue<T> for breakpoint-specific styling:
+ * ```tsx
+ * <Box p={{ base: 'sm', md: 'lg', lg: 'xl' }} h={{ base: 'auto', md: 'full' }} />
+ * ```
+ *
+ * **Sizing Props (h, w, hMin, hMax, wMin, wMax):**
+ * - Accept predefined tokenized values (`"auto"`, `"full"`, `"fit"`, `"screen"`, etc.) for consistency
+ * - For arbitrary Tailwind classes or custom CSS, use the component's `className` or `style` props instead
+ *
+ * **Spacing Props (p, m, gap, etc.):**
+ * - Accept tokenized spacing values for consistent spacing across components
+ * - All spacing is responsive
+ */
 export interface LayoutProps {
   p?: ResponsiveValue<SpacingType | "unset">;
   px?: ResponsiveValue<SpacingType | "unset">;
@@ -30,12 +46,12 @@ export interface LayoutProps {
 
   gap?: ResponsiveValue<SpacingType | "unset">;
 
-  h?: ResponsiveValue<HeightType | "unset">;
-  hMin?: ResponsiveValue<HeightType | "unset">;
-  hMax?: ResponsiveValue<HeightType | "unset">;
-  w?: ResponsiveValue<WidthType | "unset">;
-  wMin?: ResponsiveValue<WidthType | "unset">;
-  wMax?: ResponsiveValue<WidthType | "unset">;
+  h?: ResponsiveValue<SizingType>;
+  hMin?: ResponsiveValue<SizingType>;
+  hMax?: ResponsiveValue<SizingType>;
+  w?: ResponsiveValue<SizingType>;
+  wMin?: ResponsiveValue<SizingType>;
+  wMax?: ResponsiveValue<SizingType>;
 
   position?: ResponsiveValue<PositionType>;
 

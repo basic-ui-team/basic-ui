@@ -21,10 +21,10 @@ const _Box = <As extends ElementType = "div">(
     rest as Record<string, unknown>,
   );
 
-  const resolvedLayoutProps = generateLayoutClassNames(layoutProps);
+  const { layoutClassNameString } = generateLayoutClassNames(layoutProps);
 
   const resolvedStyles = cn(
-    resolvedLayoutProps,
+    layoutClassNameString,
     boxVariants({
       display: resolvedDisplay, // TODO: We should probably have a separate "display" prop in the layout variants instead of trying to shoehorn it in here, since it's not really a "layout" prop per se. But for now this will do.
     }),

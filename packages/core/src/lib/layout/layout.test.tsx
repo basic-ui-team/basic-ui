@@ -41,9 +41,9 @@ describe("Layout utils", () => {
 
   describe("generateLayoutClassNames (via component render)", () => {
     const TestComp = ({ layout }: { layout?: Record<string, unknown> }) => {
-        const classes = generateLayoutClassNames((layout as Record<string, unknown>) || {});
+        const { layoutClassNameString } = generateLayoutClassNames((layout as Record<string, unknown>) || {});
       return (
-        <div data-testid="layout" className={classes as string}>
+        <div data-testid="layout" className={layoutClassNameString}>
           x
         </div>
       );
