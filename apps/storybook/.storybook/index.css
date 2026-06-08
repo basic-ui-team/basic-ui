@@ -8,7 +8,7 @@
 /* CSS variables work with .dark class switching */
 body {
   background-color: var(--color-bg-base);
-  color: var(--color-text-base);
+  color: var(--color-fg-base);
   transition: background-color 0.2s, color 0.2s;
 }
 
