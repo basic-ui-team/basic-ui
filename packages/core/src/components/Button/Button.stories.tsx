@@ -1,3 +1,4 @@
+import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Button } from "./Button";
 import { Box } from "../Box";
@@ -125,4 +126,27 @@ export const AsAnchor: Story = {
       Anchor Link
     </Button>
   ),
+};
+
+export const WithCustomLinkComponent: Story = {
+  render: () => {
+    // Mock custom link component (e.g., Next.js Link, React Router Link)
+    const CustomLink = React.forwardRef<any, any>(({ href, children, ...props }, ref) => (
+      <a ref={ref} href={href} data-custom-link {...props}>
+        {children}
+      </a>
+    ));
+    CustomLink.displayName = "CustomLink";
+
+    return (
+      <Box className="flex gap-sm items-center flex-wrap">
+        <Button as="a" linkComponent={CustomLink} href="/docs" color="primary">
+          Go to Docs
+        </Button>
+        <Button as="a" linkComponent={CustomLink} href="/github" variant="ghost">
+          GitHub
+        </Button>
+      </Box>
+    );
+  },
 };

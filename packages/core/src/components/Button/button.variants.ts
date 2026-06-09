@@ -1,7 +1,5 @@
 import { cva } from "class-variance-authority";
 
-// Button style variants mapped against the built-in semantic colors.
-// Each compound variant provides the composite classes for variant+color across states.
 export const buttonVariants = cva(
   [
     "relative inline-flex items-center justify-center gap-sm font-medium select-none",
@@ -18,7 +16,6 @@ export const buttonVariants = cva(
       },
       variant: {
         solid: "",
-        surface: "",
         ghost: "",
         outline: "",
         link: "cursor-pointer",
@@ -34,11 +31,11 @@ export const buttonVariants = cva(
         info: "",
       },
       loading: {
-        true: "opacity-80 cursor-progress pointer-events-none",
+        true: "opacity-80 cursor-progress pointer-events-none hover:bg-transparent active:bg-transparent",
         false: "",
       },
       disabled: {
-        true: "opacity-50 cursor-not-allowed pointer-events-none",
+        true: "opacity-50 cursor-not-allowed pointer-events-none hover:bg-transparent active:bg-transparent",
         false: "",
       },
     },
