@@ -1,7 +1,7 @@
 {
   "name": "@basic-ui/icons",
   "sideEffects": false,
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Icon registry for basic-ui",
   "type": "module",
   "main": "./dist/index.js",
