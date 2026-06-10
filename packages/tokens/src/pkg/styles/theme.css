@@ -15,10 +15,10 @@
   --color-bg-active: oklch(92.8% 0.006 264.531);
   --color-bg-disabled: oklch(96.7% 0.003 264.542);
   --color-bg-inverted: #000;
-  --color-bg-error: var(--color-red-50);
-  --color-bg-success: var(--color-green-50);
-  --color-bg-warning: var(--color-yellow-50);
-  --color-bg-info: var(--color-blue-50);
+  --color-bg-error: var(--color-red-100);
+  --color-bg-success: var(--color-green-100);
+  --color-bg-warning: var(--color-yellow-100);
+  --color-bg-info: var(--color-blue-100);
   --color-fg-base: #000;
   --color-fg-muted: oklch(37.3% 0.034 259.733);
   --color-fg-hover: oklch(21% 0.034 264.665);
@@ -28,7 +28,7 @@
   --color-fg-error: var(--color-red-800);
   --color-fg-success: var(--color-green-700);
   --color-fg-warning: var(--color-yellow-700);
-  --color-fg-info: var(--color-blue-600);
+  --color-fg-info: var(--color-blue-700);
   --color-fg-skeleton: oklch(92.8% 0.006 264.531);
   --color-surface-base: oklch(96.7% 0.003 264.542);
   --color-surface-hover: oklch(92.8% 0.006 264.531);

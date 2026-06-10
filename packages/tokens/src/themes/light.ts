@@ -11,10 +11,10 @@ export const lightTheme: ThemeConfig = {
       active: "var(--color-neutral-200)",
       disabled: "var(--color-neutral-100)",
       inverted: "var(--color-black)",
-      error: "var(--color-red-50)",
-      success: "var(--color-green-50)",
-      warning: "var(--color-yellow-50)",
-      info: "var(--color-blue-50)",
+      error: "var(--color-red-100)",
+      success: "var(--color-green-100)",
+      warning: "var(--color-yellow-100)",
+      info: "var(--color-blue-100)",
     },
     fg: {
       base: "var(--color-black)",
@@ -26,7 +26,7 @@ export const lightTheme: ThemeConfig = {
       error: "var(--color-red-800)",
       success: "var(--color-green-700)",
       warning: "var(--color-yellow-700)",
-      info: "var(--color-blue-600)",
+      info: "var(--color-blue-700)",
       skeleton: "var(--color-neutral-200)",
     },
     surface: {
