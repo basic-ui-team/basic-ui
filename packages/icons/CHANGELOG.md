@@ -1,5 +1,11 @@
 # @basic-ui/icons
 
+## 0.0.3
+
+### Patch Changes
+
+- 1aaf6c3: [icons] add sideEffects property to package.json for better tree-shaking
+
 ## 0.0.2
 
 ### Patch Changes

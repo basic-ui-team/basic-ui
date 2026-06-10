@@ -1,5 +1,18 @@
 # @basic-ui/storybook
 
+## 0.0.5
+
+### Patch Changes
+
+- Updated dependencies [ff80d71]
+- Updated dependencies [e280131]
+- Updated dependencies [4eb400d]
+- Updated dependencies [1a1b31c]
+- Updated dependencies [08e95ec]
+- Updated dependencies [0e5e419]
+  - @basic-ui/core@0.4.0
+  - @basic-ui/tokens@0.3.0
+
 ## 0.0.4
 
 ### Patch Changes

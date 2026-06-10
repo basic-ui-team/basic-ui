@@ -1,5 +1,44 @@
 # @basic-ui/core
 
+## 0.4.0
+
+### Minor Changes
+
+- ff80d71: \[core] reorganize layout-related code and improve responsive utilities
+
+  \[core] Moved layout types and utilities to a dedicated `layout` directory within `lib`.
+
+  \[core] Updated imports across components to reflect new paths for layout types.
+
+  \[core/hooks] Enhanced `useResponsiveProps` to resolve responsive values inline without extra hook calls.
+
+  \[core] Updated `package.json` to reflect changes in exports and types.
+
+- 4eb400d: [core/button] - Added new `Button` component with support for variants, sizes, colors, and loading state. This component is designed to be flexible and accessible, allowing for easy integration into various UI designs. The `Button` component also includes a new `rounded` prop for controlling border radius, enhancing the customization options available to developers.
+
+  [tokens] updated some semantic (error, info, etc) colors to be more consistent with the new design system. These changes may affect the appearance of components that rely on these tokens, so please review the updated token values and adjust your styles accordingly if necessary.
+
+- 08e95ec: \[core/divider] Added divider component. Component supports horizontal and vertical orientations, as well as solid, dashed, and dotted appearances.
+
+  \[core/Text] Updated text component to extend Layout props directly so users can modify text props fully. This is the final component currently implemented that should allow full prop manipulation (without using escape hatches)
+
+- 0e5e419: [core/badge] Added Badge component which allows the user to display a small status icon at the corner of any element. The badge can display a small dot icon, a number or a custom icon. The badge can be used to indicate the status of an element, such as whether it is active, inactive, or has new content.
+
+  [core/lib] Improved the `normalizeProps` utility to better handle camelCase-to-dashed HTML attribute conversion, including support for `aria-hidden` and `aria-live`, and added dev-time warnings for unrecognized attributes to help catch potential issues during development.
+
+  [core/skeleton] Added Skeleton component which allows the user to display a placeholder while content is loading. The skeleton can be used to indicate that content is loading and to improve the user experience by providing a visual cue that something is happening. The skeleton can be used in various shapes and sizes, such as text, circular, and rectangular. The skeleton can also be animated to provide a more dynamic loading experience.
+
+  [core/layout] Update layout to return a named object of resolved layout props and apply them to the core box element. Users will stil be able to use className and style props to override the default styles, but the layout system will now be more flexible and easier to use. This change allows for better separation of concerns between layout and styling, and makes it easier to create custom layouts without having to worry about the underlying implementation details.
+
+### Patch Changes
+
+- Updated dependencies [e280131]
+- Updated dependencies [4eb400d]
+- Updated dependencies [1a1b31c]
+- Updated dependencies [1aaf6c3]
+  - @basic-ui/tokens@0.3.0
+  - @basic-ui/icons@0.0.3
+
 ## 0.3.0
 
 ### Minor Changes
