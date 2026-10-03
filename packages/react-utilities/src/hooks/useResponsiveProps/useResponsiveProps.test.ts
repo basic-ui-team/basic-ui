@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { renderHookWithProviders } from "@core/test-utils/renderHookWithProviders";
-import { useResponsiveProps } from "@core/hooks";
+import { renderHookWithProviders } from "../../test-utils/renderHookWithProviders";
+import { useResponsiveProps } from "../useResponsiveProps/useResponsiveProps";
 
 describe("useResponsiveProps", () => {
   it("resolves primitive values", () => {

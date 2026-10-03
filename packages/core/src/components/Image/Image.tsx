@@ -1,9 +1,9 @@
-import { useResponsiveProps } from "@core/hooks";
-import { cn, forwardRefWithAs } from "@core/lib";
+import { useResponsiveProps } from "@basic-ui/react-utilities";
+import { cn, forwardRefWithAs } from "@basic-ui/react-utilities";
 import { Box, BoxProps } from "@core/components";
 import { imageVariants } from "./image.variants";
 import { AllowedImageElements, ImageOwnProps, ImageProps } from "./image.types";
-import { PolymorphicRef } from "@core/types/props";
+import { PolymorphicRef } from "@basic-ui/react-utilities";
 
 export const _Image = <As extends AllowedImageElements = "img">(
   {

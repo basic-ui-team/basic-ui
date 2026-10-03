@@ -3,11 +3,11 @@ import {
   forwardRefWithAs,
   getTruncateAccessibilityProps,
   normalizeProps,
-} from "@core/lib";
+} from "@basic-ui/react-utilities";
 import type { AllowedTextElements, TextOwnProps, TextProps } from "./text.types";
 import { textVariants } from "./text.variants";
-import { PolymorphicRef } from "@core/types/props";
-import { useResponsiveProps } from "@core/hooks";
+import { PolymorphicRef } from "@basic-ui/react-utilities";
+import { useResponsiveProps } from "@basic-ui/react-utilities";
 import { Box, BoxProps } from "../Box";
 import { BuiltInSemanticColors, isBuiltInSemanticColor } from "@core/theme";
 

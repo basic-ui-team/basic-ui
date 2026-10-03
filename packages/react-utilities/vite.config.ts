@@ -10,17 +10,13 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
-      "@core": path.resolve(__dirname, "src"),
-      "@tokens": path.resolve(__dirname, "../tokens/src"),
-      "@icons": path.resolve(__dirname, "../icons/src"),
-      "@basic-ui/icons": path.resolve(__dirname, "../icons/src"),
-      "@basic-ui/react-utilities": path.resolve(__dirname, "../react-utilities/src"),
-      "@shared": path.resolve(__dirname, "../shared/src"),
+      "@react-utilities": path.resolve(__dirname, "src"),
     },
   },
   test: {
     globals: true,
     environment: "jsdom",
+    include: ["src/**/*.{test,spec}.{ts,tsx}"],
     exclude: ["**/test-utils/**", "**/dist/**", "**/node_modules/**"],
     setupFiles: ["../../vitest.setup.ts"],
     coverage: {
@@ -53,7 +49,7 @@ export default defineConfig({
       formats: ["es"],
     },
     rollupOptions: {
-      external: ["react", "react-dom", "tailwindcss", "@basic-ui/react-utilities"],
+      external: ["react", "react-dom", "tailwindcss"],
       output: {
         globals: {
           react: "React",

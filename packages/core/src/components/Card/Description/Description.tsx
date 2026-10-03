@@ -1,6 +1,6 @@
 import { AllowedTextElements, Text } from "@core/components/Text";
 import { CardDescriptionProps } from "../card.types";
-import { PolymorphicRef } from "@core/types/props";
+import { PolymorphicRef } from "@basic-ui/react-utilities";
 import { forwardRef } from "react";
 
 const _Description = <As extends AllowedTextElements = "p">(

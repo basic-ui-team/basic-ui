@@ -1,8 +1,8 @@
-import { ResponsiveValue } from "@core/hooks";
+import { ResponsiveValue } from "@basic-ui/react-utilities";
 import { BoxProps } from "../Box";
 import { HeaderProps, AllowedHeaderElements } from "../Header";
 import { AllowedTextElements, TextProps } from "../Text";
-import { PropsWithAs } from "@core/types/props";
+import { PropsWithAs } from "@basic-ui/react-utilities";
 import { ImageProps } from "../Image";
 
 export type AllowedCardElements = "div" | "button" | "a";

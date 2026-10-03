@@ -1,5 +1,5 @@
 import type React from "react";
-import type { CommonProps, RestrictedPropsWithAs } from "../../types/props";
+import type { CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
 
 type MessageSeverity = "success" | "error" | "warning" | "info";
 

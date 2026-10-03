@@ -1,10 +1,10 @@
 import { createContext } from "react";
 import { AllowedCardElements, CardProps, CardRootProps, CardVariant } from "./card.types";
 import { Box } from "../Box";
-import { cn, forwardRefWithAs } from "@core/lib";
+import { cn, forwardRefWithAs } from "@basic-ui/react-utilities";
 import { cardRootVariants } from "./card.variants";
-import { useResponsiveProps } from "@core/hooks";
-import { PolymorphicRef } from "@core/types/props";
+import { useResponsiveProps } from "@basic-ui/react-utilities";
+import { PolymorphicRef } from "@basic-ui/react-utilities";
 
 type CardContextValue = {
   variant: CardVariant;

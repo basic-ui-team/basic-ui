@@ -1,8 +1,8 @@
-import { PolymorphicRef } from "@core/types/props";
+import { PolymorphicRef } from "@basic-ui/react-utilities";
 import type { BoxOwnProps, BoxProps } from "./box.types";
-import { useResponsiveProps } from "@core/hooks";
-import { cn } from "@core/lib/cn/cn";
-import { forwardRefWithAs, normalizeProps } from "@core/lib";
+import { useResponsiveProps } from "@basic-ui/react-utilities";
+import { cn } from "@basic-ui/react-utilities";
+import { forwardRefWithAs, normalizeProps } from "@basic-ui/react-utilities";
 import { generateLayoutClassNames, splitLayoutProps } from "../../lib/layout/layout-utils";
 import { boxVariants } from "./box.variants";
 import { ElementType } from "react";

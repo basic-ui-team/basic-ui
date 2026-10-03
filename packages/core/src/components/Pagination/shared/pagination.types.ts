@@ -1,4 +1,4 @@
-import { CommonProps } from "@core/types/props";
+import { CommonProps } from "@basic-ui/react-utilities";
 
 /** Icons used for the navigation controls (first/prev/next/last). */
 export interface PageNavigationIcons {
