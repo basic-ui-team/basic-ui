@@ -1,14 +1,3 @@
-/*
-THINGS IMPLEMENTED IN BUTTON:
-✓ Basic button handling on click event
-✓ Disabled state handling
-✓ Loading state handling (with optional loading text and icon)
-✓ Button as link with support for custom LinkComponent (Next.js Link, React Router, etc.)
-✓ Accessibility: aria-disabled for disabled state, aria-busy for loading state, proper role and keyboard handling
-✓ Styling via cva variants covering all combinations of variant, color, size, disabled, and loading states
-✓ Support for polymorphic 'as' prop to render different elements (button, a)
-*/
-
 import { AllowedButtonElements, ButtonOwnProps, ButtonProps } from "./button.types";
 import { cn, forwardRefWithAs } from "@core/lib";
 import { PolymorphicRef } from "@core/types/props";
