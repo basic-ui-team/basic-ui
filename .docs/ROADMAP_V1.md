@@ -8,12 +8,26 @@ Launch basic-ui as a production-ready, accessible React component library focuse
 
 ## Component Inventory
 
-### Already Implemented (3/36)
+### Already Implemented (16/36)
 - ✅ Alert
+- ✅ Badge
+- ✅ Box
+- ✅ Button
+- ✅ Card
+- ✅ Divider
+- ✅ Flex
+- ✅ Grid
+- ✅ Header
 - ✅ Icon
+- ✅ Image
 - ✅ Pagination
+- ✅ Skeleton
+- ✅ Spinner
+- ✅ Text
 
-### Planned for v1.0 (33 new components)
+Plus layout utilities under `packages/core/src/lib`.
+
+### Planned for v1.0 (20 new components)
 **Total: 36 components across 4 phases**
 
 ---
@@ -21,18 +35,18 @@ Launch basic-ui as a production-ready, accessible React component library focuse
 ## Phase 1: Foundation & Core UI (Weeks 1-3)
 *Establish the fundamental building blocks that all other components depend on*
 
-### Components (8 components)
-- **Text** - Base typography component
+### Components (8 components — 7 done, Label remaining)
+- ✅ **Text** (done) - Base typography component
 - **Label** - Form labels and labeling utilities
-- **Divider** - Visual separators
-- **Card** - Container for grouped content
-- **Flex** - Layout utility component
-- **Badge** - Status indicators and labels
-- **Spinner** - Loading states
-- **Skeleton** - Placeholder loading state
+- ✅ **Divider** (done) - Visual separators
+- ✅ **Card** (done) - Container for grouped content
+- ✅ **Flex** (done) - Layout utility component
+- ✅ **Badge** (done) - Status indicators and labels
+- ✅ **Spinner** (done) - Loading states
+- ✅ **Skeleton** (done) - Placeholder loading state
 
 ### Deliverables
-- [ ] All 8 components implemented with full TypeScript support
+- [x] 7 of 8 components implemented (Label remaining) with full TypeScript support
 - [ ] Component variants and customization patterns established
 - [ ] Comprehensive Storybook stories for each component
 - [ ] Unit tests with >80% coverage
@@ -52,7 +66,7 @@ Launch basic-ui as a production-ready, accessible React component library focuse
 ### Components (7 components)
 - **Input** - Text input fields
 - **Textarea** - Multi-line text input
-- **Button** - Primary interaction element
+- ✅ **Button** (done) - Primary interaction element
 - **Select** - Dropdown selection component
 - **Checkbox** - Binary choice input (leverage RadioGroup patterns)
 - **RadioGroup** - Single choice from options
@@ -81,8 +95,8 @@ Launch basic-ui as a production-ready, accessible React component library focuse
 - **Sidebar** - Side navigation panel
 - **Breadcrumb** - Navigation hierarchy indicator
 - **Tabs** - Tabbed content navigation
-- **Header** - Page header container
-- **Grid** - Layout grid system
+- ✅ **Header** (done) - Page header container
+- ✅ **Grid** (done) - Layout grid system
 - **Dropdown** - Menu and selection dropdown
 - **Field** - Form field wrapper/container
 
