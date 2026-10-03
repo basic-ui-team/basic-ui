@@ -7,7 +7,7 @@ An accessible, extensible, and approachable React component library built for ea
 **basic-ui** is a modern design system and component library designed with three core principles:
 
 - **Approachable**: Simple, semantic APIs with great TypeScript support
-- **Extensible**: Fully theemable token system with first-class customization
+- **Extensible**: Fully themeable token system with first-class customization
 - **Accessible**: WCAG 2.1 AA compliance built into every component
 
 ## Monorepo Structure
@@ -109,7 +109,7 @@ pnpm lint
 
 React components, hooks, and utilities for building user interfaces.
 
-- 27+ accessible, production-ready components
+- 16 accessible, production-ready components
 - Responsive prop system (`ResponsiveValue<T>`)
 - Dark mode support
 - Built with CVA for type-safe variants
