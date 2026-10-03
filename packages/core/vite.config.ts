@@ -53,7 +53,7 @@ export default defineConfig({
       formats: ["es"],
     },
     rollupOptions: {
-      external: ["react", "react-dom", "tailwindcss"],
+      external: ["react", "react-dom", "tailwindcss", "@basic-ui/react-utilities"],
       output: {
         globals: {
           react: "React",
