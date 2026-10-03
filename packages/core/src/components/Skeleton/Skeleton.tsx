@@ -1,6 +1,6 @@
 import { AllowedSkeletonComponent, SkeletonOwnProps, SkeletonProps } from "./skeleton.types";
 import { cn, forwardRefWithAs } from "@core/lib";
-import { PolymorphicRef } from "@core/types/props";
+import { PolymorphicRef } from "@basic-ui/react-utilities";
 import { skeletonVariants } from "./skeleton.variants";
 import { Box, BoxProps } from "../Box";
 

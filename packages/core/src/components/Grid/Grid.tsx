@@ -1,4 +1,4 @@
-import { PolymorphicRef } from "@core/types/props";
+import { PolymorphicRef } from "@basic-ui/react-utilities";
 import {
   type GridProps,
   type AllowedGridElements,

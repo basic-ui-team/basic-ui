@@ -6,7 +6,7 @@ import {
 } from "@core/lib";
 import type { AllowedTextElements, TextOwnProps, TextProps } from "./text.types";
 import { textVariants } from "./text.variants";
-import { PolymorphicRef } from "@core/types/props";
+import { PolymorphicRef } from "@basic-ui/react-utilities";
 import { useResponsiveProps } from "@core/hooks";
 import { Box, BoxProps } from "../Box";
 import { BuiltInSemanticColors, isBuiltInSemanticColor } from "@core/theme";

@@ -1,4 +1,4 @@
-import { PolymorphicRef } from "@core/types/props";
+import { PolymorphicRef } from "@basic-ui/react-utilities";
 import { AllowedDividerElements, DividerProps, DividerOwnProps } from "./divider.types";
 import { useResponsiveProps } from "@core/hooks";
 import { Box, BoxProps } from "../Box";

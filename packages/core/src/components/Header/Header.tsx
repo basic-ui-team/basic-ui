@@ -2,7 +2,7 @@ import { useResponsiveProps } from "@core/hooks";
 import { AllowedHeaderElements, HeaderOwnProps, HeaderProps } from "./header.types";
 import { headerVariants } from "./header.variants";
 import { cn, forwardRefWithAs, getTruncateAccessibilityProps, normalizeProps } from "@core/lib";
-import { PolymorphicRef } from "@core/types/props";
+import { PolymorphicRef } from "@basic-ui/react-utilities";
 import { Box, BoxProps } from "../Box";
 import { BuiltInSemanticColors, isBuiltInSemanticColor } from "@core/theme";
 

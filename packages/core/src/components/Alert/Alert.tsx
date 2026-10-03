@@ -3,7 +3,7 @@ import { cn, forwardRefWithAs } from "@core/lib";
 import { Icon } from "../Icon";
 import { CheckCircleIcon, XCircleIcon, AlertTriangleIcon, InfoIcon, XIcon } from "@basic-ui/icons";
 import type { AlertOwnProps, AlertProps } from "./alert.types";
-import type { PolymorphicRef } from "../../types/props";
+import type { PolymorphicRef } from "@basic-ui/react-utilities";
 import type { AllowedAlertElements } from "./alert.types";
 
 import {

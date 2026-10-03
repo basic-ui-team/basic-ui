@@ -1,6 +1,6 @@
 import { ResponsiveValue } from "@core/hooks";
 import { BuiltInSemanticColors } from "@core/theme";
-import { CommonProps } from "@core/types/props";
+import { CommonProps } from "@basic-ui/react-utilities";
 
 export type BadgeVariant = "standard" | "dot";
 export type BadgeSize = "small" | "medium" | "large";

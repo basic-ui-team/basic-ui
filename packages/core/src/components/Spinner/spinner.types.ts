@@ -1,4 +1,4 @@
-import { CommonProps, RestrictedPropsWithAs } from "@core/types/props";
+import { CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
 import { ResponsiveValue } from "@core/hooks";
 import LayoutProps from "../../lib/layout/layout.types";
 import { BuiltInSemanticColors } from "@core/theme";

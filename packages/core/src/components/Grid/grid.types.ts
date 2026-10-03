@@ -1,5 +1,5 @@
 import { ResponsiveValue } from "@core/hooks";
-import { CommonProps, RestrictedPropsWithAs } from "@core/types/props";
+import { CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
 import type { LayoutProps, SpacingType } from "../../lib/layout/layout.types";
 
 export type AllowedGridElements = "div" | "section" | "article" | "main" | "aside" | "nav";

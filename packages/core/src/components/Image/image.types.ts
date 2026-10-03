@@ -1,5 +1,5 @@
 import { ImgHTMLAttributes } from "react";
-import { CommonProps, RestrictedPropsWithAs } from "@core/types/props"; // Your existing types
+import { CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities"; // Your existing types
 import { ResponsiveValue } from "@core/hooks";
 import { LayoutProps } from "../../lib/layout";
 

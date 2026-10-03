@@ -6,27 +6,12 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "types": ["@testing-library/jest-dom", "vitest/globals", "node"],
     "composite": true,
     "noEmit": false,
     "rewriteRelativeImportExtensions": true
   },
-  "include": [
-    "src"
-  ],
-  "references": [
-    {
-      "path": "../react-utilities"
-    },
-    {
-      "path": "../tokens"
-    },
-    {
-      "path": "../icons"
-    }
-  ]
+  "include": ["src"],
+  "references": []
 }

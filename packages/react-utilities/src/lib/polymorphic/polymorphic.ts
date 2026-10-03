@@ -1,6 +1,6 @@
 import React from "react";
 import type { ElementType } from "react";
-import type { PropsWithAs, PolymorphicRef } from "@core/types/props";
+import type { PropsWithAs, PolymorphicRef } from "../../types/props";
 
 export type ForwardRefWithAs<P, D extends ElementType> = <As extends D = D>(
   props: PropsWithAs<P, As> & { ref?: PolymorphicRef<As> },

@@ -1,6 +1,6 @@
 import { AllowedHeaderElements, Header } from "@core/components/Header";
 import { CardTitleProps } from "../card.types";
-import { PolymorphicRef } from "@core/types/props";
+import { PolymorphicRef } from "@basic-ui/react-utilities";
 import { forwardRef } from "react";
 
 const _Title = <as extends AllowedHeaderElements = "h3">(

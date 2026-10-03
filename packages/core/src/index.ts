@@ -8,4 +8,4 @@ export type {
   PolymorphicRef,
   PropsWithAs,
   RestrictedPropsWithAs,
-} from "./types/props";
+} from "@basic-ui/react-utilities";

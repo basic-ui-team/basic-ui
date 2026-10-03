@@ -11,7 +11,7 @@ THINGS IMPLEMENTED IN BUTTON:
 
 import { AllowedButtonElements, ButtonOwnProps, ButtonProps } from "./button.types";
 import { cn, forwardRefWithAs } from "@core/lib";
-import { PolymorphicRef } from "@core/types/props";
+import { PolymorphicRef } from "@basic-ui/react-utilities";
 import { buttonVariants, buttonIconVariants } from "./button.variants";
 import { Box, BoxProps } from "../Box";
 import { Spinner } from "../Spinner";

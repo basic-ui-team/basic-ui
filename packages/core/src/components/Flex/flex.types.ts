@@ -1,5 +1,5 @@
 import { ResponsiveValue } from "@core/hooks";
-import { CommonProps, RestrictedPropsWithAs } from "@core/types/props";
+import { CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
 import type { LayoutProps, SpacingType } from "@core/lib/layout/layout.types";
 
 const flexValues = ["row", "column", "row-reverse", "column-reverse"] as const;

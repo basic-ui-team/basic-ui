@@ -4,7 +4,7 @@ import { Box } from "../Box";
 import { cn, forwardRefWithAs } from "@core/lib";
 import { cardRootVariants } from "./card.variants";
 import { useResponsiveProps } from "@core/hooks";
-import { PolymorphicRef } from "@core/types/props";
+import { PolymorphicRef } from "@basic-ui/react-utilities";
 
 type CardContextValue = {
   variant: CardVariant;

@@ -1,8 +1,8 @@
-import { PolymorphicRef } from "@core/types/props";
+import { PolymorphicRef } from "@basic-ui/react-utilities";
 import { AllowedFlexElements, FlexProps, FlexOwnProps } from "./flex.types";
 import { useResponsiveProps } from "@core/hooks";
 import { flexVariants } from "./flex.variants";
-import { cn } from "@core/lib/cn/cn";
+import { cn } from "@basic-ui/react-utilities";
 import { forwardRefWithAs } from "@core/lib"; // Removed normalizeProps
 import { Box, BoxProps } from "@core/components"; // Import Box
 

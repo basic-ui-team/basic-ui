@@ -1,7 +1,7 @@
-import { PolymorphicRef } from "@core/types/props";
+import { PolymorphicRef } from "@basic-ui/react-utilities";
 import type { BoxOwnProps, BoxProps } from "./box.types";
 import { useResponsiveProps } from "@core/hooks";
-import { cn } from "@core/lib/cn/cn";
+import { cn } from "@basic-ui/react-utilities";
 import { forwardRefWithAs, normalizeProps } from "@core/lib";
 import { generateLayoutClassNames, splitLayoutProps } from "../../lib/layout/layout-utils";
 import { boxVariants } from "./box.variants";
