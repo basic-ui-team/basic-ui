@@ -1,9 +1,9 @@
 import { PolymorphicRef } from "@basic-ui/react-utilities";
 import { AllowedFlexElements, FlexProps, FlexOwnProps } from "./flex.types";
-import { useResponsiveProps } from "@core/hooks";
+import { useResponsiveProps } from "@basic-ui/react-utilities";
 import { flexVariants } from "./flex.variants";
 import { cn } from "@basic-ui/react-utilities";
-import { forwardRefWithAs } from "@core/lib"; // Removed normalizeProps
+import { forwardRefWithAs } from "@basic-ui/react-utilities"; // Removed normalizeProps
 import { Box, BoxProps } from "@core/components"; // Import Box
 
 const _Flex = <As extends AllowedFlexElements = "div">(

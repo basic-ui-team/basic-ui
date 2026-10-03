@@ -1,4 +1,4 @@
-import { ResponsiveValue } from "@core/hooks";
+import { ResponsiveValue } from "@basic-ui/react-utilities";
 import { CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
 import { SpacingType } from "../../lib/layout/layout.types";
 import { BuiltInSemanticColors } from "@core/theme";

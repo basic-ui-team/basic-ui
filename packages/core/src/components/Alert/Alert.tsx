@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { cn, forwardRefWithAs } from "@core/lib";
+import { cn, forwardRefWithAs } from "@basic-ui/react-utilities";
 import { Icon } from "../Icon";
 import { CheckCircleIcon, XCircleIcon, AlertTriangleIcon, InfoIcon, XIcon } from "@basic-ui/icons";
 import type { AlertOwnProps, AlertProps } from "./alert.types";

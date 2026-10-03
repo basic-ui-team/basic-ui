@@ -1,6 +1,6 @@
 import { CommonProps, PropsWithAs } from "@basic-ui/react-utilities";
-import type { LayoutProps } from "@core/lib/layout/layout.types";
-import { ResponsiveValue } from "@core/hooks";
+import type { LayoutProps } from "@core/lib/layout";
+import { ResponsiveValue } from "@basic-ui/react-utilities";
 import { ElementType } from "react";
 
 export interface BoxOwnProps extends LayoutProps, CommonProps {

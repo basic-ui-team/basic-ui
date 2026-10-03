@@ -1,4 +1,4 @@
-import { ResponsiveValue } from "@core/index";
+import { ResponsiveValue } from "@basic-ui/react-utilities";
 import { BuiltInSemanticColors } from "@core/theme";
 import { CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
 

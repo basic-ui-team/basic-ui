@@ -10,12 +10,12 @@ THINGS IMPLEMENTED IN BUTTON:
 */
 
 import { AllowedButtonElements, ButtonOwnProps, ButtonProps } from "./button.types";
-import { cn, forwardRefWithAs } from "@core/lib";
+import { cn, forwardRefWithAs } from "@basic-ui/react-utilities";
 import { PolymorphicRef } from "@basic-ui/react-utilities";
 import { buttonVariants, buttonIconVariants } from "./button.variants";
 import { Box, BoxProps } from "../Box";
 import { Spinner } from "../Spinner";
-import { useResponsiveProps } from "@core/hooks";
+import { useResponsiveProps } from "@basic-ui/react-utilities";
 import { Flex } from "../Flex";
 import { Text } from "../Text";
 

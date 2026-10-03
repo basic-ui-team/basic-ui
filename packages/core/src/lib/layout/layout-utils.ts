@@ -1,6 +1,6 @@
 import LayoutProps, { SizingType, OverflowType, PositionType, SpacingType } from "./layout.types";
-import { cn } from "@core/lib";
-import { useResponsiveProps } from "@core/hooks";
+import { cn } from "@basic-ui/react-utilities";
+import { useResponsiveProps } from "@basic-ui/react-utilities";
 import layoutVariants from "./layout.variants";
 
 export const LAYOUT_PROP_NAMES = [

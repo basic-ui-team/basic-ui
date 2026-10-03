@@ -5,10 +5,10 @@ import {
   type GridOwnProps,
   ColRowNumber,
 } from "./grid.types";
-import type { SpacingType } from "@core/lib/layout/layout.types";
-import { useResponsiveProps } from "@core/hooks";
+import type { SpacingType } from "@core/lib/layout";
+import { useResponsiveProps } from "@basic-ui/react-utilities";
 import { gridVariants } from "./grid.variants";
-import { cn, forwardRefWithAs, normalizeProps } from "@core/lib";
+import { cn, forwardRefWithAs, normalizeProps } from "@basic-ui/react-utilities";
 import { Box, BoxProps } from "../Box";
 
 const _Grid = <As extends AllowedGridElements = "div">(

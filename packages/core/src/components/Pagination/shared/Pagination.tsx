@@ -2,7 +2,7 @@
 
 import React from "react";
 import { PaginationViewProps } from "./pagination.types";
-import { cn } from "@core/lib";
+import { cn } from "@basic-ui/react-utilities";
 import {
   paginationButtonVariants,
   paginationEllipsisVariants,

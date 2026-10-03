@@ -1,4 +1,4 @@
-import { ResponsiveValue } from "@core/hooks";
+import { ResponsiveValue } from "@basic-ui/react-utilities";
 import { CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
 import type { LayoutProps, SpacingType } from "../../lib/layout/layout.types";
 

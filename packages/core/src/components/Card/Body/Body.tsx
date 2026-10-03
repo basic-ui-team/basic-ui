@@ -1,6 +1,6 @@
 import { Box } from "@core/components/Box";
-import { useResponsiveProps } from "@core/hooks";
-import { cn } from "@core/lib";
+import { useResponsiveProps } from "@basic-ui/react-utilities";
+import { cn } from "@basic-ui/react-utilities";
 import { forwardRef, useContext } from "react";
 import { CardContext } from "../Card";
 import { CardBodyProps } from "../card.types";

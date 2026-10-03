@@ -3,8 +3,8 @@ import { CardFooterProps } from "../card.types";
 import { CardContext } from "../Card";
 import { Box } from "@core/components";
 import { cardSectionVariants } from "../card.variants";
-import { cn } from "@core/lib";
-import { useResponsiveProps } from "@core/hooks";
+import { cn } from "@basic-ui/react-utilities";
+import { useResponsiveProps } from "@basic-ui/react-utilities";
 
 export const CardFooter = forwardRef<HTMLElement, CardFooterProps>(
   ({ variant = "default", sticky = false, className, ...rest }, ref) => {

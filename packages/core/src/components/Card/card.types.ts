@@ -1,4 +1,4 @@
-import { ResponsiveValue } from "@core/hooks";
+import { ResponsiveValue } from "@basic-ui/react-utilities";
 import { BoxProps } from "../Box";
 import { HeaderProps, AllowedHeaderElements } from "../Header";
 import { AllowedTextElements, TextProps } from "../Text";
