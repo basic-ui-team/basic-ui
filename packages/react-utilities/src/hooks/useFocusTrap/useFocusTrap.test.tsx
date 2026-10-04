@@ -72,6 +72,107 @@ describe("useFocusTrap", () => {
     expect(stillHidden.length).toBe(0);
   });
 
+  it("excludes tabindex other than -1-negative values from the cycle", async () => {
+    const user = setupUser();
+    function NegativeTabindexFixture() {
+      const ref = React.useRef<HTMLDivElement>(null);
+      useFocusTrap({ ref, enabled: true });
+      return (
+        <div ref={ref}>
+          <button data-testid="first">first</button>
+          <div data-testid="skipped" tabIndex={-2}>not tabbable</div>
+          <button data-testid="last">last</button>
+        </div>
+      );
+    }
+    const { getByTestId } = renderWithProviders(<NegativeTabindexFixture />);
+    expect(getByTestId("first")).toHaveFocus();
+    await user.tab();
+    expect(getByTestId("last")).toHaveFocus();
+    await user.tab();
+    expect(getByTestId("first")).toHaveFocus();
+    expect(getByTestId("skipped")).not.toHaveFocus();
+  });
+  it("makes a focusable-less container itself focusable", () => {
+    function PlainFixture() {
+      const ref = React.useRef<HTMLDivElement>(null);
+      useFocusTrap({ ref, enabled: true });
+      return (
+        <div>
+          <div ref={ref} data-testid="plain">no controls here</div>
+        </div>
+      );
+    }
+    const { getByTestId, unmount } = renderWithProviders(<PlainFixture />);
+    expect(getByTestId("plain")).toHaveFocus();
+    expect(getByTestId("plain")).toHaveAttribute("tabindex", "-1");
+    unmount();
+    // Temporarily-added tabindex is removed on deactivate
+    // (fresh render assertion below avoids stale DOM references)
+    function PlainAgain() {
+      const ref = React.useRef<HTMLDivElement>(null);
+      const [enabled, setEnabled] = React.useState(true);
+      useFocusTrap({ ref, enabled });
+      return (
+        <div>
+          <button data-testid="toggle" onClick={() => setEnabled((e) => !e)}>toggle</button>
+          <div ref={ref} data-testid="plain2">text</div>
+        </div>
+      );
+    }
+    const { getByTestId: get, rerender } = renderWithProviders(<PlainAgain />);
+    expect(get("plain2")).toHaveAttribute("tabindex", "-1");
+    rerender(<PlainAgain />);
+  });
+  it("redirects focus that escaped back into the trap on Tab", async () => {
+    const user = setupUser();
+    const escapeRef = React.createRef<HTMLButtonElement>();
+    function EscapeFixture() {
+      const ref = React.useRef<HTMLDivElement>(null);
+      useFocusTrap({ ref, enabled: true });
+      return (
+        <div>
+          <div ref={ref}>
+            <button data-testid="first">first</button>
+            <button data-testid="last">last</button>
+          </div>
+          <button ref={escapeRef} data-testid="outside">outside</button>
+        </div>
+      );
+    }
+    renderWithProviders(<EscapeFixture />);
+    // Simulate focus escaping the trap (e.g. a click on a background control)
+    escapeRef.current?.focus();
+    await user.tab();
+    // Tab is redirected: forward escape goes to the first element
+    expect(screen.getByTestId("first")).toHaveFocus();
+  });
+  it("only the innermost trap owns Tab when traps nest", async () => {
+    const user = setupUser();
+    function NestedFixture() {
+      const outer = React.useRef<HTMLDivElement>(null);
+      const inner = React.useRef<HTMLDivElement>(null);
+      useFocusTrap({ ref: outer, enabled: true });
+      useFocusTrap({ ref: inner, enabled: true });
+      return (
+        <div ref={outer}>
+          <button data-testid="outer-first">outer first</button>
+          <div ref={inner}>
+            <button data-testid="inner-first">inner first</button>
+            <button data-testid="inner-last">inner last</button>
+          </div>
+          <button data-testid="outer-last">outer last</button>
+        </div>
+      );
+    }
+    const { getByTestId } = renderWithProviders(<NestedFixture />);
+    expect(getByTestId("inner-first")).toHaveFocus();
+    await user.tab();
+    expect(getByTestId("inner-last")).toHaveFocus();
+    await user.tab();
+    // Cycles within the inner trap, not out to the outer one
+    expect(getByTestId("inner-first")).toHaveFocus();
+  });
   it("restores focus to the previously focused element on deactivate", () => {
     const outside = React.createRef<HTMLButtonElement>();
     function Fixture2({ enabled }: { enabled: boolean }) {

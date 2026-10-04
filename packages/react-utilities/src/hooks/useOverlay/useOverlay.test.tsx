@@ -13,6 +13,21 @@ describe("useOverlay", () => {
     resetOverlayStackForTesting();
   });
 
+  it("restores a pre-existing inline body overflow policy on unlock", () => {
+    const onDismiss = vi.fn();
+    document.body.style.overflow = "scroll";
+    function Fixture({ open }: { open: boolean }) {
+      const ref = React.useRef<HTMLDivElement>(null);
+      useOverlay({ open, ref, onDismiss });
+      return open ? <div ref={ref}>overlay</div> : null;
+    }
+    const { rerender } = renderWithProviders(<Fixture open />);
+    expect(document.body.style.overflow).toBe("hidden");
+    rerender(<Fixture open={false} />);
+    expect(document.body.style.overflow).toBe("scroll");
+    document.body.style.overflow = "";
+  });
+
   it("locks body scroll while open and restores on close", () => {
     const onDismiss = vi.fn();
     function Fixture({ open }: { open: boolean }) {

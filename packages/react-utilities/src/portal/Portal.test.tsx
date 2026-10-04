@@ -1,5 +1,8 @@
 import { renderWithProviders } from "../test-utils";
 import { describe, it, expect } from "vitest";
+import { hydrateRoot } from "react-dom/client";
+import { renderToString } from "react-dom/server";
+import { act } from "react";
 import { Portal } from "./Portal";
 
 describe("Portal", () => {
@@ -44,12 +47,38 @@ describe("Portal", () => {
     expect(root?.contains(inline as Node)).toBe(true);
   });
 
-  it("renders nothing during SSR (before mount)", () => {
-    // The mounted gate makes the first client render match the server:
-    // nothing. We assert the pre-mount behavior via the disabled path's
-    // counterpart — a portal only attaches after the mount effect.
-    const { baseElement } = renderWithProviders(<Portal>ssr</Portal>);
-    // After mount it has attached; before mount it returned null.
-    expect(baseElement.textContent).toContain("ssr");
+  it("emits no portal markup on the server and hydrates without mismatch", async () => {
+    // Server render: the portal must contribute nothing, so the first client
+    // render (pre-effect) matches the server output exactly.
+    const serverHtml = renderToString(
+      <div>
+        <Portal>portalled-content</Portal>
+        <span>inline-content</span>
+      </div>,
+    );
+    expect(serverHtml).not.toContain("portalled-content");
+    expect(serverHtml).toContain("inline-content");
+
+    // Hydrate that exact markup: the mount effect then attaches the portal.
+    const container = document.createElement("div");
+    document.body.appendChild(container);
+    container.innerHTML = serverHtml;
+    let root: ReturnType<typeof hydrateRoot> | null = null;
+    await act(async () => {
+      root = hydrateRoot(
+        container,
+        <div>
+          <Portal>portalled-content</Portal>
+          <span>inline-content</span>
+        </div>,
+      );
+    });
+    expect(container.querySelector("span")?.textContent).toBe("inline-content");
+    // The portal attaches to document.body after mount, not the container
+    expect(document.body.textContent).toContain("portalled-content");
+    await act(async () => {
+      root?.unmount();
+    });
+    container.remove();
   });
 });

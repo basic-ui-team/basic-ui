@@ -36,6 +36,22 @@ describe("useDialog", () => {
     expect(dialog).toHaveAttribute("aria-modal", "true");
   });
 
+  it("labels the dialog via aria-label when a title option is given", async () => {
+    const user = setupUser();
+    function TitledFixture() {
+      const { open, onOpen, dialogProps } = useDialog({ title: "Confirm action" });
+      return (
+        <div>
+          <button data-testid="opener" onClick={onOpen}>Open dialog</button>
+          {open && <div {...dialogProps} data-testid="dialog">body</div>}
+        </div>
+      );
+    }
+    const { getByTestId } = renderWithProviders(<TitledFixture />);
+    await user.click(getByTestId("opener"));
+    expect(getByTestId("dialog")).toHaveAttribute("aria-label", "Confirm action");
+    expect(getByTestId("dialog")).not.toHaveAttribute("aria-labelledby");
+  });
   it("labels the dialog via aria-labelledby pointing at the title", async () => {
     const user = setupUser();
     const { getByTestId } = renderWithProviders(<DialogFixture />);

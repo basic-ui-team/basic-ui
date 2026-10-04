@@ -5,7 +5,11 @@ import { useOverlay } from "../useOverlay/useOverlay";
 import { useFocusTrap } from "../useFocusTrap/useFocusTrap";
 
 export type UseDialogProps = UseDisclosureProps & {
-  /** Accessible name source: a title string (recommended) — wired via aria-labelledby. */
+  /**
+   * Accessible name for the dialog. When provided, it is wired via
+   * `aria-label`; otherwise the consumer must render the title element
+   * (spreading `titleProps`) so `aria-labelledby` resolves.
+   */
   title?: string;
   /**
    * Dismiss on outside pointerdown. Defaults to true.
@@ -32,7 +36,8 @@ export type UseDialogResult = {
     ref: React.RefObject<HTMLDivElement | null>;
     role: "dialog";
     "aria-modal": true;
-    "aria-labelledby": string;
+    "aria-labelledby"?: string;
+    "aria-label"?: string;
     id: string;
   };
   /** Props to spread on the dialog title element. */
@@ -63,7 +68,7 @@ export type UseDialogResult = {
  * )}
  */
 export function useDialog(props: UseDialogProps = {}): UseDialogResult {
-  const { title: _title, dismissOnOutside, lockScroll, ...disclosureProps } = props;
+  const { title, dismissOnOutside, lockScroll, ...disclosureProps } = props;
   const { open, onOpen, onClose, onToggle } = useDisclosure(disclosureProps);
 
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -79,16 +84,24 @@ export function useDialog(props: UseDialogProps = {}): UseDialogResult {
   const { fieldProps } = useAriaIds({ prefix: "dialog" });
   const titleId = `${fieldProps.id}-title`;
 
-  const dialogProps = useMemo(
-    () => ({
+  const dialogProps = useMemo(() => {
+    if (title) {
+      return {
+        ref: dialogRef,
+        role: "dialog" as const,
+        "aria-modal": true as const,
+        "aria-label": title,
+        id: fieldProps.id,
+      };
+    }
+    return {
       ref: dialogRef,
       role: "dialog" as const,
       "aria-modal": true as const,
       "aria-labelledby": titleId,
       id: fieldProps.id,
-    }),
-    [titleId, fieldProps.id],
-  );
+    };
+  }, [title, titleId, fieldProps.id]);
 
   return {
     open,

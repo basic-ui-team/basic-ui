@@ -14,10 +14,14 @@ function notifyStack() {
 
 let scrollLockCount = 0;
 let lockedBodyPaddingRight = "";
+let lockedBodyOverflow = "";
 
 function lockScroll() {
   if (scrollLockCount === 0) {
+    // Capture the page's existing inline policies so the unlock restores
+    // them exactly; a page with `overflow: scroll` keeps its scrollbar setup.
     lockedBodyPaddingRight = document.body.style.paddingRight;
+    lockedBodyOverflow = document.body.style.overflow;
     const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
     if (scrollbarWidth > 0) {
       document.body.style.paddingRight = `calc(${lockedBodyPaddingRight || "0px"} + ${scrollbarWidth}px)`;
@@ -30,7 +34,7 @@ function lockScroll() {
 function unlockScroll() {
   scrollLockCount = Math.max(0, scrollLockCount - 1);
   if (scrollLockCount === 0) {
-    document.body.style.overflow = "";
+    document.body.style.overflow = lockedBodyOverflow;
     document.body.style.paddingRight = lockedBodyPaddingRight;
   }
 }
