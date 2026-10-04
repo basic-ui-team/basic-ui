@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { cn, forwardRefWithAs } from "@basic-ui/react-utilities";
+import React from "react";
+import { cn, forwardRefWithAs, useDisclosure } from "@basic-ui/react-utilities";
 import { Icon } from "../Icon";
 import { CheckCircleIcon, XCircleIcon, AlertTriangleIcon, InfoIcon, XIcon } from "@basic-ui/icons";
 import type { AlertOwnProps, AlertProps } from "./alert.types";
@@ -40,7 +40,7 @@ const _Alert = <As extends AllowedAlertElements = "div">(
   }: AlertProps<As>,
   ref: PolymorphicRef<As>,
 ) => {
-  const [isDismissed, setIsDismissed] = useState(false);
+  const { open: isShown, onClose } = useDisclosure({ defaultOpen: true });
 
   const Comp = (as || "div") as As;
   const Child = Comp === "p" || Comp === "span" ? "span" : "div"; // Use inline wrappers for inline parents to avoid invalid nesting/hydration issues
@@ -49,12 +49,12 @@ const _Alert = <As extends AllowedAlertElements = "div">(
   const iconElement = typeof iconNode === "function" ? React.createElement(iconNode) : iconNode;
 
   const handleDismiss = () => {
-    setIsDismissed(true);
+    onClose();
     onDismiss?.();
   };
 
   // Determine if alert should be shown
-  const isVisible = isOpen && !isDismissed;
+  const isVisible = isOpen && isShown;
 
   if (!isVisible) {
     return null;

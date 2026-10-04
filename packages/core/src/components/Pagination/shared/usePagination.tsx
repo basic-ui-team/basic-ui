@@ -1,4 +1,5 @@
-import { useMemo, useState, useEffect } from "react";
+import { useEffect, useMemo } from "react";
+import { useControllableState } from "@basic-ui/react-utilities";
 import type { usePaginationProps } from "./pagination.types";
 import { calculatePaginationState, clamp, generatePageNumbers } from "./paginationUtils";
 
@@ -19,37 +20,37 @@ export function usePagination({
       "usePagination: currentPage and initialPage should be 1-indexed. Received 0 — value will be clamped to 1.",
     );
   }
-
   if (totalItems !== undefined && itemsPerPage !== undefined && pageCount !== undefined) {
     console.warn(
       "usePagination: You provided totalItems, itemsPerPage, and pageCount. pageCount will take precedence over totalItems/itemsPerPage.",
     );
   }
 
-  const [internalCurrentPage, setInternalCurrentPage] = useState<number>(() =>
-    typeof currentPage === "number" && currentPage > 0 ? currentPage : initialPage || 1,
-  );
+  const [internalCurrentPage, setInternalCurrentPage] = useControllableState<number>({
+    value: typeof currentPage === "number" ? currentPage : undefined,
+    defaultValue: Math.max(initialPage ?? 1, 1),
+    onChange: onPageChange,
+  });
+
   if (totalItems === 0) totalItems = 1; // Ensure at least 1 page when there are no items
 
   const isControlled = typeof currentPage === "number";
-
   const { totalPages, hasPrev, hasNext } = calculatePaginationState(
     totalItems as number,
     itemsPerPage ?? 1,
-    isControlled ? (currentPage as number) : internalCurrentPage,
+    isControlled ? (currentPage as number) : (internalCurrentPage as number),
     pageCount,
   );
-
   const activeCurrentPage = isControlled
     ? clamp((currentPage as number) || 1, 1, totalPages)
-    : internalCurrentPage;
+    : (internalCurrentPage as number);
 
   // if uncontrolled, ensure internal state stays within new totalPages when it changes
   useEffect(() => {
     if (!isControlled) {
       setInternalCurrentPage((prev) => clamp(prev, 1, totalPages));
     }
-  }, [totalPages, isControlled]);
+  }, [totalPages, isControlled, setInternalCurrentPage]);
 
   const pageNumbers = useMemo(
     () => generatePageNumbers(activeCurrentPage, totalPages, maxSiblingButtons, maxBoundaryButtons),
@@ -57,11 +58,7 @@ export function usePagination({
   );
 
   const handlePageChange = (page: number) => {
-    const newPage = clamp(page, 1, totalPages);
-    if (!isControlled) {
-      setInternalCurrentPage(newPage);
-    }
-    onPageChange?.(newPage);
+    setInternalCurrentPage(clamp(page, 1, totalPages));
   };
 
   return {
