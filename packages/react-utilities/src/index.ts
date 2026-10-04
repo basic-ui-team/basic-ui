@@ -53,3 +53,10 @@ export {
   type UseSelectProps,
   type UseSelectResult,
 } from "./hooks/useSelect/useSelect";
+export {
+  useAnchorPositioning,
+  type AnchorSide,
+  type AnchorAlign,
+  type UseAnchorPositioningProps,
+  type UseAnchorPositioningResult,
+} from "./hooks/useAnchorPositioning/useAnchorPositioning";
