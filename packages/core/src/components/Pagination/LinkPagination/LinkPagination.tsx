@@ -1,5 +1,5 @@
+import { cn } from "@basic-ui/react-utilities";
 import React from "react";
-import { Icon } from "../../Icon";
 import type { LinkPaginationProps } from "./linkPagination.types";
 import { usePagination } from "../shared/usePagination.tsx";
 import { Pagination } from "../shared/Pagination.tsx";
@@ -98,7 +98,16 @@ export const LinkPagination = React.forwardRef<
           aria-disabled={disabled}
           tabIndex={disabled ? -1 : undefined}
         >
-          <Icon icon={icon} size={type === "prev" || type === "next" ? "sm" : "md"} />
+          <Box
+            as="span"
+            className={cn(
+              "flex items-center justify-center",
+              type === "prev" || type === "next" ? "w-lg h-lg" : "w-xl h-xl",
+            )}
+            aria-hidden="true"
+          >
+            {icon}
+          </Box>
         </Box>
       );
     };

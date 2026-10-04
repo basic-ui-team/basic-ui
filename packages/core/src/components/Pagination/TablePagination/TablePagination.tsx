@@ -1,7 +1,7 @@
+import { cn } from "@basic-ui/react-utilities";
 import React from "react";
 import { usePagination } from "../shared/usePagination.tsx";
 import { Pagination } from "../shared/Pagination.tsx";
-import { Icon } from "../../Icon";
 import type { TablePaginationProps } from "./tablePagination.types";
 import { Box } from "@core/components";
 
@@ -78,7 +78,16 @@ export const TablePagination = React.forwardRef<HTMLElement, TablePaginationProp
           aria-disabled={disabled}
           className={className}
         >
-          <Icon icon={icon} size={type === "prev" || type === "next" ? "sm" : "md"} />
+          <Box
+            as="span"
+            className={cn(
+              "flex items-center justify-center",
+              type === "prev" || type === "next" ? "w-lg h-lg" : "w-xl h-xl",
+            )}
+            aria-hidden="true"
+          >
+            {icon}
+          </Box>
         </Box>
       );
     };

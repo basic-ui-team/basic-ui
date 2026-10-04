@@ -4,7 +4,7 @@
  * components in packages/core/src/components/** may not import another public
  * component except Box (the primitive layer).
  *
- * Known violations scheduled for removal in #85, #86 and #87 are listed in
+ * Known violations scheduled for removal in #87 are listed in
  * KNOWN_VIOLATIONS and reported as warnings until those issues land.
  */
 import { readdirSync, readFileSync, statSync } from "node:fs";
@@ -22,12 +22,6 @@ const PUBLIC_COMPONENTS = new Set(
 );
 
 const KNOWN_VIOLATIONS = new Set([
-  "packages/core/src/components/Button/Button.tsx -> Spinner",
-  "packages/core/src/components/Button/Button.tsx -> Flex",
-  "packages/core/src/components/Button/Button.tsx -> Text",
-  "packages/core/src/components/Alert/Alert.tsx -> Icon",
-  "packages/core/src/components/Pagination/LinkPagination/LinkPagination.tsx -> Icon",
-  "packages/core/src/components/Pagination/TablePagination/TablePagination.tsx -> Icon",
   "packages/core/src/components/Card/Title/Title.tsx -> Header",
   "packages/core/src/components/Card/Description/Description.tsx -> Text",
   "packages/core/src/components/Card/Image/Image.tsx -> Image",
