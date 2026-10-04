@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@core/components/Box";
+import { Box } from "../Box";
 import { BadgeColor, BadgeProps } from "./badge.types";
 import { badgeVariants } from "./badge.variants";
 import { useResponsiveProps } from "@basic-ui/react-utilities";
