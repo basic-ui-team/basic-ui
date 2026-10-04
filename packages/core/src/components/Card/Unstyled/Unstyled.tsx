@@ -1,5 +1,5 @@
 import { AllowedCardElements, CardUnstyledProps } from "../card.types";
-import { Box } from "@core/components";
+import { Box } from "../../Box";
 import { cn, forwardRefWithAs } from "@basic-ui/react-utilities";
 import { PolymorphicRef } from "@basic-ui/react-utilities";
 import { CardContext } from "../Card";

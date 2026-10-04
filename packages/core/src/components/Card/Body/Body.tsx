@@ -1,4 +1,4 @@
-import { Box } from "@core/components/Box";
+import { Box } from "../../Box";
 import { useResponsiveProps } from "@basic-ui/react-utilities";
 import { cn } from "@basic-ui/react-utilities";
 import { forwardRef, useContext } from "react";

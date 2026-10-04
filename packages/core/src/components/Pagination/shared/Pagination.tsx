@@ -9,7 +9,7 @@ import {
   paginationVariants,
 } from "./pagination.variants";
 import { ChevronLeftIcon, ChevronRightIcon } from "@basic-ui/icons";
-import { Box } from "@core/components/Box";
+import { Box } from "../../Box";
 
 export const Pagination = React.forwardRef<HTMLElement, PaginationViewProps>(
   (
