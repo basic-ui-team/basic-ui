@@ -48,8 +48,8 @@ export function useDisclosure(props: UseDisclosureProps = {}): UseDisclosureResu
   }, [open, setOpen]);
 
   const onToggle = useCallback(() => {
-    setOpen(!open);
-  }, [open, setOpen]);
+    setOpen((prev) => !prev);
+  }, [setOpen]);
 
   return { open, onOpen, onClose, onToggle, setOpen };
 }

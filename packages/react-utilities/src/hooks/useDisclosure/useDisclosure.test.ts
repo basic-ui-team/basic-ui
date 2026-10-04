@@ -56,6 +56,25 @@ describe("useDisclosure", () => {
     expect(result.current.open).toBe(false);
   });
 
+  it("two rapid toggles before a re-render net to closed (no stale snapshot)", () => {
+    const { result } = renderHookWithProviders(() => useDisclosure());
+    act(() => {
+      result.current.onToggle();
+      result.current.onToggle();
+    });
+    expect(result.current.open).toBe(false);
+  });
+
+  it("three rapid toggles before a re-render end open", () => {
+    const { result } = renderHookWithProviders(() => useDisclosure());
+    act(() => {
+      result.current.onToggle();
+      result.current.onToggle();
+      result.current.onToggle();
+    });
+    expect(result.current.open).toBe(true);
+  });
+
   it("controlled mode mirrors the open prop and fires onOpenChange with next value", () => {
     const onOpenChange = vi.fn();
     const { result, rerender } = renderHookWithProviders(

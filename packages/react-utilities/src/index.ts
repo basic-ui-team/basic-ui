@@ -16,7 +16,7 @@ export type { Breakpoint, ResponsiveValue } from "./hooks/useResponsive/types";
 export {
   useControllableState,
   type UseControllableStateProps,
-  type UseControllableStateResult,
+  type UseControllableStateSetter,
 } from "./hooks/useControllableState/useControllableState";
 export {
   useDisclosure,

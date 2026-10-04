@@ -1,20 +1,17 @@
 import { useId as useReactId } from "react";
 
-let ssrIdCounter = 0;
-
 /**
  * SSR-safe prefixed id.
  *
  * Delegates to React's own useId (which is stable across re-renders and
  * collision-free during SSR hydration) and prepends a human-readable prefix.
- * Falls back to a module counter when React's useId is unavailable.
+ * React 18+ is a peer requirement, so useId is always available.
  *
  * @example
  * const id = useId("label"); // "label-:r1:"
  */
 export function useId(prefix?: string): string {
-  const reactId = useReactId();
-  const id = reactId ?? `fallback-${++ssrIdCounter}`;
+  const id = useReactId();
   return prefix ? `${prefix}-${id}` : id;
 }
 

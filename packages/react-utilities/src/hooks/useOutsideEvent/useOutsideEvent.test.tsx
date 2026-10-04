@@ -105,6 +105,33 @@ describe("useOutsideEvent", () => {
     expect(second).toHaveBeenCalledTimes(1);
   });
 
+  it("fires onOutsidePointerDown even when the outside target stops propagation", async () => {
+    const user = setupUser();
+    const onOutsidePointerDown = vi.fn();
+
+    function Fixture() {
+      const ref = React.useRef<HTMLDivElement>(null);
+      useOutsideEvent({ ref, onOutsidePointerDown });
+      return (
+        <div>
+          <div ref={ref} data-testid="inside">
+            inside
+          </div>
+          <button
+            data-testid="outside"
+            onPointerDown={(e) => e.nativeEvent.stopPropagation()}
+          >
+            outside
+          </button>
+        </div>
+      );
+    }
+
+    const { getByTestId } = renderWithProviders(<Fixture />);
+    await user.click(getByTestId("outside"));
+    expect(onOutsidePointerDown).toHaveBeenCalledTimes(1);
+  });
+
   it("works with renderHook for logic-only usage", () => {
     const onEscape = vi.fn();
     const { result } = renderHookWithProviders(() => {

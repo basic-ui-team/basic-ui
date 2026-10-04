@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 /**
  * Props accepted by useControllableState.
@@ -18,10 +18,10 @@ export type UseControllableStateProps<T> = {
   onChange?: (value: T, ...eventArgs: unknown[]) => void;
 };
 
-export type UseControllableStateResult<T> = [
-  value: T,
-  setValue: (value: T | ((prev: T) => T), ...eventArgs: unknown[]) => void,
-];
+export type UseControllableStateSetter<T> = (
+  value: T | ((prev: T) => T),
+  ...eventArgs: unknown[]
+) => void;
 
 /**
  * Implement the controlled/uncontrolled value pattern once, for every
@@ -33,6 +33,10 @@ export type UseControllableStateResult<T> = [
  * - Without `value` (uncontrolled): the state is kept internally, seeded from
  *   `defaultValue`, and `onChange` is invoked on every change.
  *
+ * Updater functions resolve against the latest value, so consecutive setter
+ * calls before a re-render (e.g. batched event handlers) see each other's
+ * updates rather than the stale render snapshot.
+ *
  * @example
  * const [open, setOpen] = useControllableState({
  *   value: props.open,
@@ -41,20 +45,35 @@ export type UseControllableStateResult<T> = [
  * });
  */
 export function useControllableState<T>(
+  props: UseControllableStateProps<T> & { value: T },
+): [T, UseControllableStateSetter<T>];
+export function useControllableState<T>(
+  props: UseControllableStateProps<T> & { defaultValue: T },
+): [T, UseControllableStateSetter<T>];
+export function useControllableState<T>(
   props: UseControllableStateProps<T>,
-): UseControllableStateResult<T> {
+): [T | undefined, UseControllableStateSetter<T>];
+export function useControllableState<T>(
+  props: UseControllableStateProps<T>,
+): [T | undefined, UseControllableStateSetter<T>] {
   const { value: valueProp, defaultValue, onChange } = props;
   const [internalValue, setInternalValue] = useState<T | undefined>(() =>
     valueProp !== undefined ? valueProp : defaultValue,
   );
 
   const controlled = valueProp !== undefined;
-  const value = controlled ? valueProp : (internalValue as T);
+  const value = controlled ? valueProp : internalValue;
+
+  // Mirror the latest value so queued setter calls (batched updates, rapid
+  // toggles) resolve against each other's results, not a stale snapshot.
+  const latestValue = useRef(value);
+  latestValue.current = value;
 
   const setValue = useCallback(
     (next: T | ((prev: T) => T), ...eventArgs: unknown[]) => {
-      const resolved =
-        typeof next === "function" ? (next as (prev: T) => T)(value) : next;
+      const prev = latestValue.current as T;
+      const resolved = typeof next === "function" ? (next as (p: T) => T)(prev) : next;
+      latestValue.current = resolved;
 
       if (onChange) {
         onChange(resolved, ...eventArgs);
@@ -69,7 +88,7 @@ export function useControllableState<T>(
         setInternalValue(resolved);
       }
     },
-    [controlled, onChange, value],
+    [controlled, onChange],
   );
 
   return [value, setValue];
