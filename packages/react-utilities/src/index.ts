@@ -32,3 +32,18 @@ export {
   useOutsideEvent,
   type UseOutsideEventProps,
 } from "./hooks/useOutsideEvent/useOutsideEvent";
+export { Portal, type PortalProps } from "./portal/Portal";
+export {
+  useFocusTrap,
+  type UseFocusTrapProps,
+} from "./hooks/useFocusTrap/useFocusTrap";
+export {
+  useOverlay,
+  resetOverlayStackForTesting,
+  type UseOverlayProps,
+} from "./hooks/useOverlay/useOverlay";
+export {
+  useDialog,
+  type UseDialogProps,
+  type UseDialogResult,
+} from "./hooks/useDialog/useDialog";
