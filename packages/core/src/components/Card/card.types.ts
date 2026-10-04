@@ -112,7 +112,7 @@ export type AllowedHeaderElements = `h${1 | 2 | 3 | 4 | 5 | 6}`;
 
 /**
  * Props for the CardTitle component, which is a subcomponent of Card.
- * Owns its heading styling fully via card.variants (no Header dependency).
+ * Owns its heading styling fully via card.variants.
  */
 export interface CardTitleOwnProps extends CommonProps, LayoutProps {
   /** Heading level used for sizing. @default "h3" */
@@ -141,7 +141,7 @@ export type AllowedTextElements = "span" | "p" | "div";
 
 /**
  * Props for the CardDescription component, which is a subcomponent of Card.
- * Owns its text styling fully via card.variants (no Text dependency).
+ * Owns its text styling fully via card.variants.
  */
 export interface CardDescriptionOwnProps extends CommonProps, LayoutProps {
   /** Size of the text. @default "sm" */
@@ -169,7 +169,7 @@ export type AspectRatioType = "square" | "video" | "landscape" | "portrait" | "a
 /**
  * Props for the CardImage component, which is a subcomponent of Card.
  * CardImage is always rendered as an <img> element and owns its styling
- * fully via card.variants (no Image dependency).
+ * fully via card.variants.
  */
 export interface CardImageOwnProps
   extends Omit<ImgHTMLAttributes<HTMLImageElement>, "width" | "height" | "src" | "alt">,
@@ -194,8 +194,9 @@ export type CardImageProps = PropsWithAs<CardImageOwnProps, "img">;
 
 /**
  * Props for the unstyled version of the Card component.
- * This allows users to use the Card's functionality without any default styles, giving them full control over the appearance.
- * It should be used in place of the main Card component not as a child of it, and supports all the same props except for the 'variant' which is fixed to 'unstyled' in the implementation.
+ * This allows users to use the Card's functionality without any default styles, giving them full control over
+ * the appearance. It should be used in place of the main Card component not as a child of it, and supports all
+ * the same props except for the 'variant' which is fixed to 'unstyled' in the implementation.
  */
 export interface CardUnstyledProps extends Omit<CardRootProps, "variant"> {}
 
