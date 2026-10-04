@@ -117,7 +117,7 @@ export type AllowedHeaderElements = `h${1 | 2 | 3 | 4 | 5 | 6}`;
 export interface CardTitleOwnProps extends CommonProps, LayoutProps {
   /** Heading level used for sizing. @default "h3" */
   size?: ResponsiveValue<"h1" | "h2" | "h3" | "h4" | "h5" | "h6">;
-  /** Font weight. @default "medium" */
+  /** Font weight. @default "normal" */
   weight?: ResponsiveValue<"normal" | "medium" | "semibold" | "bold">;
   /** Text color. @default "default" */
   color?: ResponsiveValue<BuiltInSemanticColors | string>;

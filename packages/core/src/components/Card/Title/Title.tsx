@@ -14,7 +14,7 @@ import { BuiltInSemanticColors, isBuiltInSemanticColor } from "@core/theme";
 const _Title = <As extends AllowedHeaderElements = "h3">(
   {
     as,
-    size = "h3",
+    size = "h2",
     weight = "normal",
     color = "default",
     align = "left",
@@ -49,6 +49,7 @@ const _Title = <As extends AllowedHeaderElements = "h3">(
     <Box
       as={Comp}
       ref={ref}
+      overflow={resolvedTruncate ? "hidden" : undefined}
       className={resolvedStyles}
       {...accessibilityProps}
       {...(normalizedRest as BoxProps<As>)}
