@@ -47,3 +47,9 @@ export {
   type UseDialogProps,
   type UseDialogResult,
 } from "./hooks/useDialog/useDialog";
+export {
+  useSelect,
+  type SelectOption,
+  type UseSelectProps,
+  type UseSelectResult,
+} from "./hooks/useSelect/useSelect";
