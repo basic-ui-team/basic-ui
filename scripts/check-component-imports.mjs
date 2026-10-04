@@ -4,8 +4,8 @@
  * components in packages/core/src/components/** may not import another public
  * component except Box (the primitive layer).
  *
- * Known violations scheduled for removal in #87 are listed in
- * KNOWN_VIOLATIONS and reported as warnings until those issues land.
+ * KNOWN_VIOLATIONS exists for temporarily grandfathering violations that are
+ * scheduled for removal; it is currently empty.
  */
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, dirname, basename, resolve } from "node:path";
@@ -21,14 +21,7 @@ const PUBLIC_COMPONENTS = new Set(
   ),
 );
 
-const KNOWN_VIOLATIONS = new Set([
-  "packages/core/src/components/Card/Title/Title.tsx -> Header",
-  "packages/core/src/components/Card/Description/Description.tsx -> Text",
-  "packages/core/src/components/Card/Image/Image.tsx -> Image",
-  "packages/core/src/components/Card/card.types.ts -> Header",
-  "packages/core/src/components/Card/card.types.ts -> Text",
-  "packages/core/src/components/Card/card.types.ts -> Image",
-]);
+const KNOWN_VIOLATIONS = new Set([]);
 
 const importPattern = /(?:^|\n)\s*(?:import\s+(?:type\s+)?[^;]*?from\s+|export\s+(?:type\s+)?\{[^}]*\}\s+from\s+)["']([^"']+)["']/g;
 

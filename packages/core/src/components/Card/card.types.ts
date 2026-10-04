@@ -1,9 +1,9 @@
 import { ResponsiveValue } from "@basic-ui/react-utilities";
 import { BoxProps } from "../Box";
-import { HeaderProps, AllowedHeaderElements } from "../Header";
-import { AllowedTextElements, TextProps } from "../Text";
-import { PropsWithAs } from "@basic-ui/react-utilities";
-import { ImageProps } from "../Image";
+import { CommonProps, PropsWithAs, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
+import type { LayoutProps } from "../../lib/layout";
+import { BuiltInSemanticColors } from "@core/theme";
+import type { ImgHTMLAttributes } from "react";
 
 export type AllowedCardElements = "div" | "button" | "a";
 export type CardVariant = "default" | "elevated" | "outlined" | "unstyled";
@@ -106,27 +106,97 @@ export interface CardFooterProps extends BoxProps {
 }
 
 /**
- * Props for the CardTitle component, which is a subcomponent of Card.
- * Extends HeaderProps to allow for header styling and formatting.
+ * Allowed heading elements for CardTitle.
  */
-export type CardTitleProps<As extends AllowedHeaderElements = "h3"> = HeaderProps<As>; // type instead of interface to allow for generic extension of HeaderProps with the 'as' prop
+export type AllowedHeaderElements = `h${1 | 2 | 3 | 4 | 5 | 6}`;
+
+/**
+ * Props for the CardTitle component, which is a subcomponent of Card.
+ * Owns its heading styling fully via card.variants.
+ */
+export interface CardTitleOwnProps extends CommonProps, LayoutProps {
+  /** Heading level used for sizing. @default "h3" */
+  size?: ResponsiveValue<"h1" | "h2" | "h3" | "h4" | "h5" | "h6">;
+  /** Font weight. @default "normal" */
+  weight?: ResponsiveValue<"normal" | "medium" | "semibold" | "bold">;
+  /** Text color. @default "default" */
+  color?: ResponsiveValue<BuiltInSemanticColors | string>;
+  /** Text alignment. @default "left" */
+  align?: ResponsiveValue<"left" | "center" | "right">;
+  /** Truncate the text. @default false */
+  truncate?: ResponsiveValue<boolean>;
+  /** Text wrapping behavior. @default "nowrap" */
+  wrap?: ResponsiveValue<"wrap" | "nowrap" | "pretty" | "balance">;
+}
+
+export type CardTitleProps<As extends AllowedHeaderElements = "h3"> = RestrictedPropsWithAs<
+  CardTitleOwnProps,
+  As
+>;
+
+/**
+ * Allowed elements for CardDescription.
+ */
+export type AllowedTextElements = "span" | "p" | "div";
 
 /**
  * Props for the CardDescription component, which is a subcomponent of Card.
- * Extends TextProps to allow for text styling and formatting.
+ * Owns its text styling fully via card.variants.
  */
-export type CardDescriptionProps<As extends AllowedTextElements = "p"> = TextProps<As>; // type instead of interface to allow for generic extension of TextProps with the 'as' prop
+export interface CardDescriptionOwnProps extends CommonProps, LayoutProps {
+  /** Size of the text. @default "sm" */
+  size?: ResponsiveValue<"xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl">;
+  /** Font weight. @default "normal" */
+  weight?: ResponsiveValue<"normal" | "medium" | "semibold" | "bold">;
+  /** Text color. @default "muted" */
+  color?: ResponsiveValue<BuiltInSemanticColors | string>;
+  /** Text alignment. @default "left" */
+  align?: ResponsiveValue<"left" | "center" | "right">;
+  /** Truncate text with ellipsis. @default false */
+  truncate?: ResponsiveValue<boolean>;
+  /** Text wrapping behavior. @default "wrap" */
+  wrap?: ResponsiveValue<"nowrap" | "wrap" | "balance" | "pretty">;
+}
+
+export type CardDescriptionProps<As extends AllowedTextElements = "p"> = RestrictedPropsWithAs<
+  CardDescriptionOwnProps,
+  As
+>;
+
+export type ObjectFitType = "cover" | "contain" | "fill" | "none" | "scale-down";
+export type AspectRatioType = "square" | "video" | "landscape" | "portrait" | "auto";
 
 /**
  * Props for the CardImage component, which is a subcomponent of Card.
- * Extends BoxProps to allow for spacing and layout control.
+ * CardImage is always rendered as an <img> element and owns its styling
+ * fully via card.variants.
  */
-export type CardImageProps = ImageProps<"img">; // CardImage is always rendered as an <img> element, so we specify "img" as the allowed element type for ImageProps
+export interface CardImageOwnProps
+  extends Omit<ImgHTMLAttributes<HTMLImageElement>, "width" | "height" | "src" | "alt">,
+    CommonProps,
+    LayoutProps {
+  /** The source URL of the image. */
+  src: string;
+  /** Alt text for accessibility. */
+  alt: string;
+  /** How the image should scale to fit its container. @default "cover" */
+  objectFit?: ResponsiveValue<ObjectFitType>;
+  /** Aspect ratio preset. @default "auto" */
+  aspectRatio?: ResponsiveValue<AspectRatioType>;
+  /** Loading strategy. @default "lazy" */
+  loading?: "lazy" | "eager";
+  /** Decoding strategy. @default "auto" */
+  decoding?: "async" | "sync" | "auto";
+  rounded?: ResponsiveValue<"none" | "sm" | "md" | "lg" | "xl" | "full">;
+}
+
+export type CardImageProps = PropsWithAs<CardImageOwnProps, "img">;
 
 /**
  * Props for the unstyled version of the Card component.
- * This allows users to use the Card's functionality without any default styles, giving them full control over the appearance.
- * It should be used in place of the main Card component not as a child of it, and supports all the same props except for the 'variant' which is fixed to 'unstyled' in the implementation.
+ * This allows users to use the Card's functionality without any default styles, giving them full control over
+ * the appearance. It should be used in place of the main Card component not as a child of it, and supports all
+ * the same props except for the 'variant' which is fixed to 'unstyled' in the implementation.
  */
 export interface CardUnstyledProps extends Omit<CardRootProps, "variant"> {}
 
