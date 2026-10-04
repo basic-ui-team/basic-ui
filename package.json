@@ -22,6 +22,7 @@
     "storybook:build": "turbo build --filter=@basic-ui/storybook",
     "lint": "turbo lint",
     "typecheck": "turbo type-check",
+    "check:component-imports": "node scripts/check-component-imports.mjs",
     "format": "turbo format",
     "test": "turbo test",
     "test:watch": "turbo test -- --watch",

@@ -61,6 +61,17 @@ export const MyComp = forwardRefWithAs<MyCompOwnProps, AllowedElements>(_MyComp)
 
 - Prefer the package's main entrypoint for consumers: `import { Alert } from '@basic-ui/core'`.
 
+## Component composition rule (#60)
+
+Components in `packages/core/src/components/**` follow these rules. Full rationale and dependency audit: `.docs/engineering/core-design/component-import-analysis.md`.
+
+1. **Primitive layer:** `Box` is the styled-element foundation. Any component may import it. It is the only public component that may be imported by other components.
+2. **No sibling imports:** a component may not import another public component except `Box`. Composing richer components happens via explicit props (render slots, e.g. `Alert.icon`, `Button.loadingIcon`) or children — never hidden internal renders.
+3. **Own anatomy is fine:** files within a component's own folder (context, variants, types, parts) may import each other freely.
+4. **Shared internals** (hooks, helpers) go to `@basic-ui/react-utilities`, not into another component.
+
+Enforced by `scripts/check-component-imports.mjs` in CI (see Enforcement below).
+
 ## Layout utilities
 
 - Keep layout helpers (e.g. `splitLayoutProps`, `generateLayoutClassNames`) under `packages/core/src/lib/layout` and export them from the library internal `layout` barrel.
@@ -90,6 +101,7 @@ export const MyComp = forwardRefWithAs<MyCompOwnProps, AllowedElements>(_MyComp)
 
 - Reviewers should check for: consistent naming, exported API, proper typing, and basic a11y tests.
 - Consider adding lint or commit hooks if the team agrees to enforce naming conventions automatically.
+- `scripts/check-component-imports.mjs` runs in CI and fails when a component imports a sibling public component other than `Box` (see the composition rule above).
 
 ---
 
