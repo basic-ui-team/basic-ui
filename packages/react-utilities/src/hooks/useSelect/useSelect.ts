@@ -88,7 +88,7 @@ export type UseSelectResult = {
     ref: RefObject<HTMLDivElement | null>;
     id: string;
     role: "listbox";
-    tabIndex: number;
+    onPointerDown: (event: ReactPointerEvent<HTMLDivElement>) => void;
     "aria-labelledby": string;
     style: CSSProperties;
   };
@@ -97,6 +97,7 @@ export type UseSelectResult = {
     role: "option";
     id: string;
     "aria-selected": boolean;
+    "aria-disabled"?: boolean;
     onPointerDown: (event: ReactPointerEvent<HTMLDivElement>) => void;
     onClick: () => void;
   };
@@ -205,11 +206,27 @@ export function useSelect(props: UseSelectProps): UseSelectResult {
       return;
     }
     setActiveIndex(enabledIndexes[0] ?? -1);
-  }, [open, value, options, enabledIndexes, selectedValueIndex]);
+    // Runs only on the closed-to-open transition: a plain `open` dep would
+    // rerun on option-array identity changes and reset navigation mid-flight,
+    // forcing consumers to memoize `options`. Active-index resets when the
+    // active option disappears are handled separately below.
+  }, [open]);
 
   useEffect(() => {
     return () => window.clearTimeout(searchTimeoutRef.current);
   }, []);
+
+  /**
+   * If the active option disappears from the list (async options), reset
+   * the active index instead of pointing past the end. Only fires when the
+   * index is out of bounds, so it never clobbers the open-transition
+   * initialization (which runs with activeIndex still -1).
+   */
+  useEffect(() => {
+    if (!open) return;
+    if (activeIndex < options.length) return;
+    setActiveIndex(enabledIndexes[0] ?? -1);
+  }, [options, enabledIndexes, open, activeIndex]);
 
   const selectOption = useCallback(
     (index: number) => {
@@ -259,19 +276,23 @@ export function useSelect(props: UseSelectProps): UseSelectResult {
       const normalized = search.toLowerCase();
       const start = activeIndex >= 0 ? activeIndex + 1 : 0;
       const ordered = [...options.slice(start), ...options.slice(0, start)];
-      const firstMatch = ordered.find(
-        (option) => !option.disabled && option.label.toLowerCase().startsWith(normalized),
-      );
-      if (firstMatch) return options.indexOf(firstMatch);
       const allSameLetter =
-        normalized.length > 0 &&
+        normalized.length > 1 &&
         normalized.split("").every((char) => char === normalized[0]);
+      // Same-letter repeats cycle among single-letter matches *first* — an
+      // option like "Bball" would otherwise swallow the "bb" search and
+      // break cycling.
       if (allSameLetter) {
         const cycled = ordered.find(
           (option) => !option.disabled && option.label.toLowerCase().startsWith(normalized[0]),
         );
         if (cycled) return options.indexOf(cycled);
+        return -1;
       }
+      const firstMatch = ordered.find(
+        (option) => !option.disabled && option.label.toLowerCase().startsWith(normalized),
+      );
+      if (firstMatch) return options.indexOf(firstMatch);
       return -1;
     },
     [options, activeIndex],
@@ -320,11 +341,7 @@ export function useSelect(props: UseSelectProps): UseSelectResult {
         }
       }
 
-      if (
-        key === "Backspace" ||
-        key === "Clear" ||
-        (key.length === 1 && key !== " " && !altKey && !ctrlKey && !metaKey)
-      ) {
+      if (key.length === 1 && key !== " " && !altKey && !ctrlKey && !metaKey) {
         const search = accumulateSearch(key);
         const match = findTypeaheadIndex(search);
         if (match < 0) {
@@ -455,8 +472,14 @@ export function useSelect(props: UseSelectProps): UseSelectResult {
       });
     };
     update();
+    // The popup is body-portalled, so an ancestor's scroll moves the anchor
+    // but not the popup — recompute on any scroll (capture) as well as resize.
     window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
+    window.addEventListener("scroll", update, true);
+    return () => {
+      window.removeEventListener("resize", update);
+      window.removeEventListener("scroll", update, true);
+    };
   }, [open]);
 
   const getOptionProps = useCallback(
@@ -466,6 +489,7 @@ export function useSelect(props: UseSelectProps): UseSelectResult {
         role: "option" as const,
         id: getOptionId(index),
         "aria-selected": value !== undefined && option?.value === value,
+        ...(option?.disabled ? { "aria-disabled": true } : {}),
         onPointerDown: (event: ReactPointerEvent<HTMLDivElement>) => {
           // Keep DOM focus on the combobox so blur does not commit early.
           event.preventDefault();
@@ -506,7 +530,11 @@ export function useSelect(props: UseSelectProps): UseSelectResult {
     ref: listboxRef,
     id: listboxId,
     role: "listbox" as const,
-    tabIndex: -1,
+    // Unfocusable: a pointer press on popup padding/background must not move
+    // DOM focus off the combobox (the widget's only keyboard target).
+    onPointerDown: (event: ReactPointerEvent<HTMLDivElement>) => {
+      event.preventDefault();
+    },
     "aria-labelledby": labelId,
     style: popupStyle,
   };

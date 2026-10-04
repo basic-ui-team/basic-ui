@@ -1,5 +1,6 @@
 import { renderWithProviders, setupUser, screen } from "../../test-utils";
 import { describe, it, expect, vi } from "vitest";
+import * as React from "react";
 import { useSelect, type SelectOption } from "./useSelect";
 import { Portal } from "../../portal/Portal";
 import { axe } from "jest-axe";
@@ -378,6 +379,117 @@ describe("useSelect", () => {
       expect(listbox.style.top).toBe(`${anchorRect.bottom + window.scrollY}px`);
       expect(listbox.style.left).toBe(`${anchorRect.left + window.scrollX}px`);
       expect(listbox.style.minWidth).toBe(`${anchorRect.width}px`);
+    });
+  });
+
+  describe("review regressions", () => {
+    it("keeps the active index when options identity changes mid-navigation", async () => {
+      // An inline (unmemoized) options array gets a new identity every
+      // render; navigation must not be reset by that alone.
+      function InlineOptionsFixture() {
+        const [step, setStep] = React.useState(0);
+        const inlineOptions: SelectOption[] = fruits.map((f) => ({ ...f }));
+        const select = useSelect({ options: inlineOptions });
+        return (
+          <div>
+            <span {...select.labelProps}>Fruit</span>
+            <div data-testid="step">{step}</div>
+            <div
+              data-testid="combobox"
+              {...select.comboboxProps}
+              onClick={() => {
+                select.comboboxProps.onClick();
+                setStep((s) => s + 1);
+              }}
+            >
+              {select.selectedLabel ?? "Choose"}
+            </div>
+            {select.open && (
+              <Portal>
+                <div data-testid="listbox" {...select.listboxProps}>
+                  {inlineOptions.map((option, index) => (
+                    <div
+                      key={option.value}
+                      data-testid={`option-${option.value}`}
+                      {...select.getOptionProps(index)}
+                    >
+                      {option.label}
+                    </div>
+                  ))}
+                </div>
+              </Portal>
+            )}
+          </div>
+        );
+      }
+      renderWithProviders(<InlineOptionsFixture />);
+      const user = setupUser();
+      const combobox = screen.getByTestId("combobox");
+      combobox.focus();
+      await user.keyboard("{ArrowDown}");
+      await user.keyboard("{ArrowDown}");
+      await user.keyboard("{ArrowDown}");
+      // Three ArrowDowns past the first option: apple -> banana -> blueberry
+      expect(combobox.getAttribute("aria-activedescendant")).toBe(
+        screen.getByTestId("option-blueberry").id,
+      );
+    });
+
+    it("exposes disabled options as aria-disabled", async () => {
+      const withDisabled = [
+        { value: "apple", label: "Apple" },
+        { value: "banana", label: "Banana", disabled: true },
+      ];
+      renderWithProviders(<SelectFixture options={withDisabled} />);
+      const user = setupUser();
+      await user.click(screen.getByTestId("combobox"));
+      expect(screen.getByTestId("option-banana")).toHaveAttribute(
+        "aria-disabled",
+        "true",
+      );
+      expect(screen.getByTestId("option-apple")).not.toHaveAttribute("aria-disabled");
+    });
+
+    it("same-letter cycling wins over doubled-letter prefix options", async () => {
+      const doubled = [
+        { value: "bball", label: "Bball" },
+        { value: "banana", label: "Banana" },
+      ];
+      renderWithProviders(<SelectFixture options={doubled} />);
+      const user = setupUser();
+      const combobox = screen.getByTestId("combobox");
+      combobox.focus();
+      await user.keyboard("b");
+      expect(combobox.getAttribute("aria-activedescendant")).toBe(
+        screen.getByTestId("option-bball").id,
+      );
+      // Repeated same letter cycles to the next b-option, even though "bb"
+      // prefix-matches Bball
+      await user.keyboard("b");
+      expect(combobox.getAttribute("aria-activedescendant")).toBe(
+        screen.getByTestId("option-banana").id,
+      );
+    });
+
+    it("Backspace does not open the popup", async () => {
+      renderWithProviders(<SelectFixture />);
+      const user = setupUser();
+      const combobox = screen.getByTestId("combobox");
+      combobox.focus();
+      await user.keyboard("{Backspace}");
+      expect(screen.queryByTestId("listbox")).toBeNull();
+    });
+
+    it("does not move DOM focus when clicking popup padding", async () => {
+      renderWithProviders(<SelectFixture />);
+      const user = setupUser();
+      const combobox = screen.getByTestId("combobox");
+      combobox.focus();
+      await user.keyboard("{ArrowDown}");
+      const listbox = screen.getByTestId("listbox");
+      await user.click(listbox);
+      expect(combobox).toHaveFocus();
+      expect(screen.getByTestId("listbox")).toBeInTheDocument();
     });
   });
 
