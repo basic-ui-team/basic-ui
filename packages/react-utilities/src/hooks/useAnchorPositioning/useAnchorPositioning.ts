@@ -45,10 +45,9 @@ function clamp(value: number, min: number, max: number): number {
  *
  * - Coordinates are viewport-based (`position: fixed`), read from the
  *   anchor's `getBoundingClientRect()` — no scrollY/scrollX math.
- * - The cross axis is aligned (start/center/end) and both axes are clamped
- *   to the viewport with padding, so the popup never leaves the screen.
- *   Deliberately no flip: a collision-aware engine (floating-ui) is an
- *   explicit ADR decision, not baked in here.
+ * - The cross axis is aligned (start/center/end), and placement flips to the
+ *   mirrored side when it fits, then to a perpendicular side when needed.
+ *   Both axes are clamped to the viewport with padding.
  * - Recomputes on captured scroll and window resize, so overflow-ancestor
  *   scrolls keep the popup glued to its anchor (the bug appiq's Popover has).
  * - Portal content may attach a commit after the first render; positioning
@@ -69,9 +68,7 @@ function clamp(value: number, min: number, max: number): number {
  *   </Portal>
  * )}
  */
-export function useAnchorPositioning(
-  props: UseAnchorPositioningProps,
-): UseAnchorPositioningResult {
+export function useAnchorPositioning(props: UseAnchorPositioningProps): UseAnchorPositioningResult {
   const {
     enabled,
     anchorRef,
@@ -94,44 +91,86 @@ export function useAnchorPositioning(
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
 
-    // Main-axis coordinate: the side the popup sits on.
+    const oppositeSide = {
+      top: "bottom",
+      bottom: "top",
+      left: "right",
+      right: "left",
+    } satisfies Record<AnchorSide, AnchorSide>;
+
+    const mainSpace = (candidate: AnchorSide) =>
+      candidate === "bottom"
+        ? viewportHeight - viewportPadding - rect.bottom - sideOffset
+        : candidate === "top"
+        ? rect.top - sideOffset - viewportPadding
+        : candidate === "right"
+        ? viewportWidth - viewportPadding - rect.right - sideOffset
+        : rect.left - sideOffset - viewportPadding;
+
+    const mainSize = (candidate: AnchorSide) =>
+      candidate === "top" || candidate === "bottom" ? popupHeight : popupWidth;
+
+    const fits = (candidate: AnchorSide) => mainSpace(candidate) >= mainSize(candidate);
+
+    let placementSide = side;
+    if (!fits(placementSide)) {
+      const mirroredSide = oppositeSide[side];
+      if (fits(mirroredSide)) {
+        placementSide = mirroredSide;
+      } else {
+        const perpendicularSides: AnchorSide[] =
+          side === "top" || side === "bottom" ? ["right", "left"] : ["top", "bottom"];
+        const fallbackSide = perpendicularSides
+          .filter(fits)
+          .sort((first, second) => mainSpace(second) - mainSpace(first))[0];
+        if (fallbackSide) placementSide = fallbackSide;
+      }
+    }
+
+    const isVerticalPlacement = placementSide === "top" || placementSide === "bottom";
     const main =
-      side === "bottom"
+      placementSide === "bottom"
         ? rect.bottom + sideOffset
-        : side === "top"
-          ? rect.top - sideOffset - popupHeight
-          : side === "right"
-            ? rect.right + sideOffset
-            : rect.left - sideOffset - popupWidth;
-    // Cross-axis coordinate: alignment along that side.
+        : placementSide === "top"
+        ? rect.top - sideOffset - popupHeight
+        : placementSide === "right"
+        ? rect.right + sideOffset
+        : rect.left - sideOffset - popupWidth;
     const cross =
       align === "start"
-        ? side === "top" || side === "bottom"
+        ? isVerticalPlacement
           ? rect.left
           : rect.top
         : align === "end"
-          ? side === "top" || side === "bottom"
-            ? rect.right - popupWidth
-            : rect.bottom - popupHeight
-          : side === "top" || side === "bottom"
-            ? rect.left + rect.width / 2 - popupWidth / 2
-            : rect.top + rect.height / 2 - popupHeight / 2;
+        ? isVerticalPlacement
+          ? rect.right - popupWidth
+          : rect.bottom - popupHeight
+        : isVerticalPlacement
+        ? rect.left + rect.width / 2 - popupWidth / 2
+        : rect.top + rect.height / 2 - popupHeight / 2;
 
-    // Clamp both axes into the viewport (no flip — an ADR decision).
     const clampedCross = clamp(
       cross,
       viewportPadding,
-      Math.max(viewportPadding, viewportWidth - popupWidth - viewportPadding),
+      Math.max(
+        viewportPadding,
+        (isVerticalPlacement ? viewportWidth - popupWidth : viewportHeight - popupHeight) -
+          viewportPadding,
+      ),
     );
     const clampedMain = clamp(
       main,
       viewportPadding,
-      Math.max(viewportPadding, viewportHeight - popupHeight - viewportPadding),
+      Math.max(
+        viewportPadding,
+        (isVerticalPlacement ? viewportHeight - popupHeight : viewportWidth - popupWidth) -
+          viewportPadding,
+      ),
     );
 
     setStyle({
       position: "fixed",
-      ...(side === "top" || side === "bottom"
+      ...(isVerticalPlacement
         ? { top: clampedMain, left: clampedCross }
         : { top: clampedCross, left: clampedMain }),
     });

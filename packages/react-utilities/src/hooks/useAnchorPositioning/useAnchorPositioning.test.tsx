@@ -1,11 +1,7 @@
 import { renderWithProviders, renderHookWithProviders, waitFor } from "../../test-utils";
 import { describe, it, expect } from "vitest";
 import * as React from "react";
-import {
-  useAnchorPositioning,
-  type AnchorSide,
-  type AnchorAlign,
-} from "./useAnchorPositioning";
+import { useAnchorPositioning, type AnchorSide, type AnchorAlign } from "./useAnchorPositioning";
 import { Portal } from "../../portal/Portal";
 
 function mockElementSize(node: HTMLElement, size: { width: number; height: number }) {
@@ -106,9 +102,7 @@ describe("useAnchorPositioning", () => {
   });
 
   it("positions bottom-start below the anchor with the side offset", async () => {
-    renderWithProviders(
-      <Fixture anchorRect={{ top: 100, left: 200, right: 300, bottom: 140 }} />,
-    );
+    renderWithProviders(<Fixture anchorRect={{ top: 100, left: 200, right: 300, bottom: 140 }} />);
     await expectPopupStyle("200px", "148px"); // 140 + 8
     const popup = document.querySelector('[data-testid="popup"]') as HTMLDivElement;
     expect(popup.style.position).toBe("fixed");
@@ -174,14 +168,32 @@ describe("useAnchorPositioning", () => {
         popupSize={{ width: 100, height: 50 }}
       />,
     );
-    // 795 + 8 = 803 > 800 - 50 - 8 = 742 → clamped; left -50 → clamped to 8
-    await expectPopupStyle("8px", "742px");
+    // The popup mirrors above the anchor; left -50 is clamped to 8.
+    await expectPopupStyle("8px", "732px");
+  });
+
+  it("uses the mirrored side when the requested side does not fit", async () => {
+    renderWithProviders(
+      <Fixture
+        anchorRect={{ top: 700, left: 200, right: 300, bottom: 740 }}
+        popupSize={{ width: 100, height: 100 }}
+      />,
+    );
+    await expectPopupStyle("200px", "592px");
+  });
+
+  it("uses the roomiest perpendicular side when neither mirrored side fits", async () => {
+    renderWithProviders(
+      <Fixture
+        anchorRect={{ top: 350, left: 200, right: 300, bottom: 390 }}
+        popupSize={{ width: 100, height: 500 }}
+      />,
+    );
+    await expectPopupStyle("308px", "292px");
   });
 
   it("recomputes on window resize", async () => {
-    renderWithProviders(
-      <Fixture anchorRect={{ top: 100, left: 200, right: 300, bottom: 140 }} />,
-    );
+    renderWithProviders(<Fixture anchorRect={{ top: 100, left: 200, right: 300, bottom: 140 }} />);
     await expectPopupStyle("200px");
     Object.defineProperty(window, "innerWidth", { writable: true, value: 150 });
     window.dispatchEvent(new Event("resize"));
@@ -190,9 +202,7 @@ describe("useAnchorPositioning", () => {
   });
 
   it("recomputes on captured scroll events", async () => {
-    renderWithProviders(
-      <Fixture anchorRect={{ top: 100, left: 200, right: 300, bottom: 140 }} />,
-    );
+    renderWithProviders(<Fixture anchorRect={{ top: 100, left: 200, right: 300, bottom: 140 }} />);
     Object.defineProperty(window, "innerWidth", { writable: true, value: 100 });
     window.dispatchEvent(new Event("scroll"));
     await expectPopupStyle("92px"); // clamped to 100 - 8
