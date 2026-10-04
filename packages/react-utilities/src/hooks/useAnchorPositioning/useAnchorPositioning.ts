@@ -79,7 +79,15 @@ export function useAnchorPositioning(props: UseAnchorPositioningProps): UseAncho
   } = props;
 
   const popupRef = useRef<HTMLDivElement>(null);
-  const [style, setStyle] = useState<CSSProperties>({ position: "fixed", top: 0, left: 0 });
+  // Hidden until the first successful measurement: a late-attaching portal
+  // would otherwise be visible at the viewport origin for a frame before
+  // the rAF retry positions it.
+  const [style, setStyle] = useState<CSSProperties>({
+    position: "fixed",
+    top: 0,
+    left: 0,
+    visibility: "hidden",
+  });
 
   const update = useCallback(() => {
     const anchor = anchorRef.current;
@@ -170,6 +178,8 @@ export function useAnchorPositioning(props: UseAnchorPositioningProps): UseAncho
 
     setStyle({
       position: "fixed",
+      // First successful measurement reveals the popup.
+      visibility: "visible",
       ...(isVerticalPlacement
         ? { top: clampedMain, left: clampedCross }
         : { top: clampedCross, left: clampedMain }),

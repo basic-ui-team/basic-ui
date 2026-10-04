@@ -172,6 +172,17 @@ describe("useAnchorPositioning", () => {
     await expectPopupStyle("8px", "732px");
   });
 
+  it("initial style is hidden until positioned", () => {
+    const anchorRef = { current: null as HTMLElement | null };
+    const { result } = renderHookWithProviders(() =>
+      useAnchorPositioning({ enabled: true, anchorRef }),
+    );
+    // No anchor/popup attached: update is a no-op and the style stays hidden.
+    result.current.update();
+    expect(result.current.style.visibility).toBe("hidden");
+    expect(result.current.style.position).toBe("fixed");
+  });
+
   it("uses the mirrored side when the requested side does not fit", async () => {
     renderWithProviders(
       <Fixture
