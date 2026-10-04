@@ -3,7 +3,7 @@ import React from "react";
 import { usePagination } from "../shared/usePagination.tsx";
 import { Pagination } from "../shared/Pagination.tsx";
 import type { TablePaginationProps } from "./tablePagination.types";
-import { Box } from "@core/components";
+import { Box } from "../../Box";
 
 /**
  * TablePagination

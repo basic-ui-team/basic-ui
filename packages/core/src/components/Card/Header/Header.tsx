@@ -4,7 +4,7 @@ import { CardContext } from "../Card";
 import { useResponsiveProps } from "@basic-ui/react-utilities";
 import { cn } from "@basic-ui/react-utilities";
 import { cardSectionVariants } from "../card.variants";
-import { Box } from "@core/components";
+import { Box } from "../../Box";
 
 // 1. Remove generic <As> and use standard forwardRef
 export const CardHeader = forwardRef<HTMLElement, CardHeaderProps>(

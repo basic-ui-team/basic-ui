@@ -66,6 +66,8 @@ export const MyComp = forwardRefWithAs<MyCompOwnProps, AllowedElements>(_MyComp)
 Components in `packages/core/src/components/**` follow these rules. Full rationale and dependency audit: `.docs/engineering/core-design/component-import-analysis.md`.
 
 1. **Primitive layer:** `Box` is the styled-element foundation. Any component may import it. It is the only public component that may be imported by other components.
+   - **Placement (#84):** `Box` lives in `@basic-ui/core` at `components/Box` — by convention, not in a separate package. The composition rule plus the CI check (`scripts/check-component-imports.mjs`) provide the structural guarantee; a dedicated package would add dependency and packaging overhead without behavioral benefit.
+   - **Import specifier:** always import it relatively, e.g. `import { Box, BoxProps } from "../Box"` (depth-adjusted). Do not use `@core/components`, `@core/components/Box`, or other aliases — the relative form keeps the primitive dependency explicit and refactor-safe.
 2. **No sibling imports:** a component may not import another public component except `Box`. Composing richer components happens via explicit props (render slots, e.g. `Alert.icon`, `Button.loadingIcon`) or children — never hidden internal renders.
 3. **Own anatomy is fine:** files within a component's own folder (context, variants, types, parts) may import each other freely.
 4. **Shared internals** (hooks, helpers) go to `@basic-ui/react-utilities`, not into another component.

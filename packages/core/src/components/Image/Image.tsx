@@ -1,6 +1,6 @@
 import { useResponsiveProps } from "@basic-ui/react-utilities";
 import { cn, forwardRefWithAs } from "@basic-ui/react-utilities";
-import { Box, BoxProps } from "@core/components";
+import { Box, BoxProps } from "../Box";
 import { imageVariants } from "./image.variants";
 import { AllowedImageElements, ImageOwnProps, ImageProps } from "./image.types";
 import { PolymorphicRef } from "@basic-ui/react-utilities";

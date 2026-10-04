@@ -65,6 +65,13 @@ for (const file of walk(componentsDir)) {
   while ((match = importPattern.exec(source)) !== null) {
     const specifier = match[1];
     const target = resolveTargetComponent(dirname(file), specifier);
+    if (target === PRIMITIVE && specifier !== "." && !specifier.startsWith("./") && !specifier.startsWith("../")) {
+      // Box is importable, but only via the relative specifier (#84)
+      violations.push(
+        `${file.slice(root.length + 1)} -> Box via non-relative specifier "${specifier}" (use a relative "../Box" import)`,
+      );
+      continue;
+    }
     if (!target || !PUBLIC_COMPONENTS.has(target) || target === PRIMITIVE) continue;
     if (target === owner) continue;
     const relative = file.slice(root.length + 1);

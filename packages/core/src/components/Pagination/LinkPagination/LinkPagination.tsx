@@ -4,7 +4,7 @@ import type { LinkPaginationProps } from "./linkPagination.types";
 import { usePagination } from "../shared/usePagination.tsx";
 import { Pagination } from "../shared/Pagination.tsx";
 import { clamp } from "../shared/paginationUtils.ts";
-import { Box } from "@core/components";
+import { Box } from "../../Box";
 
 /**
  * LinkPagination
