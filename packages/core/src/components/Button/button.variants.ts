@@ -91,6 +91,24 @@ export const buttonVariants = cva(
 );
 
 // Only needed if the icon passed in is not an Icon component (which applies its own size classes based on the button size).
+export const buttonLoaderVariants = cva(
+  "flex items-center justify-center gap-md",
+  {
+    variants: {
+      label: {
+        true: "font-medium",
+        false: "",
+      },
+    },
+  },
+);
+
+// Visual equivalent of Spinner size="sm" (spinnerVariants sm: h-lg w-lg border-3).
+// Inlined per the composition rule — only Box may be imported by other components.
+export const buttonSpinnerVariants = cva(
+  "animate-spin rounded-full border-solid border-current border-border-base border-t-transparent h-lg w-lg border-3",
+);
+
 export const buttonIconVariants = cva("flex-shrink-0", {
   variants: {
     size: {

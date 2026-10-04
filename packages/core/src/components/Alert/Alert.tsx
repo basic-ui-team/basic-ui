@@ -1,6 +1,5 @@
 import React from "react";
 import { cn, forwardRefWithAs, useDisclosure } from "@basic-ui/react-utilities";
-import { Icon } from "../Icon";
 import { CheckCircleIcon, XCircleIcon, AlertTriangleIcon, InfoIcon, XIcon } from "@basic-ui/icons";
 import type { AlertOwnProps, AlertProps } from "./alert.types";
 import type { PolymorphicRef } from "@basic-ui/react-utilities";
@@ -73,7 +72,9 @@ const _Alert = <As extends AllowedAlertElements = "div">(
     >
       {/* Icon */}
       <Box as={Child} className={alertIconVariants()}>
-        {iconElement && <Icon icon={iconElement} variant={severity} size="sm" />}
+        <Box as="span" className="flex items-center justify-center w-lg h-lg" aria-hidden="true">
+          {iconElement}
+        </Box>
       </Box>
 
       {/* Content */}
@@ -91,7 +92,7 @@ const _Alert = <As extends AllowedAlertElements = "div">(
             className="shrink-0 -mr-sm -my-sm p-sm hover:bg-black/5 rounded transition-colors"
             aria-label="Dismiss alert"
           >
-            <Icon icon={<XIcon />} size="sm" />
+            <Box as="span" className="flex items-center justify-center w-lg h-lg" aria-hidden="true"><XIcon /></Box>
           </button>
         )}
       </Box>

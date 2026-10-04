@@ -1,12 +1,9 @@
 import { AllowedButtonElements, ButtonOwnProps, ButtonProps } from "./button.types";
 import { cn, forwardRefWithAs } from "@basic-ui/react-utilities";
 import { PolymorphicRef } from "@basic-ui/react-utilities";
-import { buttonVariants, buttonIconVariants } from "./button.variants";
+import { buttonVariants, buttonIconVariants, buttonLoaderVariants, buttonSpinnerVariants } from "./button.variants";
 import { Box, BoxProps } from "../Box";
-import { Spinner } from "../Spinner";
 import { useResponsiveProps } from "@basic-ui/react-utilities";
-import { Flex } from "../Flex";
-import { Text } from "../Text";
 
 /**
  * Button component with support for multiple variants, colors, sizes, and states.
@@ -94,7 +91,12 @@ export const Button = forwardRefWithAs<ButtonOwnProps, AllowedButtonElements>(
       const iconNode = loadingIcon ? (
         loadingIcon
       ) : (
-        <Spinner size="sm" ariaLabel={loadingText ? `${loadingText} loading` : "Loading"} />
+        <Box
+          as="span"
+          role="status"
+          aria-label={loadingText ? `${loadingText} loading` : "Loading"}
+          className={buttonSpinnerVariants()}
+        />
       );
 
       let customIconStyles;
@@ -105,14 +107,14 @@ export const Button = forwardRefWithAs<ButtonOwnProps, AllowedButtonElements>(
       }
 
       return (
-        <Flex justify="center" align="center" gap="md">
-          <Box className={cn(customIconStyles)}>{iconNode}</Box>
+        <Box as="span" className={buttonLoaderVariants()}>
+          <Box as="span" className={cn(customIconStyles)}>{iconNode}</Box>
           {loadingText && (
-            <Text color="inherit" weight="medium">
+            <Box as="span" className="font-medium">
               {loadingText}
-            </Text>
+            </Box>
           )}
-        </Flex>
+        </Box>
       );
     };
 
