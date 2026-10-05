@@ -24,7 +24,9 @@ function lockScroll() {
     lockedBodyOverflow = document.body.style.overflow;
     const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
     if (scrollbarWidth > 0) {
-      document.body.style.paddingRight = `calc(${lockedBodyPaddingRight || "0px"} + ${scrollbarWidth}px)`;
+      document.body.style.paddingRight = `calc(${
+        lockedBodyPaddingRight || "0px"
+      } + ${scrollbarWidth}px)`;
     }
     document.body.style.overflow = "hidden";
   }
@@ -44,6 +46,8 @@ export type UseOverlayProps = {
   open: boolean;
   /** Ref of the overlay's root element, used for outside dismissal. */
   ref: RefObject<HTMLElement | null>;
+  /** Ref of the anchor element, used to prevent outside dismissal when interacting with the anchor. */
+  anchorRef?: RefObject<HTMLElement | null>;
   /** Called when the overlay requests dismissal (Escape, outside pointerdown). */
   onDismiss: () => void;
   /**
@@ -51,6 +55,11 @@ export type UseOverlayProps = {
    * (e.g. tooltips) may disable this while keeping the stack behavior.
    */
   dismissOnOutside?: boolean;
+
+  /**
+   * Dismiss on Escape when this overlay is topmost. Defaults to true.
+   */
+  dismissOnEscape?: boolean;
   /**
    * Block document scroll while open. Defaults to true for modals.
    */
@@ -71,13 +80,23 @@ export type UseOverlayProps = {
  * useOverlay({ open, ref, onDismiss: onClose });
  */
 export function useOverlay(props: UseOverlayProps): void {
-  const { open, ref, onDismiss, dismissOnOutside = true, lockScrollWhileOpen = true } = props;
+  const {
+    open,
+    ref,
+    onDismiss,
+    anchorRef,
+    dismissOnOutside = true,
+    dismissOnEscape = true,
+    lockScrollWhileOpen = true,
+  } = props;
 
   const idRef = useRef<symbol | null>(null);
   const onDismissRef = useRef(onDismiss);
   onDismissRef.current = onDismiss;
   const dismissOnOutsideRef = useRef(dismissOnOutside);
   dismissOnOutsideRef.current = dismissOnOutside;
+  const dismissOnEscapeRef = useRef(dismissOnEscape);
+  dismissOnEscapeRef.current = dismissOnEscape;
 
   useEffect(() => {
     if (!open) return;
@@ -93,6 +112,7 @@ export function useOverlay(props: UseOverlayProps): void {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key !== "Escape") return;
       if (!isTopmost()) return;
+      if (!dismissOnEscapeRef.current) return;
       onDismissRef.current();
     };
 
@@ -101,6 +121,8 @@ export function useOverlay(props: UseOverlayProps): void {
       if (!dismissOnOutsideRef.current) return;
       const el = ref.current;
       if (!el || el.contains(event.target as Node)) return;
+      const anchorEl = anchorRef?.current;
+      if (anchorEl && anchorEl.contains(event.target as Node)) return;
       onDismissRef.current();
     };
 
