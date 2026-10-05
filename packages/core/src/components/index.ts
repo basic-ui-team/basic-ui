@@ -17,3 +17,5 @@ export { Divider } from "./Divider";
 export type { DividerProps } from "./Divider";
 export { Spinner } from "./Spinner";
 export type { SpinnerProps, SpinnerColor, SpinnerSizes } from "./Spinner";
+export { Toggle } from "./Toggle";
+export type { ToggleProps } from "./Toggle";
