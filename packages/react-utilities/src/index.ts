@@ -23,30 +23,19 @@ export {
   type UseDisclosureProps,
   type UseDisclosureResult,
 } from "./hooks/useDisclosure/useDisclosure";
-export {
-  useId,
-  useAriaIds,
-  type UseAriaIdsResult,
-} from "./hooks/useId/useId";
+export { useId, useAriaIds, type UseAriaIdsResult } from "./hooks/useId/useId";
 export {
   useOutsideEvent,
   type UseOutsideEventProps,
 } from "./hooks/useOutsideEvent/useOutsideEvent";
 export { Portal, type PortalProps } from "./portal/Portal";
-export {
-  useFocusTrap,
-  type UseFocusTrapProps,
-} from "./hooks/useFocusTrap/useFocusTrap";
+export { useFocusTrap, type UseFocusTrapProps } from "./hooks/useFocusTrap/useFocusTrap";
 export {
   useOverlay,
   resetOverlayStackForTesting,
   type UseOverlayProps,
 } from "./hooks/useOverlay/useOverlay";
-export {
-  useDialog,
-  type UseDialogProps,
-  type UseDialogResult,
-} from "./hooks/useDialog/useDialog";
+export { useDialog, type UseDialogProps, type UseDialogResult } from "./hooks/useDialog/useDialog";
 export {
   useSelect,
   type SelectOption,
@@ -60,3 +49,8 @@ export {
   type UseAnchorPositioningProps,
   type UseAnchorPositioningResult,
 } from "./hooks/useAnchorPositioning/useAnchorPositioning";
+export {
+  usePopover,
+  type UsePopoverProps,
+  type UsePopoverResult,
+} from "./hooks/usePopover/usePopover";
