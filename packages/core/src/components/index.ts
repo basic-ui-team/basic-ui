@@ -17,3 +17,5 @@ export { Divider } from "./Divider";
 export type { DividerProps } from "./Divider";
 export { Spinner } from "./Spinner";
 export type { SpinnerProps, SpinnerColor, SpinnerSizes } from "./Spinner";
+export { Dialog } from "./Dialog";
+export type { DialogProps } from "./Dialog";
