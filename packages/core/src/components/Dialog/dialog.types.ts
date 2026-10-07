@@ -32,8 +32,26 @@ export interface DialogOwnProps extends CommonProps {
    */
   description?: React.ReactNode;
 
+  /**
+   * Accessible name for the dialog when no `title` is rendered. Falls back to
+   * the hook's `aria-label` wiring so `role="dialog"` is never unnamed.
+   */
+  "aria-label"?: string;
+
+  /**
+   * Id of an external element that labels the dialog when no `title` is
+   * rendered. Overrides the generated `aria-labelledby` wiring.
+   */
+  "aria-labelledby"?: string;
+
   /** Expand to the available width, up to the dialog's maximum width. @default false */
   fullWidth?: boolean;
+
+  /**
+   * Controls the dialog's maximum width.
+   * @default "md"
+   */
+  size?: DialogSize;
 
   /** The footer content of the dialog. e.g., action buttons */
   footer?: React.ReactNode;
@@ -48,12 +66,22 @@ export interface DialogOwnProps extends CommonProps {
    */
   modal?: boolean;
 
-  /** Close the dialog when clicking outside of it. Modal only. @default true */
+  /**
+   * Close the dialog when clicking outside of it. Defaults to true, for both
+   * modal and non-modal dialogs; set false for destructive-action dialogs
+   * that must be explicitly confirmed.
+   */
   dismissOnOutside?: boolean;
 
-  /** Block background scroll while open. @default true */
+  /**
+   * Block background scroll while open. Defaults to the `modal` setting, so
+   * background scroll stays available in non-modal dialogs unless explicitly
+   * enabled.
+   */
   lockScroll?: boolean;
 }
+
+export type DialogSize = "sm" | "md" | "lg";
 
 export type DialogProps<As extends AllowedDialogElements = "div"> = RestrictedPropsWithAs<
   DialogOwnProps,

@@ -23,7 +23,7 @@ export type UseDialogProps = UseDisclosureProps & {
   dismissOnOutside?: boolean;
   /** Override background scroll locking. Defaults to the `modal` setting. */
   lockScroll?: boolean;
-  /** Whether the rendered dialog includes a description. Defaults to true. */
+  /** Whether the rendered dialog includes a description. Defaults to false. */
   hasDescription?: boolean;
 };
 
@@ -45,6 +45,7 @@ export type UseDialogResult = {
     "aria-modal": boolean;
     "aria-labelledby"?: string;
     "aria-label"?: string;
+    "aria-describedby"?: string;
     id: string;
   };
   /** Props to spread on the dialog title element. */
@@ -83,7 +84,7 @@ export function useDialog(props: UseDialogProps = {}): UseDialogResult {
     modal = true,
     dismissOnOutside = true,
     lockScroll,
-    hasDescription = true,
+    hasDescription = false,
     ...disclosureProps
   } = props;
   const { open, onOpen, onClose, onToggle } = useDisclosure(disclosureProps);

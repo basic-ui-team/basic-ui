@@ -1,13 +1,26 @@
 import { cva } from "class-variance-authority";
 
-export const dialogOverlayVariants = cva("fixed inset-0 flex items-center justify-center p-md");
+export const dialogOverlayVariants = cva(
+  "fixed inset-0 flex items-center justify-center p-md",
+  {
+    variants: {
+      modal: {
+        true: "",
+        false: "pointer-events-none",
+      },
+    },
+    defaultVariants: {
+      modal: true,
+    },
+  },
+);
 
 export const dialogBackdropVariants = cva("fixed inset-0 bg-black/50");
 
 export const dialogVariants = cva(
   [
     "bg-surface-base rounded-lg shadow-s4",
-    "max-w-[42rem] mx-auto",
+    "mx-auto",
     "focus-visible:outline-none",
   ].join(" "),
   {
@@ -18,12 +31,18 @@ export const dialogVariants = cva(
       },
       modal: {
         true: "z-100",
-        false: "",
+        false: "pointer-events-auto",
+      },
+      size: {
+        sm: "max-w-[24rem]",
+        md: "max-w-[42rem]",
+        lg: "max-w-[64rem]",
       },
     },
     defaultVariants: {
       fullWidth: false,
       modal: true,
+      size: "md",
     },
   },
 );

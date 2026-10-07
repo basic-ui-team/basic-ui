@@ -57,6 +57,18 @@ export const FullWidth: Story = {
   render: ({ as: _as, ...args }) => <DialogStory {...args} />,
 };
 
+export const Sizes: Story = {
+  args: { title: "Sized dialog", description: "The size prop controls the dialog's maximum width." },
+  argTypes: {
+    size: { control: "radio", options: ["sm", "md", "lg"] },
+    fullWidth: { control: "boolean" },
+    modal: { control: "boolean" },
+    showClose: { control: "boolean" },
+    dismissOnOutside: { control: "boolean" },
+    lockScroll: { control: "boolean" },
+  },
+  render: ({ as: _as, ...args }) => <DialogStory {...args} />,
+};
 export const NonModal: Story = {
   args: {
     modal: false,

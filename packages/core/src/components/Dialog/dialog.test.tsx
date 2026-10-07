@@ -81,6 +81,50 @@ describe("Dialog", () => {
     expect(screen.getByRole("button", { name: "Close" })).toHaveClass("text-fg-muted");
   });
 
+  it("dismisses on outside pointerdown by default", async () => {
+    const user = setupUser();
+    function Fixture() {
+      const [open, setOpen] = React.useState(false);
+      return (
+        <>
+          <button data-testid="outside" onClick={() => setOpen(true)}>
+            Open dialog
+          </button>
+          <button data-testid="background">Background target</button>
+          <Dialog open={open} onOpenChange={setOpen} title="Confirm">
+            Dialog content
+          </Dialog>
+        </>
+      );
+    }
+    renderWithProviders(<Fixture />);
+    await user.click(screen.getByRole("button", { name: "Open dialog" }));
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+    await user.click(screen.getByTestId("background"));
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  });
+  it("respects dismissOnOutside={false}", async () => {
+    const user = setupUser();
+    function Fixture() {
+      const [open, setOpen] = React.useState(false);
+      return (
+        <>
+          <button data-testid="outside" onClick={() => setOpen(true)}>
+            Open dialog
+          </button>
+          <button data-testid="background">Background target</button>
+          <Dialog open={open} onOpenChange={setOpen} title="Confirm" dismissOnOutside={false}>
+            Dialog content
+          </Dialog>
+        </>
+      );
+    }
+    renderWithProviders(<Fixture />);
+    await user.click(screen.getByRole("button", { name: "Open dialog" }));
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+    await user.click(screen.getByTestId("background"));
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+  });
   it("is axe-clean in its default modal presentation", async () => {
     const { baseElement } = renderWithProviders(
       <Dialog open title="Project settings" description="Manage project details">

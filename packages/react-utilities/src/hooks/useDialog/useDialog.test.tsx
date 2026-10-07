@@ -94,11 +94,17 @@ describe("useDialog", () => {
 
   it("describes the dialog via aria-describedby pointing at the description", async () => {
     const user = setupUser();
-    const { getByTestId } = renderWithProviders(<DialogFixture />);
+    const { getByTestId } = renderWithProviders(<DialogFixture hasDescription />);
     await user.click(getByTestId("opener"));
     const dialog = getByTestId("dialog");
     const description = getByTestId("description");
     expect(dialog.getAttribute("aria-describedby")).toBe(description.id);
+  });
+  it("omits aria-describedby when hasDescription is not enabled", async () => {
+    const user = setupUser();
+    const { getByTestId } = renderWithProviders(<DialogFixture />);
+    await user.click(getByTestId("opener"));
+    expect(getByTestId("dialog").getAttribute("aria-describedby")).toBeNull();
   });
 
   it("moves focus into the dialog on open and restores on close", async () => {

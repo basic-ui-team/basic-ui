@@ -48,7 +48,9 @@ export const Dialog = forwardRefWithAs<DialogOwnProps, AllowedDialogElements>(
       onOpenChange,
       title,
       description,
+      size = "md",
       "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledby,
       fullWidth = false,
       footer,
       showClose = true,
@@ -61,7 +63,7 @@ export const Dialog = forwardRefWithAs<DialogOwnProps, AllowedDialogElements>(
     }: DialogProps<As>,
     ref: PolymorphicRef<As>,
   ) => {
-    const {
+    const labelledBy = title ? undefined : ariaLabelledby;    const {
       open: isOpen,
       onClose,
       dialogRef,
@@ -79,6 +81,12 @@ export const Dialog = forwardRefWithAs<DialogOwnProps, AllowedDialogElements>(
       lockScroll,
     });
 
+    if (process.env.NODE_ENV !== "production" && !title && !ariaLabel && !ariaLabelledby) {
+      console.warn(
+        "Dialog requires an accessible name: pass `title`, `aria-label`, or `aria-labelledby`.",
+      );
+    }
+
     const setDialogRef = useCallback(
       (node: HTMLDivElement | null) => {
         dialogRef.current = node;
@@ -92,12 +100,13 @@ export const Dialog = forwardRefWithAs<DialogOwnProps, AllowedDialogElements>(
 
     return (
       <Portal>
-        <Box className={dialogOverlayVariants()}>
+        <Box className={dialogOverlayVariants({ modal })}>
           {modal && <Box className={dialogBackdropVariants()} />}
           <Box
             as={as || "div"}
-            className={cn(dialogVariants({ modal, fullWidth }), className)}
+            className={cn(dialogVariants({ modal, fullWidth, size }), className)}
             {...dialogProps}
+            {...(labelledBy ? { "aria-labelledby": labelledBy } : {})}
             ref={setDialogRef}
             {...(normalizeProps(rest as Record<string, unknown>) as any)}
           >
