@@ -21,7 +21,7 @@ import { toggleVariants } from "./toggle.variants";
  *
  * @example
  * // Uncontrolled
- * <Toggle defaultChecked />
+ * <Toggle defaultValue aria-label="Notifications" />
  *
  * // Controlled with external label
  * <Toggle value={on} onChange={setOn} aria-labelledby="my-label" />
@@ -48,7 +48,7 @@ export const Toggle = forwardRefWithAs<ToggleOwnProps, AllowedToggleElements>(
       onChange,
     });
     const { size: resolvedSize } = useResponsiveProps({ size });
-    const { fieldProps } = useAriaIds({ prefix: "toggle" });
+    const { id } = useAriaIds({ prefix: "toggle" });
     return (
       <Box
         as={(as || "button") as As}
@@ -67,7 +67,7 @@ export const Toggle = forwardRefWithAs<ToggleOwnProps, AllowedToggleElements>(
           }),
           className,
         )}
-        {...fieldProps}
+        id={id}
         {...(rest as BoxProps<As>)}
         onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
           if (disabled) {

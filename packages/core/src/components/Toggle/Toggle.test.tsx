@@ -91,4 +91,18 @@ describe("Toggle", () => {
     expect(toggle).toHaveAttribute("id", "custom-toggle");
     expect(toggle).toHaveAttribute("aria-labelledby", "external-label");
   });
+
+  it("does not reference a generated label element it never renders", () => {
+    renderWithProviders(<Toggle aria-label="Notifications" />);
+    const toggle = screen.getByRole("switch");
+    expect(toggle).toHaveAttribute("aria-label", "Notifications");
+    expect(toggle).not.toHaveAttribute("aria-labelledby");
+    expect(toggle).toHaveAccessibleName("Notifications");
+  });
+
+  it("exposes a generated id for external label wiring", () => {
+    renderWithProviders(<Toggle aria-label="On" />);
+    const toggle = screen.getByRole("switch");
+    expect(toggle.id).toMatch(/^toggle-/);
+  });
 });

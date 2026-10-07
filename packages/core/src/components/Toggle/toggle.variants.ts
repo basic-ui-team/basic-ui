@@ -45,8 +45,8 @@ export const toggleVariants = cva(
       { size: "lg", className: "[&_[data-slot=thumb]]:h-4 [&_[data-slot=thumb]]:w-4" },
       // thumb travel per size when checked
       { size: "sm", checked: true, className: "[&_[data-slot=thumb]]:translate-x-4" },
-      { size: "md", checked: true, className: "[&_[data-slot=thumb]]:translate-x-3.5" },
-      { size: "lg", checked: true, className: "[&_[data-slot=thumb]]:translate-x-5" },
+      { size: "md", checked: true, className: "[&_[data-slot=thumb]]:translate-x-4.5" },
+      { size: "lg", checked: true, className: "[&_[data-slot=thumb]]:translate-x-6" },
       // thumb color: inverted on the muted off-track, white on colored on-tracks
       { checked: false, className: "[&_[data-slot=thumb]]:bg-fg-inverted" },
       { checked: true, color: "primary", className: "[&_[data-slot=thumb]]:bg-white" },
