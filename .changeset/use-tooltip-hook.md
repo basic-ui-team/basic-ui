@@ -11,3 +11,4 @@ Add `useTooltip` (#72): headless hover/focus tooltip semantics on top of `usePop
 - `side`/`align`/`sideOffset`/`viewportPadding` forwarded to `usePopover`; `dismissOnOutside` fixed to `false` (tooltip persistence), `dismissOnEscape` on
 - Controlled/uncontrolled open per the library convention (`open`/`defaultOpen`/`onOpenChange`)
 - dismissOnEscape: true by default (Escape closes tooltip), configurable via props
+- Tracks hover and focus state separately — tooltip stays open when either is active, closes only when both pointer and focus are inactive

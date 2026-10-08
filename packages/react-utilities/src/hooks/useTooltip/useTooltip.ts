@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef } from "react";
+import { RefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { usePopover, UsePopoverProps } from "../usePopover/usePopover";
 
 export type UseTooltipProps<T extends HTMLElement = HTMLElement> = Omit<
@@ -72,6 +72,7 @@ export function useTooltip<T extends HTMLElement = HTMLElement>(
     side = "bottom",
     align = "center",
     sideOffset = 8,
+    viewportPadding = 8,
     open: openProp,
     defaultOpen,
     dismissOnEscape,
@@ -83,7 +84,7 @@ export function useTooltip<T extends HTMLElement = HTMLElement>(
     side,
     align,
     sideOffset,
-    viewportPadding: 8,
+    viewportPadding,
     dismissOnOutside: false,
     dismissOnEscape,
     role: "tooltip",
@@ -95,6 +96,11 @@ export function useTooltip<T extends HTMLElement = HTMLElement>(
 
   const openTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const [isHovered, setIsHovered] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+
+  const isActive = useMemo(() => isHovered || isFocused, [isHovered, isFocused]);
 
   const clearTimers = () => {
     if (openTimerRef.current) {
@@ -113,36 +119,70 @@ export function useTooltip<T extends HTMLElement = HTMLElement>(
     };
   }, []);
 
-  const scheduleOpen = () => {
+  const scheduleOpen = useCallback(() => {
     clearTimers();
-    openTimerRef.current = setTimeout(() => {
-      onOpen();
-    }, delay);
-  };
+    openTimerRef.current = setTimeout(() => onOpen(), delay);
+  }, [delay, onOpen]);
 
-  const scheduleClose = () => {
+  const scheduleClose = useCallback(() => {
     clearTimers();
-    closeTimerRef.current = setTimeout(() => {
-      onClose();
-    }, closeDelay);
-  };
+    closeTimerRef.current = setTimeout(() => onClose(), closeDelay);
+  }, [closeDelay, onClose]);
+
+  const handlePointerEnter = useCallback(() => {
+    const wasActive = isActive;
+    setIsHovered(true);
+    if (!wasActive) {
+      scheduleOpen();
+    }
+  }, [isActive, scheduleOpen]);
+
+  const handlePointerLeave = useCallback(() => {
+    setIsHovered(false);
+    if (!isFocused) {
+      scheduleClose();
+    }
+  }, [isFocused, scheduleClose]);
+
+  const handleFocus = useCallback(() => {
+    const wasActive = isActive;
+    setIsFocused(true);
+    if (!wasActive) {
+      scheduleOpen();
+    }
+  }, [isActive, scheduleOpen]);
+
+  const handleBlur = useCallback(() => {
+    setIsFocused(false);
+    if (!isHovered) {
+      scheduleClose();
+    }
+  }, [isHovered, scheduleClose]);
+
+  const handleTooltipPointerEnter = useCallback(() => {
+    clearTimers();
+  }, []);
+
+  const handleTooltipPointerLeave = useCallback(() => {
+    scheduleClose();
+  }, [scheduleClose]);
 
   return {
     open,
     triggerProps: {
       "aria-describedby": open ? popover.popoverProps.id : undefined,
-      onPointerEnter: scheduleOpen,
-      onPointerLeave: scheduleClose,
-      onFocus: scheduleOpen,
-      onBlur: scheduleClose,
+      onPointerEnter: handlePointerEnter,
+      onPointerLeave: handlePointerLeave,
+      onFocus: handleFocus,
+      onBlur: handleBlur,
     },
     tooltipProps: {
       id: popover.popoverProps.id,
       role: "tooltip",
       ref: popover.popoverProps.ref,
       style: popover.popoverProps.style,
-      onPointerEnter: clearTimers,
-      onPointerLeave: scheduleClose,
+      onPointerEnter: handleTooltipPointerEnter,
+      onPointerLeave: handleTooltipPointerLeave,
     },
   };
 }

@@ -170,17 +170,18 @@ describe("useTooltip", () => {
       vi.advanceTimersByTime(50);
     });
     
-    // Clear the timer by triggering pointer leave
+    // Clear the timer by triggering pointer leave - this should close immediately
+    // because we only have hover state (no focus)
     act(() => {
       result.current.triggerProps.onPointerLeave?.({} as React.PointerEvent<HTMLButtonElement>);
     });
     
-    // Advance time past the original delay
+    // Advance time past the close delay
     act(() => {
-      vi.advanceTimersByTime(100);
+      vi.advanceTimersByTime(200);
     });
     
-    // Tooltip should still be closed because the timer was cleared
+    // Tooltip should still be closed because the timer was cleared and close was scheduled
     expect(result.current.open).toBe(false);
   });
 
@@ -349,11 +350,17 @@ describe("useTooltip", () => {
 
     expect(onOpenChange).toHaveBeenCalledWith(true);
 
-    // Reset and test closing
+    // Reset and test closing - need to remove both hover and focus to trigger close
     onOpenChange.mockClear();
     
+    // First remove pointer (hover)
     act(() => {
       result.current.triggerProps.onPointerLeave?.({} as React.PointerEvent<HTMLButtonElement>);
+    });
+    
+    // Then remove focus
+    act(() => {
+      result.current.triggerProps.onBlur?.({} as React.FocusEvent<HTMLButtonElement>);
     });
 
     act(() => {
@@ -460,6 +467,113 @@ describe("useTooltip", () => {
       vi.advanceTimersByTime(50);
     });
 
+    expect(result.current.open).toBe(false);
+  });
+
+  it("stays open when focused even if pointer leaves trigger", () => {
+    const { result } = renderHookWithProviders(() => {
+      const anchorRef = React.useRef<HTMLButtonElement>(null);
+      return useTooltip({ anchorRef, delay: 0, closeDelay: 100 });
+    });
+
+    // Open via focus
+    act(() => {
+      result.current.triggerProps.onFocus?.({} as React.FocusEvent<HTMLButtonElement>);
+    });
+    act(() => {
+      vi.advanceTimersByTime(0);
+    });
+    expect(result.current.open).toBe(true);
+
+    // Pointer leaves - should NOT close because focus remains
+    act(() => {
+      result.current.triggerProps.onPointerLeave?.({} as React.PointerEvent<HTMLButtonElement>);
+    });
+    act(() => {
+      vi.advanceTimersByTime(100);
+    });
+    // Should still be open because focus is maintained
+    expect(result.current.open).toBe(true);
+
+    // Now lose focus - should schedule close
+    act(() => {
+      result.current.triggerProps.onBlur?.({} as React.FocusEvent<HTMLButtonElement>);
+    });
+    act(() => {
+      vi.advanceTimersByTime(100);
+    });
+    // Should be closed now that both pointer and focus are gone
+    expect(result.current.open).toBe(false);
+  });
+
+  it("stays open when hovered even if focus leaves trigger", () => {
+    const { result } = renderHookWithProviders(() => {
+      const anchorRef = React.useRef<HTMLButtonElement>(null);
+      return useTooltip({ anchorRef, delay: 0, closeDelay: 100 });
+    });
+
+    // Open via pointer
+    act(() => {
+      result.current.triggerProps.onPointerEnter?.({} as React.PointerEvent<HTMLButtonElement>);
+    });
+    act(() => {
+      vi.advanceTimersByTime(0);
+    });
+    expect(result.current.open).toBe(true);
+
+    // Focus leaves - should NOT close because hover remains
+    act(() => {
+      result.current.triggerProps.onBlur?.({} as React.FocusEvent<HTMLButtonElement>);
+    });
+    act(() => {
+      vi.advanceTimersByTime(100);
+    });
+    // Should still be open because hover is maintained
+    expect(result.current.open).toBe(true);
+
+    // Now pointer leaves - should schedule close
+    act(() => {
+      result.current.triggerProps.onPointerLeave?.({} as React.PointerEvent<HTMLButtonElement>);
+    });
+    act(() => {
+      vi.advanceTimersByTime(100);
+    });
+    // Should be closed now that both pointer and focus are gone
+    expect(result.current.open).toBe(false);
+  });
+
+  it("closes only when both pointer and focus are inactive", () => {
+    const { result } = renderHookWithProviders(() => {
+      const anchorRef = React.useRef<HTMLButtonElement>(null);
+      return useTooltip({ anchorRef, delay: 0, closeDelay: 100 });
+    });
+
+    // Open via both pointer and focus
+    act(() => {
+      result.current.triggerProps.onPointerEnter?.({} as React.PointerEvent<HTMLButtonElement>);
+      result.current.triggerProps.onFocus?.({} as React.FocusEvent<HTMLButtonElement>);
+    });
+    act(() => {
+      vi.advanceTimersByTime(0);
+    });
+    expect(result.current.open).toBe(true);
+
+    // Pointer leaves - still open because focus remains
+    act(() => {
+      result.current.triggerProps.onPointerLeave?.({} as React.PointerEvent<HTMLButtonElement>);
+    });
+    act(() => {
+      vi.advanceTimersByTime(100);
+    });
+    expect(result.current.open).toBe(true);
+
+    // Focus leaves - now both pointer and focus are gone, should close
+    act(() => {
+      result.current.triggerProps.onBlur?.({} as React.FocusEvent<HTMLButtonElement>);
+    });
+    act(() => {
+      vi.advanceTimersByTime(100);
+    });
     expect(result.current.open).toBe(false);
   });
 });
