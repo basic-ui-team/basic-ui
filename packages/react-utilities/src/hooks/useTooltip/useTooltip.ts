@@ -74,6 +74,7 @@ export function useTooltip<T extends HTMLElement = HTMLElement>(
     sideOffset = 8,
     open: openProp,
     defaultOpen,
+    dismissOnEscape,
     onOpenChange,
   } = props;
 
@@ -84,7 +85,7 @@ export function useTooltip<T extends HTMLElement = HTMLElement>(
     sideOffset,
     viewportPadding: 8,
     dismissOnOutside: false,
-    dismissOnEscape: true,
+    dismissOnEscape,
     role: "tooltip",
     hasPopup: undefined,
     open: openProp,

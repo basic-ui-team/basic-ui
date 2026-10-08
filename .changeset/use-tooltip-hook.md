@@ -10,3 +10,4 @@ Add `useTooltip` (#72): headless hover/focus tooltip semantics on top of `usePop
 - `role="tooltip"` with id wiring; trigger labelled via `aria-describedby`
 - `side`/`align`/`sideOffset`/`viewportPadding` forwarded to `usePopover`; `dismissOnOutside` fixed to `false` (tooltip persistence), `dismissOnEscape` on
 - Controlled/uncontrolled open per the library convention (`open`/`defaultOpen`/`onOpenChange`)
+- dismissOnEscape: true by default (Escape closes tooltip), configurable via props
