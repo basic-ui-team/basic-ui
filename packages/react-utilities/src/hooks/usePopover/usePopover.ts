@@ -42,7 +42,7 @@ export type UsePopoverProps<T extends HTMLElement = HTMLElement> = UseDisclosure
  * and useOverlay (stack discipline; scroll never locks — non-modal by design).
  *
  * @example
- * const [anchorRef, setAnchorRef] = useRef<HTMLButtonElement>(null);
+ * const anchorRef = useRef<HTMLButtonElement>(null);
  * const { open, onToggle, anchorProps, popoverProps } = usePopover({ anchorRef });
  * <button {...anchorProps} onClick={onToggle} />
  * {open && <Portal><div {...popoverProps}>...</div></Portal>}

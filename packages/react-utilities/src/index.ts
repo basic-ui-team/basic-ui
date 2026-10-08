@@ -54,3 +54,8 @@ export {
   type UsePopoverProps,
   type UsePopoverResult,
 } from "./hooks/usePopover/usePopover";
+export {
+  useTooltip,
+  type UseTooltipProps,
+  type UseTooltipResult,
+} from "./hooks/useTooltip/useTooltip";
