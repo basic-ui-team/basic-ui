@@ -25,10 +25,10 @@ export type UseTooltipResult<T extends HTMLElement = HTMLElement> = {
    */
   triggerProps: {
     "aria-describedby"?: string;
-    onPointerEnter?: (event: React.PointerEvent<T>) => void;
-    onPointerLeave?: (event: React.PointerEvent<T>) => void;
-    onFocus?: (event: React.FocusEvent<T>) => void;
-    onBlur?: (event: React.FocusEvent<T>) => void;
+    onPointerEnter: (event: React.PointerEvent<T>) => void;
+    onPointerLeave: (event: React.PointerEvent<T>) => void;
+    onFocus: (event: React.FocusEvent<T>) => void;
+    onBlur: (event: React.FocusEvent<T>) => void;
   };
   /**
    * Props for the tooltip element.
