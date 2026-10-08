@@ -1,5 +1,68 @@
 # @basic-ui/core
 
+## 1.0.0
+
+### Major Changes
+
+- 54034d3: Add `@basic-ui/react-utilities` package and extract shared React utilities from core.
+
+  - New `@basic-ui/react-utilities` package with `cn`, `normalizeProps`, `getTruncateAccessibilityProps`, `forwardRefWithAs` and polymorphic prop types (`CommonProps`, `PropsWithAs`, `RestrictedPropsWithAs`, `PolymorphicRef`), plus the responsive hooks (`useBreakpoint`, `useResponsiveProps`, `ResponsiveValue` type, `BREAKPOINTS`)
+  - `@basic-ui/core` depends on it via `workspace:*` and imports from it directly; the utilities are no longer re-exported from `@basic-ui/core`
+  - **BREAKING**: `cn`, `forwardRefWithAs`, `normalizeProps`, `getTruncateAccessibilityProps`, `useBreakpoint`, `useResponsiveProps`, and the polymorphic prop types moved to `@basic-ui/react-utilities` — import them from there instead of `@basic-ui/core`
+
+### Minor Changes
+
+- aaedf17: Add the `Dialog` component (#75), ported from appiq onto the `useDialog` headless hook (M2).
+
+  - Modal/non-modal behavior via `useDialog`: focus trap, scroll lock, Escape, focus restore, `aria-modal` wiring
+  - Accessible-name guarantee: `title`, `aria-label`, or external `aria-labelledby`; description wired via `aria-describedby`
+  - `dismissOnOutside` for backdrop/outside dismissal (default on, opt-out supported); non-modal overlay wrapper is pointer-transparent so background content stays interactive
+  - Sizes (`sm`/`md`/`lg`) and `fullWidth` via CVA on basic-ui tokens
+  - `useDialog`: `hasDescription` now defaults to `false` (callers rendering a description opt in), and `dialogProps` types the optional `aria-describedby`
+
+- a8fb044: Add the `Toggle` (switch) component (#80), ported from appiq onto the headless M1 hooks.
+
+  - State via `useControllableState` (controlled `value`/`onChange` + uncontrolled `defaultValue`)
+  - id/aria wiring via `useAriaIds` so it composes with Field conventions (#56)
+  - `role="switch"` with `aria-checked`; Space/Enter activation via the native button base
+  - Sizes (`sm`/`md`/`lg`) and intent colors via CVA on basic-ui tokens
+
+### Patch Changes
+
+- a0e9801: Formalize `Box` as the ancestral primitive of `core` (#84).
+
+  - Decision documented in CONVENTIONS.md: `Box` stays in `@basic-ui/core` at `components/Box` by convention — the composition rule plus the CI check provide the structural guarantee; a separate package was considered and rejected as overhead without behavioral benefit
+  - All `Box` imports standardized to the relative form (`../Box`, depth-adjusted); the `@core/components`, `@core/components/Box` alias forms are gone from `components/**`
+  - The composition check now also fails on non-relative `Box` imports, keeping the primitive dependency explicit and refactor-safe
+  - No public API changes
+
+- 136ae28: Decouple Card anatomy parts from sibling-component imports per the component composition rule (#60, completes #87).
+
+  - `Card.Title`, `Card.Description` and `Card.Image` no longer wrap the public `Header`, `Text` and `Image` components; each renders on `Box` with styling owned by new `cardTitleVariants`, `cardDescriptionVariants` and `cardImageFitVariants` in `card.variants.ts`, with visual parity to the previous defaults
+  - `card.types.ts` now defines the parts' prop types (`CardTitleOwnProps`, `CardDescriptionOwnProps`, `CardImageOwnProps`) instead of re-exporting `HeaderProps`/`TextProps`/`ImageProps` — the exported `CardTitleProps`/`CardDescriptionProps`/`CardImageProps` aliases and the `Card.Title`/`Card.Description`/`Card.Image` APIs are unchanged
+  - Every component in `core` now imports only `Box`; the composition check runs fully strict with no grandfathered violations
+
+- 018df66: Decouple Button, Alert and Pagination from sibling-component imports per the component composition rule (#60).
+
+  - Button: loading state no longer renders `Spinner`/`Flex`/`Text` internally — the loader layout and spinner glyph are inlined via `buttonLoaderVariants`/`buttonSpinnerVariants` with identical markup behavior (`role="status"` and `aria-label` preserved); rendering output is unchanged for consumers
+  - Alert and Pagination: the `Icon` wrapper is no longer used internally; severity and chevron glyphs render directly from `@basic-ui/icons` with the same sizing (`sm` → `w-lg h-lg`, `md` → `w-xl h-xl`) and color inheritance
+  - No public API changes
+
+- d6b049e: Consume the Milestone 1 headless hooks in core components (integration pass 1.5, per the plan on #55).
+
+  - `usePagination` now builds its page state on `useControllableState` instead of a hand-rolled controlled/uncontrolled pattern; pagination behavior (clamping, warnings, `onPageChange`) is unchanged
+  - `Alert` now uses `useDisclosure` for its dismissed state instead of a local `useState`; dismissal behavior and the `onDismiss` callback are unchanged
+
+- Updated dependencies [aaedf17]
+- Updated dependencies [e63b2dd]
+- Updated dependencies [7250ed1]
+- Updated dependencies [983382a]
+- Updated dependencies [78678dd]
+- Updated dependencies [54034d3]
+- Updated dependencies [91321d4]
+- Updated dependencies [792add3]
+  - @basic-ui/react-utilities@0.2.0
+
 ## 0.4.0
 
 ### Minor Changes
