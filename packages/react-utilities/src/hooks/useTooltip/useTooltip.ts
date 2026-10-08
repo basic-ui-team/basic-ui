@@ -16,7 +16,13 @@ export type UseTooltipProps<T extends HTMLElement = HTMLElement> = Omit<
 };
 
 export type UseTooltipResult<T extends HTMLElement = HTMLElement> = {
+  /**
+   * Whether the tooltip is currently open.
+   */
   open: boolean;
+  /**
+   * Props for the trigger element (usually the element that the tooltip is anchored to).
+   */
   triggerProps: {
     "aria-describedby"?: string;
     onPointerEnter?: (event: React.PointerEvent<T>) => void;
@@ -24,6 +30,9 @@ export type UseTooltipResult<T extends HTMLElement = HTMLElement> = {
     onFocus?: (event: React.FocusEvent<T>) => void;
     onBlur?: (event: React.FocusEvent<T>) => void;
   };
+  /**
+   * Props for the tooltip element.
+   */
   tooltipProps: {
     id: string;
     role: "tooltip";
@@ -34,6 +43,25 @@ export type UseTooltipResult<T extends HTMLElement = HTMLElement> = {
   };
 };
 
+/**
+ * Headless tooltip hook. Provides the logic for managing tooltip visibility
+ * and positioning without any UI components.
+ *
+ * @example
+ * const anchorRef = useRef<HTMLButtonElement>(null);
+ * const { triggerProps, tooltipProps, open } = useTooltip({
+ *   anchorRef,
+ *   delay: 500,
+ *   closeDelay: 300,
+ * });
+ *
+ * return (
+ *   <>
+ *     <button {...triggerProps} ref={anchorRef}>Hover me</button>
+ *     {open && <div {...tooltipProps}>Tooltip content</div>}
+ *   </>
+ * );
+ */
 export function useTooltip<T extends HTMLElement = HTMLElement>(
   props: UseTooltipProps<T>,
 ): UseTooltipResult<T> {
