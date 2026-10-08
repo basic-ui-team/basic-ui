@@ -12,12 +12,19 @@ export type UseDialogProps = UseDisclosureProps & {
    */
   title?: string;
   /**
+   * Whether the dialog is modal. Defaults to true. Non-modal dialogs do not
+   * trap focus or lock scrolling unless `lockScroll` is explicitly enabled.
+   */
+  modal?: boolean;
+  /**
    * Dismiss on outside pointerdown. Defaults to true.
    * Set false for destructive-action dialogs that must be explicitly confirmed.
    */
   dismissOnOutside?: boolean;
-  /** Block background scroll while open. Defaults to true. */
+  /** Override background scroll locking. Defaults to the `modal` setting. */
   lockScroll?: boolean;
+  /** Whether the rendered dialog includes a description. Defaults to false. */
+  hasDescription?: boolean;
 };
 
 export type UseDialogResult = {
@@ -35,24 +42,27 @@ export type UseDialogResult = {
   dialogProps: {
     ref: React.RefObject<HTMLDivElement | null>;
     role: "dialog";
-    "aria-modal": true;
+    "aria-modal": boolean;
     "aria-labelledby"?: string;
     "aria-label"?: string;
+    "aria-describedby"?: string;
     id: string;
   };
   /** Props to spread on the dialog title element. */
   titleProps: { id: string };
+  /** Props to spread on the dialog description element. */
+  descriptionProps: { id: string };
 };
 
 /**
- * Headless modal dialog per the WAI-ARIA APG "Dialog (Modal)" pattern.
+ * Headless dialog, modal by default, per the WAI-ARIA APG dialog patterns.
  * Wires together the milestone-2 primitives:
  *
  * - `useDisclosure` for open/close state (controlled or uncontrolled)
  * - `useOverlay` for Escape dismissal, outside dismissal, scroll lock,
  *   and correct stacking with other overlays
- * - `useFocusTrap` for focus containment and restoration, and
- *   `aria-hidden` marking of background content
+ * - `useFocusTrap` for modal focus containment, restoration, and background
+ *   `aria-hidden` marking
  * - `useAriaIds` for the labelledby wiring
  *
  * @example
@@ -62,13 +72,21 @@ export type UseDialogResult = {
  *   <Portal>
  *     <div {...dialogProps}>
  *       <h2 {...titleProps}>Title</h2>
+ *       <p {...descriptionProps}>Description</p>
  *       <button onClick={onClose}>Close</button>
  *     </div>
  *   </Portal>
  * )}
  */
 export function useDialog(props: UseDialogProps = {}): UseDialogResult {
-  const { title, dismissOnOutside, lockScroll, ...disclosureProps } = props;
+  const {
+    title,
+    modal = true,
+    dismissOnOutside = true,
+    lockScroll,
+    hasDescription = false,
+    ...disclosureProps
+  } = props;
   const { open, onOpen, onClose, onToggle } = useDisclosure(disclosureProps);
 
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -77,31 +95,36 @@ export function useDialog(props: UseDialogProps = {}): UseDialogResult {
     ref: dialogRef,
     onDismiss: onClose,
     dismissOnOutside,
-    lockScrollWhileOpen: lockScroll,
+    lockScrollWhileOpen: lockScroll ?? modal,
   });
-  useFocusTrap({ ref: dialogRef, enabled: open });
+  useFocusTrap({ ref: dialogRef, enabled: open && modal });
 
   const { fieldProps } = useAriaIds({ prefix: "dialog" });
   const titleId = `${fieldProps.id}-title`;
+  const descriptionId = `${fieldProps.id}-description`;
 
   const dialogProps = useMemo(() => {
+    const baseProps = {
+      ref: dialogRef,
+      role: "dialog" as const,
+      "aria-modal": modal,
+      id: fieldProps.id,
+    };
+    const descriptionProps = hasDescription ? { "aria-describedby": descriptionId } : {};
+
     if (title) {
       return {
-        ref: dialogRef,
-        role: "dialog" as const,
-        "aria-modal": true as const,
+        ...baseProps,
         "aria-label": title,
-        id: fieldProps.id,
+        ...descriptionProps,
       };
     }
     return {
-      ref: dialogRef,
-      role: "dialog" as const,
-      "aria-modal": true as const,
+      ...baseProps,
       "aria-labelledby": titleId,
-      id: fieldProps.id,
+      ...descriptionProps,
     };
-  }, [title, titleId, fieldProps.id]);
+  }, [title, titleId, descriptionId, fieldProps.id, modal, hasDescription]);
 
   return {
     open,
@@ -111,5 +134,6 @@ export function useDialog(props: UseDialogProps = {}): UseDialogResult {
     dialogRef,
     dialogProps,
     titleProps: { id: titleId },
+    descriptionProps: { id: descriptionId },
   };
 }

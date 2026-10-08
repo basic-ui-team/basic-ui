@@ -1,20 +1,29 @@
 import { renderWithProviders, setupUser, waitFor } from "../../test-utils";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { useDialog } from "./useDialog";
+import { useDialog, type UseDialogProps } from "./useDialog";
 import { Portal } from "../../portal/Portal";
 import { resetOverlayStackForTesting } from "../useOverlay/useOverlay";
 import { axe } from "jest-axe";
 
-function DialogFixture({ onOpenChange }: { onOpenChange?: (open: boolean) => void } = {}) {
-  const { open, onOpen, onClose, dialogProps, titleProps } = useDialog({ onOpenChange });
+function DialogFixture(props: UseDialogProps = {}) {
+  const { open, onOpen, onClose, dialogProps, titleProps, descriptionProps } = useDialog(props);
   return (
     <div>
-      <button data-testid="opener" onClick={onOpen}>Open dialog</button>
+      <button data-testid="opener" onClick={onOpen}>
+        Open dialog
+      </button>
       {open && (
         <Portal>
           <div {...dialogProps} data-testid="dialog">
-            <h2 {...titleProps} data-testid="title">Confirm</h2>
-            <button data-testid="close" onClick={onClose}>Close</button>
+            <h2 {...titleProps} data-testid="title">
+              Confirm
+            </h2>
+            <p {...descriptionProps} data-testid="description">
+              Confirm your choice.
+            </p>
+            <button data-testid="close" onClick={onClose}>
+              Close
+            </button>
           </div>
         </Portal>
       )}
@@ -36,14 +45,36 @@ describe("useDialog", () => {
     expect(dialog).toHaveAttribute("aria-modal", "true");
   });
 
+  it("supports a non-modal dialog without trapping focus or locking scroll", async () => {
+    const user = setupUser();
+    const { getByTestId } = renderWithProviders(<DialogFixture modal={false} />);
+    const opener = getByTestId("opener");
+    opener.focus();
+    await user.click(opener);
+
+    expect(getByTestId("dialog")).toHaveAttribute("aria-modal", "false");
+    expect(document.body.style.overflow).toBe("");
+
+    await user.tab();
+    expect(getByTestId("close")).toHaveFocus();
+    await user.tab({ shift: true });
+    expect(opener).toHaveFocus();
+  });
+
   it("labels the dialog via aria-label when a title option is given", async () => {
     const user = setupUser();
     function TitledFixture() {
       const { open, onOpen, dialogProps } = useDialog({ title: "Confirm action" });
       return (
         <div>
-          <button data-testid="opener" onClick={onOpen}>Open dialog</button>
-          {open && <div {...dialogProps} data-testid="dialog">body</div>}
+          <button data-testid="opener" onClick={onOpen}>
+            Open dialog
+          </button>
+          {open && (
+            <div {...dialogProps} data-testid="dialog">
+              body
+            </div>
+          )}
         </div>
       );
     }
@@ -59,6 +90,21 @@ describe("useDialog", () => {
     const dialog = getByTestId("dialog");
     const title = getByTestId("title");
     expect(dialog.getAttribute("aria-labelledby")).toBe(title.id);
+  });
+
+  it("describes the dialog via aria-describedby pointing at the description", async () => {
+    const user = setupUser();
+    const { getByTestId } = renderWithProviders(<DialogFixture hasDescription />);
+    await user.click(getByTestId("opener"));
+    const dialog = getByTestId("dialog");
+    const description = getByTestId("description");
+    expect(dialog.getAttribute("aria-describedby")).toBe(description.id);
+  });
+  it("omits aria-describedby when hasDescription is not enabled", async () => {
+    const user = setupUser();
+    const { getByTestId } = renderWithProviders(<DialogFixture />);
+    await user.click(getByTestId("opener"));
+    expect(getByTestId("dialog").getAttribute("aria-describedby")).toBeNull();
   });
 
   it("moves focus into the dialog on open and restores on close", async () => {
