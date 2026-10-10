@@ -8,9 +8,8 @@ import { tooltipVariants } from "./tooltip.variants";
  * Tooltip component for displaying a lightweight floating label anchored to a
  * trigger element.
  *
- * Ported from appiq onto the `useTooltip` headless hook (#72): all
- * timing/hover/focus semantics come from the hook, positioning from
- * `useAnchorPositioning` via `usePopover`.
+ * Uses the headless 'useTooltip'hook to provide functionality.
+ * See hook for behaviour.
  *
  * Features:
  * - Opens on hover after `delay`, on focus immediately enough for keyboard
