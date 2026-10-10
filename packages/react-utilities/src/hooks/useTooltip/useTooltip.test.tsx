@@ -576,4 +576,44 @@ describe("useTooltip", () => {
     });
     expect(result.current.open).toBe(false);
   });
+
+  it("cancels pending timers and closes when disabled becomes true", () => {
+    const { result, rerender } = renderHookWithProviders(
+      ({ disabled }: { disabled: boolean }) => {
+        const anchorRef = React.useRef<HTMLButtonElement>(null);
+        return useTooltip({ anchorRef, delay: 100, disabled });
+      },
+      { initialProps: { disabled: false } },
+    );
+    // Schedule an open, then disable before the delay elapses.
+    act(() => {
+      result.current.triggerProps.onPointerEnter?.({} as React.PointerEvent<HTMLButtonElement>);
+    });
+    rerender({ disabled: true });
+    act(() => {
+      vi.advanceTimersByTime(500);
+    });
+    expect(result.current.open).toBe(false);
+    expect(result.current.triggerProps["aria-describedby"]).toBeUndefined();
+  });
+
+  it("closes an already-open tooltip when disabled becomes true", () => {
+    const { result, rerender } = renderHookWithProviders(
+      ({ disabled }: { disabled: boolean }) => {
+        const anchorRef = React.useRef<HTMLButtonElement>(null);
+        return useTooltip({ anchorRef, delay: 0, disabled });
+      },
+      { initialProps: { disabled: false } },
+    );
+    act(() => {
+      result.current.triggerProps.onFocus?.({} as React.FocusEvent<HTMLButtonElement>);
+    });
+    act(() => {
+      vi.advanceTimersByTime(0);
+    });
+    expect(result.current.open).toBe(true);
+    rerender({ disabled: true });
+    expect(result.current.open).toBe(false);
+    expect(result.current.triggerProps["aria-describedby"]).toBeUndefined();
+  });
 });
