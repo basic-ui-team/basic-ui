@@ -15,7 +15,8 @@ import { tooltipVariants } from "./tooltip.variants";
  * - Opens on hover after `delay`, on focus immediately enough for keyboard
  *   users, and closes after `closeDelay` (WCAG 1.4.13)
  * - Stays open while the pointer rests on the tooltip panel
- * - `role="tooltip"` + `aria-describedby` wiring from the hook
+ * - `role="tooltip"` + `aria-describedby` wiring from the hook; any
+ *   description IDs already on the trigger are preserved
  * - Dismissible with Escape by default
  * - Sizes (`sm`/`md`/`lg`, responsive) and semantic colours via CVA on
  *   basic-ui tokens
@@ -50,17 +51,24 @@ export const Tooltip: React.FC<TooltipProps> = ({
     delay,
     closeDelay,
     dismissOnEscape,
+    disabled,
   });
 
-  // When disabled, render the trigger untouched: no handlers, no aria wiring.
-  if (disabled) {
-    return <Box as="span" className="inline-block">{children}</Box>;
-  }
+  // A custom `id` must back both the panel and the trigger's
+  // `aria-describedby`, so the reference always resolves.
+  const effectiveId = id ?? tooltipProps.id;
 
-  // Inject aria-describedby onto the trigger; hover/focus handlers live on the
-  // wrapper so they cover the whole trigger surface.
+  // Inject the tooltip id onto the trigger while open, preserving any
+  // description IDs the trigger already carries; hover/focus handlers live on
+  // the wrapper so they cover the whole trigger surface.
+  const childProps = (children as React.ReactElement<Record<string, unknown>>).props;
+  const describedBy = childProps["aria-describedby"];
   const trigger = React.cloneElement(children as React.ReactElement<Record<string, unknown>>, {
-    "aria-describedby": triggerProps["aria-describedby"],
+    "aria-describedby": open
+      ? [typeof describedBy === "string" ? describedBy : undefined, effectiveId]
+          .filter(Boolean)
+          .join(" ")
+      : describedBy,
   });
 
   return (
@@ -68,17 +76,17 @@ export const Tooltip: React.FC<TooltipProps> = ({
       as="span"
       className="inline-block"
       ref={anchorRef}
-      onPointerEnter={triggerProps.onPointerEnter}
-      onPointerLeave={triggerProps.onPointerLeave}
-      onFocus={triggerProps.onFocus}
-      onBlur={triggerProps.onBlur}
+      onPointerEnter={disabled ? undefined : triggerProps.onPointerEnter}
+      onPointerLeave={disabled ? undefined : triggerProps.onPointerLeave}
+      onFocus={disabled ? undefined : triggerProps.onFocus}
+      onBlur={disabled ? undefined : triggerProps.onBlur}
     >
-      {trigger}
-      {open && (
+      {disabled ? children : trigger}
+      {open && !disabled && (
         <Portal>
           <Box
             ref={tooltipProps.ref}
-            id={id ?? tooltipProps.id}
+            id={effectiveId}
             role="tooltip"
             style={{ ...tooltipProps.style, ...style }}
             className={cn(tooltipVariants({ color, size: resolvedSize, bordered }), className)}

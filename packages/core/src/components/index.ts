@@ -22,4 +22,4 @@ export type { DialogProps } from "./Dialog";
 export { Toggle } from "./Toggle";
 export type { ToggleProps } from "./Toggle";
 export { Tooltip } from "./Tooltip";
-export type { TooltipProps } from "./Tooltip";
+export type { TooltipProps, TooltipColor } from "./Tooltip";

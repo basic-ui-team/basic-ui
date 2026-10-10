@@ -279,4 +279,89 @@ describe("Tooltip", () => {
       vi.useRealTimers();
     }
   });
+
+  it("uses a custom id for both the panel and the trigger's aria-describedby", () => {
+    vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout", "requestAnimationFrame", "cancelAnimationFrame"] });
+    try {
+      renderWithProviders(
+        <Tooltip label="Custom id hint" id="help-tooltip" delay={0}>
+          <button>Hover me</button>
+        </Tooltip>,
+      );
+      const trigger = screen.getByRole("button", { name: "Hover me" });
+      act(() => {
+        hover(trigger);
+      });
+      act(() => {
+        vi.advanceTimersByTime(0);
+      });
+      act(() => {
+        flushFrame();
+      });
+      const tooltip = screen.getByRole("tooltip");
+      expect(tooltip).toHaveAttribute("id", "help-tooltip");
+      expect(trigger).toHaveAttribute("aria-describedby", "help-tooltip");
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it("preserves the trigger's existing aria-describedby ids", () => {
+    vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout", "requestAnimationFrame", "cancelAnimationFrame"] });
+    try {
+      renderWithProviders(
+        <Tooltip label="Extra hint" delay={0}>
+          <button aria-describedby="existing-description">Hover me</button>
+        </Tooltip>,
+      );
+      const trigger = screen.getByRole("button", { name: "Hover me" });
+      act(() => {
+        hover(trigger);
+      });
+      act(() => {
+        vi.advanceTimersByTime(0);
+      });
+      act(() => {
+        flushFrame();
+      });
+      const describedBy = trigger.getAttribute("aria-describedby")!;
+      expect(describedBy).toContain("existing-description");
+      const tooltip = screen.getByRole("tooltip");
+      expect(describedBy).toContain(tooltip.id);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it("closes an open tooltip and cancels pending timers when disabled", () => {
+    vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout", "requestAnimationFrame", "cancelAnimationFrame"] });
+    try {
+      function Fixture({ disabled }: { disabled: boolean }) {
+        return (
+          <Tooltip label="Hint" delay={0} closeDelay={500} disabled={disabled}>
+            <button>Hover me</button>
+          </Tooltip>
+        );
+      }
+      const { rerender } = renderWithProviders(<Fixture disabled={false} />);
+      act(() => {
+        hover(screen.getByRole("button", { name: "Hover me" }));
+      });
+      act(() => {
+        vi.advanceTimersByTime(0);
+      });
+      act(() => {
+        flushFrame();
+      });
+      expect(screen.getByRole("tooltip")).toBeInTheDocument();
+      rerender(<Fixture disabled={true} />);
+      expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "Hover me" })).not.toHaveAttribute("aria-describedby");
+      // Re-enabling must not resurrect the panel without a fresh hover.
+      rerender(<Fixture disabled={false} />);
+      expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
 });
