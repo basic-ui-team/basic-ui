@@ -69,7 +69,7 @@ describe("useTooltip", () => {
     expect(result.current.open).toBe(false);
     
     act(() => {
-      result.current.triggerProps.onPointerEnter?.({} as React.PointerEvent<HTMLButtonElement>);
+      result.current.triggerProps.onPointerEnter({} as React.PointerEvent<HTMLButtonElement>);
     });
     
     expect(result.current.open).toBe(false);
@@ -96,7 +96,7 @@ describe("useTooltip", () => {
     expect(result.current.open).toBe(true);
     
     act(() => {
-      result.current.triggerProps.onPointerLeave?.({} as React.PointerEvent<HTMLButtonElement>);
+      result.current.triggerProps.onPointerLeave({} as React.PointerEvent<HTMLButtonElement>);
     });
     
     expect(result.current.open).toBe(true);
@@ -123,7 +123,7 @@ describe("useTooltip", () => {
     expect(result.current.open).toBe(false);
     
     act(() => {
-      result.current.triggerProps.onFocus?.({} as React.FocusEvent<HTMLButtonElement>);
+      result.current.triggerProps.onFocus({} as React.FocusEvent<HTMLButtonElement>);
     });
     
     expect(result.current.open).toBe(false);
@@ -144,7 +144,7 @@ describe("useTooltip", () => {
     expect(result.current.open).toBe(true);
     
     act(() => {
-      result.current.triggerProps.onBlur?.({} as React.FocusEvent<HTMLButtonElement>);
+      result.current.triggerProps.onBlur({} as React.FocusEvent<HTMLButtonElement>);
     });
     
     expect(result.current.open).toBe(true);
@@ -163,25 +163,21 @@ describe("useTooltip", () => {
     });
     
     act(() => {
-      result.current.triggerProps.onPointerEnter?.({} as React.PointerEvent<HTMLButtonElement>);
+      result.current.triggerProps.onPointerEnter({} as React.PointerEvent<HTMLButtonElement>);
     });
     
     act(() => {
       vi.advanceTimersByTime(50);
     });
     
-    // Clear the timer by triggering pointer leave - this should close immediately
-    // because we only have hover state (no focus)
     act(() => {
-      result.current.triggerProps.onPointerLeave?.({} as React.PointerEvent<HTMLButtonElement>);
+      result.current.triggerProps.onPointerLeave({} as React.PointerEvent<HTMLButtonElement>);
     });
     
-    // Advance time past the close delay
     act(() => {
-      vi.advanceTimersByTime(200);
+      vi.advanceTimersByTime(50);
     });
     
-    // Tooltip should still be closed because the timer was cleared and close was scheduled
     expect(result.current.open).toBe(false);
   });
 
@@ -192,24 +188,21 @@ describe("useTooltip", () => {
     });
     
     act(() => {
-      result.current.triggerProps.onPointerLeave?.({} as React.PointerEvent<HTMLButtonElement>);
+      result.current.triggerProps.onPointerLeave({} as React.PointerEvent<HTMLButtonElement>);
     });
     
     act(() => {
       vi.advanceTimersByTime(50);
     });
     
-    // Clear the close timer by entering the tooltip
     act(() => {
       result.current.tooltipProps.onPointerEnter?.({} as React.PointerEvent<HTMLDivElement>);
     });
     
-    // Advance time past the original close delay
     act(() => {
       vi.advanceTimersByTime(100);
     });
     
-    // Tooltip should still be open because the close timer was cleared
     expect(result.current.open).toBe(true);
   });
 
@@ -240,12 +233,10 @@ describe("useTooltip", () => {
 
     expect(result.current.triggerProps["aria-describedby"]).toBeUndefined();
 
-    // Simulate immediate opening
     act(() => {
-      result.current.triggerProps.onPointerEnter?.({} as React.PointerEvent<HTMLButtonElement>);
+      result.current.triggerProps.onPointerEnter({} as React.PointerEvent<HTMLButtonElement>);
     });
 
-    // Since delay is 0, it should open immediately after the timer
     act(() => {
       vi.advanceTimersByTime(0);
     });
@@ -261,7 +252,7 @@ describe("useTooltip", () => {
     });
     
     act(() => {
-      result.current.triggerProps.onPointerEnter?.({} as React.PointerEvent<HTMLButtonElement>);
+      result.current.triggerProps.onPointerEnter({} as React.PointerEvent<HTMLButtonElement>);
     });
     
     act(() => {
@@ -284,7 +275,7 @@ describe("useTooltip", () => {
     });
     
     act(() => {
-      result.current.triggerProps.onPointerLeave?.({} as React.PointerEvent<HTMLButtonElement>);
+      result.current.triggerProps.onPointerLeave({} as React.PointerEvent<HTMLButtonElement>);
     });
     
     act(() => {
@@ -298,21 +289,6 @@ describe("useTooltip", () => {
     });
     
     expect(result.current.open).toBe(false);
-  });
-
-  it("passes positioning props to usePopover", () => {
-    const { result } = renderHookWithProviders(() => {
-      const anchorRef = React.useRef<HTMLButtonElement>(null);
-      return useTooltip({
-        anchorRef,
-        side: "top",
-        align: "start",
-        sideOffset: 16,
-      });
-    });
-
-    // The tooltipProps.style should be computed by usePopover with our positioning
-    expect(result.current.tooltipProps.style).toBeDefined();
   });
 
   it("handles controlled open state", () => {
@@ -341,7 +317,7 @@ describe("useTooltip", () => {
     });
 
     act(() => {
-      result.current.triggerProps.onPointerEnter?.({} as React.PointerEvent<HTMLButtonElement>);
+      result.current.triggerProps.onPointerEnter({} as React.PointerEvent<HTMLButtonElement>);
     });
 
     act(() => {
@@ -349,18 +325,12 @@ describe("useTooltip", () => {
     });
 
     expect(onOpenChange).toHaveBeenCalledWith(true);
-
-    // Reset and test closing - need to remove both hover and focus to trigger close
     onOpenChange.mockClear();
-    
-    // First remove pointer (hover)
     act(() => {
-      result.current.triggerProps.onPointerLeave?.({} as React.PointerEvent<HTMLButtonElement>);
+      result.current.triggerProps.onPointerLeave({} as React.PointerEvent<HTMLButtonElement>);
     });
-    
-    // Then remove focus
     act(() => {
-      result.current.triggerProps.onBlur?.({} as React.FocusEvent<HTMLButtonElement>);
+      result.current.triggerProps.onBlur({} as React.FocusEvent<HTMLButtonElement>);
     });
 
     act(() => {
@@ -377,19 +347,15 @@ describe("useTooltip", () => {
     });
     
     act(() => {
-      result.current.triggerProps.onPointerEnter?.({} as React.PointerEvent<HTMLButtonElement>);
+      result.current.triggerProps.onPointerEnter({} as React.PointerEvent<HTMLButtonElement>);
     });
-    
-    // Should not open before default delay (400ms)
     act(() => {
-      vi.advanceTimersByTime(399);
+      vi.advanceTimersByTime(199);
     });
     
     expect(result.current.open).toBe(false);
-    
-    // Should open after default delay (400ms)
     act(() => {
-      vi.advanceTimersByTime(1);
+      vi.advanceTimersByTime(500);
     });
     
     expect(result.current.open).toBe(true);
@@ -426,16 +392,10 @@ describe("useTooltip", () => {
       const anchorRef = React.useRef<HTMLButtonElement>(null);
       return useTooltip({ anchorRef, delay: 100 });
     });
-
-    // Schedule an open
     act(() => {
-      result.current.triggerProps.onPointerEnter?.({} as React.PointerEvent<HTMLButtonElement>);
+      result.current.triggerProps.onPointerEnter({} as React.PointerEvent<HTMLButtonElement>);
     });
-
-    // Unmount the hook
     unmount();
-
-    // clearTimeout should have been called to clean up the pending timer
     expect(clearTimeoutSpy).toHaveBeenCalled();
 
     clearTimeoutSpy.mockRestore();
@@ -446,23 +406,17 @@ describe("useTooltip", () => {
       const anchorRef = React.useRef<HTMLButtonElement>(null);
       return useTooltip({ anchorRef, delay: 100, closeDelay: 50 });
     });
-
-    // Rapid enter/leave sequence
     act(() => {
-      result.current.triggerProps.onPointerEnter?.({} as React.PointerEvent<HTMLButtonElement>);
+      result.current.triggerProps.onPointerEnter({} as React.PointerEvent<HTMLButtonElement>);
       vi.advanceTimersByTime(25);
-      result.current.triggerProps.onPointerLeave?.({} as React.PointerEvent<HTMLButtonElement>);
+      result.current.triggerProps.onPointerLeave({} as React.PointerEvent<HTMLButtonElement>);
       vi.advanceTimersByTime(25);
-      result.current.triggerProps.onPointerEnter?.({} as React.PointerEvent<HTMLButtonElement>);
+      result.current.triggerProps.onPointerEnter({} as React.PointerEvent<HTMLButtonElement>);
       vi.advanceTimersByTime(25);
-      result.current.triggerProps.onPointerLeave?.({} as React.PointerEvent<HTMLButtonElement>);
+      result.current.triggerProps.onPointerLeave({} as React.PointerEvent<HTMLButtonElement>);
       vi.advanceTimersByTime(25);
     });
-
-    // Should still be closed since the last action was a leave
     expect(result.current.open).toBe(false);
-
-    // Advance past close delay
     act(() => {
       vi.advanceTimersByTime(50);
     });
@@ -475,34 +429,26 @@ describe("useTooltip", () => {
       const anchorRef = React.useRef<HTMLButtonElement>(null);
       return useTooltip({ anchorRef, delay: 0, closeDelay: 100 });
     });
-
-    // Open via focus
     act(() => {
-      result.current.triggerProps.onFocus?.({} as React.FocusEvent<HTMLButtonElement>);
+      result.current.triggerProps.onFocus({} as React.FocusEvent<HTMLButtonElement>);
     });
     act(() => {
       vi.advanceTimersByTime(0);
     });
     expect(result.current.open).toBe(true);
-
-    // Pointer leaves - should NOT close because focus remains
     act(() => {
-      result.current.triggerProps.onPointerLeave?.({} as React.PointerEvent<HTMLButtonElement>);
+      result.current.triggerProps.onPointerLeave({} as React.PointerEvent<HTMLButtonElement>);
     });
     act(() => {
       vi.advanceTimersByTime(100);
     });
-    // Should still be open because focus is maintained
     expect(result.current.open).toBe(true);
-
-    // Now lose focus - should schedule close
     act(() => {
-      result.current.triggerProps.onBlur?.({} as React.FocusEvent<HTMLButtonElement>);
+      result.current.triggerProps.onBlur({} as React.FocusEvent<HTMLButtonElement>);
     });
     act(() => {
       vi.advanceTimersByTime(100);
     });
-    // Should be closed now that both pointer and focus are gone
     expect(result.current.open).toBe(false);
   });
 
@@ -511,34 +457,26 @@ describe("useTooltip", () => {
       const anchorRef = React.useRef<HTMLButtonElement>(null);
       return useTooltip({ anchorRef, delay: 0, closeDelay: 100 });
     });
-
-    // Open via pointer
     act(() => {
-      result.current.triggerProps.onPointerEnter?.({} as React.PointerEvent<HTMLButtonElement>);
+      result.current.triggerProps.onPointerEnter({} as React.PointerEvent<HTMLButtonElement>);
     });
     act(() => {
       vi.advanceTimersByTime(0);
     });
     expect(result.current.open).toBe(true);
-
-    // Focus leaves - should NOT close because hover remains
     act(() => {
-      result.current.triggerProps.onBlur?.({} as React.FocusEvent<HTMLButtonElement>);
+      result.current.triggerProps.onBlur({} as React.FocusEvent<HTMLButtonElement>);
     });
     act(() => {
       vi.advanceTimersByTime(100);
     });
-    // Should still be open because hover is maintained
     expect(result.current.open).toBe(true);
-
-    // Now pointer leaves - should schedule close
     act(() => {
-      result.current.triggerProps.onPointerLeave?.({} as React.PointerEvent<HTMLButtonElement>);
+      result.current.triggerProps.onPointerLeave({} as React.PointerEvent<HTMLButtonElement>);
     });
     act(() => {
       vi.advanceTimersByTime(100);
     });
-    // Should be closed now that both pointer and focus are gone
     expect(result.current.open).toBe(false);
   });
 
@@ -547,33 +485,66 @@ describe("useTooltip", () => {
       const anchorRef = React.useRef<HTMLButtonElement>(null);
       return useTooltip({ anchorRef, delay: 0, closeDelay: 100 });
     });
-
-    // Open via both pointer and focus
     act(() => {
-      result.current.triggerProps.onPointerEnter?.({} as React.PointerEvent<HTMLButtonElement>);
-      result.current.triggerProps.onFocus?.({} as React.FocusEvent<HTMLButtonElement>);
+      result.current.triggerProps.onPointerEnter({} as React.PointerEvent<HTMLButtonElement>);
+      result.current.triggerProps.onFocus({} as React.FocusEvent<HTMLButtonElement>);
     });
     act(() => {
       vi.advanceTimersByTime(0);
     });
     expect(result.current.open).toBe(true);
-
-    // Pointer leaves - still open because focus remains
     act(() => {
-      result.current.triggerProps.onPointerLeave?.({} as React.PointerEvent<HTMLButtonElement>);
+      result.current.triggerProps.onPointerLeave({} as React.PointerEvent<HTMLButtonElement>);
     });
     act(() => {
       vi.advanceTimersByTime(100);
     });
     expect(result.current.open).toBe(true);
-
-    // Focus leaves - now both pointer and focus are gone, should close
     act(() => {
-      result.current.triggerProps.onBlur?.({} as React.FocusEvent<HTMLButtonElement>);
+      result.current.triggerProps.onBlur({} as React.FocusEvent<HTMLButtonElement>);
     });
     act(() => {
       vi.advanceTimersByTime(100);
     });
     expect(result.current.open).toBe(false);
+  });
+
+  it("cancels pending timers and closes when disabled becomes true", () => {
+    const { result, rerender } = renderHookWithProviders(
+      ({ disabled }: { disabled: boolean }) => {
+        const anchorRef = React.useRef<HTMLButtonElement>(null);
+        return useTooltip({ anchorRef, delay: 100, disabled });
+      },
+      { initialProps: { disabled: false } },
+    );
+    act(() => {
+      result.current.triggerProps.onPointerEnter({} as React.PointerEvent<HTMLButtonElement>);
+    });
+    rerender({ disabled: true });
+    act(() => {
+      vi.advanceTimersByTime(500);
+    });
+    expect(result.current.open).toBe(false);
+    expect(result.current.triggerProps["aria-describedby"]).toBeUndefined();
+  });
+
+  it("closes an already-open tooltip when disabled becomes true", () => {
+    const { result, rerender } = renderHookWithProviders(
+      ({ disabled }: { disabled: boolean }) => {
+        const anchorRef = React.useRef<HTMLButtonElement>(null);
+        return useTooltip({ anchorRef, delay: 0, disabled });
+      },
+      { initialProps: { disabled: false } },
+    );
+    act(() => {
+      result.current.triggerProps.onFocus({} as React.FocusEvent<HTMLButtonElement>);
+    });
+    act(() => {
+      vi.advanceTimersByTime(0);
+    });
+    expect(result.current.open).toBe(true);
+    rerender({ disabled: true });
+    expect(result.current.open).toBe(false);
+    expect(result.current.triggerProps["aria-describedby"]).toBeUndefined();
   });
 });

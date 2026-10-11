@@ -13,6 +13,11 @@ export type UseTooltipProps<T extends HTMLElement = HTMLElement> = Omit<
    * The delay in milliseconds before hiding the tooltip.
    */
   closeDelay?: number;
+  /**
+   * When true, the tooltip never opens: pending timers are cancelled and an
+   * open tooltip closes, so no hidden overlay state remains registered.
+   */
+  disabled?: boolean;
 };
 
 export type UseTooltipResult<T extends HTMLElement = HTMLElement> = {
@@ -67,8 +72,8 @@ export function useTooltip<T extends HTMLElement = HTMLElement>(
 ): UseTooltipResult<T> {
   const {
     anchorRef,
-    delay = 400,
-    closeDelay = 200,
+    delay = 200,
+    closeDelay = 100,
     side = "bottom",
     align = "center",
     sideOffset = 8,
@@ -77,6 +82,7 @@ export function useTooltip<T extends HTMLElement = HTMLElement>(
     defaultOpen,
     dismissOnEscape,
     onOpenChange,
+    disabled = false,
   } = props;
 
   const { open, onOpen, onClose, ...popover } = usePopover({
@@ -118,6 +124,16 @@ export function useTooltip<T extends HTMLElement = HTMLElement>(
       clearTimers();
     };
   }, []);
+  // Disabling cancels pending activity and closes an open tooltip, so no
+  // hidden overlay state remains registered while disabled.
+  useEffect(() => {
+    if (disabled) {
+      clearTimers();
+      setIsHovered(false);
+      setIsFocused(false);
+      onClose();
+    }
+  }, [disabled, onClose]);
 
   const scheduleOpen = useCallback(() => {
     clearTimers();
