@@ -2,7 +2,7 @@
 /**
  * Enforces the component composition rule (#60):
  * components in packages/core/src/components/** may not import another public
- * component except Box (the primitive layer).
+ * component except Box and Icon (the approved primitive layer).
  *
  * KNOWN_VIOLATIONS exists for temporarily grandfathering violations that are
  * scheduled for removal; it is currently empty.
@@ -13,7 +13,7 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const componentsDir = join(root, "packages/core/src/components");
-const PRIMITIVE = "Box";
+const ALLOWED_COMPONENT_IMPORTS = new Set(["Box", "Icon"]);
 
 const PUBLIC_COMPONENTS = new Set(
   readdirSync(componentsDir).filter((entry) =>
@@ -65,14 +65,19 @@ for (const file of walk(componentsDir)) {
   while ((match = importPattern.exec(source)) !== null) {
     const specifier = match[1];
     const target = resolveTargetComponent(dirname(file), specifier);
-    if (target === PRIMITIVE && specifier !== "." && !specifier.startsWith("./") && !specifier.startsWith("../")) {
-      // Box is importable, but only via the relative specifier (#84)
+    if (
+      ALLOWED_COMPONENT_IMPORTS.has(target) &&
+      specifier !== "." &&
+      !specifier.startsWith("./") &&
+      !specifier.startsWith("../")
+    ) {
+      // Approved primitives are importable, but only via relative specifiers (#84).
       violations.push(
-        `${file.slice(root.length + 1)} -> Box via non-relative specifier "${specifier}" (use a relative "../Box" import)`,
+        `${file.slice(root.length + 1)} -> ${target} via non-relative specifier "${specifier}" (use a relative import)`,
       );
       continue;
     }
-    if (!target || !PUBLIC_COMPONENTS.has(target) || target === PRIMITIVE) continue;
+    if (!target || !PUBLIC_COMPONENTS.has(target) || ALLOWED_COMPONENT_IMPORTS.has(target)) continue;
     if (target === owner) continue;
     const relative = file.slice(root.length + 1);
     const key = `${relative} -> ${target}`;
@@ -92,7 +97,7 @@ if (warnings.length > 0) {
 
 if (violations.length > 0) {
   console.error(
-    `Component composition rule violations (only Box may be imported by other components):\n  ${violations.join("\n  ")}`,
+    `Component composition rule violations (only Box and Icon may be imported by other components):\n  ${violations.join("\n  ")}`,
   );
   process.exit(1);
 }
