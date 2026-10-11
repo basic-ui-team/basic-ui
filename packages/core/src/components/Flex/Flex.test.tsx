@@ -58,12 +58,12 @@ describe("Flex", () => {
 
     it("applies gap and padding tokens", () => {
       const { container } = renderWithProviders(
-        <Flex gap="md" p="sm">
+        <Flex gap={3} p={2}>
           Test
         </Flex>,
       );
-      expect(container.firstChild).toHaveClass("gap-md");
-      expect(container.firstChild).toHaveClass("p-sm");
+      expect(container.firstChild).toHaveClass("gap-3");
+      expect(container.firstChild).toHaveClass("p-2");
     });
 
     it("resolves responsive objects to base when no breakpoint matches", () => {

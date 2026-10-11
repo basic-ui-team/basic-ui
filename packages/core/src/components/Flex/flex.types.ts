@@ -1,6 +1,6 @@
 import { ResponsiveValue } from "@basic-ui/react-utilities";
 import { CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
-import type { LayoutProps, SpacingType } from "@core/lib/layout";
+import type { LayoutProps, SpacingStep } from "@core/lib/layout";
 
 const flexValues = ["row", "column", "row-reverse", "column-reverse"] as const;
 const justifyValues = ["start", "end", "center", "between", "around", "evenly", "stretch"] as const;
@@ -17,7 +17,7 @@ export interface FlexOwnProps extends LayoutProps, CommonProps {
   justify?: ResponsiveValue<justifyContent>;
   align?: ResponsiveValue<alignItems>;
   wrap?: ResponsiveValue<flexWrap>;
-  gap?: ResponsiveValue<SpacingType>;
+  gap?: ResponsiveValue<SpacingStep>;
   display?: ResponsiveValue<"flex" | "inline-flex">;
 }
 

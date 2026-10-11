@@ -26,7 +26,7 @@ export const Default: Story = {
 
 export const AllSizes: Story = {
   render: () => (
-    <Flex gap="xl" align="center" className="h-40">
+    <Flex gap={5} align="center" className="h-40">
       <Spinner size="xs" />
       <Spinner size="sm" />
       <Spinner size="md" />
@@ -38,12 +38,12 @@ export const AllSizes: Story = {
 
 export const AllColors: Story = {
   render: () => (
-    <Flex gap="lg" wrap="wrap" align="start" className="h-full">
+    <Flex gap={4} wrap="wrap" align="start" className="h-full">
       {sizes.map((size) => (
         <Flex
           key={size}
           direction="column"
-          gap="md"
+          gap={3}
           align="center"
           justify="center"
           className="h-full"
@@ -67,10 +67,10 @@ export const Visibility: Story = {
     const [visible, setVisible] = useState(true);
 
     return (
-      <Flex direction="column" gap="md" align="start">
+      <Flex direction="column" gap={3} align="start">
         <button
           onClick={() => setVisible(!visible)}
-          className="px-md py-sm bg-primary-500 text-white rounded hover:bg-primary-600 cursor-pointer"
+          className="px-3 py-2 bg-primary-500 text-white rounded hover:bg-primary-600 cursor-pointer"
         >
           Toggle Spinner
         </button>
@@ -82,7 +82,7 @@ export const Visibility: Story = {
 
 export const WithCustomAriaLabel: Story = {
   render: () => (
-    <Flex gap="lg" direction="column" align="start">
+    <Flex gap={4} direction="column" align="start">
       <Box>
         <Text>Default label "Loading"</Text>
         <Spinner />
@@ -101,7 +101,7 @@ export const WithCustomAriaLabel: Story = {
 
 export const PolymorphicElement: Story = {
   render: () => (
-    <Flex gap="lg" direction="column" align="start">
+    <Flex gap={4} direction="column" align="start">
       <Box>
         <Text>As div (default)</Text>
         <Spinner />
@@ -116,7 +116,7 @@ export const PolymorphicElement: Story = {
 
 export const SizeAndColorCombinations: Story = {
   render: () => (
-    <Flex gap="lg" wrap="wrap">
+    <Flex gap={4} wrap="wrap">
       <Spinner size="sm" color="primary" />
       <Spinner size="md" color="secondary" />
       <Spinner size="lg" color="success" />
@@ -131,25 +131,25 @@ export const SizeAndColorCombinations: Story = {
 
 export const WithSpacing: Story = {
   render: () => (
-    <Flex direction="column" gap="md">
+    <Flex direction="column" gap={3}>
       <Box>
         <Text>Spinner with margin</Text>
         <Box className="border border-border-base w-max">
-          <Spinner color="primary" m="md" />
+          <Spinner color="primary" m={3} />
         </Box>
       </Box>
       <Divider />
       <Box>
         <Text>Spinner with horizontal margin</Text>
         <Box className="border border-border-base w-max">
-          <Spinner color="secondary" mx="md" />
+          <Spinner color="secondary" mx={3} />
         </Box>
       </Box>
       <Divider />
       <Box>
         <Text>Spinner with vertical margin</Text>
         <Box className="border border-border-base w-max">
-          <Spinner color="success" my="md" />
+          <Spinner color="success" my={3} />
         </Box>
       </Box>
       <Divider />
@@ -159,19 +159,19 @@ export const WithSpacing: Story = {
 
 export const InlineWithText: Story = {
   render: () => (
-    <Flex direction="column" gap="md">
+    <Flex direction="column" gap={3}>
       <Text size="sm" weight="normal">
         Small spinner inline with text
       </Text>
-      <Flex gap="sm" align="center">
+      <Flex gap={2} align="center">
         <Spinner size="sm" color="primary" />
         <Text as="span">Loading data...</Text>
       </Flex>
 
-      <Text size="sm" weight="normal" mt="lg">
+      <Text size="sm" weight="normal" mt={4}>
         Medium spinner with larger text
       </Text>
-      <Flex gap="md" align="center">
+      <Flex gap={3} align="center">
         <Spinner size="md" color="secondary" />
         <Text as="span" size="lg">
           Processing your request...

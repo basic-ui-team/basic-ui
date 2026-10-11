@@ -102,7 +102,7 @@ export const LinkPagination = React.forwardRef<
             as="span"
             className={cn(
               "flex items-center justify-center",
-              type === "prev" || type === "next" ? "w-lg h-lg" : "w-xl h-xl",
+              type === "prev" || type === "next" ? "w-4 h-4" : "w-5 h-5",
             )}
             aria-hidden="true"
           >

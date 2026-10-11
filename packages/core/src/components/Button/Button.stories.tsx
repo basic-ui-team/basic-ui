@@ -40,9 +40,9 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: () => (
-    <Box className="flex gap-md flex-col">
+    <Box className="flex gap-3 flex-col">
       {(["solid", "ghost", "outline", "link"] as const).map((variant) => (
-        <Box key={variant} className="flex gap-sm items-center">
+        <Box key={variant} className="flex gap-2 items-center">
           {(
             [
               "default",
@@ -67,7 +67,7 @@ export const Variants: Story = {
 
 export const Sizes: Story = {
   render: () => (
-    <Box className="flex gap-lg items-center">
+    <Box className="flex gap-4 items-center">
       <Button size="sm">Small</Button>
       <Button size="md">Medium</Button>
       <Button size="lg">Large</Button>
@@ -77,7 +77,7 @@ export const Sizes: Story = {
 
 export const Loading: Story = {
   render: () => (
-    <Box className="flex gap-sm items-center">
+    <Box className="flex gap-2 items-center">
       <Button loading>Loading</Button>
       <Button loading loadingText="Submitting">
         With text
@@ -88,7 +88,7 @@ export const Loading: Story = {
 
 export const Disabled: Story = {
   render: () => (
-    <Box className="flex gap-sm items-center">
+    <Box className="flex gap-2 items-center">
       <Button disabled>Disabled</Button>
       <Button disabled loading>
         Disabled + Loading
@@ -139,7 +139,7 @@ export const WithCustomLinkComponent: Story = {
     CustomLink.displayName = "CustomLink";
 
     return (
-      <Box className="flex gap-sm items-center flex-wrap">
+      <Box className="flex gap-2 items-center flex-wrap">
         <Button as="a" linkComponent={CustomLink} href="/docs" color="primary">
           Go to Docs
         </Button>

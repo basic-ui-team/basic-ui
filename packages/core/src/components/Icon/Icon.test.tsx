@@ -45,7 +45,7 @@ describe("Icon", () => {
     it("should apply size variant classes", () => {
       const { container } = render(<Icon icon={<TestIcon />} size="lg" />);
       const span = container.querySelector("span");
-      expect(span).toHaveClass("w-2xl", "h-2xl");
+      expect(span).toHaveClass("w-6", "h-6");
     });
 
     it("should apply all size variants", () => {
@@ -90,7 +90,7 @@ describe("Icon", () => {
     it('should use "md" as default size', () => {
       const { container } = render(<Icon icon={<TestIcon />} />);
       const span = container.querySelector("span");
-      expect(span).toHaveClass("w-xl", "h-xl"); // md size
+      expect(span).toHaveClass("w-5", "h-5"); // md size
     });
 
     it('should use "default" as default variant', () => {
@@ -157,7 +157,7 @@ describe("Icon", () => {
         <Icon icon={<TestIcon />} className="hover:opacity-75" size="sm" />,
       );
       const span = container.querySelector("span");
-      expect(span).toHaveClass("w-lg", "h-lg", "hover:opacity-75");
+      expect(span).toHaveClass("w-4", "h-4", "hover:opacity-75");
     });
   });
 
@@ -212,7 +212,7 @@ describe("Icon", () => {
       );
       const span = container.querySelector("span");
       // Note: color override (text-dark) replaces variant color
-      expect(span).toHaveClass("w-2xl", "h-2xl", "text-dark");
+      expect(span).toHaveClass("w-6", "h-6", "text-dark");
       expect(span).not.toHaveClass("text-success");
       expect(span).toHaveAttribute("aria-hidden", "true");
     });
@@ -229,7 +229,7 @@ describe("Icon", () => {
         />,
       );
       const img = screen.getByRole("img", { name: "Loading spinner" });
-      expect(img).toHaveClass("animate-spin", "text-primary", "w-xl", "h-xl");
+      expect(img).toHaveClass("animate-spin", "text-primary", "w-5", "h-5");
     });
 
     it("should work with responsive size as object", () => {

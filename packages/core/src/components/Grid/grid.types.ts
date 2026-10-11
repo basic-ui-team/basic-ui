@@ -1,6 +1,6 @@
 import { ResponsiveValue } from "@basic-ui/react-utilities";
 import { CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
-import type { LayoutProps, SpacingType } from "../../lib/layout/layout.types";
+import type { LayoutProps, SpacingStep } from "../../lib/layout/layout.types";
 
 export type AllowedGridElements = "div" | "section" | "article" | "main" | "aside" | "nav";
 const COL_ROW_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const;
@@ -51,11 +51,11 @@ export interface GridOwnProps extends LayoutProps, CommonProps {
   /** Number of rows in the grid (1-12). For custom templates use `templatePreset` or `style`/`className`. */
   rows?: ResponsiveValue<ColRowNumber>;
   /** gap controls the gap between grid items.*/
-  gap?: ResponsiveValue<SpacingType>;
+  gap?: ResponsiveValue<SpacingStep>;
   /** rowGap controls the gap between grid rows.*/
-  rowGap?: ResponsiveValue<SpacingType>;
+  rowGap?: ResponsiveValue<SpacingStep>;
   /** columnGap controls the gap between grid columns.*/
-  columnGap?: ResponsiveValue<SpacingType>;
+  columnGap?: ResponsiveValue<SpacingStep>;
   /** autoFlow controls how auto-placed items are flowed into the grid */
   autoFlow?: ResponsiveValue<AutoFlowOption>;
   /** autoRows controls the size of implicitly created grid rows */

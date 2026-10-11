@@ -63,7 +63,7 @@ export const Default: Story = {
   },
   render: (args) => {
     return (
-      <Flex direction="column" align="center" gap="md">
+      <Flex direction="column" align="center" gap={3}>
         <TablePagination {...args} />
         <TablePagination {...args} color="primary" />
         <TablePagination {...args} color="secondary" />
@@ -79,7 +79,7 @@ export const PaginationShapes: Story = {
   },
   render: (args) => {
     return (
-      <Flex direction="column" align="center" gap="md">
+      <Flex direction="column" align="center" gap={3}>
         <TablePagination {...args} shape="rounded" />
         <TablePagination {...args} shape="square" />
         <TablePagination {...args} shape="circular" />
@@ -95,7 +95,7 @@ export const OutlinedVariant: Story = {
   },
   render: (args) => {
     return (
-      <Flex direction="column" align="center" gap="md">
+      <Flex direction="column" align="center" gap={3}>
         <TablePagination {...args} />
         <TablePagination {...args} color="primary" />
         <TablePagination {...args} color="secondary" />
@@ -111,7 +111,7 @@ export const SiblingBoundaryButtons: Story = {
   },
   render: (args) => {
     return (
-      <Flex direction="column" align="center" gap="lg">
+      <Flex direction="column" align="center" gap={4}>
         <Text>maxSiblingButtons=1, maxBoundaryButtons=2</Text>
         <TablePagination {...args} maxSiblingButtons={1} maxBoundaryButtons={2} />
         <Text>maxSiblingButtons=3, maxBoundaryButtons=0</Text>
@@ -155,16 +155,16 @@ export const Controlled: Story = {
   render: (args) => {
     const [currentPage, setCurrentPage] = useState(1);
     return (
-      <Flex direction="column" align="center" gap="md">
-        <Flex gap="md">
+      <Flex direction="column" align="center" gap={3}>
+        <Flex gap={3}>
           <button
-            className="px-md py-sm bg-primary-500 rounded-md border-foreground-primary border-2"
+            className="px-3 py-2 bg-primary-500 rounded-md border-foreground-primary border-2"
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           >
             Previous
           </button>
           <button
-            className="px-md py-sm bg-primary-500 rounded-md border-foreground-primary border-2"
+            className="px-3 py-2 bg-primary-500 rounded-md border-foreground-primary border-2"
             onClick={() => setCurrentPage((prev) => prev + 1)}
           >
             Next

@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority";
 
 export const paginationVariants = cva(
-  ["flex items-center justify-center gap-sm", "flex-wrap"].join(" "),
+  ["flex items-center justify-center gap-2", "flex-wrap"].join(" "),
 );
 
 export const paginationButtonVariants = cva(
@@ -22,9 +22,9 @@ export const paginationButtonVariants = cva(
         ].join(" "),
       },
       size: {
-        sm: "p-xs text-sm min-w-[2rem] min-h-[2rem]",
-        md: "p-sm text-md min-w-[2.5rem] min-h-[2.5rem]",
-        lg: "p-md text-lg min-w-[3rem] min-h-[3rem]",
+        sm: "p-1 text-sm min-w-[2rem] min-h-[2rem]",
+        md: "p-2 text-md min-w-[2.5rem] min-h-[2.5rem]",
+        lg: "p-3 text-lg min-w-[3rem] min-h-[3rem]",
       },
       shape: {
         rounded: "rounded-md",
@@ -84,5 +84,5 @@ export const paginationButtonVariants = cva(
 );
 
 export const paginationEllipsisVariants = cva(
-  ["flex items-center justify-center", "text-fg-base", "px-xs"].join(" "),
+  ["flex items-center justify-center", "text-fg-base", "px-1"].join(" "),
 );

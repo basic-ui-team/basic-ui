@@ -1,6 +1,6 @@
 import { ResponsiveValue } from "@basic-ui/react-utilities";
 import { CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
-import { SpacingType } from "../../lib/layout/layout.types";
+import { SpacingStep } from "../../lib/layout/layout.types";
 import { BuiltInSemanticColors } from "@core/theme";
 
 export type DividerDirection = "horizontal" | "vertical";
@@ -23,8 +23,8 @@ export interface DividerOwnProps extends CommonProps {
   /** Thickness of the divider line. "thin" for 1px, "medium" for 2px, "thick" for 4px, "none" for no line. Supports responsive values. @default "medium" */
   thickness?: ResponsiveValue<DividerThickness>;
 
-  /** Inset spacing from the edges. For horizontal dividers, this controls left/right padding; for vertical dividers, it controls top/bottom padding. Supports responsive values. @default "none" */
-  inset?: ResponsiveValue<SpacingType>;
+  /** Inset spacing from the edges. For horizontal dividers, this controls left/right padding; for vertical dividers, it controls top/bottom padding. Supports responsive values. @default 0 */
+  inset?: ResponsiveValue<SpacingStep>;
 
   /** Color of the divider line. Supports responsive values. Accepts built-in semantic tokens or a custom CSS color string. @default "base" */
   color?: ResponsiveValue<DividerColor>;
@@ -33,10 +33,10 @@ export interface DividerOwnProps extends CommonProps {
   label?: string;
 
   /** Margin around the divider. Supports responsive values. Passed down to the Box component. @default 0 */
-  m?: ResponsiveValue<SpacingType>;
+  m?: ResponsiveValue<SpacingStep>;
 
   /** Padding around the divider. Supports responsive values. Passed down to the Box component. @default 0 */
-  p?: ResponsiveValue<SpacingType>;
+  p?: ResponsiveValue<SpacingStep>;
 }
 
 export type AllowedDividerElements = "hr" | "div" | "span";
