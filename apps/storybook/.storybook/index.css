@@ -1,4 +1,4 @@
-@import "../../../packages/tokens/src/pkg/styles/theme.css";
+@import "../../../packages/tokens/src/generated/styles/theme.css";
 
 /* Scan workspace packages for class names */
 @source "../../../packages/core/src";

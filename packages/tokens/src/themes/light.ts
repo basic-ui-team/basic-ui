@@ -1,4 +1,5 @@
-import type ThemeConfig from "../types/index";
+import type ThemeConfig from "../types";
+import { DEFAULT_SPACING_SCALE } from "../scales/spacing";
 
 export const lightTheme: ThemeConfig = {
   color: {
@@ -105,17 +106,7 @@ export const lightTheme: ThemeConfig = {
       950: "oklch(13% 0.028 261.692)",
     },
   },
-  spacing: {
-    xs: "0.25rem",
-    sm: "0.5rem",
-    md: "1rem",
-    lg: "1.5rem",
-    xl: "2rem",
-    "2xl": "3rem",
-    "3xl": "4rem",
-    "4xl": "6rem",
-    "5xl": "8rem",
-  },
+  spacing: DEFAULT_SPACING_SCALE,
   radius: {
     none: "0",
     sm: "0.25rem",

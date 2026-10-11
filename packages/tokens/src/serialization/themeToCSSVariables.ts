@@ -1,4 +1,5 @@
-import type ThemeConfig from "../types/index";
+import type ThemeConfig from "../types";
+import type { ResolvedTheme } from "../types";
 import { PREFIX_MAP } from "../constants";
 
 export interface ThemeObj {
@@ -14,7 +15,7 @@ const THEME_CACHE: WeakMap<object, ThemeObj> = new WeakMap();
  * Convert a ThemeConfig into CSS custom properties and a token mirror.
  * Optimized for lower allocations and memoized for repeated theme objects.
  */
-export function themeToCSSVariables(theme: ThemeConfig): ThemeObj {
+export function themeToCSSVariables(theme: ResolvedTheme): ThemeObj {
   if (!theme || typeof theme !== "object") {
     return { customProperties: {}, tokens: {} };
   }

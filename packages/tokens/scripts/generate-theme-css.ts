@@ -1,6 +1,7 @@
 import { lightTheme } from "../src/themes/light";
 import { darkTheme } from "../src/themes/dark";
-import { themeToCSSVariables } from "../src/utils/themeToCSSVariables";
+import { resolveTheme } from "../src/runtime/resolveTheme";
+import { themeToCSSVariables } from "../src/serialization/themeToCSSVariables";
 import { writeFileSync, mkdirSync } from "node:fs";
 import { resolve, dirname, relative } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -34,8 +35,8 @@ function resolveVariableReference(
 }
 
 function generateTheme() {
-  const lightThemeObj = themeToCSSVariables(lightTheme);
-  const darkThemeObj = themeToCSSVariables(darkTheme);
+  const lightThemeObj = themeToCSSVariables(resolveTheme(lightTheme));
+  const darkThemeObj = themeToCSSVariables(resolveTheme(darkTheme));
 
   const lightProps = lightThemeObj.customProperties;
   const darkProps = darkThemeObj.customProperties;
@@ -99,9 +100,9 @@ export const tokens = ${JSON.stringify(lightThemeObj.tokens, null, 2)};
 export const darkTokens = ${JSON.stringify(darkThemeObj.tokens, null, 2)};
 `;
 
-  // Write generated CSS to src/pkg (new generated artifacts location)
+  // Write generated artifacts to src/generated.
   const __dirname = dirname(fileURLToPath(import.meta.url));
-  const baseOutPath = resolve(__dirname, "../src/pkg");
+  const baseOutPath = resolve(__dirname, "../src/generated");
   mkdirSync(baseOutPath, { recursive: true });
 
   const cssOutPath = resolve(baseOutPath, "styles/theme.css");
@@ -115,14 +116,6 @@ export const darkTokens = ${JSON.stringify(darkThemeObj.tokens, null, 2)};
   const relTokensPath = relative(process.cwd(), tokensOutPath);
   console.log(`✓ Generated ${relTokensPath}`);
 
-  // we generate an index.ts file that re-exports the tokens for easier imports in other packages
-  const indexOutPath = resolve(baseOutPath, "index.ts");
-  const indexContent = `/* Auto-generated — run \`pnpm generate\` in packages/tokens to regenerate */
-export { tokens, darkTokens } from "./tokens";
-`;
-  writeFileSync(indexOutPath, indexContent, "utf-8");
-  const relIndexPath = relative(process.cwd(), indexOutPath);
-  console.log(`✓ Generated ${relIndexPath}`);
 }
 
 generateTheme();

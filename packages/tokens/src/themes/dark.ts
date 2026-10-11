@@ -1,5 +1,5 @@
 import { lightTheme } from "./light";
-import type ThemeConfig from "../types/index";
+import type ThemeConfig from "../types";
 
 export const darkTheme: ThemeConfig = {
   ...lightTheme,

@@ -9,7 +9,6 @@ export default defineConfig({
     lib: {
       entry: {
         index: path.resolve(__dirname, "src/index.ts"),
-        "pkg/index": path.resolve(__dirname, "src/pkg/index.ts"),
       },
       formats: ["es"],
     },

@@ -1,16 +1,14 @@
-// Tokens package — Complete token system with themes and utilities
-export const version = "0.2.1";
-
-// Token objects
-export { tokens, darkTokens } from "./pkg/tokens";
-
-// Types
+// Theme authoring types
 export type {
   RampColors,
   SemanticColors,
-  SpacingTokens,
-  RadiusTokens,
-  ShadowTokens,
+  SpacingScaleConfig,
+  SpacingScaleRounding,
+  SpacingScaleUnit,
+  SpacingStep,
+  ThemeOverride,
+  RadiusToken,
+  ShadowToken,
   FontSizeTokens,
   FontWeightTokens,
   LineHeightTokens,
@@ -22,18 +20,16 @@ export type {
   // ContainerTokens,
   BreakpointTokens,
   OpacityTokens,
-} from "./types/index";
+} from "./types";
 
-import type ThemeConfig from "./types/index";
-export type { ThemeConfig };
+export type { default as ThemeConfig } from "./types";
 
-// Core functions
-export type { ThemeInput } from "./utils/createTheme";
+// Theme application
+export type { ThemeInput } from "./runtime/createTheme";
+export { createTheme } from "./runtime/createTheme";
+export { mergeTheme } from "./runtime/mergeTheme";
 
-// Presets & Themes
-import { lightTheme, darkTheme } from "./themes";
-export { lightTheme, darkTheme };
-
-// Utilities
-export { mergeTheme, themeToCSSVariables, createTheme, type ThemeObj } from "./utils";
-export { PREFIX_MAP } from "./constants";
+// Theme presets and scale defaults
+export { lightTheme } from "./themes/light";
+export { darkTheme } from "./themes/dark";
+export { DEFAULT_SPACING_SCALE } from "./scales/spacing";
