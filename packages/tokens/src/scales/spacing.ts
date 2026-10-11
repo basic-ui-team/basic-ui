@@ -86,6 +86,11 @@ export function resolveSpacingScale(config: SpacingScaleConfig): ResolvedSpacing
     const key = String(step) as SpacingStepToken;
     const override = config.overrides?.[key];
 
+    if (step === 0) {
+      resolved[key] = `0${config.unit}`;
+      continue;
+    }
+
     if (override !== undefined) {
       resolved[key] = override;
       continue;
