@@ -56,7 +56,7 @@ describe("createTheme", () => {
         } else if (category === "fontWeight") {
           varName = `--font-weight-${key}`;
         } else if (category === "zIndex") {
-          varName = `--z-${key}`;
+          varName = `--z-index-${key}`;
         } else {
           varName = `--${category}-${key}`;
         }
@@ -159,8 +159,8 @@ describe("createTheme", () => {
         light: { zIndex: { modal: 100, tooltip: 200 } },
       });
 
-      expect(mockRoot.style.setProperty).toHaveBeenCalledWith("--z-modal", "100");
-      expect(mockRoot.style.setProperty).toHaveBeenCalledWith("--z-tooltip", "200");
+      expect(mockRoot.style.setProperty).toHaveBeenCalledWith("--z-index-modal", "100");
+      expect(mockRoot.style.setProperty).toHaveBeenCalledWith("--z-index-tooltip", "200");
     });
   });
 
@@ -196,7 +196,7 @@ describe("createTheme", () => {
         "font-sans",
         "duration-fast",
         "ease-in",
-        "z-modal",
+        "z-index-modal",
         "breakpoint-md",
         "opacity-disabled",
       ];
