@@ -1,5 +1,5 @@
 ---
-"@basic-ui/core": major
+"@basic-ui/core": minor
 "@basic-ui/react-utilities": minor
 ---
 
