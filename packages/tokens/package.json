@@ -11,11 +11,7 @@
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
-    "./styles/theme.css": "./dist/pkg/styles/theme.css",
-    "./pkg": {
-      "import": "./dist/pkg/index.js",
-      "types": "./dist/pkg/index.d.ts"
-    }
+    "./styles/theme.css": "./dist/generated/styles/theme.css"
   },
   "files": [
     "dist"

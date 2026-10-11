@@ -1,6 +1,7 @@
-import ThemeConfig from "../types/index";
-import { lightTheme, darkTheme } from "../themes";
-import { themeToCSSVariables } from "./themeToCSSVariables";
+import ThemeConfig from "../types";
+import { lightTheme } from "../themes/light";
+import { darkTheme } from "../themes/dark";
+import { themeToCSSVariables } from "../serialization/themeToCSSVariables";
 import { mergeTheme } from "./mergeTheme";
 
 /**

@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createTheme } from "./createTheme";
-import type  ThemeConfig from "../types/index";
+import type ThemeConfig from "../types";
 
 describe("createTheme", () => {
   let mockRoot: HTMLElement;
@@ -27,7 +27,7 @@ describe("createTheme", () => {
   describe("light theme injection", () => {
     it.each<[string, Partial<ThemeConfig>]>([
       ["colors", { color: { primary: {50: "#FF0000"}, fg: { base: "#CC0000" } } }],
-      ["spacing", { spacing: { md: "2rem", lg: "3rem" } }],
+      ["spacing", { spacing: { "5": "2rem", "6": "3rem" } }],
       ["radius", { radius: { md: "0.5rem" } }],
       ["fontSize", { fontSize: { md: "1.125rem" } }],
       ["fontWeight", { fontWeight: { bold: 700, normal: 400 } }],
@@ -69,13 +69,13 @@ describe("createTheme", () => {
       createTheme({
         light: {
           color: { primary: {50: "#0066FF"} },
-          spacing: { md: "1.5rem" },
+          spacing: { "5": "1.5rem" },
           radius: { md: "0.5rem" },
         },
       });
 
       expect(mockRoot.style.setProperty).toHaveBeenCalledWith("--color-primary-50", "#0066FF");
-      expect(mockRoot.style.setProperty).toHaveBeenCalledWith("--spacing-md", "1.5rem");
+      expect(mockRoot.style.setProperty).toHaveBeenCalledWith("--spacing-5", "1.5rem");
       expect(mockRoot.style.setProperty).toHaveBeenCalledWith("--radius-md", "0.5rem");
     });
   });
@@ -111,7 +111,7 @@ describe("createTheme", () => {
 
     it.each<[string, Partial<ThemeConfig>, string]>([
       ["color", { color: { primary: {50: "#4D94FF"} } }, "color"],
-      ["spacing", { spacing: { md: "1.25rem" } }, "spacing"],
+      ["spacing", { spacing: { "5": "1.25rem" } }, "spacing"],
       ["shadow", { shadow: { s1: "0 2px 4px rgba(0,0,0,0.2)" } }, "shadow"],
       ["duration", { duration: { fast: "50ms" } }, "duration"],
       ["opacity", { opacity: { disabled: 0.3 } }, "opacity"],
@@ -162,7 +162,7 @@ describe("createTheme", () => {
       createTheme({
         dark: {
           color: { primary: {50: "#000"} },
-          spacing: { md: "1rem" },
+          spacing: { "5": "1rem" },
           radius: { sm: "0.25rem" },
           shadow: { s2: "shadow" },
           fontSize: { md: "1rem" },
@@ -181,7 +181,7 @@ describe("createTheme", () => {
       const css = mockStyleElement.textContent;
       const prefixes = [
         "color-primary",
-        "spacing-md",
+        "spacing-5",
         "radius-sm",
         "shadow-s2",
         "text-md",

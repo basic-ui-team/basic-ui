@@ -1,4 +1,4 @@
-import type ThemeConfig from "../types/index";
+import type ThemeConfig from "../types";
 
 function isPlainObject(value: unknown): value is Record<string, any> {
   return value !== null && typeof value === "object" && !Array.isArray(value);

@@ -2,15 +2,19 @@
 export const version = "0.2.1";
 
 // Token objects
-export { tokens, darkTokens } from "./pkg/tokens";
+export { tokens, darkTokens } from "./generated/tokens";
 
 // Types
 export type {
   RampColors,
   SemanticColors,
-  SpacingTokens,
-  RadiusTokens,
-  ShadowTokens,
+  SpacingScaleConfig,
+  SpacingScaleRounding,
+  SpacingScaleUnit,
+  SpacingStep,
+  SpacingStepToken,
+  RadiusToken,
+  ShadowToken,
   FontSizeTokens,
   FontWeightTokens,
   LineHeightTokens,
@@ -22,18 +26,27 @@ export type {
   // ContainerTokens,
   BreakpointTokens,
   OpacityTokens,
-} from "./types/index";
+} from "./types";
 
-import type ThemeConfig from "./types/index";
+import type ThemeConfig from "./types";
 export type { ThemeConfig };
 
 // Core functions
-export type { ThemeInput } from "./utils/createTheme";
+export type { ThemeInput } from "./runtime/createTheme";
 
 // Presets & Themes
-import { lightTheme, darkTheme } from "./themes";
+import { lightTheme } from "./themes/light";
+import { darkTheme } from "./themes/dark";
 export { lightTheme, darkTheme };
 
 // Utilities
-export { mergeTheme, themeToCSSVariables, createTheme, type ThemeObj } from "./utils";
+export { createTheme } from "./runtime/createTheme";
+export { mergeTheme } from "./runtime/mergeTheme";
+export { themeToCSSVariables, type ThemeObj } from "./serialization/themeToCSSVariables";
+export {
+  DEFAULT_SPACING_SCALE,
+  resolveSpacingScale,
+  validateSpacingScale,
+  type ResolvedSpacingScale,
+} from "./scales/spacing";
 export { PREFIX_MAP } from "./constants";

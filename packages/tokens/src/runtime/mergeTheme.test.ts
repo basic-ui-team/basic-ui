@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { mergeTheme } from "./mergeTheme";
-import type ThemeConfig from "../types/index";
+import type ThemeConfig from "../types";
 
 const baseTheme: ThemeConfig = {
   color: {
@@ -8,7 +8,7 @@ const baseTheme: ThemeConfig = {
     primary: { 50: "hsl(119 43% 52%)" },
     fg: { base: "hsl(210 10% 18%)" },
   },
-  spacing: { md: "1rem", sm: "0.5rem", lg: "1.5rem" },
+  spacing: { "5": "1rem", "3": "0.5rem", "6": "1.5rem" },
   radius: { md: "0.375rem", sm: "0.25rem" },
   shadow: { s2: "0 1px 2px 0 rgb(0 0 0 / 0.05)" },
   fontSize: { md: "1rem", sm: "0.875rem" },
@@ -26,7 +26,7 @@ const baseTheme: ThemeConfig = {
 describe("mergeTheme", () => {
   it.each<[string, Partial<ThemeConfig>]>([
     ["color", { color: { primary: { 50: "#FF0000" } } }],
-    ["spacing", { spacing: { md: "1.5rem" } }],
+    ["spacing", { spacing: { "5": "1.5rem" } }],
     ["fontSize", { fontSize: { md: "1.125rem" } }],
     ["fontWeight", { fontWeight: { bold: 800 } }],
     ["radius", { radius: { md: "0.5rem" } }],
@@ -71,12 +71,12 @@ describe("mergeTheme", () => {
   it("merges multiple categories simultaneously", () => {
     const override = {
       color: { primary: { 50: "#0066FF" } },
-      spacing: { md: "2rem" },
+      spacing: { "5": "2rem" },
       fontSize: { md: "1.125rem" },
     };
     const result = mergeTheme(baseTheme, override);
     expect(result.color?.primary?.[50]).toBe("#0066FF");
-    expect(result.spacing?.md).toBe("2rem");
+    expect(result.spacing?.["5"]).toBe("2rem");
     expect(result.fontSize?.md).toBe("1.125rem");
   });
 

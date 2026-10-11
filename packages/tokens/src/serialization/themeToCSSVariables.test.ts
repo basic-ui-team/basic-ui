@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { themeToCSSVariables } from "./themeToCSSVariables";
-import type ThemeConfig from "../types/index";
+import type ThemeConfig from "../types";
 
 describe("themeToCSSVariables", () => {
   it("flattens a single category with correct CSS variable prefix", () => {
@@ -18,7 +18,7 @@ describe("themeToCSSVariables", () => {
   it("flattens multiple categories with their respective prefixes", () => {
     const theme: ThemeConfig = {
       color: { primary: { "500": "#FF0000" } },
-      spacing: { md: "1rem" },
+      spacing: { "5": "1rem" },
       radius: { lg: "0.5rem" },
     };
 
@@ -26,7 +26,7 @@ describe("themeToCSSVariables", () => {
 
     expect(result.customProperties).toEqual({
       "--color-primary-500": "#FF0000",
-      "--spacing-md": "1rem",
+      "--spacing-5": "1rem",
       "--radius-lg": "0.5rem",
     });
   });
@@ -103,7 +103,7 @@ describe("themeToCSSVariables", () => {
     it("returns a tokens mirror and caches results by theme object identity", () => {
       const theme: ThemeConfig = {
         color: { primary: { "500": "#FF0000" } },
-        spacing: { md: "1rem" },
+        spacing: { "5": "1rem" },
       };
 
       const first = themeToCSSVariables(theme);
@@ -111,7 +111,7 @@ describe("themeToCSSVariables", () => {
       // tokens mirror should contain compact token names
       expect(first.tokens).toEqual({
         color: { primary: { "500": "primary-500" } },
-        spacing: { md: "md" },
+        spacing: { "5": "5" },
       });
 
       // second call with the same object should return the cached object (same reference)
