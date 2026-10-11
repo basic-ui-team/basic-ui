@@ -5,11 +5,9 @@ export const iconVariants = cva("", {
     size: {
       xs: "w-3 h-3",
       sm: "w-4 h-4",
-      md: "w-5 h-5",
+      md: "w-6 h-6",
       lg: "w-6 h-6",
       xl: "w-7 h-7",
-      xxl: "w-4xl h-4xl",
-      xxxl: "w-5xl h-5xl",
     },
     variant: {
       default: "text-primary",

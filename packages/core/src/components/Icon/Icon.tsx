@@ -25,6 +25,9 @@ import { Box } from "../Box";
  *
  * // Responsive: md=md, lg=lg
  * <Icon icon={CheckCircle} size={{ base: "sm", md: "md", lg: "lg" }} />
+ *
+ * // Layout props apply to the existing wrapper; no outer Box is needed
+ * <Icon icon={CheckCircle} p={2} />
  */
 export const Icon = React.forwardRef<HTMLSpanElement, IconProps>(
   (
