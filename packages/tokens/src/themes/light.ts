@@ -168,10 +168,17 @@ export const lightTheme: ThemeConfig = {
     spring: "cubic-bezier(0.34, 1.56, 0.64, 1)",
   },
   zIndex: {
-    dropdown: 40,
-    modal: 45,
-    toast: 50,
-    tooltip: 50,
+    base: 0,
+    elevated: 10,
+    docked: 20,
+    dropdown: 1000,
+    sticky: 1050,
+    banner: 1100,
+    overlay: 1150,
+    modal: 1200,
+    popover: 1250,
+    toast: 1300,
+    tooltip: 1400,
   },
   // TODO: Container queries are a relatively new css feature and we will support them soon.
   // container: {
