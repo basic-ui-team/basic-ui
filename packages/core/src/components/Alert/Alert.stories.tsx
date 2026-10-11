@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Alert } from "./Alert";
 import { BriefcaseIcon } from "@basic-ui/icons";
 import { useState } from "react";
+import { Alert } from "./Alert";
+import { Button } from "../Button";
 import { Flex } from "../Flex";
 
 const meta: Meta<typeof Alert> = {
@@ -12,144 +13,92 @@ const meta: Meta<typeof Alert> = {
     layout: "centered",
   },
 } satisfies Meta<typeof Alert>;
+
 export default meta;
 
 type Story = StoryObj<typeof Alert>;
 
-export const AllSeverities: Story = {
+const messages = {
+  info: "A new version is available.",
+  success: "Your profile was updated.",
+  warning: "Your trial expires in three days.",
+  error: "We could not save your changes.",
+} as const;
+
+export const Severities: Story = {
   render: () => (
-    <Flex direction="column" gap={3}>
-      <Alert severity="info">This is an info alert.</Alert>
-      <Alert severity="success">This is a success alert.</Alert>
-      <Alert severity="warning">This is a warning alert.</Alert>
-      <Alert severity="error">This is an error alert.</Alert>
+    <Flex direction="column" gap={3} className="max-w-full">
+      {(Object.keys(messages) as Array<keyof typeof messages>).map((severity) => (
+        <Alert key={severity} severity={severity} title={severity}>
+          {messages[severity]}
+        </Alert>
+      ))}
     </Flex>
   ),
 };
 
-export const Borderless: Story = {
+export const Variants: Story = {
   render: () => (
-    <Flex direction="column" gap={3}>
-      <Alert severity="info" borderless>
-        This is an info alert.
+    <Flex direction="column" gap={3} className="max-w-full">
+      <Alert severity="info" variant="subtle" title="Subtle">
+        A tinted surface with a semantic border.
       </Alert>
-      <Alert severity="success" borderless>
-        This is a success alert.
-      </Alert>
-      <Alert severity="warning" borderless>
-        This is a warning alert.
-      </Alert>
-      <Alert severity="error" borderless>
-        This is an error alert.
-      </Alert>
-    </Flex>
-  ),
-};
-
-export const WithTitle: Story = {
-  render: () => (
-    <Flex direction="column" gap={3}>
-      <Alert severity="info" title="Info Alert">
-        This is an info alert.
-      </Alert>
-      <Alert severity="success" title="Success Alert">
-        This is a success alert.
-      </Alert>
-      <Alert severity="warning" title="Warning Alert">
-        This is a warning alert.
-      </Alert>
-      <Alert severity="error" title="Error Alert">
-        This is an error alert.
+      <Alert severity="info" variant="outline" title="Outline">
+        A base surface with a stronger semantic border.
       </Alert>
     </Flex>
   ),
 };
 
-export const WithIcon: Story = {
+export const WithCustomIcon: Story = {
   render: () => (
-    <Flex direction="column" gap={3}>
-      <Alert severity="info" title="Info Alert" icon={<BriefcaseIcon />}>
-        This is an info alert.
-      </Alert>
-      <Alert severity="success" title="Success Alert" icon={<BriefcaseIcon />}>
-        This is a success alert.
-      </Alert>
-      <Alert severity="warning" title="Warning Alert" icon={<BriefcaseIcon />}>
-        This is a warning alert.
-      </Alert>
-      <Alert severity="error" title="Error Alert" icon={<BriefcaseIcon />}>
-        This is an error alert.
-      </Alert>
-    </Flex>
+    <Alert
+      className="max-w-full"
+      severity="info"
+      title="Workspace updated"
+      icon={<BriefcaseIcon />}
+    >
+      Your workspace settings have been applied.
+    </Alert>
+  ),
+};
+
+export const WithAction: Story = {
+  render: () => (
+    <Alert
+      className="max-w-full"
+      severity="warning"
+      title="Payment method expires soon"
+      action={
+        <Button variant="link" color="warning" size="sm">
+          Update
+        </Button>
+      }
+    >
+      Update it now to avoid an interrupted subscription.
+    </Alert>
   ),
 };
 
 export const Dismissible: Story = {
-  args: {
-    severity: "info",
-    title: "Dismissible Alert",
-    children: "This alert can be dismissed by the user.",
-    onDismiss: () => alert("Alert dismissed!"),
-  },
-};
-
-export const WithAction: Story = {
-  args: {
-    severity: "info",
-    title: "Alert with Action",
-    children: "This alert includes a custom action element.",
-    action: <button className="text-sm text-fg-info hover:underline">Take Action</button>,
-  },
-};
-
-export const WithActionAndDismiss: Story = {
-  args: {
-    severity: "info",
-    title: "Alert with Action and Dismiss",
-    children: "This alert includes both a custom action and a dismiss button.",
-    action: <button className="text-sm text-fg-info hover:underline">Take Action</button>,
-    onDismiss: () => alert("Alert dismissed!"),
-  },
-};
-
-// using the onDimiss callback to remove the alert from the DOM instead of just hiding it, to demonstrate the isOpen prop
-export const ControlledDismissal: Story = {
   render: () => {
-    const [isOpen, setIsOpen] = useState(true);
+    const [open, setOpen] = useState(true);
 
     return (
-      <Flex direction="column" gap={3}>
-        <button
-          onClick={() => setIsOpen(true)}
-          className="self-start px-4 py-2 bg-surface-info text-fg-info font-bold rounded hover:bg-surface-base/80 transition-colors"
+      <Flex direction="column" gap={3} className="max-w-full">
+        <Button variant="outline" color="primary" size="sm" onClick={() => setOpen(true)}>
+          Show alert
+        </Button>
+        <Alert
+          open={open}
+          onOpenChange={setOpen}
+          dismissible
+          severity="success"
+          title="Changes saved"
         >
-          Show Alert
-        </button>
-        {isOpen && (
-          <Alert
-            severity="warning"
-            title="Controlled Dismissal Alert"
-            isOpen={isOpen}
-            onDismiss={() => setIsOpen(false)}
-          >
-            This alert can be dismissed, which will remove it from the DOM. Click "Show Alert" to
-            display it again.
-          </Alert>
-        )}
+          Your changes are now live.
+        </Alert>
       </Flex>
     );
   },
-};
-
-export const AsDifferentElement: Story = {
-  render: () => (
-    <Flex direction="column" gap={3}>
-      <Alert as="span" severity="info">
-        This alert is rendered as a &lt;span&gt; element.
-      </Alert>
-      <Alert as="p" severity="success">
-        This alert is rendered as a &lt;p&gt; element.
-      </Alert>
-    </Flex>
-  ),
 };

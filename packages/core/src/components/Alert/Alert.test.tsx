@@ -1,208 +1,122 @@
+/// <reference types="@testing-library/jest-dom" />
 import React from "react";
-import { describe, it, expect, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { renderWithProviders, screen, setupUser } from "../../test-utils";
 import { Alert } from "./Alert";
 
 describe("Alert", () => {
-  describe("rendering", () => {
-    it("renders description content", () => {
-      renderWithProviders(<Alert>Error message</Alert>);
-      expect(screen.getByText("Error message")).toBeInTheDocument();
-    });
+  it("renders visible subtle alert content with its title and default icon", () => {
+    const { container } = renderWithProviders(
+      <Alert title="Updated">Your profile was updated.</Alert>,
+    );
 
-    it("renders title when provided", () => {
-      renderWithProviders(<Alert title="Title">Description</Alert>);
-      expect(screen.getByText("Title")).toBeInTheDocument();
-      expect(screen.getByText("Description")).toBeInTheDocument();
-    });
-
-    it("does not render title slot when title is not provided", () => {
-      const { container } = renderWithProviders(<Alert>Description</Alert>);
-      expect(container.querySelector("[class*='alert-title']")).not.toBeInTheDocument();
-    });
-
-    it("applies custom className", () => {
-      const { container } = renderWithProviders(<Alert className="custom-class">Test</Alert>);
-      expect(container.firstChild).toHaveClass("custom-class");
-    });
+    expect(screen.getByText("Updated")).toBeInTheDocument();
+    expect(screen.getByText("Your profile was updated.")).toBeInTheDocument();
+    expect(container.querySelector("svg")).toBeInTheDocument();
+    expect(container.firstChild).toHaveClass("border", "bg-bg-info");
   });
 
-  describe("semantic roles", () => {
-    it.each<["error" | "warning" | "info" | "success", string]>([
-      ["error", "alert"],
-      ["warning", "alert"],
-      ["info", "status"],
-      ["success", "status"],
-    ])("uses role='%s' for severity %s", (severity, expectedRole) => {
-      const { container } = renderWithProviders(<Alert severity={severity}>Test</Alert>);
-      expect(container.firstChild).toHaveAttribute("role", expectedRole);
-    });
+  it.each<["error" | "warning" | "info" | "success", "alert" | "status"]>([
+    ["error", "alert"],
+    ["warning", "alert"],
+    ["info", "status"],
+    ["success", "status"],
+  ])("uses the %s role for %s alerts", (severity, role) => {
+    renderWithProviders(<Alert severity={severity}>Message</Alert>);
+
+    expect(screen.getByRole(role)).toBeInTheDocument();
   });
 
-  describe("icon behavior", () => {
-    it("renders default icon based on severity", () => {
-      const { container } = renderWithProviders(<Alert severity="success">Test</Alert>);
-      // Icon component renders SVG, not img element
-      expect(container.querySelector("svg")).toBeInTheDocument();
-    });
+  it("renders an outlined alert without the subtle semantic background", () => {
+    const { container } = renderWithProviders(
+      <Alert severity="warning" variant="outline">
+        Check your settings.
+      </Alert>,
+    );
 
-    it("hides icon when icon={false}", () => {
-      const { container } = renderWithProviders(<Alert icon={false}>Test</Alert>);
-      expect(container.querySelector("svg")).not.toBeInTheDocument();
-    });
-
-    it("renders custom icon when provided", () => {
-      const CustomIcon = <span data-testid="custom-icon">🎉</span>;
-      renderWithProviders(<Alert icon={CustomIcon}>Test</Alert>);
-      expect(screen.getByTestId("custom-icon")).toBeInTheDocument();
-    });
-
-    it("respects custom icon map", () => {
-      const CustomCheckIcon = <span data-testid="custom-check">✓</span>;
-      renderWithProviders(
-        <Alert severity="success" iconMap={{ success: CustomCheckIcon }}>
-          Test
-        </Alert>,
-      );
-      expect(screen.getByTestId("custom-check")).toBeInTheDocument();
-    });
+    expect(container.firstChild).toHaveClass("border-2", "bg-surface-base", "border-border-warning");
+    expect(container.firstChild).not.toHaveClass("bg-bg-warning");
   });
 
-  describe("dismissal", () => {
-    it("does not render dismiss button by default", () => {
-      renderWithProviders(<Alert>Description</Alert>);
-      expect(screen.queryByLabelText("Dismiss alert")).not.toBeInTheDocument();
-    });
+  it("supports custom icons and removes the icon slot when disabled", () => {
+    const { container, rerender } = renderWithProviders(
+      <Alert icon={<span data-testid="custom-icon">!</span>}>Message</Alert>,
+    );
 
-    it("renders dismiss button when onDismiss is provided", () => {
-      renderWithProviders(<Alert onDismiss={() => {}}>Test</Alert>);
-      expect(screen.getByLabelText("Dismiss alert")).toBeInTheDocument();
-    });
+    expect(screen.getByTestId("custom-icon")).toBeInTheDocument();
 
-    it("calls onDismiss callback when alert is dismissed", async () => {
-      const handleDismiss = vi.fn();
-      renderWithProviders(<Alert onDismiss={handleDismiss}>Test</Alert>);
+    rerender(<Alert icon={false}>Message</Alert>);
 
-      const button = screen.getByLabelText("Dismiss alert");
-      const user = setupUser();
-      await user.click(button);
-      expect(handleDismiss).toHaveBeenCalledOnce();
-    });
+    expect(screen.queryByTestId("custom-icon")).not.toBeInTheDocument();
+    expect(container.querySelector("svg")).not.toBeInTheDocument();
+    expect(container.firstChild?.childNodes).toHaveLength(1);
   });
 
-  describe("visibility control", () => {
-    it("renders when isOpen={true} (default)", () => {
-      renderWithProviders(<Alert>Visible</Alert>);
-      expect(screen.getByText("Visible")).toBeInTheDocument();
-    });
+  it("only renders the actions slot when an action or dismiss button is present", () => {
+    const { container, rerender } = renderWithProviders(<Alert>Message</Alert>);
 
-    it("does not render when isOpen={false}", () => {
-      renderWithProviders(<Alert isOpen={false}>Hidden</Alert>);
-      expect(screen.queryByText("Hidden")).not.toBeInTheDocument();
-    });
+    expect(container.firstChild?.childNodes).toHaveLength(2);
 
-    it("respects isOpen prop even when onDismiss is provided", () => {
-      renderWithProviders(
-        <Alert onDismiss={() => {}} isOpen={false}>
-          Hidden
-        </Alert>,
-      );
-      expect(screen.queryByText("Hidden")).not.toBeInTheDocument();
-      expect(screen.queryByLabelText("Dismiss alert")).not.toBeInTheDocument();
-    });
+    rerender(
+      <Alert action={<button type="button">Retry</button>}>
+        Message
+      </Alert>,
+    );
+
+    expect(screen.getByRole("button", { name: "Retry" })).toBeInTheDocument();
   });
 
-  describe("styling variants", () => {
-    (["success", "error", "warning", "info"] as const).forEach((severity) => {
-      it(`renders with ${severity} severity variant`, () => {
-        const { container } = renderWithProviders(<Alert severity={severity}>Test</Alert>);
-        expect(container.firstChild).toBeInTheDocument();
-      });
-    });
+  it("closes uncontrolled dismissible alerts", async () => {
+    renderWithProviders(<Alert dismissible>Message</Alert>);
 
-    it("applies borderless variant when borderless={true}", () => {
-      const { container } = renderWithProviders(<Alert borderless>Test</Alert>);
-      // borderless applies border-0 p-0 classes
-      const el = container.firstChild;
-      expect(el && el instanceof HTMLElement && el.className).toMatch(
-        /border-0.*p-0|p-0.*border-0/,
-      );
-    });
+    await setupUser().click(screen.getByRole("button", { name: "Dismiss alert" }));
+
+    expect(screen.queryByText("Message")).not.toBeInTheDocument();
   });
 
-  describe("ref forwarding", () => {
-    it("forwards ref to container div by default", () => {
-      const ref = React.createRef<HTMLDivElement>();
-      renderWithProviders(<Alert ref={ref}>Test</Alert>);
-      expect(ref.current).toBeInTheDocument();
-      expect(ref.current?.tagName).toBe("DIV");
-    });
+  it("honors defaultOpen before its first render", () => {
+    renderWithProviders(<Alert defaultOpen={false}>Message</Alert>);
 
-    it("forwards ref to span element when as='span'", () => {
-      const ref = React.createRef<HTMLSpanElement>();
-      renderWithProviders(
-        <Alert as="span" ref={ref}>
-          Test
-        </Alert>,
-      );
-      expect(ref.current).toBeInTheDocument();
-      expect(ref.current?.tagName).toBe("SPAN");
-    });
-
-    it("forwards ref to p element when as='p'", () => {
-      const ref = React.createRef<HTMLParagraphElement>();
-      renderWithProviders(
-        <Alert as="p" ref={ref}>
-          Test
-        </Alert>,
-      );
-      expect(ref.current).toBeInTheDocument();
-      expect(ref.current?.tagName).toBe("P");
-    });
+    expect(screen.queryByText("Message")).not.toBeInTheDocument();
   });
 
-  describe("polymorphic rendering", () => {
-    it("renders as div by default", () => {
-      const { container } = renderWithProviders(<Alert>Test</Alert>);
-      expect(container.firstChild?.nodeName).toBe("DIV");
-    });
+  it("requests closure from controlled alerts and supports reopening", async () => {
+    const onOpenChange = vi.fn();
+    const { rerender } = renderWithProviders(
+      <Alert open dismissible onOpenChange={onOpenChange}>
+        Message
+      </Alert>,
+    );
 
-    it("renders as span when as='span'", () => {
-      const { container } = renderWithProviders(<Alert as="span">Test</Alert>);
-      expect(container.firstChild?.nodeName).toBe("SPAN");
-    });
+    await setupUser().click(screen.getByRole("button", { name: "Dismiss alert" }));
 
-    it("renders as p when as='p'", () => {
-      const { container } = renderWithProviders(<Alert as="p">Test</Alert>);
-      expect(container.firstChild?.nodeName).toBe("P");
-    });
+    expect(onOpenChange).toHaveBeenCalledWith(false);
+    expect(screen.getByText("Message")).toBeInTheDocument();
 
-    it("maintains component props regardless of as value", () => {
-      const { container: divContainer } = renderWithProviders(
-        <Alert severity="error" title="Error">
-          Div alert
-        </Alert>,
-      );
-      const { container: spanContainer } = renderWithProviders(
-        <Alert as="span" severity="error" title="Error">
-          Span alert
-        </Alert>,
-      );
+    rerender(
+      <Alert open={false} dismissible onOpenChange={onOpenChange}>
+        Message
+      </Alert>,
+    );
+    expect(screen.queryByText("Message")).not.toBeInTheDocument();
 
-      expect(divContainer.firstChild).toHaveAttribute("role", "alert");
-      expect(spanContainer.firstChild).toHaveAttribute("role", "alert");
-      expect(screen.getAllByText("Error")).toHaveLength(2);
-    });
+    rerender(
+      <Alert open dismissible onOpenChange={onOpenChange}>
+        Message
+      </Alert>,
+    );
+    expect(screen.getByText("Message")).toBeInTheDocument();
+  });
 
-    it("passes element-specific native props correctly", () => {
-      const { container } = renderWithProviders(
-        <Alert as="p" id="alert-para" data-testid="alert-element">
-          Paragraph alert
-        </Alert>,
-      );
-      const el = container.firstChild;
-      expect(el).toHaveAttribute("id", "alert-para");
-      expect(el).toHaveAttribute("data-testid", "alert-element");
-    });
+  it("forwards refs and supports section roots", () => {
+    const ref = React.createRef<HTMLElement>();
+    renderWithProviders(
+      <Alert as="section" ref={ref} data-testid="alert">
+        Message
+      </Alert>,
+    );
+
+    expect(screen.getByTestId("alert").tagName).toBe("SECTION");
+    expect(ref.current).toBe(screen.getByTestId("alert"));
   });
 });

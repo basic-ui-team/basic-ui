@@ -1,20 +1,18 @@
 import type React from "react";
 import type { CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
 
-type MessageSeverity = "success" | "error" | "warning" | "info";
+export type AlertSeverity = "success" | "error" | "warning" | "info";
+export type AlertVariant = "subtle" | "outline";
 
-export type AlertOwnProps = {
+export interface AlertOwnProps extends CommonProps {
   /** Alert type/severity — determines color and icon semantics. @default "info" */
-  severity?: MessageSeverity;
+  severity?: AlertSeverity;
 
-  /** Removes the default border and adjusts padding for a more compact look. @default false */
-  borderless?: boolean;
+  /** Alert visual style variant. @default "subtle" */
+  variant?: AlertVariant;
 
   /** Custom icon for the alert. Set to `false` to disable the icon. */
   icon?: React.ReactNode | false;
-
-  /** Optional mapping of severity levels to custom icons. Overrides default icons when provided. */
-  iconMap?: Partial<Record<MessageSeverity, React.ReactNode>>;
 
   /** Alert title/heading text. Optional. Rendered above description. */
   title?: React.ReactNode;
@@ -22,13 +20,22 @@ export type AlertOwnProps = {
   /** Custom action element to be rendered within the alert. */
   action?: React.ReactNode;
 
-  /** Callback fired when the alert is dismissed. If provided, the alert becomes dismissible. */
-  onDismiss?: () => void;
+  /** Whether the alert renders a button that allows the user to close it. @default false */
+  dismissible?: boolean;
 
-  /** Whether the alert content is currently visible. Use to control dismissal. @default true */
-  isOpen?: boolean;
-} & CommonProps;
+  /** Controlled open state of the alert. */
+  open?: boolean;
 
-export type AllowedAlertElements = 'div' | 'span' | 'p';
+  /** Uncontrolled default open state of the alert. */
+  defaultOpen?: boolean;
 
-export type AlertProps<As extends AllowedAlertElements = 'div'> = RestrictedPropsWithAs<AlertOwnProps, As>;
+  /** Callback fired when the open state of the alert changes. */
+  onOpenChange?: (open: boolean) => void;
+}
+
+export type AllowedAlertElements = "div" | "section";
+
+export type AlertProps<As extends AllowedAlertElements = "div"> = RestrictedPropsWithAs<
+  AlertOwnProps,
+  As
+>;
