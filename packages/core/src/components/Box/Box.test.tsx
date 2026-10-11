@@ -44,22 +44,22 @@ describe("Box", () => {
 
     it("applies padding and margin tokens", () => {
       const { container } = renderWithProviders(
-        <Box p="sm" m="md">
+        <Box p={2} m={3}>
           Test
         </Box>,
       );
-      expect(container.firstChild).toHaveClass("p-sm");
-      expect(container.firstChild).toHaveClass("m-md");
+      expect(container.firstChild).toHaveClass("p-2");
+      expect(container.firstChild).toHaveClass("m-3");
     });
 
     it("resolves responsive objects to base when no breakpoint matches", () => {
       const { container } = renderWithProviders(
-        <Box display={{ base: "inline", md: "block" }} p={{ base: "sm", md: "lg" }}>
+        <Box display={{ base: "inline", md: "block" }} p={{ base: 2, md: 4 }}>
           Test
         </Box>,
       );
       expect(container.firstChild).toHaveClass("inline");
-      expect(container.firstChild).toHaveClass("p-sm");
+      expect(container.firstChild).toHaveClass("p-2");
     });
   });
 

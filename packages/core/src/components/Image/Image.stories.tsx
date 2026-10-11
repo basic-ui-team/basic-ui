@@ -43,7 +43,7 @@ export const ResponsivePicture: Story = {
 
 export const ObjectFit: Story = {
   render: () => (
-    <Flex direction="column" gap="md">
+    <Flex direction="column" gap={3}>
       <Box>
         <Text>Object Fit: Cover</Text>
         <Image
@@ -87,7 +87,7 @@ export const ObjectFit: Story = {
 const variants = ["none", "sm", "md", "lg", "xl", "full"] as const;
 export const Rounded: Story = {
   render: () => (
-    <Flex direction="column" gap="md">
+    <Flex direction="column" gap={3}>
       {variants.map((v) => (
         <Box key={v}>
           <Text>Rounded: {v}</Text>
@@ -106,7 +106,7 @@ export const Rounded: Story = {
 const aspectRatios = ["square", "video", "landscape", "portrait", "auto"] as const;
 export const AspectRatios: Story = {
   render: () => (
-    <Flex direction="column" gap="md">
+    <Flex direction="column" gap={3}>
       {aspectRatios.map((ar) => (
         <Box key={ar}>
           <Text>Aspect Ratio: {ar}</Text>

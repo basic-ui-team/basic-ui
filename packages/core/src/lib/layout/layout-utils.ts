@@ -1,4 +1,4 @@
-import LayoutProps, { SizingType, OverflowType, PositionType, SpacingType } from "./layout.types";
+import LayoutProps, { SizingType, OverflowType, PositionType, SpacingStep } from "./layout.types";
 import { cn } from "@basic-ui/react-utilities";
 import { useResponsiveProps } from "@basic-ui/react-utilities";
 import layoutVariants from "./layout.variants";
@@ -41,7 +41,7 @@ export const LAYOUT_PROP_NAMES = [
  *
  * @example
  * // Predefined variants—recommended for consistency
- * <Box h="full" w="fit" p="md" />
+ * <Box h="full" w="fit" p={3} />
  *
  * // For arbitrary Tailwind classes, use className prop
  * <Box h="full" className="h-[custom-value]" />
@@ -56,14 +56,14 @@ export const generateLayoutClassNames = (
   layout: LayoutProps,
 ): { layoutClassNameString: string } => {
   const defaultLayout = {
-    p: "none",
+    p: 0,
     px: "unset",
     py: "unset",
     pt: "unset",
     pr: "unset",
     pb: "unset",
     pl: "unset",
-    m: "none",
+    m: 0,
     mx: "unset",
     my: "unset",
     mt: "unset",
@@ -119,21 +119,21 @@ export const generateLayoutClassNames = (
   return {
     layoutClassNameString: cn(
       layoutVariants({
-        padding: padding as SpacingType | "unset",
-        paddingX: paddingX as SpacingType | "unset",
-        paddingY: paddingY as SpacingType | "unset",
-        paddingTop: paddingTop as SpacingType | "unset",
-        paddingRight: paddingRight as SpacingType | "unset",
-        paddingBottom: paddingBottom as SpacingType | "unset",
-        paddingLeft: paddingLeft as SpacingType | "unset",
-        margin: margin as SpacingType | "unset",
-        marginX: marginX as SpacingType | "unset",
-        marginY: marginY as SpacingType | "unset",
-        marginTop: marginTop as SpacingType | "unset",
-        marginRight: marginRight as SpacingType | "unset",
-        marginBottom: marginBottom as SpacingType | "unset",
-        marginLeft: marginLeft as SpacingType | "unset",
-        gap: gap as SpacingType,
+        padding: padding as SpacingStep | "unset",
+        paddingX: paddingX as SpacingStep | "unset",
+        paddingY: paddingY as SpacingStep | "unset",
+        paddingTop: paddingTop as SpacingStep | "unset",
+        paddingRight: paddingRight as SpacingStep | "unset",
+        paddingBottom: paddingBottom as SpacingStep | "unset",
+        paddingLeft: paddingLeft as SpacingStep | "unset",
+        margin: margin as SpacingStep | "unset",
+        marginX: marginX as SpacingStep | "unset",
+        marginY: marginY as SpacingStep | "unset",
+        marginTop: marginTop as SpacingStep | "unset",
+        marginRight: marginRight as SpacingStep | "unset",
+        marginBottom: marginBottom as SpacingStep | "unset",
+        marginLeft: marginLeft as SpacingStep | "unset",
+        gap: gap as SpacingStep,
         position: position as PositionType,
         overflow: overflow as OverflowType,
         overflowX: overflowX as OverflowType,

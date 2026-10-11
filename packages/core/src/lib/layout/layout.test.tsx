@@ -6,8 +6,8 @@ describe("Layout utils", () => {
   describe("splitLayoutProps", () => {
     it("separates layout props from rest", () => {
       const props = {
-        p: "sm",
-        mx: "lg",
+        p: 2,
+        mx: 4,
         position: "relative",
         overflow: "hidden",
         id: "my-id",
@@ -16,8 +16,8 @@ describe("Layout utils", () => {
 
       const { layout, rest } = splitLayoutProps(props);
 
-      expect(layout.p).toBe("sm");
-      expect(layout.mx).toBe("lg");
+      expect(layout.p).toBe(2);
+      expect(layout.mx).toBe(4);
       expect(layout.position).toBe("relative");
       expect(layout.overflow).toBe("hidden");
 
@@ -51,12 +51,12 @@ describe("Layout utils", () => {
 
     it("applies token classes for provided layout props", () => {
       renderWithProviders(
-        <TestComp layout={{ p: "sm", m: "md", position: "relative", overflow: "hidden" }} />,
+        <TestComp layout={{ p: 2, m: 3, position: "relative", overflow: "hidden" }} />,
       );
 
       const el = screen.getByTestId("layout");
-      expect(el).toHaveClass("p-sm");
-      expect(el).toHaveClass("m-md");
+      expect(el).toHaveClass("p-2");
+      expect(el).toHaveClass("m-3");
       expect(el).toHaveClass("relative");
       expect(el).toHaveClass("overflow-hidden");
     });
@@ -70,10 +70,10 @@ describe("Layout utils", () => {
     });
 
     it("resolves responsive objects to base value", () => {
-      renderWithProviders(<TestComp layout={{ p: { base: "xs", md: "lg" } }} />);
+      renderWithProviders(<TestComp layout={{ p: { base: 1, md: 4 } }} />);
       const el = screen.getByTestId("layout");
       // test environment matchMedia mocks no matches -> base used
-      expect(el).toHaveClass("p-xs");
+      expect(el).toHaveClass("p-1");
     });
 
     it("respects `unset` to avoid emitting token class", () => {

@@ -106,10 +106,10 @@ export const FullWidth: Story = {
 
 export const LoadingList: Story = {
   render: () => (
-    <Flex direction="column" gap="sm" className="w-80">
+    <Flex direction="column" gap={2} className="w-80">
       <Skeleton variant="text" animated />
       <Skeleton variant="text" animated />
-      <Box pt="sm">
+      <Box pt={2}>
         <Skeleton variant="rectangular" animated h="full" className="h-40 w-full" />
       </Box>
     </Flex>
@@ -119,9 +119,9 @@ export const LoadingList: Story = {
 export const UserCard: Story = {
   render: () => (
     <Box className="border border-border-base rounded-lg p-4 w-80">
-      <Flex align="center" gap="sm" pb="sm" w="full">
+      <Flex align="center" gap={2} pb={2} w="full">
         <Skeleton variant="circular" animated className="h-12 w-12" />
-        <Flex direction="column" gap="sm" align="end" w="full">
+        <Flex direction="column" gap={2} align="end" w="full">
           <Skeleton variant="text" animated w="full" className="w-48" />
           <Skeleton variant="text" animated w="full" className="w-24" />
         </Flex>

@@ -13,6 +13,7 @@ import {
   alertActionVariants,
 } from "./alert.variants";
 import { Box } from "../Box";
+import { Icon } from "../Icon";
 
 // Map alert severities to icon components
 const ICON_MAP: Record<string, React.ComponentType> = {
@@ -71,11 +72,7 @@ const _Alert = <As extends AllowedAlertElements = "div">(
       {...(props as any)}
     >
       {/* Icon */}
-      <Box as={Child} className={alertIconVariants()}>
-        <Box as="span" className="flex items-center justify-center w-lg h-lg" aria-hidden="true">
-          {iconElement}
-        </Box>
-      </Box>
+      <Icon icon={iconElement} className={alertIconVariants()} />
 
       {/* Content */}
       <Box as={Child} className={alertContentVariants()}>
@@ -89,10 +86,12 @@ const _Alert = <As extends AllowedAlertElements = "div">(
         {onDismiss && (
           <button
             onClick={handleDismiss}
-            className="shrink-0 -mr-sm -my-sm p-sm hover:bg-black/5 rounded transition-colors"
+            className="shrink-0 -mr-2 -my-2 p-2 hover:bg-black/5 rounded transition-colors"
             aria-label="Dismiss alert"
           >
-            <Box as="span" className="flex items-center justify-center w-lg h-lg" aria-hidden="true"><XIcon /></Box>
+            <Box as="span" className="flex items-center justify-center w-4 h-4" aria-hidden="true">
+              <XIcon />
+            </Box>
           </button>
         )}
       </Box>

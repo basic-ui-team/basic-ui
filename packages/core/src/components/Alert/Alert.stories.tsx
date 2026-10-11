@@ -18,7 +18,7 @@ type Story = StoryObj<typeof Alert>;
 
 export const AllSeverities: Story = {
   render: () => (
-    <Flex direction="column" gap="md">
+    <Flex direction="column" gap={3}>
       <Alert severity="info">This is an info alert.</Alert>
       <Alert severity="success">This is a success alert.</Alert>
       <Alert severity="warning">This is a warning alert.</Alert>
@@ -29,7 +29,7 @@ export const AllSeverities: Story = {
 
 export const Borderless: Story = {
   render: () => (
-    <Flex direction="column" gap="md">
+    <Flex direction="column" gap={3}>
       <Alert severity="info" borderless>
         This is an info alert.
       </Alert>
@@ -48,7 +48,7 @@ export const Borderless: Story = {
 
 export const WithTitle: Story = {
   render: () => (
-    <Flex direction="column" gap="md">
+    <Flex direction="column" gap={3}>
       <Alert severity="info" title="Info Alert">
         This is an info alert.
       </Alert>
@@ -67,7 +67,7 @@ export const WithTitle: Story = {
 
 export const WithIcon: Story = {
   render: () => (
-    <Flex direction="column" gap="md">
+    <Flex direction="column" gap={3}>
       <Alert severity="info" title="Info Alert" icon={<BriefcaseIcon />}>
         This is an info alert.
       </Alert>
@@ -118,7 +118,7 @@ export const ControlledDismissal: Story = {
     const [isOpen, setIsOpen] = useState(true);
 
     return (
-      <Flex direction="column" gap="md">
+      <Flex direction="column" gap={3}>
         <button
           onClick={() => setIsOpen(true)}
           className="self-start px-4 py-2 bg-surface-info text-fg-info font-bold rounded hover:bg-surface-base/80 transition-colors"
@@ -143,7 +143,7 @@ export const ControlledDismissal: Story = {
 
 export const AsDifferentElement: Story = {
   render: () => (
-    <Flex direction="column" gap="md">
+    <Flex direction="column" gap={3}>
       <Alert as="span" severity="info">
         This alert is rendered as a &lt;span&gt; element.
       </Alert>

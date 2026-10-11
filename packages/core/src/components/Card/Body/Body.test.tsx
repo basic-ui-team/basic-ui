@@ -10,13 +10,13 @@ describe("Card.Body", () => {
     const { container } = renderWithProviders(<CardBody>Content</CardBody>);
     const el = container.querySelector("div");
     expect(el).toBeInTheDocument();
-    expect(el).toHaveClass("p-md");
+    expect(el).toHaveClass("p-3");
   });
 
   it("applies compact variant classes", () => {
     const { container } = renderWithProviders(<CardBody variant="compact">C</CardBody>);
     const el = container.querySelector("div");
-    expect(el).toHaveClass("p-sm");
+    expect(el).toHaveClass("p-2");
   });
 
   it("receives disabled state from Card context", () => {

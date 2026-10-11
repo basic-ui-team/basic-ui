@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority";
 // import { tokens as t} from "@basic-ui/tokens" tailwind doesn't support dynamic class names:(
 
-export const alertVariants = cva("flex gap-md rounded-lg border p-md", {
+export const alertVariants = cva("flex gap-3 rounded-lg border p-3", {
   variants: {
     severity: {
       success: `border-border-success bg-bg-success text-fg-success`,
@@ -25,4 +25,4 @@ export const alertIconVariants = cva("flex-shrink-0 h-5 w-5");
 
 export const alertContentVariants = cva("flex-1 text-sm");
 
-export const alertActionVariants = cva("ml-auto flex items-center gap-sm");
+export const alertActionVariants = cva("ml-auto flex items-center gap-2");

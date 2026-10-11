@@ -13,7 +13,7 @@ type Story = StoryObj<typeof Text>;
 
 export const SizeVariants: Story = {
   render: () => (
-    <div className="flex flex-col gap-md">
+    <div className="flex flex-col gap-3">
       <Text size="xs">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
         ut labore et dolore magna aliqua.
@@ -48,7 +48,7 @@ export const SizeVariants: Story = {
 
 export const WeightVariants: Story = {
   render: () => (
-    <div className="flex flex-col gap-md">
+    <div className="flex flex-col gap-3">
       <Text weight="normal">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
         ut labore et dolore magna aliqua. (Default)
@@ -71,7 +71,7 @@ export const WeightVariants: Story = {
 
 export const ColorVariants: Story = {
   render: () => (
-    <div className="flex flex-col gap-md">
+    <div className="flex flex-col gap-3">
       <Text color="default">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
         ut labore et dolore magna aliqua. (Default)
@@ -114,7 +114,7 @@ export const ColorVariants: Story = {
 
 export const AlignmentVariants: Story = {
   render: () => (
-    <Flex direction="column" gap="md">
+    <Flex direction="column" gap={3}>
       <Text align="left">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
         ut labore et dolore magna aliqua. (Left Aligned)
@@ -144,7 +144,7 @@ export const TruncateVariant: Story = {
 
 export const WrapVariants: Story = {
   render: () => (
-    <Flex direction="column" align="center" gap="md">
+    <Flex direction="column" align="center" gap={3}>
       <div className="w-128 border p-2 border-gray-300 rounded">
         <Text wrap="nowrap">
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
@@ -191,7 +191,7 @@ export const WrapVariants: Story = {
 
 export const PolymorphicVariants: Story = {
   render: () => (
-    <div className="flex flex-col gap-md">
+    <div className="flex flex-col gap-3">
       <Text as="span">
         This is a <strong>span</strong> element. (Note: alignment variants won't apply to span since
         text-align doesn't affect inline elements)
@@ -208,7 +208,7 @@ export const PolymorphicVariants: Story = {
 
 export const CombinedVariants: Story = {
   render: () => (
-    <div className="flex flex-col gap-md">
+    <div className="flex flex-col gap-3">
       <Text size="lg" weight="bold" color="primary" align="center" wrap="balance">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
         ut labore et dolore magna aliqua. (Combined Variants)
@@ -219,7 +219,7 @@ export const CombinedVariants: Story = {
 
 export const ComposedExample: Story = {
   render: () => (
-    <div className="flex flex-col gap-md w-full">
+    <div className="flex flex-col gap-3 w-full">
       <Text wrap="pretty">
         Welcome to the Basic UI Component Library 🎉. This body of text can have a variety of
         different inline styles applied such as <strong>bold text</strong>. Maybe we can have some{" "}

@@ -65,10 +65,10 @@ export const MyComp = forwardRefWithAs<MyCompOwnProps, AllowedElements>(_MyComp)
 
 Components in `packages/core/src/components/**` follow these rules. Full rationale and dependency audit: `.docs/engineering/core-design/component-import-analysis.md`.
 
-1. **Primitive layer:** `Box` is the styled-element foundation. Any component may import it. It is the only public component that may be imported by other components.
+1. **Primitive layer:** `Box` is the styled-element foundation and `Icon` is the SVG presentation primitive. Any component may import either one.
    - **Placement (#84):** `Box` lives in `@basic-ui/core` at `components/Box` — by convention, not in a separate package. The composition rule plus the CI check (`scripts/check-component-imports.mjs`) provide the structural guarantee; a dedicated package would add dependency and packaging overhead without behavioral benefit.
-   - **Import specifier:** always import it relatively, e.g. `import { Box, BoxProps } from "../Box"` (depth-adjusted). Do not use `@core/components`, `@core/components/Box`, or other aliases — the relative form keeps the primitive dependency explicit and refactor-safe.
-2. **No sibling imports:** a component may not import another public component except `Box`. Composing richer components happens via explicit props (render slots, e.g. `Alert.icon`, `Button.loadingIcon`) or children — never hidden internal renders.
+   - **Import specifier:** always import primitives relatively, e.g. `import { Box, BoxProps } from "../Box"` or `import { Icon } from "../Icon"` (depth-adjusted). Do not use `@core/components`, component aliases, or other aliases — the relative form keeps the primitive dependency explicit and refactor-safe.
+2. **No sibling imports:** a component may not import another public component except `Box` and `Icon`. Composing richer components happens via explicit props (render slots, e.g. `Alert.icon`, `Button.loadingIcon`) or children — never hidden internal renders. Put cross-component behavior in shared hooks and helpers instead.
 3. **Own anatomy is fine:** files within a component's own folder (context, variants, types, parts) may import each other freely.
 4. **Shared internals** (hooks, helpers) go to `@basic-ui/react-utilities`, not into another component.
 
@@ -103,7 +103,7 @@ Enforced by `scripts/check-component-imports.mjs` in CI (see Enforcement below).
 
 - Reviewers should check for: consistent naming, exported API, proper typing, and basic a11y tests.
 - Consider adding lint or commit hooks if the team agrees to enforce naming conventions automatically.
-- `scripts/check-component-imports.mjs` runs in CI and fails when a component imports a sibling public component other than `Box` (see the composition rule above).
+- `scripts/check-component-imports.mjs` runs in CI and fails when a component imports a sibling public component other than `Box` or `Icon` (see the composition rule above).
 
 ---
 

@@ -7,11 +7,11 @@ export const spinnerVariants = cva(
       size: {
         // For each size, the border width is proportional to create a consistent visual appearance
         // Border width should be ~1/6 to 1/8 of the diameter to show spinning motion while maintaining circle shape
-        xs: "h-md w-md border-2",
-        sm: "h-lg w-lg border-3",
-        md: "h-xl w-xl border-4",
-        lg: "h-2xl w-2xl border-5",
-        xl: "w-3xl h-3xl border-6",
+        xs: "h-3 w-3 border-2",
+        sm: "h-4 w-4 border-3",
+        md: "h-5 w-5 border-4",
+        lg: "h-6 w-6 border-5",
+        xl: "w-7 h-7 border-6",
       },
       color: {
         default: "border-border-base border-t-transparent",

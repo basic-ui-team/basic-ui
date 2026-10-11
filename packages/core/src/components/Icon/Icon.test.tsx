@@ -24,10 +24,13 @@ describe("Icon", () => {
       expect(screen.getByTestId("test-svg")).toBeInTheDocument();
     });
 
-    it("should render a span wrapper", () => {
+    it("should render exactly one span wrapper around the icon", () => {
       const { container } = render(<Icon icon={<TestIcon />} />);
       const span = container.querySelector("span");
+
       expect(span).toBeInTheDocument();
+      expect(container.querySelectorAll("span")).toHaveLength(1);
+      expect(span?.querySelector("svg")).toBeInTheDocument();
     });
 
     it("should render string content as icon", () => {
@@ -45,7 +48,7 @@ describe("Icon", () => {
     it("should apply size variant classes", () => {
       const { container } = render(<Icon icon={<TestIcon />} size="lg" />);
       const span = container.querySelector("span");
-      expect(span).toHaveClass("w-2xl", "h-2xl");
+      expect(span).toHaveClass("w-6", "h-6");
     });
 
     it("should apply all size variants", () => {
@@ -90,7 +93,7 @@ describe("Icon", () => {
     it('should use "md" as default size', () => {
       const { container } = render(<Icon icon={<TestIcon />} />);
       const span = container.querySelector("span");
-      expect(span).toHaveClass("w-xl", "h-xl"); // md size
+      expect(span).toHaveClass("w-6", "h-6"); // md size
     });
 
     it('should use "default" as default variant', () => {
@@ -157,7 +160,25 @@ describe("Icon", () => {
         <Icon icon={<TestIcon />} className="hover:opacity-75" size="sm" />,
       );
       const span = container.querySelector("span");
-      expect(span).toHaveClass("w-lg", "h-lg", "hover:opacity-75");
+      expect(span).toHaveClass("w-4", "h-4", "hover:opacity-75");
+    });
+
+    it("should apply layout props to its existing wrapper", () => {
+      const { container } = render(<Icon icon={<TestIcon />} p={2} m={3} />);
+      const span = container.querySelector("span");
+
+      expect(span).toHaveClass("p-2", "m-3");
+      expect(container.querySelectorAll("span")).toHaveLength(1);
+    });
+
+    it("should resolve responsive layout props on its existing wrapper", () => {
+      const { container } = render(
+        <Icon icon={<TestIcon />} p={{ base: 1, md: 4 }} />,
+      );
+      const span = container.querySelector("span");
+
+      expect(span).toHaveClass("p-1");
+      expect(container.querySelectorAll("span")).toHaveLength(1);
     });
   });
 
@@ -212,7 +233,7 @@ describe("Icon", () => {
       );
       const span = container.querySelector("span");
       // Note: color override (text-dark) replaces variant color
-      expect(span).toHaveClass("w-2xl", "h-2xl", "text-dark");
+      expect(span).toHaveClass("w-6", "h-6", "text-dark");
       expect(span).not.toHaveClass("text-success");
       expect(span).toHaveAttribute("aria-hidden", "true");
     });
@@ -229,7 +250,7 @@ describe("Icon", () => {
         />,
       );
       const img = screen.getByRole("img", { name: "Loading spinner" });
-      expect(img).toHaveClass("animate-spin", "text-primary", "w-xl", "h-xl");
+      expect(img).toHaveClass("animate-spin", "text-primary", "w-6", "h-6");
     });
 
     it("should work with responsive size as object", () => {

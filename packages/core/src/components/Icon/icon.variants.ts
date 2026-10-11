@@ -3,13 +3,11 @@ import { cva } from "class-variance-authority";
 export const iconVariants = cva("", {
   variants: {
     size: {
-      xs: "w-md h-md",
-      sm: "w-lg h-lg",
-      md: "w-xl h-xl",
-      lg: "w-2xl h-2xl",
-      xl: "w-3xl h-3xl",
-      xxl: "w-4xl h-4xl",
-      xxxl: "w-5xl h-5xl",
+      xs: "w-3 h-3",
+      sm: "w-4 h-4",
+      md: "w-6 h-6",
+      lg: "w-6 h-6",
+      xl: "w-7 h-7",
     },
     variant: {
       default: "text-primary",

@@ -101,7 +101,7 @@ export const WithCustomContent: Story = {
  */
 export const AllColors: Story = {
   render: () => (
-    <Flex gap="lg" wrap="wrap">
+    <Flex gap={4} wrap="wrap">
       {(["primary", "secondary", "success", "warning", "error", "info"] as const).map((color) => (
         <Box key={color} className="relative w-12 h-12">
           <Badge content={color.charAt(0).toUpperCase()} color={color}>
@@ -120,7 +120,7 @@ export const AllColors: Story = {
  */
 export const Variants: Story = {
   render: () => (
-    <Flex gap="lg">
+    <Flex gap={4}>
       <Box className="relative w-12 h-12">
         <Badge content="9" variant="standard" color="primary">
           <Box className="w-12 h-12 bg-surface-base rounded-lg flex items-center justify-center">
@@ -144,7 +144,7 @@ export const Variants: Story = {
  */
 export const AllSizes: Story = {
   render: () => (
-    <Flex gap="lg" align="start" p="md">
+    <Flex gap={4} align="start" p={3}>
       {(["small", "medium", "large"] as const).map((size) => (
         <Box key={size} className="relative w-12 h-12">
           <Badge content={size.charAt(0).toUpperCase()} size={size} color="primary">
@@ -163,7 +163,7 @@ export const AllSizes: Story = {
  */
 export const AllShapes: Story = {
   render: () => (
-    <Flex gap="lg" align="start" p="md">
+    <Flex gap={4} align="start" p={3}>
       {(["rounded", "square", "circular"] as const).map((shape) => (
         <Box key={shape} className="relative w-12 h-12">
           <Badge content="5" shape={shape} color="primary">
@@ -182,7 +182,7 @@ export const AllShapes: Story = {
  */
 export const AllPositions: Story = {
   render: () => (
-    <Flex gap="lg" wrap="wrap">
+    <Flex gap={4} wrap="wrap">
       {(["top-left", "top-right", "bottom-left", "bottom-right"] as const).map((position) => (
         <Box key={position} className="relative w-12 h-12">
           <Badge content="5" position={position} color="primary">
@@ -203,7 +203,7 @@ export const AllPositions: Story = {
  */
 export const WithMaxValue: Story = {
   render: () => (
-    <Flex gap="lg">
+    <Flex gap={4}>
       <Box className="relative w-12 h-12">
         <Badge content={5} max={10} color="primary">
           <Box className="w-12 h-12 bg-surface-base rounded-lg flex items-center justify-center">
@@ -243,7 +243,7 @@ export const WithPing: Story = {
  */
 export const Visibility: Story = {
   render: () => (
-    <Flex gap="lg">
+    <Flex gap={4}>
       <Box className="relative w-12 h-12">
         <Badge content="5" visible={true} color="primary">
           <Box className="w-12 h-12 bg-surface-base rounded-lg flex items-center justify-center">

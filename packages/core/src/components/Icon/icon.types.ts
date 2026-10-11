@@ -1,5 +1,6 @@
 import React from "react";
 import type { ResponsiveValue } from "@basic-ui/react-utilities";
+import { LayoutProps } from "@core/lib/layout";
 
 /**
  * Icon semantic color variants aligned with design tokens
@@ -33,7 +34,7 @@ export type IconSizeValue = "xs" | "sm" | "md" | "lg" | "xl";
  */
 export type IconSize = ResponsiveValue<IconSizeValue>;
 
-export interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
+export interface IconProps extends LayoutProps, React.HTMLAttributes<HTMLSpanElement> {
   /**
    * The icon to render — can be an SVG component or React node
    * Pass icon components from @basic-ui/icons or custom SVG elements

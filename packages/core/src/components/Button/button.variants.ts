@@ -2,7 +2,7 @@ import { cva } from "class-variance-authority";
 
 export const buttonVariants = cva(
   [
-    "relative inline-flex items-center justify-center gap-sm font-medium select-none",
+    "relative inline-flex items-center justify-center gap-2 font-medium select-none",
     "transition-all duration-slow ease-spring",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-500",
     "text-fg-base disabled:text-fg-muted",
@@ -10,9 +10,9 @@ export const buttonVariants = cva(
   {
     variants: {
       size: {
-        sm: "px-sm py-xs text-sm gap-xs rounded-md",
-        md: "px-md py-sm text-md gap-sm rounded-lg",
-        lg: "px-lg py-md text-lg gap-md rounded-xl",
+        sm: "px-2 py-1 text-sm gap-1 rounded-md",
+        md: "px-3 py-2 text-md gap-2 rounded-lg",
+        lg: "px-4 py-3 text-lg gap-3 rounded-xl",
       },
       variant: {
         solid: "",
@@ -92,7 +92,7 @@ export const buttonVariants = cva(
 
 // Only needed if the icon passed in is not an Icon component (which applies its own size classes based on the button size).
 export const buttonLoaderVariants = cva(
-  "flex items-center justify-center gap-md",
+  "flex items-center justify-center gap-3",
   {
     variants: {
       label: {
@@ -103,10 +103,10 @@ export const buttonLoaderVariants = cva(
   },
 );
 
-// Visual equivalent of Spinner size="sm" (spinnerVariants sm: h-lg w-lg border-3).
+// Visual equivalent of Spinner size="sm" (spinnerVariants sm: h-4 w-4 border-3).
 // Inlined per the composition rule — only Box may be imported by other components.
 export const buttonSpinnerVariants = cva(
-  "animate-spin rounded-full border-solid border-current border-border-base border-t-transparent h-lg w-lg border-3",
+  "animate-spin rounded-full border-solid border-current border-border-base border-t-transparent h-4 w-4 border-3",
 );
 
 export const buttonIconVariants = cva("flex-shrink-0", {

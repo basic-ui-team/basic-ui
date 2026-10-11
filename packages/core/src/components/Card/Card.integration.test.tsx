@@ -30,7 +30,7 @@ describe("Card integration", () => {
     expect(img).toHaveClass("object-cover");
 
     const header = container.querySelector("header");
-    expect(header).toHaveClass("p-md");
+    expect(header).toHaveClass("p-3");
 
     const footer = container.querySelector("footer");
     expect(footer).toHaveClass("sticky");
