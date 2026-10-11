@@ -364,4 +364,38 @@ describe("Tooltip", () => {
       vi.useRealTimers();
     }
   });
+
+  it("supports controlled open state through the component", () => {
+    vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout", "requestAnimationFrame", "cancelAnimationFrame"] });
+    try {
+      const onOpenChange = vi.fn();
+      const { rerender } = renderWithProviders(
+        <Tooltip open={false} onOpenChange={onOpenChange} delay={0} label="Controlled hint">
+          <button>Hover me</button>
+        </Tooltip>,
+      );
+      const trigger = screen.getByRole("button", { name: "Hover me" });
+
+      act(() => {
+        hover(trigger);
+        vi.advanceTimersByTime(0);
+      });
+
+      expect(onOpenChange).toHaveBeenCalledWith(true);
+      expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+
+      rerender(
+        <Tooltip open onOpenChange={onOpenChange} delay={0} label="Controlled hint">
+          <button>Hover me</button>
+        </Tooltip>,
+      );
+      act(() => {
+        flushFrame();
+      });
+
+      expect(screen.getByRole("tooltip")).toHaveTextContent("Controlled hint");
+    } finally {
+      vi.useRealTimers();
+    }
+  });
 });

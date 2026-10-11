@@ -72,8 +72,8 @@ export function useTooltip<T extends HTMLElement = HTMLElement>(
 ): UseTooltipResult<T> {
   const {
     anchorRef,
-    delay = 400,
-    closeDelay = 200,
+    delay = 200,
+    closeDelay = 100,
     side = "bottom",
     align = "center",
     sideOffset = 8,

@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { cn, Portal, useResponsiveProps, useTooltip } from "@basic-ui/react-utilities";
+import { cn, Portal, useTooltip } from "@basic-ui/react-utilities";
 import { Box } from "../Box";
 import { TooltipProps } from "./tooltip.types";
 import { tooltipVariants } from "./tooltip.variants";
@@ -18,8 +18,7 @@ import { tooltipVariants } from "./tooltip.variants";
  * - `role="tooltip"` + `aria-describedby` wiring from the hook; any
  *   description IDs already on the trigger are preserved
  * - Dismissible with Escape by default
- * - Sizes (`sm`/`md`/`lg`, responsive) and semantic colours via CVA on
- *   basic-ui tokens
+ * - A consistent surface style that can be customized with `className`
  *
  * @example
  * <Tooltip label="Save changes">
@@ -31,25 +30,31 @@ export const Tooltip: React.FC<TooltipProps> = ({
   children,
   side = "bottom",
   align = "center",
+  sideOffset,
+  viewportPadding,
   delay,
   closeDelay,
+  open,
+  defaultOpen,
+  onOpenChange,
   disabled = false,
-  color = "inverted",
-  bordered = false,
-  size,
   dismissOnEscape,
   className,
   id,
   style,
 }) => {
   const anchorRef = useRef<HTMLDivElement>(null);
-  const { size: resolvedSize } = useResponsiveProps({ size: size ?? "md" });
-  const { open, triggerProps, tooltipProps } = useTooltip({
+  const { open: isOpen, triggerProps, tooltipProps } = useTooltip({
     anchorRef,
     side,
     align,
+    sideOffset,
+    viewportPadding,
     delay,
     closeDelay,
+    open,
+    defaultOpen,
+    onOpenChange,
     dismissOnEscape,
     disabled,
   });
@@ -64,7 +69,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
   const childProps = (children as React.ReactElement<Record<string, unknown>>).props;
   const describedBy = childProps["aria-describedby"];
   const trigger = React.cloneElement(children as React.ReactElement<Record<string, unknown>>, {
-    "aria-describedby": open
+    "aria-describedby": isOpen
       ? [typeof describedBy === "string" ? describedBy : undefined, effectiveId]
           .filter(Boolean)
           .join(" ")
@@ -82,14 +87,14 @@ export const Tooltip: React.FC<TooltipProps> = ({
       onBlur={disabled ? undefined : triggerProps.onBlur}
     >
       {disabled ? children : trigger}
-      {open && !disabled && (
+      {isOpen && !disabled && (
         <Portal>
           <Box
             ref={tooltipProps.ref}
             id={effectiveId}
             role="tooltip"
             style={{ ...tooltipProps.style, ...style }}
-            className={cn(tooltipVariants({ color, size: resolvedSize, bordered }), className)}
+            className={cn(tooltipVariants, className)}
             onPointerEnter={tooltipProps.onPointerEnter}
             onPointerLeave={tooltipProps.onPointerLeave}
           >

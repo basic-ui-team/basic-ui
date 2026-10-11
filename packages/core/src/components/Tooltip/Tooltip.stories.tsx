@@ -1,7 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { HelpCircleIcon } from "@basic-ui/icons";
 import { Tooltip } from "./Tooltip";
 import { Box } from "../Box";
+import { Button } from "../Button";
 import { Flex } from "../Flex";
+import { Icon } from "../Icon";
 import { Text } from "../Text";
 
 const meta: Meta<typeof Tooltip> = {
@@ -15,12 +18,6 @@ const meta: Meta<typeof Tooltip> = {
   argTypes: {
     side: { control: "select", options: ["top", "right", "bottom", "left"] },
     align: { control: "select", options: ["start", "center", "end"] },
-    color: {
-      control: "select",
-      options: ["default", "inverted", "primary", "success", "warning", "error", "info"],
-    },
-    size: { control: "select", options: ["sm", "md", "lg"] },
-    bordered: { control: "boolean" },
     disabled: { control: "boolean" },
     delay: { control: "number" },
     closeDelay: { control: "number" },
@@ -33,7 +30,7 @@ type Story = StoryObj<typeof Tooltip>;
 export const Default: Story = {
   args: {
     label: "A short helpful hint",
-    children: <button>Hover or focus me</button>,
+    children: <Button>Hover or focus me</Button>,
   },
 };
 
@@ -42,7 +39,7 @@ export const Delayed: Story = {
     label: "This tooltip waits 800ms before appearing",
     delay: 800,
     closeDelay: 400,
-    children: <button>Delayed tooltip</button>,
+    children: <Button>Delayed tooltip</Button>,
   },
 };
 
@@ -50,55 +47,50 @@ export const WithDisabledTrigger: Story = {
   args: {
     label: "You will never see this",
     disabled: true,
-    children: <button disabled>Disabled trigger</button>,
+    children: <Button disabled>Disabled trigger</Button>,
   },
 };
 
 export const Sides: Story = {
   render: () => (
-    <Flex direction="column" gap="lg" align="center">
+    <Flex direction="column" gap="xl" mt="2xl">
       {(["top", "right", "bottom", "left"] as const).map((side) => (
-        <Tooltip key={side} label={`Tooltip on the ${side}`} side={side}>
-          <button>{side}</button>
-        </Tooltip>
+        <Flex key={side} gap="lg" justify="evenly" align="center">
+          {(["start", "center", "end"] as const).map((align) => (
+            <Tooltip
+              key={`${side}-${align}`}
+              label={`Tip`}
+              side={side}
+              align={align}
+            >
+              <Button>
+                {side} / {align}
+              </Button>
+            </Tooltip>
+          ))}
+        </Flex>
       ))}
-    </Flex>
-  ),
-};
-
-export const Sizes: Story = {
-  render: () => (
-    <Flex direction="column" gap="lg" align="start">
-      {(["sm", "md", "lg"] as const).map((size) => (
-        <Tooltip key={size} label={`A ${size} tooltip`} size={size}>
-          <button>{size}</button>
-        </Tooltip>
-      ))}
-    </Flex>
-  ),
-};
-
-export const Colors: Story = {
-  render: () => (
-    <Flex direction="column" gap="lg" align="start">
-      {(["default", "inverted", "primary", "success", "warning", "error", "info"] as const).map(
-        (color) => (
-          <Tooltip key={color} label={`A ${color} tooltip`} color={color} bordered>
-            <button>{color}</button>
-          </Tooltip>
-        ),
-      )}
     </Flex>
   ),
 };
 
 export const AccessibleTrigger: Story = {
   render: () => (
-    <Box>
+    <Box className="flex justify-center">
       <Tooltip label="Save your changes to the server">
-        <button>Save</button>
+        <Button>Save</Button>
       </Tooltip>
     </Box>
+  ),
+};
+
+export const IconTrigger: Story = {
+  render: () => (
+    <Tooltip label="More information about this feature">
+      <Button aria-label="More information" variant="ghost">
+        <Icon icon={<HelpCircleIcon />} size="lg" />
+      </Button>
+    </Tooltip>
   ),
 };
 
@@ -106,8 +98,7 @@ export const LongContent: Story = {
   args: {
     label:
       "A longer tooltip message that wraps across multiple lines because tooltips should remain readable at a comfortable measure.",
-    size: "lg",
-    children: <button>Long message</button>,
+    children: <Button>Long message</Button>,
   },
 };
 
@@ -115,7 +106,7 @@ export const TextTrigger: Story = {
   render: () => (
     <Text>
       Hover over this{" "}
-      <Tooltip label="Inline text triggers work too" size="sm">
+      <Tooltip label="Inline text triggers work too">
         <span className="underline decoration-dotted cursor-help">dotted term</span>
       </Tooltip>{" "}
       for a definition.
