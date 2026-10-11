@@ -66,6 +66,17 @@ describe("Dialog", () => {
     expect(screen.getByRole("dialog")).toHaveClass("w-full");
   });
 
+  it("layers the modal surface above its backdrop", () => {
+    const { baseElement } = renderWithProviders(
+      <Dialog open title="Confirm">
+        Dialog content
+      </Dialog>,
+    );
+
+    expect(baseElement.querySelector(".z-overlay")).toBeInTheDocument();
+    expect(screen.getByRole("dialog")).toHaveClass("z-modal");
+  });
+
   it("does not add title spacing when the title is omitted", () => {
     renderWithProviders(
       <Dialog open aria-label="Dialog without a title">

@@ -15,7 +15,7 @@ export const dialogOverlayVariants = cva(
   },
 );
 
-export const dialogBackdropVariants = cva("fixed inset-0 bg-black/50");
+export const dialogBackdropVariants = cva("fixed inset-0 z-overlay bg-black/50");
 
 export const dialogVariants = cva(
   [
@@ -30,7 +30,7 @@ export const dialogVariants = cva(
         false: "",
       },
       modal: {
-        true: "z-100",
+        true: "z-modal",
         false: "pointer-events-auto",
       },
       size: {
