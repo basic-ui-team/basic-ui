@@ -34,6 +34,7 @@ describe("Card integration", () => {
 
     const footer = container.querySelector("footer");
     expect(footer).toHaveClass("sticky");
+    expect(footer).toHaveClass("z-sticky");
 
     // keyboard activation
     root.focus();

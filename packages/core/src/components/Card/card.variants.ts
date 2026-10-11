@@ -50,7 +50,7 @@ export const cardSectionVariants = cva("", {
       compact: "p-2",
     },
     sticky: {
-      true: "sticky bottom-0 z-dropdown bg-surface-base/5 backdrop-blur-xs",
+      true: "sticky bottom-0 z-sticky bg-surface-base/5 backdrop-blur-xs",
       false: "",
     },
     disabled: {
