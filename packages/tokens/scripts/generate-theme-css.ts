@@ -1,5 +1,6 @@
 import { lightTheme } from "../src/themes/light";
 import { darkTheme } from "../src/themes/dark";
+import { resolveTheme } from "../src/runtime/resolveTheme";
 import { themeToCSSVariables } from "../src/serialization/themeToCSSVariables";
 import { writeFileSync, mkdirSync } from "node:fs";
 import { resolve, dirname, relative } from "node:path";
@@ -34,8 +35,8 @@ function resolveVariableReference(
 }
 
 function generateTheme() {
-  const lightThemeObj = themeToCSSVariables(lightTheme);
-  const darkThemeObj = themeToCSSVariables(darkTheme);
+  const lightThemeObj = themeToCSSVariables(resolveTheme(lightTheme));
+  const darkThemeObj = themeToCSSVariables(resolveTheme(darkTheme));
 
   const lightProps = lightThemeObj.customProperties;
   const darkProps = darkThemeObj.customProperties;

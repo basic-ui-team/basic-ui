@@ -1,5 +1,5 @@
 import type ThemeConfig from "../types";
-import { DEFAULT_SPACING_SCALE, resolveSpacingScale } from "../scales/spacing";
+import { DEFAULT_SPACING_SCALE } from "../scales/spacing";
 
 export const lightTheme: ThemeConfig = {
   color: {
@@ -106,7 +106,7 @@ export const lightTheme: ThemeConfig = {
       950: "oklch(13% 0.028 261.692)",
     },
   },
-  spacing: resolveSpacingScale(DEFAULT_SPACING_SCALE),
+  spacing: DEFAULT_SPACING_SCALE,
   radius: {
     none: "0",
     sm: "0.25rem",

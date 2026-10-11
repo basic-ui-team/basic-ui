@@ -12,7 +12,8 @@ export type {
   SpacingScaleRounding,
   SpacingScaleUnit,
   SpacingStep,
-  SpacingStepToken,
+  ResolvedSpacingScale,
+  ThemeOverride,
   RadiusToken,
   ShadowToken,
   FontSizeTokens,
@@ -29,7 +30,8 @@ export type {
 } from "./types";
 
 import type ThemeConfig from "./types";
-export type { ThemeConfig };
+import type { ResolvedTheme } from "./types";
+export type { ThemeConfig, ResolvedTheme };
 
 // Core functions
 export type { ThemeInput } from "./runtime/createTheme";
@@ -47,6 +49,5 @@ export {
   DEFAULT_SPACING_SCALE,
   resolveSpacingScale,
   validateSpacingScale,
-  type ResolvedSpacingScale,
 } from "./scales/spacing";
 export { PREFIX_MAP } from "./constants";

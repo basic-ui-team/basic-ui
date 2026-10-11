@@ -1,4 +1,8 @@
-import type { SpacingScaleConfig, SpacingStepToken } from "../types";
+import type {
+  ResolvedSpacingScale,
+  SpacingScaleConfig,
+  SpacingStepToken,
+} from "../types";
 
 const MAX_SPACING_STEPS = 10;
 const VALID_UNITS = ["px", "rem"] as const;
@@ -11,8 +15,6 @@ export const DEFAULT_SPACING_SCALE: SpacingScaleConfig = {
   unit: "px",
   rounding: "whole",
 };
-
-export type ResolvedSpacingScale = Partial<Record<SpacingStepToken, string>>;
 
 /**
  * Validate spacing scale configuration before it is resolved into tokens.

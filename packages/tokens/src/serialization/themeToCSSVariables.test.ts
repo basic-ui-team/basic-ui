@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { themeToCSSVariables } from "./themeToCSSVariables";
+import { resolveTheme } from "../runtime/resolveTheme";
 import type ThemeConfig from "../types";
+
+const serializeTheme = (theme: ThemeConfig) =>
+  themeToCSSVariables({ ...resolveTheme(theme), spacing: {} });
 
 describe("themeToCSSVariables", () => {
   it("flattens a single category with correct CSS variable prefix", () => {
@@ -8,7 +12,7 @@ describe("themeToCSSVariables", () => {
       color: { primary: { "500": "hsl(119 43% 52%)" } },
     };
 
-    const result = themeToCSSVariables(theme);
+    const result = serializeTheme(theme);
 
     expect(result.customProperties).toEqual({
       "--color-primary-500": "hsl(119 43% 52%)",
@@ -18,15 +22,13 @@ describe("themeToCSSVariables", () => {
   it("flattens multiple categories with their respective prefixes", () => {
     const theme: ThemeConfig = {
       color: { primary: { "500": "#FF0000" } },
-      spacing: { "5": "1rem" },
       radius: { lg: "0.5rem" },
     };
 
-    const result = themeToCSSVariables(theme);
+    const result = serializeTheme(theme);
 
     expect(result.customProperties).toEqual({
       "--color-primary-500": "#FF0000",
-      "--spacing-5": "1rem",
       "--radius-lg": "0.5rem",
     });
   });
@@ -38,7 +40,7 @@ describe("themeToCSSVariables", () => {
       opacity: { disabled: 0.5 },
     };
 
-    const result = themeToCSSVariables(theme);
+    const result = serializeTheme(theme);
 
     expect(result.customProperties).toEqual({
       "--font-weight-bold": 700,
@@ -56,7 +58,7 @@ describe("themeToCSSVariables", () => {
       },
     };
 
-    const result = themeToCSSVariables(theme);
+    const result = serializeTheme(theme);
 
     expect(result.customProperties).toEqual({
       "--color-primary-500": "hsl(119 43% 52%)",
@@ -70,7 +72,7 @@ describe("themeToCSSVariables", () => {
       unknown: { value: "ignored" }, // Not in PREFIX_MAP
     } as ThemeConfig;
 
-    const result = themeToCSSVariables(theme);
+    const result = serializeTheme(theme);
 
     expect(result.customProperties).toEqual({
       "--color-primary-500": "red",
@@ -78,9 +80,9 @@ describe("themeToCSSVariables", () => {
   });
 
   it("returns empty object for empty theme", () => {
-    const result = themeToCSSVariables({});
+    const result = themeToCSSVariables(resolveTheme({}));
 
-    expect(result.customProperties).toEqual({});
+    expect(result.customProperties).toHaveProperty("--spacing-0", "0px");
   });
 
   it("handles multi-word token keys correctly", () => {
@@ -91,7 +93,7 @@ describe("themeToCSSVariables", () => {
       },
     };
 
-    const result = themeToCSSVariables(theme);
+    const result = serializeTheme(theme);
 
     expect(result.customProperties).toEqual({
       "--color-bg-base": "hsl(210 20% 97%)",
@@ -103,23 +105,23 @@ describe("themeToCSSVariables", () => {
     it("returns a tokens mirror and caches results by theme object identity", () => {
       const theme: ThemeConfig = {
         color: { primary: { "500": "#FF0000" } },
-        spacing: { "5": "1rem" },
       };
+      const resolvedTheme = { ...resolveTheme(theme), spacing: {} };
 
-      const first = themeToCSSVariables(theme);
+      const first = themeToCSSVariables(resolvedTheme);
 
       // tokens mirror should contain compact token names
       expect(first.tokens).toEqual({
         color: { primary: { "500": "primary-500" } },
-        spacing: { "5": "5" },
+        spacing: {},
       });
 
       // second call with the same object should return the cached object (same reference)
-      const second = themeToCSSVariables(theme);
+      const second = themeToCSSVariables(resolvedTheme);
       expect(second).toBe(first);
 
       // but a deep-equal clone (different identity) should not return the same cached reference
-      const clone = JSON.parse(JSON.stringify(theme)) as ThemeConfig;
+      const clone = JSON.parse(JSON.stringify(resolvedTheme));
       const third = themeToCSSVariables(clone);
       expect(third).not.toBe(first);
       // values should still be equivalent
@@ -134,7 +136,7 @@ describe("themeToCSSVariables", () => {
         },
       };
 
-      const result = themeToCSSVariables(theme);
+      const result = serializeTheme(theme);
       expect(result.tokens.color.bg.base).toBe("bg-base");
       expect(result.tokens.color.fg.base).toBe("fg-base");
     });

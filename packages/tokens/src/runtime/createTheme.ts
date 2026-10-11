@@ -1,4 +1,4 @@
-import ThemeConfig from "../types";
+import type { ResolvedTheme, ThemeOverride } from "../types";
 import { lightTheme } from "../themes/light";
 import { darkTheme } from "../themes/dark";
 import { themeToCSSVariables } from "../serialization/themeToCSSVariables";
@@ -9,8 +9,8 @@ import { mergeTheme } from "./mergeTheme";
  * Both are optional - if not provided, CSS defaults will be used.
  */
 export interface ThemeInput {
-  light?: Partial<ThemeConfig>;
-  dark?: Partial<ThemeConfig>;
+  light?: ThemeOverride;
+  dark?: ThemeOverride;
 }
 
 /**
@@ -38,7 +38,7 @@ export function createTheme(config: ThemeInput): void {
   const root = document.documentElement;
 
   // Helper to inject theme to a target element
-  const injectTheme = (theme: ThemeConfig, target: HTMLElement = root) => {
+  const injectTheme = (theme: ResolvedTheme, target: HTMLElement = root) => {
     const props = themeToCSSVariables(theme).customProperties;
     Object.entries(props).forEach(([varName, value]) => {
       target.style.setProperty(varName, String(value));
@@ -62,7 +62,7 @@ export function createTheme(config: ThemeInput): void {
  * Helper: Create a style element that targets :root.dark
  * This ensures dark theme doesn't get overridden by light theme inline styles
  */
-function injectDarkThemeStyles(theme: ThemeConfig): void {
+function injectDarkThemeStyles(theme: ResolvedTheme): void {
   // Remove existing dark theme style if present
   const existingStyle = document.getElementById("basic-ui-dark-theme");
   if (existingStyle) {

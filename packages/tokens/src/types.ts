@@ -29,6 +29,7 @@ type SemanticState =
 /** Numeric spacing scale positions. */
 export type SpacingStep = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 export type SpacingStepToken = `${SpacingStep}`;
+export type ResolvedSpacingScale = Partial<Record<SpacingStepToken, string>>;
 export type SpacingScaleUnit = "px" | "rem";
 export type SpacingScaleRounding = "whole" | "up" | "down";
 
@@ -100,7 +101,7 @@ export type SemanticColors = {
  */
 export default interface ThemeConfig {
   color?: Partial<RampColors> & Partial<SemanticColors> & { white?: string; black?: string }; // Include base colors
-  spacing?: Partial<Record<SpacingStepToken, string>>;
+  spacing?: SpacingScaleConfig;
   radius?: Partial<Record<RadiusToken, string>>;
   shadow?: Partial<Record<ShadowToken, string>>;
   fontSize?: Partial<Record<FontSizeTokens, string>>;
@@ -115,3 +116,13 @@ export default interface ThemeConfig {
   // container?: Partial<Record<ContainerTokens, string>>;
   opacity?: Partial<Record<OpacityTokens, string | number>>;
 }
+
+export interface ResolvedTheme extends Omit<ThemeConfig, "spacing"> {
+  spacing: ResolvedSpacingScale;
+}
+
+export type DeepPartial<T> = T extends object
+  ? { [Key in keyof T]?: DeepPartial<T[Key]> }
+  : T;
+
+export type ThemeOverride = DeepPartial<ThemeConfig>;
