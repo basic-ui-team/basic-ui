@@ -1,21 +1,63 @@
 import { cva } from "class-variance-authority";
-// import { tokens as t} from "@basic-ui/tokens" tailwind doesn't support dynamic class names:(
 
-export const alertVariants = cva("flex gap-3 rounded-lg border p-3", {
+export const alertVariants = cva("flex gap-3 rounded-lg p-3", {
   variants: {
     severity: {
-      success: `border-border-success bg-bg-success text-fg-success`,
-      error: `border-border-error bg-bg-error text-fg-error`,
-      warning: `border-border-warning bg-bg-warning text-fg-warning`,
-      info: `border-border-info bg-bg-info text-fg-info`,
+      success: "text-fg-success",
+      error: "text-fg-error",
+      warning: "text-fg-warning",
+      info: "text-fg-info",
     },
-    borderless: {
-      true: "border-0 p-0",
-      false: "",
+    variant: {
+      subtle: "border",
+      outline: "border-2 bg-surface-base",
     },
   },
+  compoundVariants: [
+    {
+      severity: "success",
+      variant: "subtle",
+      className: "border-border-success bg-bg-success",
+    },
+    {
+      severity: "error",
+      variant: "subtle",
+      className: "border-border-error bg-bg-error",
+    },
+    {
+      severity: "warning",
+      variant: "subtle",
+      className: "border-border-warning bg-bg-warning",
+    },
+    {
+      severity: "info",
+      variant: "subtle",
+      className: "border-border-info bg-bg-info",
+    },
+    {
+      severity: "success",
+      variant: "outline",
+      className: "border-border-success",
+    },
+    {
+      severity: "error",
+      variant: "outline",
+      className: "border-border-error",
+    },
+    {
+      severity: "warning",
+      variant: "outline",
+      className: "border-border-warning",
+    },
+    {
+      severity: "info",
+      variant: "outline",
+      className: "border-border-info",
+    },
+  ],
   defaultVariants: {
     severity: "info",
+    variant: "subtle",
   },
 });
 
@@ -26,3 +68,7 @@ export const alertIconVariants = cva("flex-shrink-0 h-5 w-5");
 export const alertContentVariants = cva("flex-1 text-sm");
 
 export const alertActionVariants = cva("ml-auto flex items-center gap-2");
+
+export const alertDismissButtonVariants = cva(
+  "shrink-0 -mr-2 -my-2 rounded p-2 transition-colors hover:bg-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current",
+);
