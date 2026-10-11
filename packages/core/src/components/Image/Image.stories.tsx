@@ -36,7 +36,7 @@ export const ResponsivePicture: Story = {
           media: "(min-width: 601px)",
         },
       ]}
-      className="w-full max-w-3"
+      className="w-full max-w-md"
     />
   ),
 };
