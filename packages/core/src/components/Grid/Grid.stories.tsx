@@ -38,7 +38,7 @@ export const Basic: Story = {
 
 export const TemplatePreset: Story = {
   render: () => (
-    <div className="space-y-md">
+    <div className="space-y-3">
       <section>
         <Header as="h4" py={3}>Masonry</Header>
         <Grid templatePreset="masonry" gap={3}>
