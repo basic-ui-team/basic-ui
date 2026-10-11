@@ -52,7 +52,7 @@ export function validateSpacingScale(config: SpacingScaleConfig): void {
   if (config.overrides) {
     for (const key of Object.keys(config.overrides)) {
       const step = Number(key);
-      if (!Number.isInteger(step) || step < 0 || step >= config.steps) {
+      if (String(step) !== key || !Number.isInteger(step) || step < 0 || step >= config.steps) {
         throw new RangeError(
           `Spacing scale override "${key}" must target an available step from 0 to ${config.steps - 1}.`,
         );
