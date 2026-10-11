@@ -10,7 +10,7 @@ export const alertVariants = cva("flex gap-3 rounded-lg border p-3", {
       info: `border-border-info bg-bg-info text-fg-info`,
     },
     borderless: {
-      true: "border-0",
+      true: "border-0 p-0",
       false: "",
     },
   },
