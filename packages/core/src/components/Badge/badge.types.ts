@@ -1,33 +1,20 @@
-import { ResponsiveValue } from "@basic-ui/react-utilities";
-import { BuiltInSemanticColors } from "@core/theme";
-import { CommonProps } from "@basic-ui/react-utilities";
+import type React from "react";
+import type { CommonProps } from "@basic-ui/react-utilities";
 
-export type BadgeVariant = "standard" | "dot";
-export type BadgeSize = "small" | "medium" | "large";
-export type BadgeShape = "rounded" | "square" | "circular";
+export type BadgeVariant = "count" | "dot";
+export type BadgeSize = "sm" | "md" | "lg";
 export type BadgePosition = "top-left" | "top-right" | "bottom-left" | "bottom-right";
-export type BadgeColor = Exclude<BuiltInSemanticColors, "default" | "muted">;
+export type BadgeColor = "error" | "success" | "warning" | "info";
 
-export interface BadgeProps extends CommonProps {
-  /** The content to be displayed within the badge. Can be a string, number, or any React node. */
-  content?: React.ReactNode;
-  /** The maximum value to display. If the content is a number and exceeds this value, it will be displayed as "max+". */
-  max?: number;
+export interface BadgeSharedProps extends Omit<CommonProps, "children"> {
+  /** The element to which the badge is attached. */
+  children: React.ReactElement;
 
-  /** The color of the badge. @default "primary" */
-  color?: BadgeColor;
+  /** The semantic color of the badge. */
+  color: BadgeColor;
 
-  /** The variant of the badge. @default "standard" */
-  variant?: BadgeVariant;
-
-  /** The size of the badge. @default "medium" */
-  size?: ResponsiveValue<BadgeSize>;
-
-  /** The shape of the badge. @default "circular" */
-  shape?: BadgeShape;
-
-  /** Whether the badge is visible. @default true */
-  visible?: boolean;
+  /** The size of the badge. @default "md" */
+  size?: BadgeSize;
 
   /** The position of the badge relative to its parent element. @default "top-right" */
   position?: BadgePosition;
@@ -35,13 +22,32 @@ export interface BadgeProps extends CommonProps {
   /** Whether the badge should have a pulsing animation. @default false */
   ping?: boolean;
 
-  /** Accessibility label for the badge content. Use for dynamic updates (e.g., notification count). */
-  ariaLabel?: string;
+  /** Accessible name required when the badge is exposed to assistive technologies. */
+  "aria-label"?: string;
 
-  /** Hide badge from screen readers. Set to false for announcements (e.g., status updates). @default true */
-  ariaHidden?: boolean;
+  /** Whether the badge is decorative. Defaults to true when it has no accessible name or live region. */
+  "aria-hidden"?: boolean;
 
-  /** Indicate polite or assertive ARIA live region announcements for dynamic content. 
-   * ariaHidden must be set to false for announcements to be made (providing ariaLabel sets ariaHidden to false automatically) */
-  ariaLive?: "polite" | "assertive" | "off";
+  /** Opt in to dynamic announcements when the badge is not decorative. */
+  "aria-live"?: "polite" | "assertive" | "off";
 }
+
+export interface BadgeCountProps {
+  /** The count or label to display. */
+  content: React.ReactNode;
+
+  /** The maximum numeric value before the badge displays `max+`. */
+  max?: number;
+
+  /** The visible count indicator. @default "count" */
+  variant?: "count";
+}
+
+export interface BadgeDotProps {
+  /** The compact status indicator. */
+  variant: "dot";
+  content?: never;
+  max?: never;
+}
+
+export type BadgeProps = BadgeSharedProps & (BadgeCountProps | BadgeDotProps);

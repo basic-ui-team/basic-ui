@@ -1,205 +1,140 @@
+/// <reference types="@testing-library/jest-dom" />
 import React from "react";
+import { describe, expect, it, vi } from "vitest";
 import { renderWithProviders, screen } from "../../test-utils";
 import { Badge } from "./Badge";
-import { BadgePosition, BadgeShape, BadgeSize, BadgeVariant } from "./badge.types";
+
+const Anchor = () => <button type="button">Notifications</button>;
 
 describe("Badge", () => {
-  it("renders children with badge content", () => {
+  it("renders count content over its anchor", () => {
     renderWithProviders(
-      <Badge content="5">
-        <button>Notifications</button>
+      <Badge content={3} color="error">
+        <Anchor />
       </Badge>,
     );
-    expect(screen.getByText("5")).toBeInTheDocument();
-    expect(screen.getByText("Notifications")).toBeInTheDocument();
+
+    expect(screen.getByText("3")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Notifications" })).toBeInTheDocument();
   });
 
-  it("renders string content when content is a string", () => {
-    renderWithProviders(<Badge content="New">Inbox</Badge>);
-    expect(screen.getByText("New")).toBeInTheDocument();
-    expect(screen.getByText("Inbox")).toBeInTheDocument();
-  });
-
-  it("renders number content when content is a number", () => {
-    renderWithProviders(<Badge content={10}>Messages</Badge>);
-    expect(screen.getByText("10")).toBeInTheDocument();
-    expect(screen.getByText("Messages")).toBeInTheDocument();
-  });
-
-  it("renders max+ when content exceeds max", () => {
+  it("formats numeric counts above max", () => {
     renderWithProviders(
-      <Badge content={100} max={99}>
-        Alerts
+      <Badge content={100} max={99} color="error">
+        <Anchor />
       </Badge>,
     );
+
     expect(screen.getByText("99+")).toBeInTheDocument();
-    expect(screen.getByText("Alerts")).toBeInTheDocument();
-  });
-
-  it("hides badge when visible is false via data attribute", () => {
-    const { container } = renderWithProviders(
-      <Badge content="Hidden" visible={false}>
-        Profile
-      </Badge>,
-    );
-    const badge = container.querySelector("span[data-visible='false']");
-    expect(badge).toBeInTheDocument();
-    expect(badge).toHaveClass("data-[visible=false]:hidden");
-    expect(screen.getByText("Profile")).toBeInTheDocument();
   });
 
   it.each([
-    ["top-left", "top-0 left-0 translate-x-[-50%] translate-y-[-50%]"],
-    ["top-right", "top-0 right-0 translate-x-[50%] translate-y-[-50%]"],
-    ["bottom-left", "bottom-0 left-0 translate-x-[-50%] translate-y-[50%]"],
-    ["bottom-right", "bottom-0 right-0 translate-x-[50%] translate-y-[50%]"],
-  ])("applies correct classes for position variant %s", (position, expectedClasses) => {
-    const { container } = renderWithProviders(
-      <Badge content="Pos" position={position as BadgePosition}>
-        Test
-      </Badge>,
-    );
-    const badge = container.querySelector("span");
-    expect(badge).toHaveClass(expectedClasses);
-  });
-
-  it.each([
-    ["primary", "bg-primary-500 text-fg-base"],
-    ["secondary", "bg-secondary-500 text-fg-base"],
-    ["success", "bg-bg-success text-fg-success"],
-    ["warning", "bg-bg-warning text-fg-warning"],
-    ["error", "bg-bg-error text-fg-error"],
-    ["info", "bg-bg-info text-fg-info"],
-  ])("applies correct classes for color variant %s", (color, expectedClasses) => {
-    const { container } = renderWithProviders(
-      <Badge content="Col" color={color as any}>
-        Test
-      </Badge>,
-    );
-    const badge = container.querySelector("span");
-    expect(badge).toHaveClass(expectedClasses);
-  });
-
-  it.each([
-    [true, "motion-safe:animate-[ping_1.5s_ease-out_infinite]"],
-    [false, ""],
-  ])("applies correct classes for ping variant %s", (ping, expectedClasses) => {
-    const { container } = renderWithProviders(
-      <Badge content="Ping" ping={ping}>
-        Test
-      </Badge>,
-    );
-    const badge = container.querySelector("span");
-    if (expectedClasses) {
-      expect(badge).toHaveClass(expectedClasses);
-    } else {
-      expect(badge).toBeInTheDocument();
-    }
-  });
-
-  it.each([
-    ["small", "text-xs min-w-4 w-auto h-4"],
-    ["medium", "text-sm min-w-6 w-auto h-6"],
-    ["large", "text-base min-w-8 w-auto h-8"],
-  ])("applies correct classes for size variant %s", (size, expectedClasses) => {
-    const { container } = renderWithProviders(
-      <Badge content="Size" size={size as BadgeSize}>
-        Test
-      </Badge>,
-    );
-    const badge = container.querySelector("span");
-    expect(badge).toHaveClass(expectedClasses);
-  });
-
-  it.each([
-    ["standard", ""],
-    ["dot", "w-3 h-3 min-w-3 min-h-3 px-0 py-0"],
-  ])("applies correct classes for variant %s", (variant, expectedClasses) => {
-    const { container } = renderWithProviders(
-      <Badge content="Var" variant={variant as BadgeVariant}>
-        Test
-      </Badge>,
-    );
-
-    const badge = container.querySelector("span");
-    if (expectedClasses) {
-      expect(badge).toHaveClass(expectedClasses);
-    } else {
-      expect(badge).toBeInTheDocument();
-    }
-  });
-
-  it.each([
-    ["rounded", "rounded-md"],
-    ["square", "rounded-none"],
-    ["circular", "rounded-full"],
-  ])("applies correct classes for shape variant %s", (shape, expectedClasses) => {
-    const { container } = renderWithProviders(
-      <Badge content="Shape" shape={shape as BadgeShape}>
-        Test
-      </Badge>,
-    );
-    const badge = container.querySelector("span");
-    expect(badge).toHaveClass(expectedClasses);
-  });
-
-  it("forwards ref to the badge element", () => {
-    const ref = React.createRef<HTMLSpanElement>();
+    ["sm", "min-h-5", "min-w-5"],
+    ["md", "min-h-6", "min-w-6"],
+    ["lg", "min-h-7", "min-w-7"],
+  ] as const)("uses the %s count size recipe", (size, minHeight, minWidth) => {
     renderWithProviders(
-      <Badge content="Ref" ref={ref}>
-        Test
+      <Badge content="3" color="info" size={size}>
+        <Anchor />
       </Badge>,
     );
-    expect(ref.current).toBeInstanceOf(HTMLSpanElement);
-    expect(ref.current).toHaveTextContent("Ref");
+
+    expect(screen.getByText("3")).toHaveClass(minHeight, minWidth);
   });
 
-  it("applies ariaLabel when provided", () => {
+  it.each([
+    ["success", "bg-border-success"],
+    ["warning", "bg-border-warning"],
+    ["error", "bg-border-error"],
+    ["info", "bg-border-info"],
+  ] as const)("uses the stronger %s token for dots", (color, expectedClass) => {
     const { container } = renderWithProviders(
-      <Badge content="5" ariaLabel="5 new messages">
-        Test
+      <Badge variant="dot" color={color}>
+        <Anchor />
       </Badge>,
     );
-    const badge = container.querySelector("span");
-    expect(badge).toHaveAttribute("aria-label", "5 new messages");
+
+    expect(container.querySelector("[data-slot='badge']")).toHaveClass(expectedClass);
+    expect(container.querySelector("[data-slot='badge']")).toHaveTextContent("");
   });
 
-  it("sets aria-hidden to true by default", () => {
-    const { container } = renderWithProviders(<Badge content="5">Test</Badge>);
-    const badge = container.querySelector("span");
-    expect(badge).toHaveAttribute("aria-hidden", "true");
+  it("uses semantic background and foreground tokens for count badges", () => {
+    renderWithProviders(
+      <Badge content="New" color="success">
+        <Anchor />
+      </Badge>,
+    );
+
+    expect(screen.getByText("New")).toHaveClass(
+      "bg-bg-success",
+      "text-fg-success",
+    );
   });
 
-  it("does not set aria-hidden when ariaLabel is provided", () => {
+  it("is decorative by default", () => {
     const { container } = renderWithProviders(
-      <Badge content="5" ariaLabel="5 notifications">
-        Test
+      <Badge content="3" color="info">
+        <Anchor />
       </Badge>,
     );
-    const badge = container.querySelector("span");
+
+    expect(container.querySelector("[data-slot='badge']")).toHaveAttribute("aria-hidden", "true");
+    expect(container.querySelector("[data-slot='badge']")).not.toHaveAttribute("aria-live");
+  });
+
+  it("only adds live-region behavior when it is explicitly requested", () => {
+    const { container } = renderWithProviders(
+      <Badge
+        content="3"
+        color="info"
+        aria-label="3 unread notifications"
+        aria-live="polite"
+      >
+        <Anchor />
+      </Badge>,
+    );
+
+    const badge = container.querySelector("[data-slot='badge']");
     expect(badge).not.toHaveAttribute("aria-hidden");
-  });
-
-  it("applies ariaLive when provided", () => {
-    const { container } = renderWithProviders(
-      <Badge content="5" ariaHidden={false} ariaLive="polite">
-        Test
-      </Badge>,
-    );
-    const badge = container.querySelector("span");
+    expect(badge).toHaveAttribute("aria-label", "3 unread notifications");
     expect(badge).toHaveAttribute("aria-live", "polite");
   });
 
-  it("ping dot does not receive user className", () => {
+  it("renders a decorative ping halo behind a stable visible dot", () => {
     const { container } = renderWithProviders(
-      <Badge content="5" ping={true} className="custom-class">
-        Test
+      <Badge variant="dot" color="success" ping>
+        <Anchor />
       </Badge>,
     );
-    const spans = container.querySelectorAll("span");
-    const badgeSpan = spans[0];
-    const pingDot = spans[1]; // ping dot is second span
-    expect(badgeSpan).toHaveClass("custom-class");
-    expect(pingDot).not.toHaveClass("custom-class");
+
+    const ping = container.querySelector("[data-slot='badge-ping']");
+    const badge = container.querySelector("[data-slot='badge']");
+    expect(ping).toHaveAttribute("aria-hidden", "true");
+    expect(ping).toHaveClass("motion-safe:animate-[ping_1.5s_ease-out_infinite]");
+    expect(badge).not.toHaveClass("motion-safe:animate-[ping_1.5s_ease-out_infinite]");
+  });
+
+  it("warns when an exposed badge has no accessible name", () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    renderWithProviders(
+      <Badge content="3" color="info" aria-hidden={false}>
+        <Anchor />
+      </Badge>,
+    );
+
+    expect(warn).toHaveBeenCalledWith("An exposed Badge requires an aria-label.");
+    warn.mockRestore();
+  });
+
+  it("forwards its ref to the visible indicator", () => {
+    const ref = React.createRef<HTMLSpanElement>();
+    renderWithProviders(
+      <Badge content="3" color="info" ref={ref}>
+        <Anchor />
+      </Badge>,
+    );
+
+    expect(ref.current).toHaveTextContent("3");
+    expect(ref.current).toHaveAttribute("data-slot", "badge");
   });
 });
