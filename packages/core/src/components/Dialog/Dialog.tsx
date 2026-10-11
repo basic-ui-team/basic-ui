@@ -121,7 +121,7 @@ export const Dialog = forwardRefWithAs<DialogOwnProps, AllowedDialogElements>(
                   <button aria-label="Close" onClick={onClose} className={dialogCloseVariants()}>
                     <Box
                       as="span"
-                      className="flex items-center justify-center w-lg h-lg"
+                      className="flex items-center justify-center w-4 h-4"
                       aria-hidden="true"
                     >
                       <XIcon />

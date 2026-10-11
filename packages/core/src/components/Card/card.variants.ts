@@ -46,8 +46,8 @@ export const cardRootVariants = cva(
 export const cardSectionVariants = cva("", {
   variants: {
     variant: {
-      default: "p-md",
-      compact: "p-sm",
+      default: "p-3",
+      compact: "p-2",
     },
     sticky: {
       true: "sticky bottom-0 z-dropdown bg-surface-base/5 backdrop-blur-xs",

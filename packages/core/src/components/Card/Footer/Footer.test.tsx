@@ -10,7 +10,7 @@ describe("Card.Footer", () => {
     const { container } = renderWithProviders(<CardFooter>F</CardFooter>);
     const el = container.querySelector("footer");
     expect(el).toBeInTheDocument();
-    expect(el).toHaveClass("p-md");
+    expect(el).toHaveClass("p-3");
   });
 
   it("supports sticky footers", () => {

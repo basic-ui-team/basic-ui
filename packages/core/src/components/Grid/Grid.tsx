@@ -5,7 +5,7 @@ import {
   type GridOwnProps,
   ColRowNumber,
 } from "./grid.types";
-import type { SpacingType } from "@core/lib/layout";
+import type { SpacingStep } from "@core/lib/layout";
 import { useResponsiveProps } from "@basic-ui/react-utilities";
 import { gridVariants } from "./grid.variants";
 import { cn, forwardRefWithAs, normalizeProps } from "@basic-ui/react-utilities";
@@ -70,9 +70,9 @@ const _Grid = <As extends AllowedGridElements = "div">(
     gridVariants({
       cols: templatePreset ? undefined : (resolvedCols as ColRowNumber),
       rows: templatePreset ? undefined : (resolvedRows as ColRowNumber),
-      gap: resolvedGap as SpacingType,
-      rowGap: resolvedRowGap as SpacingType,
-      columnGap: resolvedColumnGap as SpacingType,
+      gap: resolvedGap as SpacingStep,
+      rowGap: resolvedRowGap as SpacingStep,
+      columnGap: resolvedColumnGap as SpacingStep,
       autoFlow: resolvedAutoFlow,
       autoRows: resolvedAutoRows,
       autoCols: resolvedAutoCols,

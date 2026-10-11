@@ -33,9 +33,9 @@ export const Default: Story = {
 
 export const Sizes: Story = {
   render: () => (
-    <Flex direction="column" gap="md" align="start">
+    <Flex direction="column" gap={3} align="start">
       {(["sm", "md", "lg"] as const).map((size) => (
-        <Flex key={size} gap="sm" align="center">
+        <Flex key={size} gap={2} align="center">
           <Toggle size={size} defaultValue />
           <Text as="span" size="sm">{size}</Text>
         </Flex>
@@ -46,28 +46,28 @@ export const Sizes: Story = {
 
 export const Colors: Story = {
   render: () => (
-    <Flex direction="column" gap="md" align="start">
-      <Flex gap="sm" align="center">
+    <Flex direction="column" gap={3} align="start">
+      <Flex gap={2} align="center">
         <Toggle color="primary" defaultValue />
         <Text as="span" size="sm">primary</Text>
       </Flex>
-      <Flex gap="sm" align="center">
+      <Flex gap={2} align="center">
         <Toggle color="secondary" defaultValue />
         <Text as="span" size="sm">secondary</Text>
       </Flex>
-      <Flex gap="sm" align="center">
+      <Flex gap={2} align="center">
         <Toggle color="success" defaultValue />
         <Text as="span" size="sm">success</Text>
       </Flex>
-      <Flex gap="sm" align="center">
+      <Flex gap={2} align="center">
         <Toggle color="warning" defaultValue />
         <Text as="span" size="sm">warning</Text>
       </Flex>
-      <Flex gap="sm" align="center">
+      <Flex gap={2} align="center">
         <Toggle color="error" defaultValue />
         <Text as="span" size="sm">error</Text>
       </Flex>
-      <Flex gap="sm" align="center">
+      <Flex gap={2} align="center">
         <Toggle color="info" defaultValue />
         <Text as="span" size="sm">info</Text>
       </Flex>
@@ -77,7 +77,7 @@ export const Colors: Story = {
 
 export const Disabled: Story = {
   render: () => (
-    <Flex gap="lg" align="center">
+    <Flex gap={4} align="center">
       <Toggle disabled />
       <Toggle disabled defaultValue />
     </Flex>
@@ -87,8 +87,8 @@ export const Disabled: Story = {
 function ControlledDemo() {
   const [notifications, setNotifications] = useState(true);
   return (
-    <Flex direction="column" gap="md" align="start">
-      <Flex gap="sm" align="center">
+    <Flex direction="column" gap={3} align="start">
+      <Flex gap={2} align="center">
         <Toggle
           value={notifications}
           onChange={setNotifications}

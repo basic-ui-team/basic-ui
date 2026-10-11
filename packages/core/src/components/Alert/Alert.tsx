@@ -72,7 +72,7 @@ const _Alert = <As extends AllowedAlertElements = "div">(
     >
       {/* Icon */}
       <Box as={Child} className={alertIconVariants()}>
-        <Box as="span" className="flex items-center justify-center w-lg h-lg" aria-hidden="true">
+        <Box as="span" className="flex items-center justify-center w-4 h-4" aria-hidden="true">
           {iconElement}
         </Box>
       </Box>
@@ -89,10 +89,10 @@ const _Alert = <As extends AllowedAlertElements = "div">(
         {onDismiss && (
           <button
             onClick={handleDismiss}
-            className="shrink-0 -mr-sm -my-sm p-sm hover:bg-black/5 rounded transition-colors"
+            className="shrink-0 -mr-2 -my-2 p-2 hover:bg-black/5 rounded transition-colors"
             aria-label="Dismiss alert"
           >
-            <Box as="span" className="flex items-center justify-center w-lg h-lg" aria-hidden="true"><XIcon /></Box>
+            <Box as="span" className="flex items-center justify-center w-4 h-4" aria-hidden="true"><XIcon /></Box>
           </button>
         )}
       </Box>

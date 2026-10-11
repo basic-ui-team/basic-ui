@@ -14,7 +14,7 @@ type Story = StoryObj<typeof Card>;
 
 export const Variants: Story = {
   render: () => (
-    <div className="flex flex-col gap-md w-5/6">
+    <div className="flex flex-col gap-3 w-5/6">
       <Card variant="default">
         <Card.Header>
           <Card.Title>Default card</Card.Title>
@@ -62,7 +62,7 @@ export const Variants: Story = {
 
 export const Interactions: Story = {
   render: () => (
-    <div className="flex flex-col gap-md w-5/6">
+    <div className="flex flex-col gap-3 w-5/6">
       <Card interaction="static">
         <Card.Body>
           <Card.Description>Static card (no pointer interactions)</Card.Description>
@@ -108,7 +108,7 @@ export const Interactions: Story = {
 
 export const SelectedDisabled: Story = {
   render: () => (
-    <div className="flex flex-col gap-md w-5/6">
+    <div className="flex flex-col gap-3 w-5/6">
       <Card selected>
         <Card.Body>
           <Card.Description>Selected card (visual selected state)</Card.Description>
@@ -132,13 +132,13 @@ export const SelectedDisabled: Story = {
 
 export const Composition: Story = {
   render: () => (
-    <div className="flex flex-col gap-md w-3/4">
+    <div className="flex flex-col gap-3 w-3/4">
       <Card>
         <Card.Header>
           <Card.Title>Profile</Card.Title>
           <Card.Description as="span">@username</Card.Description>
         </Card.Header>
-        <Card.Image p="md" src="https://placehold.co/600x400" alt="banner" objectFit="cover" />
+        <Card.Image p={3} src="https://placehold.co/600x400" alt="banner" objectFit="cover" />
         <Card.Body>
           <Text>
             This is an example of a composed Card using Header, Image, Body and Footer
@@ -146,15 +146,15 @@ export const Composition: Story = {
           </Text>
         </Card.Body>
         <Card.Footer>
-          <Flex justify="end" gap="sm">
+          <Flex justify="end" gap={2}>
             <button
-              className="bg-primary-500 text-foreground-primary px-md py-sm rounded-sm"
+              className="bg-primary-500 text-foreground-primary px-3 py-2 rounded-sm"
               onClick={() => alert("Followed")}
             >
               Follow
             </button>
             <button
-              className="bg-secondary-400 text-foreground-primary px-md py-sm rounded-sm"
+              className="bg-secondary-400 text-foreground-primary px-3 py-2 rounded-sm"
               onClick={() => alert("Message sent")}
             >
               Message
@@ -179,15 +179,15 @@ export const Composition: Story = {
           </Text>
         </Card.Body>
         <Card.Footer sticky>
-          <Flex justify="end" gap="sm">
+          <Flex justify="end" gap={2}>
             <button
-              className="bg-primary-500 text-foreground-primary px-md py-sm rounded-sm "
+              className="bg-primary-500 text-foreground-primary px-3 py-2 rounded-sm "
               onClick={() => alert("Action clicked")}
             >
               Action
             </button>
             <button
-              className="bg-error text-foreground-primary px-md py-sm rounded-sm"
+              className="bg-error text-foreground-primary px-3 py-2 rounded-sm"
               onClick={() => alert("Cancel clicked")}
             >
               Cancel
@@ -201,8 +201,8 @@ export const Composition: Story = {
 
 export const UnstyledUsage: Story = {
   render: () => (
-    <div className="flex flex-col gap-md w-5/6">
-      <Card.Unstyled className="p-md border border-primary-500 rounded-full shadow-sm hover:shadow-md hover:bg-primary-500/10 transition-all duration-300">
+    <div className="flex flex-col gap-3 w-5/6">
+      <Card.Unstyled className="p-3 border border-primary-500 rounded-full shadow-sm hover:shadow-md hover:bg-primary-500/10 transition-all duration-300">
         <Card.Header>
           <Card.Title>Unstyled with custom classes</Card.Title>
         </Card.Header>
@@ -226,7 +226,7 @@ export const UnstyledUsage: Story = {
 
 export const Polymorphic: Story = {
   render: () => (
-    <div className="flex flex-col gap-md w-5/6">
+    <div className="flex flex-col gap-3 w-5/6">
       <Card as="div">
         <Card.Body>
           <Card.Description>Rendered as `div` (default)</Card.Description>

@@ -57,18 +57,18 @@ describe("Grid", () => {
     });
 
     it("applies gap token classes", () => {
-      const { container } = renderWithProviders(<Grid gap="md">Test</Grid>);
-      expect(container.firstChild).toHaveClass("gap-md");
+      const { container } = renderWithProviders(<Grid gap={3}>Test</Grid>);
+      expect(container.firstChild).toHaveClass("gap-3");
     });
 
     it("applies rowGap/columnGap token classes", () => {
       const { container } = renderWithProviders(
-        <Grid rowGap="sm" columnGap="lg">
+        <Grid rowGap={2} columnGap={4}>
           Test
         </Grid>,
       );
-      expect(container.firstChild).toHaveClass("row-gap-sm");
-      expect(container.firstChild).toHaveClass("column-gap-lg");
+      expect(container.firstChild).toHaveClass("row-gap-2");
+      expect(container.firstChild).toHaveClass("column-gap-4");
     });
 
     it("applies alignment classes", () => {

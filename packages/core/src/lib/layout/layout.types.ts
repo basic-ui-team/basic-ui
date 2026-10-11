@@ -1,7 +1,7 @@
 import { ResponsiveValue } from "@basic-ui/react-utilities";
 
-export const spacingValues = ["none", "xs", "sm", "md", "lg", "xl", "2xl", "3xl"] as const;
-export type SpacingType = (typeof spacingValues)[number];
+export const spacingSteps = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] as const;
+export type SpacingStep = (typeof spacingSteps)[number];
 
 export const SizingValues = ["unset", "auto", "full", "min", "max", "fit", "screen"] as const;
 export type SizingType = (typeof SizingValues)[number];
@@ -16,7 +16,7 @@ export type OverflowType = "visible" | "hidden" | "auto" | "scroll";
  * **Responsive Support:**
  * All props accept ResponsiveValue<T> for breakpoint-specific styling:
  * ```tsx
- * <Box p={{ base: 'sm', md: 'lg', lg: 'xl' }} h={{ base: 'auto', md: 'full' }} />
+ * <Box p={{ base: 2, md: 4, lg: 5 }} h={{ base: 'auto', md: 'full' }} />
  * ```
  *
  * **Sizing Props (h, w, hMin, hMax, wMin, wMax):**
@@ -28,23 +28,23 @@ export type OverflowType = "visible" | "hidden" | "auto" | "scroll";
  * - All spacing is responsive
  */
 export interface LayoutProps {
-  p?: ResponsiveValue<SpacingType | "unset">;
-  px?: ResponsiveValue<SpacingType | "unset">;
-  py?: ResponsiveValue<SpacingType | "unset">;
-  pt?: ResponsiveValue<SpacingType | "unset">;
-  pr?: ResponsiveValue<SpacingType | "unset">;
-  pb?: ResponsiveValue<SpacingType | "unset">;
-  pl?: ResponsiveValue<SpacingType | "unset">;
+  p?: ResponsiveValue<SpacingStep | "unset">;
+  px?: ResponsiveValue<SpacingStep | "unset">;
+  py?: ResponsiveValue<SpacingStep | "unset">;
+  pt?: ResponsiveValue<SpacingStep | "unset">;
+  pr?: ResponsiveValue<SpacingStep | "unset">;
+  pb?: ResponsiveValue<SpacingStep | "unset">;
+  pl?: ResponsiveValue<SpacingStep | "unset">;
 
-  m?: ResponsiveValue<SpacingType | "unset">;
-  mx?: ResponsiveValue<SpacingType | "unset">;
-  my?: ResponsiveValue<SpacingType | "unset">;
-  mt?: ResponsiveValue<SpacingType | "unset">;
-  mr?: ResponsiveValue<SpacingType | "unset">;
-  mb?: ResponsiveValue<SpacingType | "unset">;
-  ml?: ResponsiveValue<SpacingType | "unset">;
+  m?: ResponsiveValue<SpacingStep | "unset">;
+  mx?: ResponsiveValue<SpacingStep | "unset">;
+  my?: ResponsiveValue<SpacingStep | "unset">;
+  mt?: ResponsiveValue<SpacingStep | "unset">;
+  mr?: ResponsiveValue<SpacingStep | "unset">;
+  mb?: ResponsiveValue<SpacingStep | "unset">;
+  ml?: ResponsiveValue<SpacingStep | "unset">;
 
-  gap?: ResponsiveValue<SpacingType | "unset">;
+  gap?: ResponsiveValue<SpacingStep | "unset">;
 
   h?: ResponsiveValue<SizingType>;
   hMin?: ResponsiveValue<SizingType>;

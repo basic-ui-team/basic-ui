@@ -53,9 +53,9 @@ export const WithDisabledTrigger: Story = {
 
 export const Sides: Story = {
   render: () => (
-    <Flex direction="column" gap="xl" mt="2xl">
+    <Flex direction="column" gap={5} mt={6}>
       {(["top", "right", "bottom", "left"] as const).map((side) => (
-        <Flex key={side} gap="lg" justify="evenly" align="center">
+        <Flex key={side} gap={4} justify="evenly" align="center">
           {(["start", "center", "end"] as const).map((align) => (
             <Tooltip
               key={`${side}-${align}`}

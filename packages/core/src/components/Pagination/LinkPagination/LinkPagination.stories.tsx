@@ -28,7 +28,7 @@ export const Default: Story = {
     getPageHref: (p: number) => `/${p}`,
   },
   render: (args) => (
-    <Flex direction="column" align="center" gap="md">
+    <Flex direction="column" align="center" gap={3}>
       <LinkPagination {...args} />
       <LinkPagination {...args} color="primary" />
       <LinkPagination {...args} color="secondary" />

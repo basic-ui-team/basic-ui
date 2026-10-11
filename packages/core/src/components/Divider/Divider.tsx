@@ -20,10 +20,10 @@ const _Divider = <As extends AllowedDividerElements = "hr">(
     appearance = "solid",
     thickness = "medium",
     color = "default",
-    inset = "none",
+    inset = 0,
     label,
-    m = "none",
-    p = "none",
+    m = 0,
+    p = 0,
     className,
     style,
     ...rest
