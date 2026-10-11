@@ -72,8 +72,24 @@ export type DurationTokens = "fast" | "normal" | "slow";
 /** Animation easing functions */
 export type EasingTokens = "in" | "out" | "spring";
 
-/** Stacking context (z-index) for overlays */
-export type ZIndexTokens = "dropdown" | "modal" | "toast" | "tooltip";
+/**
+ * Semantic stacking layers.
+ *
+ * Local content uses base through docked. Global layers are reserved for
+ * portalled and app-wide UI, ordered from dropdown through tooltip.
+ */
+export type ZIndexTokens =
+  | "base"
+  | "elevated"
+  | "docked"
+  | "dropdown"
+  | "sticky"
+  | "banner"
+  | "overlay"
+  | "modal"
+  | "popover"
+  | "toast"
+  | "tooltip";
 
 /** Breakpoints for responsive design */
 export type BreakpointTokens = "sm" | "md" | "lg" | "xl" | "2xl";

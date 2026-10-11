@@ -12,7 +12,7 @@ export const PREFIX_MAP: Record<keyof ThemeConfig, string> = {
   fontFamily: "font",
   duration: "duration",
   easing: "ease",
-  zIndex: "z",
+  zIndex: "z-index",
   breakpoint: "breakpoint",
   // container: "container",
   opacity: "opacity",

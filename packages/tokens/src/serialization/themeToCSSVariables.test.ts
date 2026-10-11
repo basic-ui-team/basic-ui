@@ -44,7 +44,7 @@ describe("themeToCSSVariables", () => {
 
     expect(result.customProperties).toEqual({
       "--font-weight-bold": 700,
-      "--z-modal": 45,
+      "--z-index-modal": 45,
       "--opacity-disabled": 0.5,
     });
   });

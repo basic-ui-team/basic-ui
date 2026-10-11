@@ -184,8 +184,15 @@ export const tokens = {
     "spring": "spring"
   },
   "zIndex": {
+    "base": "base",
+    "elevated": "elevated",
+    "docked": "docked",
     "dropdown": "dropdown",
+    "sticky": "sticky",
+    "banner": "banner",
+    "overlay": "overlay",
     "modal": "modal",
+    "popover": "popover",
     "toast": "toast",
     "tooltip": "tooltip"
   },
@@ -383,8 +390,15 @@ export const darkTokens = {
     "spring": "spring"
   },
   "zIndex": {
+    "base": "base",
+    "elevated": "elevated",
+    "docked": "docked",
     "dropdown": "dropdown",
+    "sticky": "sticky",
+    "banner": "banner",
+    "overlay": "overlay",
     "modal": "modal",
+    "popover": "popover",
     "toast": "toast",
     "tooltip": "tooltip"
   },
