@@ -68,6 +68,16 @@ describe("mergeTheme", () => {
     expect(result.spacing["5"]).toBe("1.5rem");
   });
 
+  it("resolves partial spacing overrides against the default scale when the base omits spacing", () => {
+    const result = mergeTheme({}, {
+      spacing: { overrides: { "5": "1rem" } },
+    });
+
+    expect(result.spacing["1"]).toBe("4px");
+    expect(result.spacing["5"]).toBe("1rem");
+    expect(result.spacing["9"]).toBe("64px");
+  });
+
   it("handles empty override", () => {
     const result = mergeTheme(baseTheme, {});
     expect(result.color).toEqual(baseTheme.color);

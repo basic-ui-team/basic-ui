@@ -3,7 +3,15 @@ import type { ResolvedTheme } from "../types";
 import { DEFAULT_SPACING_SCALE, resolveSpacingScale } from "../scales/spacing";
 
 export function resolveTheme(theme: ThemeConfig): ResolvedTheme {
-  const spacingScale = resolveSpacingScale(theme.spacing ?? DEFAULT_SPACING_SCALE);
+  const spacingConfig = {
+    ...DEFAULT_SPACING_SCALE,
+    ...theme.spacing,
+    overrides: {
+      ...DEFAULT_SPACING_SCALE.overrides,
+      ...theme.spacing?.overrides,
+    },
+  };
+  const spacingScale = resolveSpacingScale(spacingConfig);
 
   return {
     ...theme,
