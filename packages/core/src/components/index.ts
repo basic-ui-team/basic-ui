@@ -25,3 +25,14 @@ export { Toggle } from "./Toggle";
 export type { ToggleProps } from "./Toggle";
 export { Tooltip } from "./Tooltip";
 export type { TooltipProps } from "./Tooltip";
+export { Badge } from "./Badge";
+export type {
+  BadgeColor,
+  BadgeCountProps,
+  BadgeDotProps,
+  BadgePosition,
+  BadgeProps,
+  BadgeSharedProps,
+  BadgeSize,
+  BadgeVariant,
+} from "./Badge";

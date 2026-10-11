@@ -1,36 +1,23 @@
 import { cva } from "class-variance-authority";
 
 export const badgeVariants = cva(
-  [
-    "absolute inline-flex items-center justify-center",
-    "transform font-semibold rounded-full",
-    "transition-all duration-200 ease-spring",
-    "pointer-events-none",
-    "data-[visible=false]:hidden",
-  ].join(" "),
+  ["absolute inline-flex items-center justify-center", "z-elevated pointer-events-none"].join(" "),
   {
     variants: {
       variant: {
-        dot: "w-2 h-2 p-0",
-        standard: "",
+        count: "rounded-full font-semibold leading-none whitespace-nowrap",
+        dot: "rounded-full",
       },
       size: {
-        small: "text-xs min-w-4 w-auto h-4",
-        medium: "text-sm min-w-6  w-auto h-6",
-        large: "text-base min-w-8 w-auto h-8",
-      },
-      shape: {
-        circular: "rounded-full",
-        rounded: "rounded-md",
-        square: "rounded-none",
+        sm: "",
+        md: "",
+        lg: "",
       },
       color: {
-        primary: "bg-primary-500 text-fg-base",
-        secondary: "bg-secondary-500 text-fg-base",
-        success: "bg-bg-success text-fg-success",
-        warning: "bg-bg-warning text-fg-warning",
-        error: "bg-bg-error text-fg-error",
-        info: "bg-bg-info text-fg-info",
+        success: "",
+        warning: "",
+        error: "",
+        info: "",
       },
       position: {
         "top-left": "top-0 left-0 translate-x-[-50%] translate-y-[-50%]",
@@ -38,35 +25,83 @@ export const badgeVariants = cva(
         "bottom-left": "bottom-0 left-0 translate-x-[-50%] translate-y-[50%]",
         "bottom-right": "bottom-0 right-0 translate-x-[50%] translate-y-[50%]",
       },
-      ping: {
-        true: "motion-safe:animate-[ping_1.5s_ease-out_infinite]",
-        false: "",
-      },
     },
     compoundVariants: [
       {
-        variant: "dot",
-        size: "small",
-        className: "w-2 h-2 min-w-2 min-h-2 px-0 py-0",
+        variant: "count",
+        size: "sm",
+        className: "min-h-5 min-w-5 px-2 text-xs",
+      },
+      {
+        variant: "count",
+        size: "md",
+        className: "min-h-6 min-w-6 px-2 text-sm",
+      },
+      {
+        variant: "count",
+        size: "lg",
+        className: "min-h-7 min-w-7 px-3 text-sm",
       },
       {
         variant: "dot",
-        size: "medium",
-        className: "w-3 h-3 min-w-3 min-h-3 px-0 py-0",
+        size: "sm",
+        className: "h-2 w-2",
       },
       {
         variant: "dot",
-        size: "large",
-        className: "w-4 h-4 min-w-4 min-h-4 px-0 py-0",
+        size: "md",
+        className: "h-3 w-3",
+      },
+      {
+        variant: "dot",
+        size: "lg",
+        className: "h-4 w-4",
+      },
+      {
+        variant: "count",
+        color: "success",
+        className: "bg-bg-success text-fg-success",
+      },
+      {
+        variant: "count",
+        color: "warning",
+        className: "bg-bg-warning text-fg-warning",
+      },
+      {
+        variant: "count",
+        color: "error",
+        className: "bg-bg-error text-fg-error",
+      },
+      {
+        variant: "count",
+        color: "info",
+        className: "bg-bg-info text-fg-info",
+      },
+      {
+        variant: "dot",
+        color: "success",
+        className: "bg-border-success",
+      },
+      {
+        variant: "dot",
+        color: "warning",
+        className: "bg-border-warning",
+      },
+      {
+        variant: "dot",
+        color: "error",
+        className: "bg-border-error",
+      },
+      {
+        variant: "dot",
+        color: "info",
+        className: "bg-border-info",
       },
     ],
     defaultVariants: {
-      variant: "standard",
-      size: "medium",
-      color: "primary",
-      shape: "circular",
+      variant: "count",
+      size: "md",
       position: "top-right",
-      ping: false,
     },
   },
 );
