@@ -11,8 +11,12 @@ export type {
 } from "./types/props";
 export { useResponsiveProps } from "./hooks/useResponsiveProps/useResponsiveProps";
 export { useBreakpoint, resetForTesting } from "./hooks/useBreakpoint/useBreakpoint";
-export { BREAKPOINTS } from "./hooks/useResponsive/constants";
+export { BREAKPOINTS, BREAKPOINT_ORDER } from "./hooks/useResponsive/constants";
 export type { Breakpoint, ResponsiveValue } from "./hooks/useResponsive/types";
+export {
+  getResponsiveClassNames,
+  type ResponsiveClassNameResolver,
+} from "./lib/responsive/getResponsiveClassNames";
 export {
   useControllableState,
   type UseControllableStateProps,

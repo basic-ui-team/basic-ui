@@ -10,7 +10,7 @@ const queries: Record<Exclude<Breakpoint, "base">, string> = {
   md: `(min-width: ${BREAKPOINTS.md}px)`,
   lg: `(min-width: ${BREAKPOINTS.lg}px)`,
   xl: `(min-width: ${BREAKPOINTS.xl}px)`,
-  xxl: `(min-width: ${BREAKPOINTS.xxl}px)`,
+  "2xl": `(min-width: ${BREAKPOINTS["2xl"]}px)`,
 };
 
 let mqls: MediaQueryLists | null = null;
@@ -26,7 +26,7 @@ function initMqls() {
     md: window.matchMedia(queries.md),
     lg: window.matchMedia(queries.lg),
     xl: window.matchMedia(queries.xl),
-    xxl: window.matchMedia(queries.xxl),
+    "2xl": window.matchMedia(queries["2xl"]),
   };
 
   // Store the handler at module scope so we can remove it later when there
@@ -51,9 +51,9 @@ function getCurrentBreakpoint(): Breakpoint {
   initMqls();
   if (!mqls) return "base";
 
-  // Mobile-first: iterate sm->md->lg->xl->xxl and let the last match win
+  // Mobile-first: iterate sm->md->lg->xl->2xl and let the last match win
   let current: Breakpoint = "base";
-  const order: Exclude<Breakpoint, "base">[] = ["sm", "md", "lg", "xl", "xxl"];
+  const order: Exclude<Breakpoint, "base">[] = ["sm", "md", "lg", "xl", "2xl"];
   for (const bp of order) {
     const mq = mqls[bp];
     if (mq?.matches) current = bp;

@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import type { ResponsiveValue } from "../useResponsive/types";
+import { BREAKPOINT_ORDER } from "../useResponsive/constants";
 import { useBreakpoint } from "../useBreakpoint/useBreakpoint";
 
 /**
@@ -41,11 +42,10 @@ export function useResponsiveProps<T extends Record<string, ResponsiveValue<any>
 
 // Helper function (pure, no hooks)
 function resolveBreakpointValue<T>(responsiveObj: Record<string, T>, currentBreakpoint: string): T {
-  const breakpointOrder = ["base", "sm", "md", "lg", "xl", "xxl"];
-  const currentIndex = breakpointOrder.indexOf(currentBreakpoint);
+  const currentIndex = BREAKPOINT_ORDER.indexOf(currentBreakpoint as (typeof BREAKPOINT_ORDER)[number]);
 
   for (let i = currentIndex; i >= 0; i--) {
-    const bp = breakpointOrder[i];
+    const bp = BREAKPOINT_ORDER[i];
     if (bp in responsiveObj && responsiveObj[bp] !== undefined) {
       return responsiveObj[bp];
     }
