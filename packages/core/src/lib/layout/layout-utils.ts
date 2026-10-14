@@ -1,35 +1,43 @@
-import LayoutProps, { SizingType, OverflowType, PositionType, SpacingStep } from "./layout.types";
-import { cn } from "@basic-ui/react-utilities";
-import { useResponsiveProps } from "@basic-ui/react-utilities";
-import layoutVariants from "./layout.variants";
+import LayoutProps from "./layout.types";
+import { cn, getResponsiveClassNames } from "@basic-ui/react-utilities";
+import layoutVariants, { layoutVariantsConfig } from "./layout.variants";
 
-export const LAYOUT_PROP_NAMES = [
-  "p",
-  "px",
-  "py",
-  "pt",
-  "pr",
-  "pb",
-  "pl",
-  "m",
-  "mx",
-  "my",
-  "mt",
-  "mr",
-  "mb",
-  "ml",
-  "gap",
-  "h",
-  "hMin",
-  "hMax",
-  "w",
-  "wMin",
-  "wMax",
-  "position",
-  "overflow",
-  "overflowX",
-  "overflowY",
-] as const;
+export const layoutPropVariants = {
+  p: "padding",
+  px: "paddingX",
+  py: "paddingY",
+  pt: "paddingTop",
+  pr: "paddingRight",
+  pb: "paddingBottom",
+  pl: "paddingLeft",
+
+  m: "margin",
+  mx: "marginX",
+  my: "marginY",
+  mt: "marginTop",
+  mr: "marginRight",
+  mb: "marginBottom",
+  ml: "marginLeft",
+
+  gap: "gap",
+
+  h: "height",
+  hMin: "heightMin",
+  hMax: "heightMax",
+  w: "width",
+  wMin: "widthMin",
+  wMax: "widthMax",
+
+  display: "display",
+  position: "position",
+  overflow: "overflow",
+  overflowX: "overflowX",
+  overflowY: "overflowY",
+} as const satisfies Record<keyof LayoutProps, keyof typeof layoutVariantsConfig.variants>;
+
+export type LayoutPropName = keyof typeof layoutPropVariants;
+
+export const LAYOUT_PROP_NAMES = Object.keys(layoutPropVariants) as LayoutPropName[];
 
 /**
  * Generates className for layout-related props with full responsive support.
@@ -55,96 +63,34 @@ export const LAYOUT_PROP_NAMES = [
 export const generateLayoutClassNames = (
   layout: LayoutProps,
 ): { layoutClassNameString: string } => {
-  const defaultLayout = {
-    p: 0,
-    px: "unset",
-    py: "unset",
-    pt: "unset",
-    pr: "unset",
-    pb: "unset",
-    pl: "unset",
-    m: 0,
-    mx: "unset",
-    my: "unset",
-    mt: "unset",
-    mr: "unset",
-    mb: "unset",
-    ml: "unset",
-    gap: "unset",
-    h: "unset",
-    hMin: "unset",
-    hMax: "unset",
-    w: "unset",
-    wMin: "unset",
-    wMax: "unset",
-    position: "static",
-    overflow: "unset",
-    overflowX: "unset",
-    overflowY: "unset",
-  } as LayoutProps;
-
-  const mergedLayout = {
-    ...defaultLayout,
-    ...(layout || {}),
-  };
-
-  const {
-    p: padding,
-    px: paddingX,
-    py: paddingY,
-    pt: paddingTop,
-    pr: paddingRight,
-    pb: paddingBottom,
-    pl: paddingLeft,
-    m: margin,
-    mx: marginX,
-    my: marginY,
-    mt: marginTop,
-    mr: marginRight,
-    mb: marginBottom,
-    ml: marginLeft,
-    gap,
-    h,
-    hMin,
-    hMax,
-    w,
-    wMin,
-    wMax,
-    position,
-    overflow,
-    overflowX,
-    overflowY,
-  } = useResponsiveProps(mergedLayout, LAYOUT_PROP_NAMES as unknown as (keyof LayoutProps)[]); // Pass layout prop names as ordered keys to ensure consistent class name generation regardless of the order in which layout props are provided by the user
-
   return {
     layoutClassNameString: cn(
-      layoutVariants({
-        padding: padding as SpacingStep | "unset",
-        paddingX: paddingX as SpacingStep | "unset",
-        paddingY: paddingY as SpacingStep | "unset",
-        paddingTop: paddingTop as SpacingStep | "unset",
-        paddingRight: paddingRight as SpacingStep | "unset",
-        paddingBottom: paddingBottom as SpacingStep | "unset",
-        paddingLeft: paddingLeft as SpacingStep | "unset",
-        margin: margin as SpacingStep | "unset",
-        marginX: marginX as SpacingStep | "unset",
-        marginY: marginY as SpacingStep | "unset",
-        marginTop: marginTop as SpacingStep | "unset",
-        marginRight: marginRight as SpacingStep | "unset",
-        marginBottom: marginBottom as SpacingStep | "unset",
-        marginLeft: marginLeft as SpacingStep | "unset",
-        gap: gap as SpacingStep,
-        position: position as PositionType,
-        overflow: overflow as OverflowType,
-        overflowX: overflowX as OverflowType,
-        overflowY: overflowY as OverflowType,
-        height: h as SizingType,
-        heightMin: hMin as SizingType,
-        heightMax: hMax as SizingType,
-        width: w as SizingType,
-        widthMin: wMin as SizingType,
-        widthMax: wMax as SizingType,
-      }),
+      getResponsiveClassNames(layout.p, (value) => layoutVariants({ padding: value })),
+      getResponsiveClassNames(layout.px, (value) => layoutVariants({ paddingX: value })),
+      getResponsiveClassNames(layout.py, (value) => layoutVariants({ paddingY: value })),
+      getResponsiveClassNames(layout.pt, (value) => layoutVariants({ paddingTop: value })),
+      getResponsiveClassNames(layout.pr, (value) => layoutVariants({ paddingRight: value })),
+      getResponsiveClassNames(layout.pb, (value) => layoutVariants({ paddingBottom: value })),
+      getResponsiveClassNames(layout.pl, (value) => layoutVariants({ paddingLeft: value })),
+      getResponsiveClassNames(layout.m, (value) => layoutVariants({ margin: value })),
+      getResponsiveClassNames(layout.mx, (value) => layoutVariants({ marginX: value })),
+      getResponsiveClassNames(layout.my, (value) => layoutVariants({ marginY: value })),
+      getResponsiveClassNames(layout.mt, (value) => layoutVariants({ marginTop: value })),
+      getResponsiveClassNames(layout.mr, (value) => layoutVariants({ marginRight: value })),
+      getResponsiveClassNames(layout.mb, (value) => layoutVariants({ marginBottom: value })),
+      getResponsiveClassNames(layout.ml, (value) => layoutVariants({ marginLeft: value })),
+      getResponsiveClassNames(layout.gap, (value) => layoutVariants({ gap: value })),
+      getResponsiveClassNames(layout.h, (value) => layoutVariants({ height: value })),
+      getResponsiveClassNames(layout.hMin, (value) => layoutVariants({ heightMin: value })),
+      getResponsiveClassNames(layout.hMax, (value) => layoutVariants({ heightMax: value })),
+      getResponsiveClassNames(layout.w, (value) => layoutVariants({ width: value })),
+      getResponsiveClassNames(layout.wMin, (value) => layoutVariants({ widthMin: value })),
+      getResponsiveClassNames(layout.wMax, (value) => layoutVariants({ widthMax: value })),
+      getResponsiveClassNames(layout.display, (value) => layoutVariants({ display: value })),
+      getResponsiveClassNames(layout.position, (value) => layoutVariants({ position: value })),
+      getResponsiveClassNames(layout.overflow, (value) => layoutVariants({ overflow: value })),
+      getResponsiveClassNames(layout.overflowX, (value) => layoutVariants({ overflowX: value })),
+      getResponsiveClassNames(layout.overflowY, (value) => layoutVariants({ overflowY: value })),
     ),
   };
 };

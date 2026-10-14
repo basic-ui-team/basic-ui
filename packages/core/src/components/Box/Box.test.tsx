@@ -15,6 +15,7 @@ describe("Box", () => {
     it("defaults to a div element", () => {
       const { container } = renderWithProviders(<Box>Hi</Box>);
       expect(container.querySelector("div")).toBeInTheDocument();
+      expect(container.firstChild).not.toHaveClass("p-0", "m-0", "block", "static");
     });
 
     it("renders as allowed element via as prop", () => {
@@ -52,14 +53,18 @@ describe("Box", () => {
       expect(container.firstChild).toHaveClass("m-3");
     });
 
-    it("resolves responsive objects to base when no breakpoint matches", () => {
+    it("emits static responsive display and layout classes", () => {
       const { container } = renderWithProviders(
         <Box display={{ base: "inline", md: "block" }} p={{ base: 2, md: 4 }}>
           Test
         </Box>,
       );
+
       expect(container.firstChild).toHaveClass("inline");
+      expect(container.firstChild).toHaveClass("md:block");
       expect(container.firstChild).toHaveClass("p-2");
+      expect(container.firstChild).toHaveClass("md:p-4");
+      expect(container.firstChild).not.toHaveAttribute("display");
     });
   });
 

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Box } from "./Box";
-import { Text } from "../Text/Text";
 import { Flex } from "../Flex/Flex";
+import { Text } from "../Text/Text";
 
 const meta: Meta<typeof Box> = {
   title: "Components/Box",
@@ -14,78 +14,116 @@ type Story = StoryObj<typeof Box>;
 
 export const Default: Story = {
   render: () => (
-    <Box className="border p-2 rounded">
-      <Text as="span">This is a Box (div)</Text>
+    <Box className="rounded-lg border border-border-base bg-surface-base p-3 text-fg-base">
+      <Text as="span">A transparent, polymorphic layout primitive.</Text>
     </Box>
   ),
 };
 
-export const AsSpan: Story = {
+export const SemanticElements: Story = {
   render: () => (
-    <Flex direction="row" align="center" gap={3}>
-      <Text as="span">Inline with Box as span:</Text>
-      <Box as="span" px={2} className="border text-foreground-primary rounded">
-        Inline Box
+    <Box as="article" p={4} className="max-w-xl rounded-lg border border-border-base bg-surface-base">
+      <Box as="header" mb={3}>
+        <Box as="h2" className="text-lg font-semibold">
+          Release notes
+        </Box>
+        <Text as="p" color="muted">
+          Box retains native semantics while supplying layout props.
+        </Text>
       </Box>
-    </Flex>
+      <Box as="section" aria-labelledby="changes-heading">
+        <Box as="h3" id="changes-heading" className="font-semibold">
+          Changes
+        </Box>
+        <Box as="ul" mt={2} pl={4} className="list-disc">
+          <Box as="li">Use an element appropriate to the content.</Box>
+          <Box as="li">Add layout without an extra wrapper.</Box>
+        </Box>
+      </Box>
+    </Box>
   ),
 };
 
-export const DisplayVariants: Story = {
+export const Display: Story = {
   render: () => (
-    <Flex direction="column" gap={3} className="text-foreground-primary">
-      <Box display="block" className="border p-2">
+    <Box p={3} className="rounded-lg border border-border-base bg-surface-base">
+      <Box display="block" p={2} className="rounded bg-surface-hover">
         Block
       </Box>
-      <Box display="inline-block" className="border p-2">
+      <Box display="inline-block" mt={2} p={2} className="rounded bg-surface-hover">
         Inline-block
       </Box>
-      <Box display="inline" className="border p-2">
+      <Box display="inline" ml={2} p={2} className="rounded bg-surface-hover">
         Inline
       </Box>
-    </Flex>
-  ),
-};
-
-export const LayoutProps: Story = {
-  render: () => (
-    <Flex direction="column" gap={3} className="w-full text-foreground-primary">
-      <Box p={3} m={2} className="border rounded">
-        Padding MD & Margin SM
-      </Box>
-      <Box px={4} py={2} className="border rounded">
-        Padding X LG, Y SM
-      </Box>
-      <Box mt={4} ml={2} mr={5} mb={1} className="border rounded">
-        Margin Top LG, Left SM, Right XL, Bottom XS
-      </Box>
-      <Box pt={4} pl={2} pr={5} pb={1} className="border rounded">
-        Padding Top LG, Left SM, Right XL, Bottom XS
-      </Box>
-    </Flex>
-  ),
-};
-
-export const Polymorphic: Story = {
-  render: () => (
-    <Box
-      as="section"
-      aria-label="Example section"
-      className="border border-border-base p-2 rounded"
-    >
-      <Text as="span">Section using Box as="section"</Text>
     </Box>
+  ),
+};
+
+export const Spacing: Story = {
+  render: () => (
+    <Box p={3} className="rounded-lg border border-border-base bg-surface-base">
+      <Box p={3} className="rounded bg-surface-hover">
+        <Text as="span">p=3</Text>
+      </Box>
+      <Box mt={3} px={4} py={2} className="rounded bg-surface-hover">
+        <Text as="span">mt=3, px=4, py=2</Text>
+      </Box>
+      <Box mt={3} pt={2} pr={4} pb={3} pl={1} className="rounded bg-surface-hover">
+        <Text as="span">Independent side spacing</Text>
+      </Box>
+    </Box>
+  ),
+};
+
+export const Sizing: Story = {
+  render: () => (
+    <Flex direction="column" gap={3} className="max-w-xl">
+      <Box w="full" p={3} className="rounded-lg border border-border-base bg-surface-base">
+        <Text as="span">w=&quot;full&quot;</Text>
+      </Box>
+      <Box w="fit" p={3} className="rounded-lg border border-border-base bg-surface-base">
+        <Text as="span">w=&quot;fit&quot;</Text>
+      </Box>
+      <Box wMin="full" p={3} className="rounded-lg border border-border-base bg-surface-base">
+        <Text as="span">wMin=&quot;full&quot;</Text>
+      </Box>
+    </Flex>
+  ),
+};
+
+export const PositionAndOverflow: Story = {
+  render: () => (
+    <Flex direction="column" gap={3} className="max-w-xl">
+      <Box position="relative" p={4} className="rounded-lg border border-border-base bg-surface-base">
+        <Text as="span">A positioned ancestor</Text>
+        <Box
+          position="absolute"
+          className="right-2 top-2 rounded bg-bg-info px-2 py-1 text-fg-info"
+        >
+          Pinned
+        </Box>
+      </Box>
+      <Box overflowX="auto" p={3} className="rounded-lg border border-border-base bg-surface-base">
+        <Box className="w-max whitespace-nowrap">
+          Horizontal overflow remains scrollable when content exceeds its container.
+        </Box>
+      </Box>
+    </Flex>
   ),
 };
 
 export const Responsive: Story = {
   render: () => (
     <Box
-      display={{ base: "inline", md: "block" }}
+      display={{ base: "block", md: "inline-block" }}
       p={{ base: 2, md: 4 }}
-      className="border border-border-base rounded"
+      className="rounded-lg border border-border-base bg-surface-base"
     >
-      <Text as="span">Responsive Box (resize preview to inspect)</Text>
+      <Text as="span">
+        Resize the preview: this emits stable <code>p-2 md:p-4 block md:inline-block</code>{" "}
+        classes for CSS to resolve.
+      </Text>
     </Box>
   ),
 };
