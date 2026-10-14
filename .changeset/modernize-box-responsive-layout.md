@@ -2,4 +2,4 @@
 "@basic-ui/core": minor
 ---
 
-Modernize Box layout props with static responsive utilities, transparent defaults, and shared display support.
+Modernize Box with static responsive layout utilities, transparent defaults, shared display support, and native polymorphic prop forwarding.

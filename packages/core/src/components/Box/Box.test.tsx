@@ -29,6 +29,28 @@ describe("Box", () => {
       expect(ref.current).toBeInTheDocument();
       expect(ref.current?.tagName).toBe("DIV");
     });
+
+    it("forwards native props and refs to polymorphic elements", () => {
+      const ref = React.createRef<HTMLAnchorElement>();
+      renderWithProviders(
+        <Box
+          as="a"
+          ref={ref}
+          href="/docs"
+          aria-label="Read the documentation"
+          data-testid="documentation-link"
+          title="Documentation"
+        >
+          Documentation
+        </Box>,
+      );
+
+      const link = screen.getByTestId("documentation-link");
+      expect(link).toHaveAttribute("href", "/docs");
+      expect(link).toHaveAttribute("aria-label", "Read the documentation");
+      expect(link).toHaveAttribute("title", "Documentation");
+      expect(ref.current).toBe(link);
+    });
   });
 
   describe("variants", () => {
