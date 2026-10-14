@@ -8,6 +8,8 @@ export type SizingType = (typeof SizingValues)[number];
 
 export type PositionType = "static" | "relative" | "absolute" | "fixed" | "sticky";
 
+export type DisplayType = "block" | "inline" | "inline-block" | "none";
+
 export type OverflowType = "visible" | "hidden" | "auto" | "scroll";
 
 /**
@@ -54,6 +56,7 @@ export interface LayoutProps {
   wMax?: ResponsiveValue<SizingType>;
 
   position?: ResponsiveValue<PositionType>;
+  display?: ResponsiveValue<DisplayType>;
 
   overflow?: ResponsiveValue<OverflowType | "unset">;
   overflowX?: ResponsiveValue<OverflowType | "unset">;

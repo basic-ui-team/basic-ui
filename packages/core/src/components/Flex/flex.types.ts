@@ -12,7 +12,7 @@ type justifyContent = (typeof justifyValues)[number];
 type alignItems = (typeof alignValues)[number];
 type flexWrap = (typeof wrapValues)[number];
 
-export interface FlexOwnProps extends LayoutProps, CommonProps {
+export interface FlexOwnProps extends Omit<LayoutProps, "display">, CommonProps {
   direction?: ResponsiveValue<flexDirection>;
   justify?: ResponsiveValue<justifyContent>;
   align?: ResponsiveValue<alignItems>;

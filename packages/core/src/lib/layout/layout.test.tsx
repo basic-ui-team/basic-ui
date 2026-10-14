@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { renderWithProviders, screen } from "../../test-utils";
 import { generateLayoutClassNames, splitLayoutProps, LAYOUT_PROP_NAMES } from "./layout-utils";
+import type { LayoutProps } from "./layout.types";
 
 describe("Layout utils", () => {
   describe("splitLayoutProps", () => {
@@ -9,6 +10,7 @@ describe("Layout utils", () => {
         p: 2,
         mx: 4,
         position: "relative",
+        display: "inline",
         overflow: "hidden",
         id: "my-id",
         "data-test": "x",
@@ -19,6 +21,7 @@ describe("Layout utils", () => {
       expect(layout.p).toBe(2);
       expect(layout.mx).toBe(4);
       expect(layout.position).toBe("relative");
+      expect(layout.display).toBe("inline");
       expect(layout.overflow).toBe("hidden");
 
       expect((rest as Record<string, unknown>).id).toBe("my-id");
@@ -35,13 +38,14 @@ describe("Layout utils", () => {
       expect(Array.isArray(LAYOUT_PROP_NAMES)).toBe(true);
       expect(LAYOUT_PROP_NAMES).toContain("p");
       expect(LAYOUT_PROP_NAMES).toContain("m");
+      expect(LAYOUT_PROP_NAMES).toContain("display");
       expect(LAYOUT_PROP_NAMES).toContain("position");
     });
   });
 
   describe("generateLayoutClassNames (via component render)", () => {
-    const TestComp = ({ layout }: { layout?: Record<string, unknown> }) => {
-        const { layoutClassNameString } = generateLayoutClassNames((layout as Record<string, unknown>) || {});
+    const TestComp = ({ layout }: { layout?: LayoutProps }) => {
+      const { layoutClassNameString } = generateLayoutClassNames(layout ?? {});
       return (
         <div data-testid="layout" className={layoutClassNameString}>
           x
@@ -61,19 +65,23 @@ describe("Layout utils", () => {
       expect(el).toHaveClass("overflow-hidden");
     });
 
-    it("uses merged defaults when props omitted", () => {
+    it("does not emit layout classes when props are omitted", () => {
       renderWithProviders(<TestComp />);
       const el = screen.getByTestId("layout");
 
-      expect(el).toHaveClass("p-0");
-      expect(el).toHaveClass("m-0");
+      expect(el).not.toHaveClass("p-0", "m-0", "block", "static");
     });
 
-    it("resolves responsive objects to base value", () => {
-      renderWithProviders(<TestComp layout={{ p: { base: 1, md: 4 } }} />);
+    it("emits static responsive classes", () => {
+      renderWithProviders(
+        <TestComp layout={{ p: { base: 1, md: 4 }, display: { base: "block", md: "inline" } }} />,
+      );
       const el = screen.getByTestId("layout");
-      // test environment matchMedia mocks no matches -> base used
+
       expect(el).toHaveClass("p-1");
+      expect(el).toHaveClass("md:p-4");
+      expect(el).toHaveClass("block");
+      expect(el).toHaveClass("md:inline");
     });
 
     it("respects `unset` to avoid emitting token class", () => {
@@ -84,12 +92,11 @@ describe("Layout utils", () => {
       expect(el.className).not.toMatch(/\bm-/);
     });
 
-    it("handles undefined layout by using defaults", () => {
+    it("handles undefined layout without emitting defaults", () => {
       renderWithProviders(<TestComp layout={undefined} />);
       const el = screen.getByTestId("layout");
       
-        expect(el).toHaveClass("p-0"); // default padding
-        expect(el).toHaveClass("m-0"); // default margin
+      expect(el).not.toHaveClass("p-0", "m-0", "block", "static");
     });
   });
 });

@@ -45,7 +45,7 @@ export type AutoFlowOption = (typeof autoFlowValues)[number];
 export type AutoColsRowsOption = (typeof autoColsRowsValues)[number];
 export type GridTemplatePresetOption = (typeof gridTemplatePresetValues)[number];
 
-export interface GridOwnProps extends LayoutProps, CommonProps {
+export interface GridOwnProps extends Omit<LayoutProps, "display">, CommonProps {
   /** Number of columns in the grid (1-12). For custom templates use `templatePreset` or `style`/`className`. */
   cols?: ResponsiveValue<ColRowNumber>;
   /** Number of rows in the grid (1-12). For custom templates use `templatePreset` or `style`/`className`. */

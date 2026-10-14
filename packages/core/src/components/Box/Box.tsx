@@ -1,46 +1,32 @@
-import { PolymorphicRef } from "@basic-ui/react-utilities";
-import type { BoxOwnProps, BoxProps } from "./box.types";
-import { useResponsiveProps } from "@basic-ui/react-utilities";
+import { CommonProps, PolymorphicRef } from "@basic-ui/react-utilities";
+import type { BoxProps } from "./box.types";
 import { cn } from "@basic-ui/react-utilities";
 import { forwardRefWithAs, normalizeProps } from "@basic-ui/react-utilities";
 import { generateLayoutClassNames, splitLayoutProps } from "../../lib/layout/layout-utils";
-import { boxVariants } from "./box.variants";
 import { ElementType } from "react";
+import { LayoutProps } from "@core/lib/layout";
 
 const _Box = <As extends ElementType = "div">(
-  { as, display, className, children, style, ...rest }: BoxProps<As>,
+  { as, className, children, style, ...restProps }: BoxProps<As>,
   ref: PolymorphicRef<As>,
 ) => {
   const Comp = (as || "div") as As;
 
-  const { display: resolvedDisplay } = useResponsiveProps({
-    display,
-  });
+  const { layout, rest } = splitLayoutProps(restProps);
+  const { layoutClassNameString } = generateLayoutClassNames(layout);
 
-  const { layout: layoutProps, rest: restProps } = splitLayoutProps(
-    rest as Record<string, unknown>,
-  );
+  const resolvedStyles = cn(layoutClassNameString, className);
 
-  const { layoutClassNameString } = generateLayoutClassNames(layoutProps);
-
-  const resolvedStyles = cn(
-    layoutClassNameString,
-    boxVariants({
-      display: resolvedDisplay, // TODO: We should probably have a separate "display" prop in the layout variants instead of trying to shoehorn it in here, since it's not really a "layout" prop per se. But for now this will do.
-    }),
-    className,
-  );
-
-  const restAny = normalizeProps(restProps as Record<string, unknown>);
+  const normalizedProps = normalizeProps(rest as Record<string, unknown>);
 
   return (
-    <Comp ref={ref} className={resolvedStyles} style={style} {...(restAny as any)}>
+    <Comp ref={ref} className={resolvedStyles} style={style} {...(normalizedProps as any)}>
       {children}
     </Comp>
   );
 };
 
-export const Box = forwardRefWithAs<BoxOwnProps, ElementType>(_Box as any);
+export const Box = forwardRefWithAs<LayoutProps & CommonProps, ElementType>(_Box as any);
 (Box as unknown as { displayName?: string }).displayName = "Box";
 
 export default Box;
