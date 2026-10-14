@@ -1,6 +1,6 @@
 import { cva } from "class-variance-authority";
 
-export const layoutVariants = cva("", {
+export const layoutVariantsConfig = {
   variants: {
     position: {
       static: "static",
@@ -302,6 +302,8 @@ export const layoutVariants = cva("", {
     widthMin: "unset",
     widthMax: "unset",
   },
-});
+} as const;
+
+export const layoutVariants = cva("", layoutVariantsConfig);
 
 export default layoutVariants;
