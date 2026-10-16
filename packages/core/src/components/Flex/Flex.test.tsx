@@ -56,22 +56,38 @@ describe("Flex", () => {
       expect(container.firstChild).toHaveClass("inline-flex");
     });
 
-    it("applies gap and padding tokens", () => {
+    it("uses Box layout classes for gap and padding", () => {
       const { container } = renderWithProviders(
-        <Flex gap={3} p={2}>
+        <Flex gap={{ base: 3, md: 4 }} p={2}>
           Test
         </Flex>,
       );
       expect(container.firstChild).toHaveClass("gap-3");
+      expect(container.firstChild).toHaveClass("md:gap-4");
       expect(container.firstChild).toHaveClass("p-2");
+      expect(container.firstChild).not.toHaveAttribute("gap");
     });
 
-    it("resolves responsive objects to base when no breakpoint matches", () => {
+    it("emits static responsive variant classes", () => {
       const { container } = renderWithProviders(
-        <Flex direction={{ base: "column", md: "row" }}>Test</Flex>,
+        <Flex
+          direction={{ base: "column", md: "row" }}
+          justify={{ base: "start", md: "between" }}
+          display={{ base: "flex", md: "inline-flex" }}
+        >
+          Test
+        </Flex>,
       );
-      // vitest.setup.ts mocks matchMedia to no matches by default, so base should be used
+
       expect(container.firstChild).toHaveClass("flex-col");
+      expect(container.firstChild).toHaveClass("md:flex-row");
+      expect(container.firstChild).toHaveClass("justify-start");
+      expect(container.firstChild).toHaveClass("md:justify-between");
+      expect(container.firstChild).toHaveClass("flex");
+      expect(container.firstChild).toHaveClass("md:inline-flex");
+      expect(container.firstChild).not.toHaveAttribute("direction");
+      expect(container.firstChild).not.toHaveAttribute("justify");
+      expect(container.firstChild).not.toHaveAttribute("display");
     });
   });
 
