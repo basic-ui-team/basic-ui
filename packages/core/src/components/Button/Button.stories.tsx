@@ -2,6 +2,7 @@ import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Button } from "./Button";
 import { Box } from "../Box";
+import { Spinner } from "../Spinner";
 
 const meta: Meta<typeof Button> = {
   title: "Components/Button",
@@ -82,6 +83,9 @@ export const Loading: Story = {
       <Button loading loadingText="Submitting">
         With text
       </Button>
+      <Button loading loadingIcon={<Spinner as="span" size="sm" color="primary" />}>
+        With spinner
+      </Button>
     </Box>
   ),
 };
@@ -107,8 +111,15 @@ export const WithClickAction: Story = {
 export const WithCustomLoadingIcon: Story = {
   args: {
     loading: true,
-    loadingIcon: <span data-testid="custom-loader">★</span>,
+    loadingIcon: <Spinner as="span" size={{ base: "xs", md: "sm" }} color="primary" />,
     children: "Loading",
+  },
+};
+
+export const ResponsiveSizes: Story = {
+  args: {
+    size: { base: "sm", md: "md", lg: "lg" },
+    children: "Resize to change button size",
   },
 };
 

@@ -3,14 +3,9 @@ import {
   cn,
   forwardRefWithAs,
   PolymorphicRef,
-  useResponsiveProps,
+  getResponsiveClassNames,
 } from "@basic-ui/react-utilities";
-import {
-  buttonVariants,
-  buttonIconVariants,
-  buttonLoaderVariants,
-  buttonSpinnerVariants,
-} from "./button.variants";
+import { buttonVariants, buttonSizeClasses } from "./button.variants";
 import { Box, BoxProps } from "../Box";
 
 /**
@@ -59,10 +54,9 @@ export const Button = forwardRefWithAs<ButtonOwnProps, AllowedButtonElements>(
     // Use custom link component when rendering as 'a', otherwise use default 'as' prop
     const Comp = (as === "a" && linkComponent ? linkComponent : as || "button") as As;
 
-    const { size: resolvedSize } = useResponsiveProps({ size });
-
     const resolvedStyles = cn(
-      buttonVariants({ variant, color, size: resolvedSize, disabled, loading }),
+      buttonVariants({ variant, color, size: null, disabled, loading }),
+      getResponsiveClassNames(size, (value) => buttonSizeClasses[value]),
       className,
     );
 
@@ -89,44 +83,13 @@ export const Button = forwardRefWithAs<ButtonOwnProps, AllowedButtonElements>(
             return;
           }
           if (typeof original === "function") original(e as any);
-          // Hate this cast to any but BoxProps<As> doesn't know about onClick when As is not 'button' and I don't know how to type it without making BoxProps a discriminated union which would be a nightmare to maintain
+          // Hate this cast to any but BoxProps<As> doesn't know about onClick
+          // when As is not 'button' and I don't know how to type it without making
+          // BoxProps a discriminated union which would be a nightmare to maintain
         };
       }
       restProps = { ...boxProps };
     }
-
-    const renderLoader = () => {
-      const iconNode = loadingIcon ? (
-        loadingIcon
-      ) : (
-        <Box
-          as="span"
-          role="status"
-          aria-label={loadingText ? `${loadingText} loading` : "Loading"}
-          className={buttonSpinnerVariants()}
-        />
-      );
-
-      let customIconStyles;
-
-      if (loadingIcon) {
-        // If a custom loading icon is provided, apply size-based styles to ensure it fits well within the button
-        customIconStyles = buttonIconVariants({ size: resolvedSize });
-      }
-
-      return (
-        <Box as="span" className={buttonLoaderVariants()}>
-          <Box as="span" className={cn(customIconStyles)}>
-            {iconNode}
-          </Box>
-          {loadingText && (
-            <Box as="span" className="font-medium">
-              {loadingText}
-            </Box>
-          )}
-        </Box>
-      );
-    };
 
     return (
       <Box
@@ -136,7 +99,14 @@ export const Button = forwardRefWithAs<ButtonOwnProps, AllowedButtonElements>(
         aria-busy={loading}
         {...(restProps as BoxProps<As>)}
       >
-        {loading ? renderLoader() : children}
+        {loading ? (
+          <>
+            {loadingIcon}
+            {loadingText ?? children}
+          </>
+        ) : (
+          children
+        )}
       </Box>
     );
   },

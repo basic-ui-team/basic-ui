@@ -9,16 +9,100 @@ describe("Button", () => {
     expect(screen.getByText("Click me")).toBeInTheDocument();
   });
 
-  it("shows spinner when loading and no loadingIcon is provided", () => {
-    renderWithProviders(<Button loading>Hidden</Button>);
-    expect(screen.getByRole("status")).toBeInTheDocument();
-    const btn = screen.getByRole("button");
+  it("preserves children while loading without creating an icon", () => {
+    renderWithProviders(<Button loading>Submit</Button>);
+    const btn = screen.getByRole("button", { name: "Submit" });
+    expect(screen.queryByRole("status")).not.toBeInTheDocument();
+    expect(btn.querySelector(".animate-spin")).not.toBeInTheDocument();
     expect(btn).toHaveAttribute("aria-busy", "true");
+    expect(btn).toBeDisabled();
   });
 
   it("renders custom loadingIcon when provided", () => {
     renderWithProviders(<Button loading loadingIcon={<span data-testid="custom">X</span>} />);
     expect(screen.getByTestId("custom")).toBeInTheDocument();
+  });
+
+  it("replaces children with loadingText while busy", () => {
+    renderWithProviders(
+      <Button loading loadingText="Submitting">Submit</Button>,
+    );
+    expect(screen.getByRole("button", { name: "Submitting" })).toBeDisabled();
+    expect(screen.queryByText("Submit")).not.toBeInTheDocument();
+  });
+
+  it("leaves custom loading icon sizing and styling untouched", () => {
+    const LoadingIcon = () => (
+      <svg data-testid="styled-loader" className="h-9 w-9 text-fg-info" />
+    );
+    renderWithProviders(
+      <Button loading size={{ base: "sm", md: "lg" }} loadingIcon={<LoadingIcon />}>
+        Submit
+      </Button>,
+    );
+    const icon = screen.getByTestId("styled-loader");
+    expect(icon).toHaveAttribute("class", "h-9 w-9 text-fg-info");
+    expect(icon.parentElement).toBe(screen.getByRole("button", { name: "Submit" }));
+  });
+
+  it("ignores loading-only content when not busy", () => {
+    renderWithProviders(
+      <Button loadingText="Submitting" loadingIcon={<span data-testid="unused-loader" />}>
+        Submit
+      </Button>,
+    );
+    expect(screen.getByRole("button", { name: "Submit" })).toHaveAttribute("aria-busy", "false");
+    expect(screen.queryByTestId("unused-loader")).not.toBeInTheDocument();
+    expect(screen.queryByText("Submitting")).not.toBeInTheDocument();
+  });
+
+  it.each([
+    ["sm", "px-2 py-1 text-sm gap-1 rounded-md"],
+    ["md", "px-3 py-2 text-md gap-2 rounded-lg"],
+    ["lg", "px-4 py-3 text-lg gap-3 rounded-xl"],
+  ] as const)("preserves %s size utilities", (size, classes) => {
+    renderWithProviders(<Button size={size}>Submit</Button>);
+    expect(screen.getByRole("button")).toHaveClass(...classes.split(" "));
+  });
+
+  it("prefixes only size utilities, preserving scalar appearance and state", () => {
+    renderWithProviders(
+      <Button
+        size={{ base: "sm", md: "lg", xl: "md" }}
+        variant="outline"
+        color="success"
+        disabled
+        loading
+      >
+        Submit
+      </Button>,
+    );
+    const button = screen.getByRole("button");
+    expect(button).toHaveClass(
+      "px-2", "py-1", "text-sm", "gap-1", "rounded-md",
+      "inline-flex", "border-border-success", "text-fg-success",
+      "cursor-not-allowed", "pointer-events-none",
+    );
+    expect([...button.classList].filter((name) => name.startsWith("md:"))).toEqual([
+      "md:px-4", "md:py-3", "md:text-lg", "md:gap-3", "md:rounded-xl",
+    ]);
+    expect([...button.classList].filter((name) => name.startsWith("xl:"))).toEqual([
+      "xl:px-3", "xl:py-2", "xl:text-md", "xl:gap-2", "xl:rounded-lg",
+    ]);
+    expect(button).toBeDisabled();
+    expect(button).toHaveAttribute("aria-busy", "true");
+    expect(button).not.toHaveAttribute("size");
+  });
+
+  it("preserves consumer class overrides with responsive sizing", () => {
+    renderWithProviders(
+      <Button size={{ base: "sm", md: "lg" }} className="hidden px-9 md:px-1">
+        Submit
+      </Button>,
+    );
+    const button = screen.getByRole("button");
+    expect(button).toHaveClass("hidden", "px-9", "md:px-1");
+    expect(button).not.toHaveClass("inline-flex", "md:inline-flex", "px-2", "md:px-4");
   });
 
   it("applies native disabled attribute when rendered as button", () => {

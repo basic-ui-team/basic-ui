@@ -50,9 +50,14 @@ The `Button` component is designed for consistent, accessible user interactions 
 <Button size="sm">Small</Button>
 <Button size="md">Medium</Button>
 <Button size="lg">Large</Button>
+<Button size={{ base: "sm", md: "md", lg: "lg" }}>Responsive</Button>
 ```
 
 ### Loading State
+
+Loading disables interaction and sets `aria-busy`. Children remain visible unless
+`loadingText` is provided. Button does not create a default spinner or style the
+supplied icon; pass a styled icon element or `Spinner` when needed.
 
 ```tsx
 // Basic loading
@@ -63,9 +68,8 @@ The `Button` component is designed for consistent, accessible user interactions 
   Submit
 </Button>
 
-// With custom loading icon
-const CustomIcon = <span aria-hidden>★</span>;
-<Button loading loadingIcon={CustomIcon}>
+// With a consumer-styled spinner
+<Button loading loadingIcon={<Spinner as="span" size="sm" color="primary" />}>
   Loading
 </Button>
 ```
@@ -120,9 +124,9 @@ const handleClick = () => {
 | `color` | `'default' \| 'muted' \| 'primary' \| 'secondary' \| 'error' \| 'success' \| 'warning' \| 'info'` | `'default'` | Semantic color scheme |
 | `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Button size (responsive values supported) |
 | `disabled` | `boolean` | `false` | Disables the button and applies disabled styles |
-| `loading` | `boolean` | `false` | Shows loading state with spinner/icon |
-| `loadingText` | `string` | — | Optional text to display during loading state |
-| `loadingIcon` | `React.ReactNode` | — | Custom loading icon (defaults to spinner) |
+| `loading` | `boolean` | `false` | Marks the button busy and disables interaction |
+| `loadingText` | `string` | — | Replaces children while loading; otherwise children remain visible |
+| `loadingIcon` | `React.ReactNode` | — | Optional loading icon element with consumer-owned styling; no default icon |
 | `as` | `'button' \| 'a'` | `'button'` | Polymorphic element type |
 | `linkComponent` | `React.ElementType` | — | Custom link component (Next.js Link, React Router Link, etc.) |
 | `className` | `string` | — | Additional CSS classes |
