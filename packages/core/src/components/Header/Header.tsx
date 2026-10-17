@@ -4,17 +4,18 @@ import {
   getTruncateAccessibilityProps,
   normalizeProps,
   PolymorphicRef,
-  useResponsiveProps,
+  getResponsiveClassNames,
 } from "@basic-ui/react-utilities";
 import { AllowedHeaderElements, HeaderOwnProps, HeaderProps } from "./header.types";
-import { headerVariants } from "./header.variants";
+import { headerVariants, headerSizeClasses, headerAlignClasses } from "./header.variants";
 import { Box, BoxProps } from "../Box";
 import { BuiltInSemanticColors, isBuiltInSemanticColor } from "@core/theme";
+import { getTextFlowClasses } from "@core/lib";
 
 const _Header = <As extends AllowedHeaderElements = "h1">(
   {
     as,
-    size,
+    size = "h2",
     weight = "normal",
     color = "default",
     align = "left",
@@ -22,42 +23,35 @@ const _Header = <As extends AllowedHeaderElements = "h1">(
     wrap = "nowrap",
     children,
     className,
+    overflow,
+    overflowX,
+    overflowY,
     ...rest
   }: HeaderProps<As>,
   ref: PolymorphicRef<As>,
 ) => {
   const Comp = (as || "h1") as As;
 
-  const {
-    size: resolvedSize,
-    weight: resolvedWeight,
-    align: resolvedAlign,
-    wrap: resolvedWrap,
-    truncate: resolvedTruncate,
-    color: resolvedColor,
-  } = useResponsiveProps({ size, weight, align, truncate, wrap, color });
-
-  const isBuiltInColor = isBuiltInSemanticColor(resolvedColor);
+  const flow = getTextFlowClasses({ truncate, wrap, overflow, overflowX, overflowY });
+  const isBuiltInColor = isBuiltInSemanticColor(color);
 
   const resolvedStyles = cn(
     headerVariants({
-      size: resolvedSize,
-      weight: resolvedWeight,
-      color: isBuiltInColor ? (resolvedColor as BuiltInSemanticColors) : "custom",
-      // Only apply align styles to block-level elements since text-align doesn't apply to inline elements
-      align: resolvedAlign,
-      truncate: resolvedTruncate,
-      wrap: resolvedWrap,
+      size: null,
+      weight,
+      color: isBuiltInColor ? (color as BuiltInSemanticColors) : "custom",
+      align: null,
+      truncate: null,
+      wrap: null,
     }),
+    getResponsiveClassNames(size, (value) => headerSizeClasses[value]),
+    getResponsiveClassNames(align, (value) => headerAlignClasses[value]),
+    flow.className,
     className,
-    !isBuiltInColor && resolvedColor ? resolvedColor : null, // If it's a custom color (not one of the built-in options), apply it directly as a className (which should be a valid CSS color value)
+    !isBuiltInColor && color ? color : null,
   );
 
-  // Accessibility: if header is visually truncated and the consumer didn't provide
-  // a `title` or `aria-label`, expose the full text to assistive tech via both
-  // `title` (hover) and `aria-label` (screen readers) when `children` is a string.
-  const accessibilityProps =
-    resolvedTruncate && getTruncateAccessibilityProps(children, resolvedTruncate, rest);
+  const accessibilityProps = getTruncateAccessibilityProps(children, flow.hasTruncation, rest);
 
   // Normalize props (non-mutating)
   const normalizedRest = normalizeProps(rest);
@@ -66,7 +60,6 @@ const _Header = <As extends AllowedHeaderElements = "h1">(
     <Box<As>
       as={Comp}
       ref={ref}
-      overflow={resolvedTruncate ? "hidden" : undefined} // Ensure overflow hidden is applied when truncation is enabled
       className={resolvedStyles}
       {...accessibilityProps}
       {...(normalizedRest as BoxProps<As>)}

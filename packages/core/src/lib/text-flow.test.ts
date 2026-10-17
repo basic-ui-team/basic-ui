@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { getCardTextFlowClasses } from "./card-text-utils";
+import { getTextFlowClasses } from "./text-flow";
 
-describe("Card text flow", () => {
+describe("Text flow", () => {
   it("does not add truncation resets when truncation is never enabled", () => {
-    expect(getCardTextFlowClasses({
+    expect(getTextFlowClasses({
       truncate: { base: false, md: false },
       wrap: { base: "wrap", md: "pretty" },
       overflowX: { base: "auto", lg: "scroll" },
@@ -14,7 +14,7 @@ describe("Card text flow", () => {
   });
 
   it("restores default overflow and the selected nowrap mode", () => {
-    expect(getCardTextFlowClasses({
+    expect(getTextFlowClasses({
       truncate: { base: true, md: false },
       wrap: "nowrap",
     })).toEqual({
@@ -24,7 +24,7 @@ describe("Card text flow", () => {
   });
 
   it("carries axis overrides while truncated and restores them in breakpoint order", () => {
-    const result = getCardTextFlowClasses({
+    const result = getTextFlowClasses({
       truncate: { base: true, lg: false },
       wrap: { base: "nowrap", md: "wrap" },
       overflow: { base: "auto", xl: "hidden" },
@@ -38,7 +38,7 @@ describe("Card text flow", () => {
   });
 
   it("restores visible overflow for unset after truncation", () => {
-    const result = getCardTextFlowClasses({
+    const result = getTextFlowClasses({
       truncate: { base: true, md: false },
       wrap: "wrap",
       overflow: { base: "scroll", md: "unset" },

@@ -11,6 +11,22 @@ export default meta;
 
 type Story = StoryObj<typeof Header>;
 
+export const ResponsiveLayout: Story = {
+  render: () => (
+    <div className="max-w-lg">
+      <Header
+        as="h2"
+        size={{ base: "h4", md: "h3", lg: "h2" }}
+        align={{ base: "left", lg: "center" }}
+        truncate={{ base: true, md: false }}
+        wrap="balance"
+      >
+        A heading that truncates on narrow screens and wraps on wider screens
+      </Header>
+    </div>
+  ),
+};
+
 export const SizeVariants: Story = {
   render: () => (
     <Flex direction="column" gap={3}>

@@ -9,7 +9,7 @@ import {
 import { Box, BoxProps } from "../../Box";
 import { AllowedHeaderElements, CardTitleOwnProps } from "../card.types";
 import { cardTitleVariants, cardTitleSizeClasses, cardTextAlignClasses } from "../card.variants";
-import { getCardTextFlowClasses } from "../card-text-utils";
+import { getTextFlowClasses } from "@core/lib";
 import { BuiltInSemanticColors, isBuiltInSemanticColor } from "@core/theme";
 
 const _Title = <As extends AllowedHeaderElements = "h3">(
@@ -31,7 +31,7 @@ const _Title = <As extends AllowedHeaderElements = "h3">(
   ref: PolymorphicRef<As>,
 ) => {
   const Comp = (as || "h3") as As;
-  const flow = getCardTextFlowClasses({ truncate, wrap, overflow, overflowX, overflowY });
+  const flow = getTextFlowClasses({ truncate, wrap, overflow, overflowX, overflowY });
   const isBuiltInColor = isBuiltInSemanticColor(color);
   const resolvedStyles = cn(
     cardTitleVariants({

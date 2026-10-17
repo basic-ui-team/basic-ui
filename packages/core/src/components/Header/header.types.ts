@@ -4,15 +4,15 @@ import type { LayoutProps } from "@core/lib";
 import { BuiltInSemanticColors } from "@core/theme";
 
 export interface HeaderOwnProps extends CommonProps, LayoutProps {
-  /** Size of the header. @default "h2" */
+  /** Fixed visual size, independent of heading semantics. Use responsive values for breakpoint changes. @default "h2" */
   size?: ResponsiveValue<"h1" | "h2" | "h3" | "h4" | "h5" | "h6">;
   /** Font weight. @default "normal" */
-  weight?: ResponsiveValue<"normal" | "medium" | "semibold" | "bold">;
+  weight?: "normal" | "medium" | "semibold" | "bold";
   /** Color of the header. @default "default" */
-  color?: ResponsiveValue<BuiltInSemanticColors | string>;
+  color?: BuiltInSemanticColors | string;
   /** Text alignment. @default "left" */
   align?: ResponsiveValue<"left" | "center" | "right">;
-  /** Truncate the text. @default false */
+  /** Single-line ellipsis. Overrides wrap and overflow while active. @default false */
   truncate?: ResponsiveValue<boolean>;
   /** Text wrapping behavior. @default "nowrap" */
   wrap?: ResponsiveValue<"wrap" | "nowrap" | "pretty" | "balance">;

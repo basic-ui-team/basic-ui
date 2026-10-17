@@ -5,9 +5,15 @@ import {
   type Breakpoint,
   type ResponsiveValue,
 } from "@basic-ui/react-utilities";
-import { generateLayoutClassNames, type LayoutProps, type OverflowType } from "@core/lib";
-import type { CardTitleOwnProps } from "./card.types";
-import { cardTextWrapClasses } from "./card.variants";
+import { generateLayoutClassNames } from "./layout-utils";
+import type { LayoutProps, OverflowType } from "./layout.types";
+
+export const textWrapClasses = {
+  nowrap: "text-nowrap",
+  wrap: "text-wrap",
+  balance: "text-balance",
+  pretty: "text-pretty",
+} as const;
 
 function valueAt<Value extends string | boolean>(
   value: ResponsiveValue<Value> | undefined,
@@ -18,13 +24,16 @@ function valueAt<Value extends string | boolean>(
     : breakpoint === "base" ? value : undefined;
 }
 
-export function getCardTextFlowClasses({
+export function getTextFlowClasses({
   truncate,
   wrap,
   overflow,
   overflowX,
   overflowY,
-}: Required<Pick<CardTitleOwnProps, "truncate" | "wrap">> &
+}: {
+  truncate: ResponsiveValue<boolean>;
+  wrap: ResponsiveValue<keyof typeof textWrapClasses>;
+} &
   Pick<LayoutProps, "overflow" | "overflowX" | "overflowY">) {
   const hasTruncation = typeof truncate === "boolean"
     ? truncate
@@ -34,14 +43,14 @@ export function getCardTextFlowClasses({
     return {
       hasTruncation,
       className: cn(
-        getResponsiveClassNames(wrap, (value) => cardTextWrapClasses[value]),
+        getResponsiveClassNames(wrap, (value) => textWrapClasses[value]),
         generateLayoutClassNames({ overflow, overflowX, overflowY }).layoutClassNameString,
       ),
     };
   }
 
   let currentTruncate = false;
-  let currentWrap: keyof typeof cardTextWrapClasses = "wrap";
+  let currentWrap: keyof typeof textWrapClasses = "wrap";
   let currentX: OverflowType = "visible";
   let currentY: OverflowType = "visible";
 
@@ -72,7 +81,7 @@ export function getCardTextFlowClasses({
             : `overflow-x-${currentX} overflow-y-${currentY}`,
           "text-clip",
           currentWrap === "nowrap" ? "whitespace-nowrap" : "whitespace-normal",
-          cardTextWrapClasses[currentWrap],
+          textWrapClasses[currentWrap],
         );
   }
 

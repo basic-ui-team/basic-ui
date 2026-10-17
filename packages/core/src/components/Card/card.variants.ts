@@ -1,4 +1,5 @@
 import { cva } from "class-variance-authority";
+import { textWrapClasses } from "@core/lib";
 
 export const cardSectionSpacingClasses = {
   default: "p-3",
@@ -28,13 +29,6 @@ export const cardTextAlignClasses = {
   left: "text-left",
   center: "text-center",
   right: "text-right",
-} as const;
-
-export const cardTextWrapClasses = {
-  nowrap: "text-nowrap",
-  wrap: "text-wrap",
-  balance: "text-balance",
-  pretty: "text-pretty",
 } as const;
 
 export const cardImageObjectFitClasses = {
@@ -152,7 +146,7 @@ export const cardTitleVariants = cva("font-sans font-normal leading-tight", {
       true: "truncate",
       false: "",
     },
-    wrap: cardTextWrapClasses,
+    wrap: textWrapClasses,
   },
   defaultVariants: {
     size: "h3",
@@ -189,7 +183,7 @@ export const cardDescriptionVariants = cva("font-sans", {
       true: "truncate",
       false: "",
     },
-    wrap: cardTextWrapClasses,
+    wrap: textWrapClasses,
   },
   defaultVariants: {
     size: "md",

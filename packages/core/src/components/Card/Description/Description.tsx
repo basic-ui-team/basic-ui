@@ -13,7 +13,7 @@ import {
   cardDescriptionSizeClasses,
   cardTextAlignClasses,
 } from "../card.variants";
-import { getCardTextFlowClasses } from "../card-text-utils";
+import { getTextFlowClasses } from "@core/lib";
 import { BuiltInSemanticColors, isBuiltInSemanticColor } from "@core/theme";
 
 const _Description = <As extends AllowedTextElements = "p">(
@@ -35,7 +35,7 @@ const _Description = <As extends AllowedTextElements = "p">(
   ref: PolymorphicRef<As>,
 ) => {
   const Comp = (as || "p") as As;
-  const flow = getCardTextFlowClasses({ truncate, wrap, overflow, overflowX, overflowY });
+  const flow = getTextFlowClasses({ truncate, wrap, overflow, overflowX, overflowY });
   const isBuiltInColor = isBuiltInSemanticColor(color);
   const resolvedStyles = cn(
     cardDescriptionVariants({

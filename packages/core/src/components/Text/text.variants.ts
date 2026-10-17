@@ -1,16 +1,25 @@
 import { cva } from "class-variance-authority";
+import { textWrapClasses } from "@core/lib";
+
+export const textSizeClasses = {
+  xs: "text-xs",
+  sm: "text-sm",
+  md: "text-md",
+  lg: "text-lg",
+  xl: "text-xl",
+  "2xl": "text-2xl",
+  "3xl": "text-3xl",
+} as const;
+
+export const textAlignClasses = {
+  left: "text-left",
+  center: "text-center",
+  right: "text-right",
+} as const;
 
 export const textVariants = cva("font-sans", {
   variants: {
-    size: {
-      xs: "text-xs",
-      sm: "text-sm",
-      md: "text-md",
-      lg: "text-lg",
-      xl: "text-xl",
-      "2xl": "text-2xl",
-      "3xl": "text-3xl",
-    },
+    size: textSizeClasses,
     weight: {
       normal: "font-normal",
       medium: "font-medium",
@@ -28,21 +37,12 @@ export const textVariants = cva("font-sans", {
       info: "text-fg-info",
       custom: "",
     },
-    align: {
-      left: "text-left",
-      center: "text-center",
-      right: "text-right",
-    },
+    align: textAlignClasses,
     truncate: {
       true: "truncate",
       false: "",
     },
-    wrap: {
-      nowrap: "text-nowrap",
-      wrap: "text-wrap",
-      balance: "text-balance",
-      pretty: "text-pretty",
-    },
+    wrap: textWrapClasses,
   },
   defaultVariants: {
     size: "md",

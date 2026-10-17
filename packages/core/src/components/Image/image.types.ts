@@ -25,7 +25,8 @@ export interface ImageOwnProps
   loading?: "lazy" | "eager";
   /** Decoding strategy (async, sync, auto). */
   decoding?: "async" | "sync" | "auto";
-  rounded?: ResponsiveValue<"none" | "sm" | "md" | "lg" | "xl" | "full">;
+  /** Scalar corner rounding. */
+  rounded?: "none" | "sm" | "md" | "lg" | "xl" | "full";
 }
 
 export type ImageSource = {

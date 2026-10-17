@@ -149,6 +149,56 @@ variants are cosmetic and become scalar. Dialog size/fullWidth, Badge placement,
 and footer stickiness are valid spatial candidates but new responsive support
 is deferred. Badge size remains the agreed addition.
 
+### Card responsive authoring
+
+Card root `variant`, Title/Description `weight` and `color`, Image `rounded`,
+and Footer `sticky` are scalar. Section `default`/`compact` variants are padding
+presets and accept responsive values independently on Header, Body, and Footer.
+
+Title sizes are fixed visual mappings (`h1` through `h6` map to `text-3xl`,
+`text-2xl`, `text-xl`, `text-lg`, `text-md`, and `text-sm`).
+They no longer scale automatically at `md` and `lg`; express that explicitly:
+
+```tsx
+<Card.Title size={{ base: "h4", md: "h3", lg: "h2" }} as="h2">
+  Card title
+</Card.Title>
+```
+
+The heading element remains independent of visual size. Title retains its
+existing default visual size of `h2`; Description retains `md` and `default`
+color. Both support responsive size, alignment, wrapping, and truncation.
+
+Truncation uses single-line ellipsis and owns whitespace and overflow while
+active. When it turns off, the latest requested wrapping and overflow values
+are restored, with visible overflow when unspecified or `unset`. Consumer
+`className` overrides remain last. For string children, enabling truncation at
+any breakpoint supplies stable full-text `title` and `aria-label` attributes
+unless either attribute was explicitly provided; these do not depend on the
+viewport.
+
+Image fitting and aspect ratio remain responsive. Use `aspectRatio="auto"` at a
+later breakpoint to restore intrinsic proportions; image rounding stays scalar.
+
+### Standalone Header, Text, and Image
+
+Header and Text use the same responsive/scalar split as Card typography:
+size, alignment, wrapping, and truncation are responsive; weight and color are
+scalar. Their shared text-flow helper also handles Card typography, keeping
+truncation resets and stable full-text attributes consistent.
+
+Header uses the fixed visual size mappings listed above for Card.Title.
+Automatic `md`/`lg` scaling is removed; supply responsive `size` values instead.
+Its existing default element (`h1`) and default visual size (`h2`) are preserved.
+Text retains its `p` element, `md` size, `default` color, and `wrap` defaults.
+Its existing inline-span alignment behavior is unchanged.
+
+Image keeps object fitting and aspect ratio responsive, but rounding is scalar.
+For a picture element, aspect ratio and rounding belong to the wrapper, while
+object fitting belongs to the inner image. Each resolver emits only its own
+utilities, so default fitting, ratio, or rounding cannot leak into another axis.
+The `auto` ratio explicitly resets a previous breakpoint's ratio.
+
 Off-scale recipe values, bespoke Grid templates, and descendant/state selector
 forms are not automatically harvested into the source. Review them during their
 owning migration; do not use a component-specific list to bypass that review.
