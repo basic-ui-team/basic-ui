@@ -42,10 +42,53 @@ export const MyComp = forwardRefWithAs<MyCompOwnProps, AllowedElements>(_MyComp)
 
 - Do not use manual `forwardRef` + `as any` cast patterns — they are error-prone.
 
-## Hooks & responsive props
+## Responsive props
 
-- Use `useBreakpoint()` once inside `useResponsiveProps` and resolve responsive objects with a pure resolver function. Avoid calling `useResponsive` per prop.
-- Keep `orderedKeys` stable across renders when provided.
+Use `ResponsiveValue<T>` when size, spacing, or layout should adapt to the
+available space. Keep colors, cosmetic variants, interaction state, and
+accessibility attributes independent of viewport size. Use CSS for responsive
+presentation rather than selecting styles with a viewport hook.
+
+Keep styling in the component's variant file. Use `getResponsiveClassNames` to
+resolve each responsive value into its classes:
+
+```ts
+getResponsiveClassNames(size, currentSize =>
+  sizeVariants({ size: currentSize }),
+);
+```
+
+The callback should return only the styles controlled by that prop, not the
+whole component recipe. Keep unrelated defaults, colors, and focus styles out
+of it. Normal CVA compounds can still combine responsive size with scalar state.
+
+CSS overrides earlier declarations; it does not replace an entire recipe.
+When a value turns styling off, emit an explicit reset rather than an empty
+string. Test transitions in both directions.
+
+Coordinate child parts when their geometry is coupled to the parent's size.
+Do not implicitly resize content supplied by the consumer.
+
+### Generating responsive CSS
+
+Responsive utilities must be present in the shipped stylesheet. Supported
+families and values live in
+[`responsive-utilities.ts`](../../packages/core/src/lib/responsive-utilities.ts).
+Composing existing utilities in a new recipe needs no generator registration.
+
+If a required utility is missing, review whether it belongs in a shared family
+and extend that family rather than adding a component-specific list. Regenerate
+the stylesheet and include it with your change:
+
+```sh
+pnpm --filter @basic-ui/core generate:layout-utilities
+pnpm --filter @basic-ui/core check:layout-utilities
+```
+
+Test both the component's class output and the resulting CSS. A class appearing
+in the DOM does not prove that the stylesheet contains it. See the
+[responsive CSS design](../engineering/core-design/responsive-css.md) for the
+supported capabilities and current migration scope.
 
 ## Exports & TypeScript
 
@@ -76,7 +119,12 @@ Enforced by `scripts/check-component-imports.mjs` in CI (see Enforcement below).
 
 ## Layout utilities
 
-- Keep layout helpers (e.g. `splitLayoutProps`, `generateLayoutClassNames`) under `packages/core/src/lib/layout` and export them from the library internal `layout` barrel.
+Use Box for shared spacing, sizing, and layout props instead of handling them
+again in each component. Layout props should become classes, not DOM attributes.
+
+Shared layout types, recipes, and helpers live in
+[`packages/core/src/lib`](../../packages/core/src/lib). Recipe keys match the
+public prop names, such as `p` and `hMin`.
 
 ## Tests & Accessibility
 
