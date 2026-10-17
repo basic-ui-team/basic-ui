@@ -1,5 +1,11 @@
 import { cva } from "class-variance-authority";
 
+export const toggleSizeClasses = {
+  sm: "h-4 w-8 p-0.5",
+  md: "h-5 w-9 p-0.5",
+  lg: "h-6 w-11 p-0.5",
+};
+
 export const toggleVariants = cva(
   [
     "relative inline-flex items-center shrink-0 rounded-full",
@@ -9,11 +15,7 @@ export const toggleVariants = cva(
   ].join(" "),
   {
     variants: {
-      size: {
-        sm: "h-4 w-8 p-0.5",
-        md: "h-5 w-9 p-0.5",
-        lg: "h-6 w-11 p-0.5",
-      },
+      size: toggleSizeClasses,
       color: {
         primary: "",
         secondary: "",

@@ -1,14 +1,14 @@
 import {
   useAriaIds,
   useControllableState,
-  useResponsiveProps,
   cn,
   forwardRefWithAs,
   PolymorphicRef,
+  getResponsiveClassNames,
 } from "@basic-ui/react-utilities";
 import { Box, BoxProps } from "../Box";
 import { AllowedToggleElements, ToggleOwnProps, ToggleProps } from "./toggle.types";
-import { toggleVariants } from "./toggle.variants";
+import { toggleSizeClasses, toggleVariants } from "./toggle.variants";
 
 /**
  * Toggle (switch) component for binary on/off choices.
@@ -47,7 +47,6 @@ export const Toggle = forwardRefWithAs<ToggleOwnProps, AllowedToggleElements>(
       defaultValue,
       onChange,
     });
-    const { size: resolvedSize } = useResponsiveProps({ size });
     const { id } = useAriaIds({ prefix: "toggle" });
     return (
       <Box
@@ -60,11 +59,11 @@ export const Toggle = forwardRefWithAs<ToggleOwnProps, AllowedToggleElements>(
         data-checked={checked || undefined}
         className={cn(
           toggleVariants({
-            size: resolvedSize,
             color,
             checked: Boolean(checked),
             disabled,
           }),
+          getResponsiveClassNames(size, (value) => toggleSizeClasses[value]),
           className,
         )}
         id={id}
