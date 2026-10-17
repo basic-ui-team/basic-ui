@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { createLayoutUtilitySource, getLayoutUtilityCandidates } from "./layout-utility-source";
+import {
+  createLayoutUtilitySource,
+  getFlexUtilityCandidates,
+  getLayoutUtilityCandidates,
+} from "./layout-utility-source";
 
 describe("layout utility source", () => {
   it("derives unique candidates from the layout variant configuration", () => {
@@ -13,9 +17,18 @@ describe("layout utility source", () => {
     expect(new Set(candidates).size).toBe(candidates.length);
   });
 
+  it("includes the dynamic Flex utilities in the responsive source", () => {
+    const candidates = getFlexUtilityCandidates();
+
+    expect(candidates).toContain("flex-row");
+    expect(candidates).toContain("flex-wrap");
+    expect(candidates).toContain("inline-flex");
+  });
+
   it("generates responsive Tailwind source for every canonical breakpoint", () => {
-    expect(createLayoutUtilitySource(["base", "sm", "md"])).toContain(
-      '@source inline("{,sm:,md:}{',
-    );
+    const source = createLayoutUtilitySource(["base", "sm", "md"]);
+
+    expect(source).toContain('@source inline("{,sm:,md:}{');
+    expect(source).toContain("flex-row");
   });
 });
