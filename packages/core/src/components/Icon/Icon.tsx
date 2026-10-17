@@ -1,7 +1,7 @@
 import React from "react";
 import type { IconProps } from "./icon.types";
-import { cn, useResponsiveProps } from "@basic-ui/react-utilities";
-import { iconVariants } from "./icon.variants";
+import { cn, getResponsiveClassNames } from "@basic-ui/react-utilities";
+import { iconSizeClasses, iconVariants } from "./icon.variants";
 import { Box } from "../Box";
 
 /**
@@ -13,14 +13,15 @@ import { Box } from "../Box";
  * Defaults to `aria-hidden="true"` since icons are typically decorative;
  * pass `aria-hidden={false}` and an `aria-label` when the icon conveys meaning.
  * Supports responsive sizing via ResponsiveValue.
+ * Inherits the surrounding color unless a semantic color is explicitly provided.
  *
  * @example
  * // From @basic-ui/icons
  * import { CheckCircle } from "@basic-ui/icons";
- * <Icon icon={CheckCircle} variant="success" />
+ * <Icon icon={CheckCircle} color="success" />
  *
  * // Custom SVG
- * <Icon icon={<svg>...</svg>} size="lg" variant="primary" />
+ * <Icon icon={<svg>...</svg>} size="lg" color="primary" />
  *
  * // Responsive: md=md, lg=lg
  * <Icon icon={CheckCircle} size={{ base: "sm", md: "md", lg: "lg" }} />
@@ -33,8 +34,7 @@ export const Icon = React.forwardRef<HTMLSpanElement, IconProps>(
     {
       icon,
       size = "md",
-      variant = "default",
-      color = "default",
+      color,
       className,
       "aria-hidden": ariaHidden = true,
       "aria-label": ariaLabel,
@@ -42,15 +42,13 @@ export const Icon = React.forwardRef<HTMLSpanElement, IconProps>(
     },
     ref,
   ) => {
-    const { size: resolvedSize } = useResponsiveProps({ size });
-
     return (
       <Box
         as="span"
         ref={ref}
         className={cn(
-          "flex items-center justify-center",
-          iconVariants({ size: resolvedSize, variant, color }),
+          iconVariants({ color, size: null }),
+          getResponsiveClassNames(size, (value) => iconSizeClasses[value]),
           className,
         )}
         aria-hidden={ariaHidden}

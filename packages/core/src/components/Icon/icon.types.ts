@@ -3,9 +3,9 @@ import type { ResponsiveValue } from "@basic-ui/react-utilities";
 import { LayoutProps } from "@core/lib";
 
 /**
- * Icon semantic color variants aligned with design tokens
+ * Explicit semantic colors aligned with design tokens.
  */
-export type IconVariant =
+type IconColor =
   | "default"
   | "muted"
   | "primary"
@@ -16,23 +16,9 @@ export type IconVariant =
   | "info";
 
 /**
- * Explicit light/dark text color override, independent of semantic variant.
- * Use when the icon sits on a colored or inverted surface.
- * - `"default"` — inherits no forced color (semantic variant applies)
- * - `"light"` — forces `--color-text-light` (gray-500)
- * - `"dark"` — forces `--color-text` (gray-800 in light mode)
- */
-export type IconColor = "default" | "light" | "dark";
-
-/**
- * Icon size base values (without responsive wrapping)
- */
-export type IconSizeValue = "xs" | "sm" | "md" | "lg" | "xl";
-
-/**
  * Icon size variants using design token scale
  */
-export type IconSize = ResponsiveValue<IconSizeValue>;
+type IconSize = "xs" | "sm" | "md" | "lg" | "xl";
 
 export interface IconProps extends LayoutProps, React.HTMLAttributes<HTMLSpanElement> {
   /**
@@ -45,18 +31,10 @@ export interface IconProps extends LayoutProps, React.HTMLAttributes<HTMLSpanEle
    * Size variant using design token scale
    * @default "md"
    */
-  size?: IconSize;
+  size?: ResponsiveValue<IconSize>;
 
   /**
-   * Color variant aligned with design tokens
-   * @default "default"
-   */
-  variant?: IconVariant;
-
-  /**
-   * Explicit light/dark text color override.
-   * Overrides the `variant` color when set to `"light"` or `"dark"`.
-   * @default "default"
+   * Optional semantic color. Inherits the parent's color when omitted.
    */
   color?: IconColor;
 }

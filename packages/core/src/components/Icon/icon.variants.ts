@@ -1,29 +1,26 @@
 import { cva } from "class-variance-authority";
 
-export const iconVariants = cva("", {
+export const iconSizeClasses = {
+  xs: "w-4 h-4",
+  sm: "w-5 h-5",
+  md: "w-6 h-6",
+  lg: "w-7 h-7",
+  xl: "w-8 h-8",
+} as const;
+
+export const iconVariants = cva("flex items-center justify-center", {
   variants: {
-    size: {
-      xs: "w-3 h-3",
-      sm: "w-4 h-4",
-      md: "w-6 h-6",
-      lg: "w-6 h-6",
-      xl: "w-7 h-7",
-    },
-    variant: {
-      default: "text-primary",
-      muted: "text-muted",
-      primary: "text-primary",
-      secondary: "text-secondary",
-      success: "text-success",
-      error: "text-error",
-      warning: "text-warning",
-      info: "text-info",
-    },
+    size: iconSizeClasses,
     color: {
-      default: "",
-      light: "text-light",
-      dark: "text-dark",
+      default: "text-primary-700 dark:text-primary-300",
+      muted: "text-fg-muted",
+      primary: "text-primary-700 dark:text-primary-300",
+      secondary: "text-secondary-700 dark:text-secondary-300",
+      success: "text-fg-success",
+      error: "text-fg-error",
+      warning: "text-fg-warning",
+      info: "text-fg-info",
     },
   },
-  defaultVariants: { size: "md", variant: "default", color: "default" },
+  defaultVariants: { size: "md" },
 });
