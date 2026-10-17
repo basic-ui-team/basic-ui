@@ -5,7 +5,6 @@ import {
   cn,
   forwardRefWithAs,
   PolymorphicRef,
-  useResponsiveProps,
 } from "@basic-ui/react-utilities";
 import { cardRootVariants } from "./card.variants";
 
@@ -48,13 +47,9 @@ export const _Card = <As extends AllowedCardElements = "div">(
     resolvedAs = as || "div";
   }
 
-  const resolvedProps = useResponsiveProps({
-    variant,
-  });
-
   const cardClassName = cn(
     cardRootVariants({
-      variant: resolvedProps.variant,
+      variant,
       isLink: !!href,
       interaction,
       selected,
@@ -79,7 +74,7 @@ export const _Card = <As extends AllowedCardElements = "div">(
   return (
     <CardContext.Provider
       value={{
-        variant: resolvedProps.variant || "default",
+        variant: variant || "default",
         disabled: disabled || false,
         selected: selected || false,
         isLink: !!href,

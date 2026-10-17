@@ -2,8 +2,13 @@ import { forwardRef, useContext } from "react";
 import { CardImageProps } from "../card.types";
 import { CardContext } from "../Card";
 import { Box, BoxProps } from "../../Box";
-import { cn, useResponsiveProps } from "@basic-ui/react-utilities";
-import { cardImageFitVariants, cardImageVariants } from "../card.variants";
+import { cn, getResponsiveClassNames } from "@basic-ui/react-utilities";
+import {
+  cardImageFitVariants,
+  cardImageVariants,
+  cardImageObjectFitClasses,
+  cardImageAspectRatioClasses,
+} from "../card.variants";
 
 export const CardImage = forwardRef<HTMLImageElement, CardImageProps>(
   (
@@ -22,15 +27,15 @@ export const CardImage = forwardRef<HTMLImageElement, CardImageProps>(
   ) => {
     const ctx = useContext(CardContext);
     const disabled = ctx?.disabled || false;
-    const { objectFit: resolvedObjectFit, aspectRatio: resolvedAspectRatio, rounded: resolvedRounded } =
-      useResponsiveProps({ objectFit, aspectRatio, rounded });
     // Apply disabled styles from Card context, but allow overriding via className
     const resolvedStyle = cn(
       cardImageFitVariants({
-        objectFit: resolvedObjectFit,
-        aspectRatio: resolvedAspectRatio,
-        rounded: resolvedRounded,
+        objectFit: null,
+        aspectRatio: null,
+        rounded,
       }),
+      getResponsiveClassNames(objectFit, (value) => cardImageObjectFitClasses[value]),
+      getResponsiveClassNames(aspectRatio, (value) => cardImageAspectRatioClasses[value]),
       cardImageVariants({
         disabled,
       }),

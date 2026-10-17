@@ -6,6 +6,23 @@ import { renderWithProviders } from "../../../test-utils";
 import { axe } from "jest-axe";
 
 describe("Card.Image", () => {
+  it("changes fit and ratio independently, including restoring auto ratio", () => {
+    const { container } = renderWithProviders(
+      <CardImage
+        src="/img.png"
+        alt="img"
+        objectFit={{ base: "cover", lg: "contain" }}
+        aspectRatio={{ base: "square", md: "auto" }}
+        rounded="lg"
+      />,
+    );
+    const img = container.querySelector("img")!;
+    expect(img).toHaveClass("object-cover", "lg:object-contain", "aspect-square", "md:aspect-auto", "rounded-lg");
+    expect(img.className.split(/\s+/).filter((name) => name.startsWith("md:"))).toEqual(["md:aspect-auto"]);
+    expect(img.className.split(/\s+/).filter((name) => name.startsWith("lg:"))).toEqual(["lg:object-contain"]);
+    expect(img).not.toHaveClass("aspect-auto", "lg:inline-block", "lg:rounded-lg");
+  });
+
   it("renders an img with provided src and alt and default object-fit", () => {
     const { container } = renderWithProviders(<CardImage src="/img.png" alt="img" />);
     const img = container.querySelector("img");

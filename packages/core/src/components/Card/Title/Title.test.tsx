@@ -5,6 +5,30 @@ import { renderWithProviders } from "../../../test-utils";
 import { axe } from "jest-axe";
 
 describe("Card.Title", () => {
+  it.each([
+    ["h1", "text-3xl"],
+    ["h2", "text-2xl"],
+    ["h3", "text-xl"],
+    ["h4", "text-lg"],
+    ["h5", "text-md"],
+    ["h6", "text-sm"],
+  ] as const)("uses a fixed %s visual size without changing heading semantics", (size, utility) => {
+    const { container } = renderWithProviders(<CardTitle size={size}>Title</CardTitle>);
+    const title = container.querySelector("h3")!;
+    expect(title).toHaveClass(utility);
+    expect(title.className).not.toMatch(/(?:^|\s)(?:md|lg):text-/);
+  });
+
+  it("applies independent responsive size and alignment", () => {
+    const { container } = renderWithProviders(
+      <CardTitle size={{ base: "h6", lg: "h2" }} align={{ base: "center", md: "left" }}>
+        Title
+      </CardTitle>,
+    );
+    expect(container.firstElementChild).toHaveClass("text-sm", "lg:text-2xl", "text-center", "md:text-left");
+    expect(container.firstElementChild).not.toHaveClass("text-2xl", "lg:font-sans");
+  });
+
   it("renders an h3 by default", () => {
     const { container } = renderWithProviders(<CardTitle>Title</CardTitle>);
     expect(container.querySelector("h3")).toBeInTheDocument();

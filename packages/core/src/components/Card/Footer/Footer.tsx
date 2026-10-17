@@ -2,17 +2,12 @@ import { forwardRef, useContext } from "react";
 import { CardFooterProps } from "../card.types";
 import { CardContext } from "../Card";
 import { Box } from "../../Box";
-import { cardSectionVariants } from "../card.variants";
-import { cn, useResponsiveProps } from "@basic-ui/react-utilities";
+import { cardSectionVariants, cardSectionSpacingClasses } from "../card.variants";
+import { cn, getResponsiveClassNames } from "@basic-ui/react-utilities";
 
 export const CardFooter = forwardRef<HTMLElement, CardFooterProps>(
   ({ variant = "default", sticky = false, className, ...rest }, ref) => {
     const ctx = useContext(CardContext);
-
-    const resolved = useResponsiveProps({
-      variant,
-      sticky,
-    });
 
     const disabled = ctx?.disabled || false;
 
@@ -22,10 +17,11 @@ export const CardFooter = forwardRef<HTMLElement, CardFooterProps>(
         ref={ref}
         className={cn(
           cardSectionVariants({
-            variant: resolved.variant,
-            sticky: resolved.sticky,
+            variant: null,
+            sticky,
             disabled,
           }),
+          getResponsiveClassNames(variant, (value) => cardSectionSpacingClasses[value]),
           className,
         )}
         {...rest}
