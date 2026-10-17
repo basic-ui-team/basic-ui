@@ -1,15 +1,19 @@
-import { PolymorphicRef } from "@basic-ui/react-utilities";
+import {
+  cn,
+  forwardRefWithAs,
+  normalizeProps,
+  PolymorphicRef,
+  useResponsiveProps,
+} from "@basic-ui/react-utilities";
 import {
   type GridProps,
   type AllowedGridElements,
   type GridOwnProps,
   ColRowNumber,
 } from "./grid.types";
-import type { SpacingStep } from "@core/lib/layout";
-import { useResponsiveProps } from "@basic-ui/react-utilities";
 import { gridVariants } from "./grid.variants";
-import { cn, forwardRefWithAs, normalizeProps } from "@basic-ui/react-utilities";
 import { Box, BoxProps } from "../Box";
+import { SpacingStep } from "@core/lib";
 
 const _Grid = <As extends AllowedGridElements = "div">(
   {

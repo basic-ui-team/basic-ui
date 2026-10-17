@@ -1,6 +1,5 @@
-import { ResponsiveValue } from "@basic-ui/react-utilities";
-import { CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
-import { LayoutProps } from "../../lib/layout";
+import { CommonProps, ResponsiveValue, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
+import { LayoutProps } from "@core/lib";
 import { BuiltInSemanticColors } from "@core/theme/colors";
 
 export type AllowedTextElements = "span" | "p" | "div";

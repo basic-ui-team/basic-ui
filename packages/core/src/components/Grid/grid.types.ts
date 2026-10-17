@@ -1,6 +1,5 @@
-import { ResponsiveValue } from "@basic-ui/react-utilities";
-import { CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
-import type { LayoutProps, SpacingStep } from "../../lib/layout/layout.types";
+import { CommonProps, ResponsiveValue, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
+import type { LayoutProps, SpacingStep } from "../../lib/layout.types";
 
 export type AllowedGridElements = "div" | "section" | "article" | "main" | "aside" | "nav";
 const COL_ROW_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const;

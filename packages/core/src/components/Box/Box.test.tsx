@@ -54,6 +54,31 @@ describe("Box", () => {
   });
 
   describe("variants", () => {
+    it("preserves layout precedence and consumer overrides without leaking props", () => {
+      const style = { color: "red" };
+      renderWithProviders(
+        <Box
+          data-testid="layout-box"
+          p={2}
+          px={3}
+          hMin={{ base: "min", md: "full" }}
+          overflowY={{ base: "hidden", lg: "auto" }}
+          className="p-4 md:min-h-screen"
+          style={style}
+        />,
+      );
+
+      const box = screen.getByTestId("layout-box");
+      expect(box).toHaveClass(
+        "p-4", "min-h-min", "md:min-h-screen", "overflow-y-hidden", "lg:overflow-y-auto",
+      );
+      expect(box).not.toHaveClass("p-2", "px-3", "md:min-h-full");
+      expect(box.style.color).toBe("red");
+      for (const prop of ["p", "px", "hMin", "overflowY"]) {
+        expect(box).not.toHaveAttribute(prop);
+      }
+    });
+
     it("applies display classes", () => {
       const { container } = renderWithProviders(<Box display="inline">Test</Box>);
       expect(container.firstChild).toHaveClass("inline");

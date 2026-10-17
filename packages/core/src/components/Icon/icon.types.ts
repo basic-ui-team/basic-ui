@@ -1,6 +1,6 @@
 import React from "react";
 import type { ResponsiveValue } from "@basic-ui/react-utilities";
-import { LayoutProps } from "@core/lib/layout";
+import { LayoutProps } from "@core/lib";
 
 /**
  * Icon semantic color variants aligned with design tokens

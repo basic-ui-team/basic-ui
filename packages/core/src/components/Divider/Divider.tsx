@@ -1,8 +1,6 @@
-import { PolymorphicRef } from "@basic-ui/react-utilities";
+import { cn, forwardRefWithAs, PolymorphicRef, useResponsiveProps } from "@basic-ui/react-utilities";
 import { AllowedDividerElements, DividerProps, DividerOwnProps } from "./divider.types";
-import { useResponsiveProps } from "@basic-ui/react-utilities";
 import { Box, BoxProps } from "../Box";
-import { cn, forwardRefWithAs } from "@basic-ui/react-utilities";
 import { dividerVariants } from "./divider.variants";
 
 /**

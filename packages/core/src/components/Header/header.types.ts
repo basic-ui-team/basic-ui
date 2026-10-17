@@ -1,6 +1,6 @@
 import { ResponsiveValue } from "@basic-ui/react-utilities";
 import { type CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
-import type { LayoutProps } from "../../lib/layout";
+import type { LayoutProps } from "@core/lib";
 import { BuiltInSemanticColors } from "@core/theme";
 
 export interface HeaderOwnProps extends CommonProps, LayoutProps {

@@ -1,5 +1,5 @@
 import { existsSync, readFileSync } from "node:fs";
-import { tokens } from "../../tokens/src/generated/tokens";
+import { tokens } from "../../../tokens/src/generated/tokens";
 
 function utilitiesFor(prefixes: readonly string[], values: readonly (string | number)[]): string[] {
   return prefixes.flatMap((prefix) => values.map((value) => `${prefix}-${value}`));
@@ -13,15 +13,32 @@ const gridTracks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 export const responsiveUtilityFamilies = {
   spacing: utilitiesFor(
     [
-      "p", "px", "py", "pt", "pr", "pb", "pl",
-      "m", "mx", "my", "mt", "mr", "mb", "ml",
-      "gap", "gap-x", "gap-y",
+      "p",
+      "px",
+      "py",
+      "pt",
+      "pr",
+      "pb",
+      "pl",
+      "m",
+      "mx",
+      "my",
+      "mt",
+      "mr",
+      "mb",
+      "ml",
+      "gap",
+      "gap-x",
+      "gap-y",
     ],
     spacing,
   ),
   sizing: [
     ...utilitiesFor(["h", "min-h", "w", "min-w"], dimensions),
-    ...utilitiesFor(["max-h", "max-w"], [...spacing, "none", "full", "screen", "min", "max", "fit"]),
+    ...utilitiesFor(
+      ["max-h", "max-w"],
+      [...spacing, "none", "full", "screen", "min", "max", "fit"],
+    ),
   ],
   borderWidth: utilitiesFor(
     ["border", "border-x", "border-y", "border-t", "border-r", "border-b", "border-l"],
@@ -29,7 +46,16 @@ export const responsiveUtilityFamilies = {
   ),
   radius: utilitiesFor(["rounded"], Object.keys(tokens.radius)),
   translation: utilitiesFor(["translate-x", "translate-y"], [...spacing, "1/2", "full"]),
-  display: ["block", "inline", "inline-block", "hidden", "flex", "inline-flex", "grid", "inline-grid"],
+  display: [
+    "block",
+    "inline",
+    "inline-block",
+    "hidden",
+    "flex",
+    "inline-flex",
+    "grid",
+    "inline-grid",
+  ],
   flex: utilitiesFor(
     ["flex"],
     ["row", "col", "row-reverse", "col-reverse", "nowrap", "wrap", "wrap-reverse"],
@@ -104,7 +130,6 @@ ${directives.join("\n")}
 
 export function isUtilitySourceCurrent(outputPath: string, source: string): boolean {
   return (
-    existsSync(outputPath) &&
-    readFileSync(outputPath, "utf8").replace(/\r\n/g, "\n") === source
+    existsSync(outputPath) && readFileSync(outputPath, "utf8").replace(/\r\n/g, "\n") === source
   );
 }

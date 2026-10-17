@@ -1,6 +1,6 @@
 import { cva } from "class-variance-authority";
 
-export const flexVariantsConfig = {
+export const flexVariants = cva("", {
   variants: {
     direction: {
       row: "flex-row",
@@ -33,6 +33,4 @@ export const flexVariantsConfig = {
       "inline-flex": "inline-flex",
     },
   },
-} as const;
-
-export const flexVariants = cva("flex", flexVariantsConfig);
+});

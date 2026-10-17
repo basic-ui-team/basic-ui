@@ -4,8 +4,8 @@ import {
   useResponsiveProps,
   cn,
   forwardRefWithAs,
+  PolymorphicRef,
 } from "@basic-ui/react-utilities";
-import { PolymorphicRef } from "@basic-ui/react-utilities";
 import { Box, BoxProps } from "../Box";
 import { AllowedToggleElements, ToggleOwnProps, ToggleProps } from "./toggle.types";
 import { toggleVariants } from "./toggle.variants";

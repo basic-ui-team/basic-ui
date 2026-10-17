@@ -1,7 +1,7 @@
 import { ImgHTMLAttributes } from "react";
 import { CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities"; // Your existing types
 import { ResponsiveValue } from "@basic-ui/react-utilities";
-import { LayoutProps } from "../../lib/layout";
+import { LayoutProps } from "@core/lib";
 
 export type ObjectFitType = "cover" | "contain" | "fill" | "none" | "scale-down";
 

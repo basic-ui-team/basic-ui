@@ -9,7 +9,10 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import corePackage from "../package.json";
 import tokensPackage from "../../tokens/package.json";
 import { BREAKPOINT_ORDER } from "../../react-utilities/src/hooks/useResponsive/constants";
-import { createResponsiveUtilitySource, responsiveUtilities } from "./responsive-utilities";
+import {
+  createResponsiveUtilitySource,
+  responsiveUtilities,
+} from "../src/lib/responsive-utilities";
 
 const coreRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const fixture = readFileSync(
@@ -41,7 +44,8 @@ beforeAll(() => {
   // Stage the exported CSS layout so tests do not depend on a previous package build.
   stageStyles(corePackage, coreRoot, {
     "src/styles.css": corePackage.exports["./styles.css"],
-    "src/generated/layout-utilities.generated.css": "./dist/generated/layout-utilities.generated.css",
+    "src/generated/layout-utilities.generated.css":
+      "./dist/generated/layout-utilities.generated.css",
   });
   stageStyles(tokensPackage, resolve(coreRoot, "../tokens"), {
     "src/generated/styles/theme.css": tokensPackage.exports["./styles/theme.css"],
@@ -95,7 +99,9 @@ describe("responsive utilities through the public CSS entry", () => {
         breakpoint === "base" ? "" : breakpoint === "2xl" ? "\\32 xl\\:" : `${breakpoint}\\:`;
       for (const utility of responsiveUtilities) {
         const selector = `.${prefix}${utility.replace(/[^a-zA-Z0-9_-]/g, "\\$&")}`;
-        expect(css.includes(`${selector} {`), `Missing CSS for ${breakpoint}:${utility}`).toBe(true);
+        expect(css.includes(`${selector} {`), `Missing CSS for ${breakpoint}:${utility}`).toBe(
+          true,
+        );
       }
     }
     expect(css).toContain("@media (width >= 768px)");
@@ -106,7 +112,9 @@ describe("responsive utilities through the public CSS entry", () => {
     }
 
     console.info(
-      `Responsive CSS fixture: ${responsiveUtilities.length} utilities, ${responsiveUtilities.length * BREAKPOINT_ORDER.length} candidates, ${Buffer.byteLength(css)} raw bytes, ${gzipSync(css).length} gzip bytes`,
+      `Responsive CSS fixture: ${responsiveUtilities.length} utilities, ${
+        responsiveUtilities.length * BREAKPOINT_ORDER.length
+      } candidates, ${Buffer.byteLength(css)} raw bytes, ${gzipSync(css).length} gzip bytes`,
     );
   });
 

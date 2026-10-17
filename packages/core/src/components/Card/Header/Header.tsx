@@ -1,8 +1,7 @@
 import { useContext, forwardRef } from "react";
 import { CardHeaderProps } from "../card.types";
 import { CardContext } from "../Card";
-import { useResponsiveProps } from "@basic-ui/react-utilities";
-import { cn } from "@basic-ui/react-utilities";
+import { cn, useResponsiveProps } from "@basic-ui/react-utilities";
 import { cardSectionVariants } from "../card.variants";
 import { Box } from "../../Box";
 

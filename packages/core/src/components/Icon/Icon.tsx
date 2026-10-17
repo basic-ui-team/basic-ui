@@ -1,7 +1,6 @@
 import React from "react";
 import type { IconProps } from "./icon.types";
-import { cn } from "@basic-ui/react-utilities";
-import { useResponsiveProps } from "@basic-ui/react-utilities";
+import { cn, useResponsiveProps } from "@basic-ui/react-utilities";
 import { iconVariants } from "./icon.variants";
 import { Box } from "../Box";
 

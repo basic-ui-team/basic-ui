@@ -1,9 +1,17 @@
 import { AllowedButtonElements, ButtonOwnProps, ButtonProps } from "./button.types";
-import { cn, forwardRefWithAs } from "@basic-ui/react-utilities";
-import { PolymorphicRef } from "@basic-ui/react-utilities";
-import { buttonVariants, buttonIconVariants, buttonLoaderVariants, buttonSpinnerVariants } from "./button.variants";
+import {
+  cn,
+  forwardRefWithAs,
+  PolymorphicRef,
+  useResponsiveProps,
+} from "@basic-ui/react-utilities";
+import {
+  buttonVariants,
+  buttonIconVariants,
+  buttonLoaderVariants,
+  buttonSpinnerVariants,
+} from "./button.variants";
 import { Box, BoxProps } from "../Box";
-import { useResponsiveProps } from "@basic-ui/react-utilities";
 
 /**
  * Button component with support for multiple variants, colors, sizes, and states.
@@ -80,7 +88,7 @@ export const Button = forwardRefWithAs<ButtonOwnProps, AllowedButtonElements>(
             e.stopPropagation();
             return;
           }
-          if (typeof original === "function") original(e as any); 
+          if (typeof original === "function") original(e as any);
           // Hate this cast to any but BoxProps<As> doesn't know about onClick when As is not 'button' and I don't know how to type it without making BoxProps a discriminated union which would be a nightmare to maintain
         };
       }
@@ -108,7 +116,9 @@ export const Button = forwardRefWithAs<ButtonOwnProps, AllowedButtonElements>(
 
       return (
         <Box as="span" className={buttonLoaderVariants()}>
-          <Box as="span" className={cn(customIconStyles)}>{iconNode}</Box>
+          <Box as="span" className={cn(customIconStyles)}>
+            {iconNode}
+          </Box>
           {loadingText && (
             <Box as="span" className="font-medium">
               {loadingText}

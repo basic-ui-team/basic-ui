@@ -1,6 +1,5 @@
-import { ResponsiveValue } from "@basic-ui/react-utilities";
+import { CommonProps, ResponsiveValue, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
 import { BuiltInSemanticColors } from "@core/theme";
-import { CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
 
 type toggleSizes = "sm" | "md" | "lg";
 type toggleColors = Exclude<BuiltInSemanticColors, "default" | "muted">;
@@ -22,5 +21,7 @@ export interface ToggleOwnProps extends CommonProps {
   disabled?: boolean;
 }
 
-export type ToggleProps<As extends AllowedToggleElements = "button"> =
-  RestrictedPropsWithAs<ToggleOwnProps, As>;
+export type ToggleProps<As extends AllowedToggleElements = "button"> = RestrictedPropsWithAs<
+  ToggleOwnProps,
+  As
+>;

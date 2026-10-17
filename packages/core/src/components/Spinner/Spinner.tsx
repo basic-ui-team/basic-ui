@@ -1,9 +1,12 @@
-import { useResponsiveProps } from "@basic-ui/react-utilities";
+import {
+  cn,
+  forwardRefWithAs,
+  PolymorphicRef,
+  useResponsiveProps,
+} from "@basic-ui/react-utilities";
 import { AllowedSpinnerElements, SpinnerOwnProps, SpinnerProps } from "./spinner.types";
-import { PolymorphicRef } from "@basic-ui/react-utilities";
 import { Box, BoxProps } from "../Box";
 import { spinnerVariants } from "./spinner.variants";
-import { cn, forwardRefWithAs } from "@basic-ui/react-utilities";
 
 export const _Spinner = <As extends AllowedSpinnerElements = "div">(
   {

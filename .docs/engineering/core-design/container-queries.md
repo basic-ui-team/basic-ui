@@ -97,32 +97,34 @@ switching cannot change compiled container-query conditions.
 
 ## Implementation boundary
 
-The finite root utility vocabulary belongs in the existing shared layout
-pipeline:
+Root prop rendering and utility-source ownership remain separate:
 
 ```text
 LayoutProps
-  -> layoutPropVariants
-  -> layoutVariantsConfig
+  -> layoutVariants (matching public prop names)
+  -> layout class generation
+
+Shared responsive utility vocabulary
   -> generated Tailwind candidate matrix
 ```
 
 Expected changes:
 
 1. Add `ContainerType` and `containerType` to
-   `packages/core/src/lib/layout/layout.types.ts`.
+   `packages/core/src/lib/layout.types.ts`.
 2. Add the `@container` and `@container-size` mappings to
-   `packages/core/src/lib/layout/layout.variants.ts`.
-3. Add the public-to-variant mapping and static class generation in
-   `packages/core/src/lib/layout/layout-utils.ts`.
-4. Regenerate
+   `packages/core/src/lib/layout.variants.ts`.
+3. Add the public prop name to `LAYOUT_PROP_NAMES` in
+   `packages/core/src/lib/layout-utils.ts`; variant keys already match prop names.
+4. Add the root utility names to the shared source in
+   `packages/core/src/lib/responsive-utilities.ts` and regenerate
    `packages/core/src/generated/layout-utilities.generated.css`.
 5. Add container token support to the Tokens theme types, defaults, serializer,
    and generated stylesheet.
 6. Add a Box Storybook example that visibly responds to its parent container.
 
-Only `@container` and `@container-size` need registering in Core's generated
-candidate source. Child classes such as `@md:flex-row` remain literal consumer
+Only `@container` and `@container-size` need adding to Core's utility
+source. Child classes such as `@md:flex-row` remain literal consumer
 `className` values that Tailwind scans normally.
 
 ## Regression proof

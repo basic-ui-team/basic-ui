@@ -1,6 +1,5 @@
-import { CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
-import { ResponsiveValue } from "@basic-ui/react-utilities";
-import LayoutProps from "../../lib/layout/layout.types";
+import { CommonProps, ResponsiveValue, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
+import { LayoutProps } from "@core/lib";
 import { BuiltInSemanticColors } from "@core/theme";
 
 export type SpinnerColor = BuiltInSemanticColors;
@@ -16,7 +15,6 @@ export interface SpinnerOwnProps
 
   /** Color of the spinner. Accepts built-in semantic colors. @default "default" */
   color?: SpinnerColor;
-
 
   /** Whether the spinner is visible or hidden. @default true */
   visible?: boolean;

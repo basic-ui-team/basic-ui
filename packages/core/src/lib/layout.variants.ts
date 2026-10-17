@@ -1,6 +1,6 @@
 import { cva } from "class-variance-authority";
 
-export const layoutVariantsConfig = {
+export const layoutVariants = cva("", {
   variants: {
     position: {
       static: "static",
@@ -15,7 +15,7 @@ export const layoutVariantsConfig = {
       "inline-block": "inline-block",
       none: "hidden",
     },
-    padding: {
+    p: {
       0: "p-0",
       1: "p-1",
       2: "p-2",
@@ -28,7 +28,7 @@ export const layoutVariantsConfig = {
       9: "p-9",
       unset: "",
     },
-    paddingX: {
+    px: {
       0: "px-0",
       1: "px-1",
       2: "px-2",
@@ -41,7 +41,7 @@ export const layoutVariantsConfig = {
       9: "px-9",
       unset: "",
     },
-    paddingY: {
+    py: {
       0: "py-0",
       1: "py-1",
       2: "py-2",
@@ -54,7 +54,7 @@ export const layoutVariantsConfig = {
       9: "py-9",
       unset: "",
     },
-    paddingTop: {
+    pt: {
       0: "pt-0",
       1: "pt-1",
       2: "pt-2",
@@ -67,7 +67,7 @@ export const layoutVariantsConfig = {
       9: "pt-9",
       unset: "",
     },
-    paddingRight: {
+    pr: {
       0: "pr-0",
       1: "pr-1",
       2: "pr-2",
@@ -80,7 +80,7 @@ export const layoutVariantsConfig = {
       9: "pr-9",
       unset: "",
     },
-    paddingBottom: {
+    pb: {
       0: "pb-0",
       1: "pb-1",
       2: "pb-2",
@@ -93,7 +93,7 @@ export const layoutVariantsConfig = {
       9: "pb-9",
       unset: "",
     },
-    paddingLeft: {
+    pl: {
       0: "pl-0",
       1: "pl-1",
       2: "pl-2",
@@ -106,7 +106,7 @@ export const layoutVariantsConfig = {
       9: "pl-9",
       unset: "",
     },
-    margin: {
+    m: {
       0: "m-0",
       1: "m-1",
       2: "m-2",
@@ -119,7 +119,7 @@ export const layoutVariantsConfig = {
       9: "m-9",
       unset: "",
     },
-    marginX: {
+    mx: {
       0: "mx-0",
       1: "mx-1",
       2: "mx-2",
@@ -132,7 +132,7 @@ export const layoutVariantsConfig = {
       9: "mx-9",
       unset: "",
     },
-    marginY: {
+    my: {
       0: "my-0",
       1: "my-1",
       2: "my-2",
@@ -145,7 +145,7 @@ export const layoutVariantsConfig = {
       9: "my-9",
       unset: "",
     },
-    marginTop: {
+    mt: {
       0: "mt-0",
       1: "mt-1",
       2: "mt-2",
@@ -158,7 +158,7 @@ export const layoutVariantsConfig = {
       9: "mt-9",
       unset: "",
     },
-    marginRight: {
+    mr: {
       0: "mr-0",
       1: "mr-1",
       2: "mr-2",
@@ -171,7 +171,7 @@ export const layoutVariantsConfig = {
       9: "mr-9",
       unset: "",
     },
-    marginBottom: {
+    mb: {
       0: "mb-0",
       1: "mb-1",
       2: "mb-2",
@@ -184,7 +184,7 @@ export const layoutVariantsConfig = {
       9: "mb-9",
       unset: "",
     },
-    marginLeft: {
+    ml: {
       0: "ml-0",
       1: "ml-1",
       2: "ml-2",
@@ -210,7 +210,7 @@ export const layoutVariantsConfig = {
       9: "gap-9",
       unset: "",
     },
-    height: {
+    h: {
       auto: "h-auto",
       full: "h-full",
       screen: "h-screen",
@@ -219,7 +219,7 @@ export const layoutVariantsConfig = {
       fit: "h-fit",
       unset: "",
     },
-    heightMin: {
+    hMin: {
       auto: "min-h-auto",
       full: "min-h-full",
       screen: "min-h-screen",
@@ -228,7 +228,7 @@ export const layoutVariantsConfig = {
       fit: "min-h-fit",
       unset: "",
     },
-    heightMax: {
+    hMax: {
       auto: "max-h-auto",
       full: "max-h-full",
       screen: "max-h-screen",
@@ -237,7 +237,7 @@ export const layoutVariantsConfig = {
       fit: "max-h-fit",
       unset: "",
     },
-    width: {
+    w: {
       auto: "w-auto",
       full: "w-full",
       screen: "w-screen",
@@ -246,7 +246,7 @@ export const layoutVariantsConfig = {
       fit: "w-fit",
       unset: "",
     },
-    widthMin: {
+    wMin: {
       auto: "min-w-auto",
       full: "min-w-full",
       screen: "min-w-screen",
@@ -255,7 +255,7 @@ export const layoutVariantsConfig = {
       fit: "min-w-fit",
       unset: "",
     },
-    widthMax: {
+    wMax: {
       auto: "max-w-auto",
       full: "max-w-full",
       screen: "max-w-screen",
@@ -286,8 +286,6 @@ export const layoutVariantsConfig = {
       unset: "",
     },
   },
-} as const;
-
-export const layoutVariants = cva("", layoutVariantsConfig);
+});
 
 export default layoutVariants;

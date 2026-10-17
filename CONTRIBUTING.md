@@ -34,7 +34,9 @@ We welcome contributions to basic-ui! Whether it's a bug fix, feature, or docume
 
 - **Accessibility**: Use semantic HTML, ARIA attributes, and keyboard navigation
 - **Props**: Name descriptively, avoid flags that can be inferred
-- **Responsiveness**: Support `ResponsiveValue<T>` for breakpoint-based props
+- **Responsiveness**: Use `ResponsiveValue<T>` for eligible size/layout adaptation,
+  not cosmetic or semantic changes. Compose utilities from the shared responsive
+  vocabulary and test compiled output; see [shared responsive CSS vocabulary](.docs/guides/CONVENTIONS.md#shared-responsive-css-vocabulary).
 - **Dark Mode**: Use semantic color tokens (e.g., `--color-text`, not hardcoded colors)
 - **Variants**: Use CVA for type-safe class composition
 

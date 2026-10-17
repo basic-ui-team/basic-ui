@@ -3,9 +3,9 @@ import {
   forwardRefWithAs,
   getTruncateAccessibilityProps,
   normalizeProps,
+  PolymorphicRef,
   useResponsiveProps,
 } from "@basic-ui/react-utilities";
-import { PolymorphicRef } from "@basic-ui/react-utilities";
 import { Box, BoxProps } from "../../Box";
 import { AllowedTextElements, CardDescriptionOwnProps } from "../card.types";
 import { cardDescriptionVariants } from "../card.variants";
@@ -27,8 +27,14 @@ const _Description = <As extends AllowedTextElements = "p">(
   ref: PolymorphicRef<As>,
 ) => {
   const Comp = (as || "p") as As;
-  const { size: resolvedSize, weight: resolvedWeight, align: resolvedAlign, wrap: resolvedWrap, truncate: resolvedTruncate, color: resolvedColor } =
-    useResponsiveProps({ size, weight, align, wrap, truncate, color });
+  const {
+    size: resolvedSize,
+    weight: resolvedWeight,
+    align: resolvedAlign,
+    wrap: resolvedWrap,
+    truncate: resolvedTruncate,
+    color: resolvedColor,
+  } = useResponsiveProps({ size, weight, align, wrap, truncate, color });
   const isBuiltInColor = isBuiltInSemanticColor(resolvedColor);
   const resolvedStyles = cn(
     cardDescriptionVariants({
@@ -58,5 +64,7 @@ const _Description = <As extends AllowedTextElements = "p">(
   );
 };
 
-export const CardDescription = forwardRefWithAs<CardDescriptionOwnProps, AllowedTextElements>(_Description);
+export const CardDescription = forwardRefWithAs<CardDescriptionOwnProps, AllowedTextElements>(
+  _Description,
+);
 (CardDescription as unknown as { displayName?: string }).displayName = "CardDescription";

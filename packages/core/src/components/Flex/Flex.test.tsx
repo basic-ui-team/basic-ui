@@ -31,6 +31,53 @@ describe("Flex", () => {
   });
 
   describe("variants", () => {
+    it("preserves explicit layout defaults without introducing gap or padding", () => {
+      const { container } = renderWithProviders(<Flex>Test</Flex>);
+
+      expect(container.firstChild).toHaveClass(
+        "flex", "flex-row", "flex-nowrap", "justify-start", "items-stretch",
+      );
+      expect(container.firstChild).not.toHaveClass("gap-3", "p-0");
+    });
+
+    it("keeps independently responsive axes from injecting defaults into one another", () => {
+      const { container } = renderWithProviders(
+        <Flex
+          direction={{ base: "column", md: "row" }}
+          justify={{ base: "end", xl: "between" }}
+          align={{ base: "start", md: "center" }}
+          wrap={{ base: "nowrap", "2xl": "wrap" }}
+          display={{ base: "inline-flex", lg: "flex" }}
+        >
+          Test
+        </Flex>,
+      );
+
+      expect(container.firstChild).toHaveClass(
+        "flex-col", "md:flex-row", "justify-end", "xl:justify-between",
+        "items-start", "md:items-center", "flex-nowrap", "2xl:flex-wrap",
+        "inline-flex", "lg:flex",
+      );
+      expect(container.firstChild).not.toHaveClass(
+        "flex", "md:flex", "md:justify-start", "md:items-stretch", "lg:flex-row",
+      );
+    });
+
+    it("allows consumer classes to override matching base and breakpoint utilities", () => {
+      const { container } = renderWithProviders(
+        <Flex
+          direction={{ base: "column", md: "row" }}
+          p={2}
+          className="flex-row md:flex-col p-4"
+        >
+          Test
+        </Flex>,
+      );
+
+      expect(container.firstChild).toHaveClass("flex-row", "md:flex-col", "p-4");
+      expect(container.firstChild).not.toHaveClass("flex-col", "md:flex-row", "p-2");
+    });
+
     it("applies direction classes", () => {
       const { container } = renderWithProviders(<Flex direction="column">Test</Flex>);
       expect(container.firstChild).toHaveClass("flex-col");

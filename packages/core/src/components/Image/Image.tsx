@@ -1,9 +1,12 @@
-import { useResponsiveProps } from "@basic-ui/react-utilities";
-import { cn, forwardRefWithAs } from "@basic-ui/react-utilities";
+import {
+  cn,
+  forwardRefWithAs,
+  PolymorphicRef,
+  useResponsiveProps,
+} from "@basic-ui/react-utilities";
 import { Box, BoxProps } from "../Box";
 import { imageVariants } from "./image.variants";
 import { AllowedImageElements, ImageOwnProps, ImageProps } from "./image.types";
-import { PolymorphicRef } from "@basic-ui/react-utilities";
 
 export const _Image = <As extends AllowedImageElements = "img">(
   {
@@ -77,25 +80,25 @@ export const _Image = <As extends AllowedImageElements = "img">(
         }),
         className,
       )}
-      {...(rest as BoxProps<As>)} 
+      {...(rest as BoxProps<As>)}
     />
   );
 };
 
 /**
  * Image component for rendering responsive images with art-direction support.
- * 
+ *
  * Supports both `img` and `picture` elements for flexible image rendering with:
  * - Responsive sizing through aspect-ratio presets
  * - Object-fit variants (cover, contain, fill, none, scale-down)
  * - Art-direction sources for responsive images
  * - Rounded corners with responsive values
  * - Performance optimizations (lazy loading, async decoding)
- * 
+ *
  * @example
  * // Basic image
  * <Image src="/photo.jpg" alt="A photo" />
- * 
+ *
  * @example
  * // Responsive picture element
  * <Image
@@ -104,7 +107,7 @@ export const _Image = <As extends AllowedImageElements = "img">(
  *   alt="Responsive"
  *   sources={[{ srcSet: "/small.jpg", media: "(max-width: 600px)" }]}
  * />
- * 
+ *
  * @example
  * // With aspect ratio and object-fit
  * <Image

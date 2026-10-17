@@ -6,41 +6,41 @@ Status: analysis complete, refactor pending. Target release: v1.0.0 (pre-release
 
 All imports under `packages/core/src/components/**` were audited for component-to-component
 dependencies. Imports of utilities (`@basic-ui/react-utilities`), icons (`@basic-ui/icons`),
-theme (`@core/theme`), and layout internals (`lib/layout`) are out of scope — #60 targets
+theme (`@core/theme`), and layout internals (`lib`) are out of scope — #60 targets
 component-to-component coupling only.
 
 ## Full dependency matrix (current state)
 
 Edge = "importer imports target". `|` marks a type-only import.
 
-| Importer        | Box | Flex | Text | Spinner | Icon | Header | Image | Notes |
-| --------------- | --- | ---- | ---- | ------- | ---- | ------ | ----- | ----- |
-| Alert           | x   |      |      |         | x    |        |       | Icon used for severity glyph + close button |
-| Badge           | x   |      |      |         |      |        |       | |
-| Box             | —   |      |      |         |      |        |       | Leaf; depends only on `lib/layout` |
-| Button          | x   | x    | x    | x       |      |        |       | Hotspot — see below |
-| Card (root)     | x   |      |      |         |      |        |       | |
-| Card.Body       | x   |      |      |         |      |        |       | |
-| Card.Footer     | x   |      |      |         |      |        |       | |
-| Card.Header     | x   |      |      |         |      |        |       | |
-| Card.Unstyled   | x   |      |      |         |      |        |       | |
-| Card.Title      |     |      |      |         |      | x      |       | Wraps Header |
-| Card.Description|     |      | x    |         |      |        |       | Wraps Text |
-| Card.Image      |     |      |      |         |      |        | x     | Wraps Image |
-| Card (types)    | x\| |      | x\| |         |      | x\|     | x\|    | card.types.ts re-exports Box/Header/Text/Image prop types |
-| Divider         | x   |      |      |         |      |        |       | |
-| Flex            | x   |      |      |         |      |        |       | |
-| Grid            | x   |      |      |         |      |        |       | |
-| Header          | x   |      |      |         |      |        |       | |
-| Icon            | x   |      |      |         |      |        |       | |
-| Image           | x   |      |      |         |      |        |       | |
-| Pagination (shared) | x |    |      |         |      |        |       | |
-| LinkPagination  | x   |      |      |         | x    |        |       | Icon renders chevron glyphs |
-| TablePagination | x   |      |      |         | x    |        |       | Icon renders chevron glyphs |
-| Skeleton        | x   |      |      |         |      |        |       | |
-| Spinner         | x   |      |      |         |      |        |       | |
-| Text            | x   |      |      |         |      |        |       | |
-| Select          | —   |      |      |         |      |        |       | No component imports |
+| Importer            | Box | Flex | Text | Spinner | Icon | Header | Image | Notes                                                     |
+| ------------------- | --- | ---- | ---- | ------- | ---- | ------ | ----- | --------------------------------------------------------- |
+| Alert               | x   |      |      |         | x    |        |       | Icon used for severity glyph + close button               |
+| Badge               | x   |      |      |         |      |        |       |                                                           |
+| Box                 | —   |      |      |         |      |        |       | Leaf; depends only on layout helpers in `lib`             |
+| Button              | x   | x    | x    | x       |      |        |       | Hotspot — see below                                       |
+| Card (root)         | x   |      |      |         |      |        |       |                                                           |
+| Card.Body           | x   |      |      |         |      |        |       |                                                           |
+| Card.Footer         | x   |      |      |         |      |        |       |                                                           |
+| Card.Header         | x   |      |      |         |      |        |       |                                                           |
+| Card.Unstyled       | x   |      |      |         |      |        |       |                                                           |
+| Card.Title          |     |      |      |         |      | x      |       | Wraps Header                                              |
+| Card.Description    |     |      | x    |         |      |        |       | Wraps Text                                                |
+| Card.Image          |     |      |      |         |      |        | x     | Wraps Image                                               |
+| Card (types)        | x\| |      | x\|  |         |      | x\|    | x\|   | card.types.ts re-exports Box/Header/Text/Image prop types |
+| Divider             | x   |      |      |         |      |        |       |                                                           |
+| Flex                | x   |      |      |         |      |        |       |                                                           |
+| Grid                | x   |      |      |         |      |        |       |                                                           |
+| Header              | x   |      |      |         |      |        |       |                                                           |
+| Icon                | x   |      |      |         |      |        |       |                                                           |
+| Image               | x   |      |      |         |      |        |       |                                                           |
+| Pagination (shared) | x   |      |      |         |      |        |       |                                                           |
+| LinkPagination      | x   |      |      |         | x    |        |       | Icon renders chevron glyphs                               |
+| TablePagination     | x   |      |      |         | x    |        |       | Icon renders chevron glyphs                               |
+| Skeleton            | x   |      |      |         |      |        |       |                                                           |
+| Spinner             | x   |      |      |         |      |        |       |                                                           |
+| Text                | x   |      |      |         |      |        |       |                                                           |
+| Select              | —   |      |      |         |      |        |       | No component imports                                      |
 
 ## Classification of edges
 
@@ -59,12 +59,12 @@ standardize on one (`../Box`).
 
 ### 2. Sibling-component composition (the actual debt) — refactor
 
-| Component | Imports | Used for |
-| --------- | ------- | -------- |
-| Button | Spinner, Flex, Text | `renderLoader()`: Flex wrapper + Box + optional Text for `loadingText` |
-| Alert | Icon | Severity glyph and close button |
-| LinkPagination / TablePagination | Icon | Chevron glyphs in nav buttons |
-| Card.Title / Card.Description / Card.Image | Header / Text / Image | Anatomy parts wrap public siblings |
+| Component                                  | Imports               | Used for                                                               |
+| ------------------------------------------ | --------------------- | ---------------------------------------------------------------------- |
+| Button                                     | Spinner, Flex, Text   | `renderLoader()`: Flex wrapper + Box + optional Text for `loadingText` |
+| Alert                                      | Icon                  | Severity glyph and close button                                        |
+| LinkPagination / TablePagination           | Icon                  | Chevron glyphs in nav buttons                                          |
+| Card.Title / Card.Description / Card.Image | Header / Text / Image | Anatomy parts wrap public siblings                                     |
 
 These are hidden composition: a component silently renders another public component. Per the
 competitor analysis (Radix primitives + Chakra v3 snippets), the industry direction is to make
@@ -87,7 +87,7 @@ within one component's own folder structure, not cross-component coupling. Keep.
 - Spinner: two options:
   1. Keep the `Spinner` import — it is arguably part of the primitive layer (a semantic status element).
   2. Inline a minimal spinner (border + `animate-spin` classes in variants).
-  Recommendation: keep `Spinner` only if we classify it as primitive; otherwise inline. Decide during implementation; both are breaking-change-safe pre-1.0.
+     Recommendation: keep `Spinner` only if we classify it as primitive; otherwise inline. Decide during implementation; both are breaking-change-safe pre-1.0.
 - Net: Button drops from 4 component imports to at most 1 (Box, allowed).
 
 ### Alert — icon via existing slot

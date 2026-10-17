@@ -3,8 +3,8 @@ import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it } from "vitest";
-import { BREAKPOINT_ORDER } from "../../react-utilities/src/hooks/useResponsive/constants";
-import { tokens } from "../../tokens/src/generated/tokens";
+import { BREAKPOINT_ORDER } from "../../../react-utilities/src/hooks/useResponsive/constants";
+import { tokens } from "../../../tokens/src/generated/tokens";
 import {
   createResponsiveUtilitySource,
   isUtilitySourceCurrent,
@@ -15,9 +15,23 @@ import {
 describe("shared responsive vocabulary", () => {
   it("covers the token spacing scale for each supported spacing property", () => {
     for (const prefix of [
-      "p", "px", "py", "pt", "pr", "pb", "pl",
-      "m", "mx", "my", "mt", "mr", "mb", "ml",
-      "gap", "gap-x", "gap-y",
+      "p",
+      "px",
+      "py",
+      "pt",
+      "pr",
+      "pb",
+      "pl",
+      "m",
+      "mx",
+      "my",
+      "mt",
+      "mr",
+      "mb",
+      "ml",
+      "gap",
+      "gap-x",
+      "gap-y",
     ]) {
       expect(responsiveUtilityFamilies.spacing).toEqual(
         expect.arrayContaining(Object.keys(tokens.spacing).map((step) => `${prefix}-${step}`)),
@@ -45,14 +59,21 @@ describe("shared responsive vocabulary", () => {
   });
 
   it("contains only unique concrete utilities, without recipe keys or automatic modifiers", () => {
-    expect(responsiveUtilities).toEqual(
-      [...new Set(Object.values(responsiveUtilityFamilies).flat())],
-    );
+    expect(responsiveUtilities).toEqual([
+      ...new Set(Object.values(responsiveUtilityFamilies).flat()),
+    ]);
     expect(
       responsiveUtilities.every((utility) => utility.length > 0 && !/\s|:/.test(utility)),
     ).toBe(true);
     for (const excluded of [
-      "sm", "md", "lg", "bg-primary-500", "font-bold", "shadow-s1", "animate-spin", "p-10",
+      "sm",
+      "md",
+      "lg",
+      "bg-primary-500",
+      "font-bold",
+      "shadow-s1",
+      "animate-spin",
+      "p-10",
     ]) {
       expect(responsiveUtilities).not.toContain(excluded);
     }
@@ -65,7 +86,7 @@ describe("responsive utility source", () => {
     const committed = readFileSync(
       resolve(
         dirname(fileURLToPath(import.meta.url)),
-        "../src/generated/layout-utilities.generated.css",
+        "../generated/layout-utilities.generated.css",
       ),
       "utf8",
     );
@@ -92,9 +113,9 @@ describe("responsive utility source", () => {
   });
 
   it("rejects mixed quotes rather than silently changing the utility", () => {
-    expect(() =>
-      createResponsiveUtilitySource(["base"], [`data-[label="it's"]:h-4`]),
-    ).toThrow("Cannot serialize a utility containing both quote types");
+    expect(() => createResponsiveUtilitySource(["base"], [`data-[label="it's"]:h-4`])).toThrow(
+      "Cannot serialize a utility containing both quote types",
+    );
   });
 });
 

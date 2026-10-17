@@ -1,6 +1,5 @@
-import { ResponsiveValue } from "@basic-ui/react-utilities";
-import { CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
-import { SpacingStep } from "../../lib/layout/layout.types";
+import { CommonProps, ResponsiveValue, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
+import { SpacingStep } from "@core/lib";
 import { BuiltInSemanticColors } from "@core/theme";
 
 export type DividerDirection = "horizontal" | "vertical";

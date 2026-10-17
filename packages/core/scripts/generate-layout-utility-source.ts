@@ -6,7 +6,7 @@ import {
   createResponsiveUtilitySource,
   isUtilitySourceCurrent,
   responsiveUtilities,
-} from "./responsive-utilities";
+} from "../src/lib/responsive-utilities";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const outputPath = resolve(__dirname, "../src/generated/layout-utilities.generated.css");

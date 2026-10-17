@@ -3,9 +3,9 @@ import {
   forwardRefWithAs,
   getTruncateAccessibilityProps,
   normalizeProps,
+  PolymorphicRef,
   useResponsiveProps,
 } from "@basic-ui/react-utilities";
-import { PolymorphicRef } from "@basic-ui/react-utilities";
 import { Box, BoxProps } from "../../Box";
 import { AllowedHeaderElements, CardTitleOwnProps } from "../card.types";
 import { cardTitleVariants } from "../card.variants";
@@ -27,8 +27,14 @@ const _Title = <As extends AllowedHeaderElements = "h3">(
   ref: PolymorphicRef<As>,
 ) => {
   const Comp = (as || "h3") as As;
-  const { size: resolvedSize, weight: resolvedWeight, align: resolvedAlign, wrap: resolvedWrap, truncate: resolvedTruncate, color: resolvedColor } =
-    useResponsiveProps({ size, weight, align, wrap, truncate, color });
+  const {
+    size: resolvedSize,
+    weight: resolvedWeight,
+    align: resolvedAlign,
+    wrap: resolvedWrap,
+    truncate: resolvedTruncate,
+    color: resolvedColor,
+  } = useResponsiveProps({ size, weight, align, wrap, truncate, color });
   const isBuiltInColor = isBuiltInSemanticColor(resolvedColor);
   const resolvedStyles = cn(
     cardTitleVariants({

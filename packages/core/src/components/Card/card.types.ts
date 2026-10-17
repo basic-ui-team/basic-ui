@@ -1,9 +1,13 @@
-import { ResponsiveValue } from "@basic-ui/react-utilities";
+import {
+  CommonProps,
+  PropsWithAs,
+  ResponsiveValue,
+  RestrictedPropsWithAs,
+} from "@basic-ui/react-utilities";
 import { BoxProps } from "../Box";
-import { CommonProps, PropsWithAs, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
-import type { LayoutProps } from "../../lib/layout";
 import { BuiltInSemanticColors } from "@core/theme";
 import type { ImgHTMLAttributes } from "react";
+import { LayoutProps } from "@core/lib";
 
 export type AllowedCardElements = "div" | "button" | "a";
 export type CardVariant = "default" | "elevated" | "outlined" | "unstyled";
