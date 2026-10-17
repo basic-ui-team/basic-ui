@@ -54,6 +54,24 @@ describe("Box", () => {
   });
 
   describe("variants", () => {
+    it("preserves concrete resets and matching consumer overrides", () => {
+      const { container } = renderWithProviders(
+        <Box
+          p={{ base: 4, md: 0 }}
+          hMax={{ base: "screen", md: "none" }}
+          wMax={{ base: "full", md: "none" }}
+          overflow={{ base: "hidden", md: "visible" }}
+          className="md:p-1 lg:max-w-screen"
+        />,
+      );
+      expect(container.firstChild).toHaveClass(
+        "p-4", "md:p-1", "max-h-screen", "md:max-h-none",
+        "max-w-full", "md:max-w-none", "lg:max-w-screen",
+        "overflow-hidden", "md:overflow-visible",
+      );
+      expect(container.firstChild).not.toHaveClass("md:p-0");
+    });
+
     it("preserves layout precedence and consumer overrides without leaking props", () => {
       const style = { color: "red" };
       renderWithProviders(

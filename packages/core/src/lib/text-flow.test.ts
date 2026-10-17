@@ -37,13 +37,12 @@ describe("Text flow", () => {
     expect(result.className).not.toContain("xl:overflow-x-scroll");
   });
 
-  it("restores visible overflow for unset after truncation", () => {
+  it("restores explicit visible overflow after truncation", () => {
     const result = getTextFlowClasses({
       truncate: { base: true, md: false },
       wrap: "wrap",
-      overflow: { base: "scroll", md: "unset" },
+      overflow: { base: "scroll", md: "visible" },
     });
     expect(result.className).toContain("md:overflow-visible");
-    expect(result.className).not.toContain("overflow-unset");
   });
 });

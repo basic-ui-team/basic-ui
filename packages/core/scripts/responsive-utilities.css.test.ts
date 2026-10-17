@@ -18,6 +18,7 @@ import { badgeGeometryVariants } from "../src/components/Badge/badge.variants";
 import { gridVariants } from "../src/components/Grid/grid.variants";
 import { dividerThicknessClasses } from "../src/components/Divider/divider.variants";
 import { spacingSteps } from "../src/lib/layout.types";
+import { generateLayoutClassNames } from "../src/lib/layout-utils";
 
 const coreRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const fixture = readFileSync(
@@ -96,6 +97,25 @@ async function compileFixture(generatedSource?: string) {
 }
 
 describe("responsive utilities through the public CSS entry", () => {
+  it("compiles concrete layout resets including maximum dimensions", async () => {
+    const css = await compileFixture();
+    const { layoutClassNameString } = generateLayoutClassNames({
+      p: { base: 4, md: 0 },
+      h: { base: "full", md: "auto" },
+      hMax: { base: "screen", md: "none" },
+      wMax: { base: "none", md: "full", lg: "none" },
+      overflow: { base: "hidden", md: "visible" },
+    });
+    for (const candidate of layoutClassNameString.split(/\s+/)) {
+      const escaped = candidate.replace(/[^a-zA-Z0-9_-]/g, "\\$&");
+      expect(css, `Missing CSS for ${candidate}`).toContain(`.${escaped} {`);
+    }
+    expect(css).toContain("max-height: none");
+    expect(css).toContain("max-width: none");
+    expect(css).not.toContain("max-h-auto");
+    expect(css).not.toContain("max-w-auto");
+  });
+
   it("covers Grid presets, axis gaps, and directional Divider thickness", async () => {
     const css = await compileFixture();
     const classes = [

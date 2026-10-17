@@ -58,7 +58,7 @@ import { Text } from "@basic-ui/core";
 
 Truncation forces single-line ellipsis while active. When it turns off, the
 latest requested wrapping and overflow values are restored. Overflow defaults
-to visible when restoring an unspecified or `unset` value. Consumer
+to visible when unspecified; use `"visible"` for an explicit reset. Consumer
 `className` overrides remain last.
 
 ### Controlled vs Uncontrolled

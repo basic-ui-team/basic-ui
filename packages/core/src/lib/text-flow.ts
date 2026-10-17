@@ -68,10 +68,10 @@ export function getTextFlowClasses({
     currentTruncate = nextTruncate ?? currentTruncate;
     currentWrap = nextWrap ?? currentWrap;
     if (nextOverflow !== undefined) {
-      currentX = currentY = nextOverflow === "unset" ? "visible" : nextOverflow;
+      currentX = currentY = nextOverflow;
     }
-    if (nextX !== undefined) currentX = nextX === "unset" ? "visible" : nextX;
-    if (nextY !== undefined) currentY = nextY === "unset" ? "visible" : nextY;
+    if (nextX !== undefined) currentX = nextX;
+    if (nextY !== undefined) currentY = nextY;
 
     classesByBreakpoint[breakpoint] = currentTruncate
       ? "overflow-hidden text-ellipsis whitespace-nowrap"

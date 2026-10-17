@@ -115,10 +115,19 @@ describe("Layout utils", () => {
       ).toBe("p-1 md:p-4 block md:inline");
     });
 
-    it("respects `unset` to avoid emitting token class", () => {
+    it("emits concrete resets and subsequent constraints without losing earlier declarations", () => {
       expect(
-        generateLayoutClassNames({ p: "unset", m: "unset" }).layoutClassNameString,
-      ).toBe("");
+        generateLayoutClassNames({
+          p: { base: 4, md: 0, lg: 2 },
+          m: { base: 0, md: 3, lg: 0 },
+          h: { base: "full", md: "auto" },
+          hMax: { base: "screen", md: "none", lg: "full" },
+          wMax: { base: "none", md: "screen", lg: "none" },
+          overflow: { base: "hidden", md: "visible", lg: "auto" },
+        }).layoutClassNameString,
+      ).toBe(
+        "p-4 md:p-0 lg:p-2 m-0 md:m-3 lg:m-0 h-full md:h-auto max-h-screen md:max-h-none lg:max-h-full max-w-none md:max-w-screen lg:max-w-none overflow-hidden md:overflow-visible lg:overflow-auto",
+      );
     });
   });
 });

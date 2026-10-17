@@ -26,7 +26,6 @@ export const layoutVariants = cva("", {
       7: "p-7",
       8: "p-8",
       9: "p-9",
-      unset: "",
     },
     px: {
       0: "px-0",
@@ -39,7 +38,6 @@ export const layoutVariants = cva("", {
       7: "px-7",
       8: "px-8",
       9: "px-9",
-      unset: "",
     },
     py: {
       0: "py-0",
@@ -52,7 +50,6 @@ export const layoutVariants = cva("", {
       7: "py-7",
       8: "py-8",
       9: "py-9",
-      unset: "",
     },
     pt: {
       0: "pt-0",
@@ -65,7 +62,6 @@ export const layoutVariants = cva("", {
       7: "pt-7",
       8: "pt-8",
       9: "pt-9",
-      unset: "",
     },
     pr: {
       0: "pr-0",
@@ -78,7 +74,6 @@ export const layoutVariants = cva("", {
       7: "pr-7",
       8: "pr-8",
       9: "pr-9",
-      unset: "",
     },
     pb: {
       0: "pb-0",
@@ -91,7 +86,6 @@ export const layoutVariants = cva("", {
       7: "pb-7",
       8: "pb-8",
       9: "pb-9",
-      unset: "",
     },
     pl: {
       0: "pl-0",
@@ -104,7 +98,6 @@ export const layoutVariants = cva("", {
       7: "pl-7",
       8: "pl-8",
       9: "pl-9",
-      unset: "",
     },
     m: {
       0: "m-0",
@@ -117,7 +110,6 @@ export const layoutVariants = cva("", {
       7: "m-7",
       8: "m-8",
       9: "m-9",
-      unset: "",
     },
     mx: {
       0: "mx-0",
@@ -130,7 +122,6 @@ export const layoutVariants = cva("", {
       7: "mx-7",
       8: "mx-8",
       9: "mx-9",
-      unset: "",
     },
     my: {
       0: "my-0",
@@ -143,7 +134,6 @@ export const layoutVariants = cva("", {
       7: "my-7",
       8: "my-8",
       9: "my-9",
-      unset: "",
     },
     mt: {
       0: "mt-0",
@@ -156,7 +146,6 @@ export const layoutVariants = cva("", {
       7: "mt-7",
       8: "mt-8",
       9: "mt-9",
-      unset: "",
     },
     mr: {
       0: "mr-0",
@@ -169,7 +158,6 @@ export const layoutVariants = cva("", {
       7: "mr-7",
       8: "mr-8",
       9: "mr-9",
-      unset: "",
     },
     mb: {
       0: "mb-0",
@@ -182,7 +170,6 @@ export const layoutVariants = cva("", {
       7: "mb-7",
       8: "mb-8",
       9: "mb-9",
-      unset: "",
     },
     ml: {
       0: "ml-0",
@@ -195,7 +182,6 @@ export const layoutVariants = cva("", {
       7: "ml-7",
       8: "ml-8",
       9: "ml-9",
-      unset: "",
     },
     gap: {
       0: "gap-0",
@@ -208,7 +194,6 @@ export const layoutVariants = cva("", {
       7: "gap-7",
       8: "gap-8",
       9: "gap-9",
-      unset: "",
     },
     h: {
       auto: "h-auto",
@@ -217,7 +202,6 @@ export const layoutVariants = cva("", {
       min: "h-min",
       max: "h-max",
       fit: "h-fit",
-      unset: "",
     },
     hMin: {
       auto: "min-h-auto",
@@ -226,16 +210,14 @@ export const layoutVariants = cva("", {
       min: "min-h-min",
       max: "min-h-max",
       fit: "min-h-fit",
-      unset: "",
     },
     hMax: {
-      auto: "max-h-auto",
+      none: "max-h-none",
       full: "max-h-full",
       screen: "max-h-screen",
       min: "max-h-min",
       max: "max-h-max",
       fit: "max-h-fit",
-      unset: "",
     },
     w: {
       auto: "w-auto",
@@ -244,7 +226,6 @@ export const layoutVariants = cva("", {
       min: "w-min",
       max: "w-max",
       fit: "w-fit",
-      unset: "",
     },
     wMin: {
       auto: "min-w-auto",
@@ -253,37 +234,32 @@ export const layoutVariants = cva("", {
       min: "min-w-min",
       max: "min-w-max",
       fit: "min-w-fit",
-      unset: "",
     },
     wMax: {
-      auto: "max-w-auto",
+      none: "max-w-none",
       full: "max-w-full",
       screen: "max-w-screen",
       min: "max-w-min",
       max: "max-w-max",
       fit: "max-w-fit",
-      unset: "",
     },
     overflow: {
       visible: "overflow-visible",
       hidden: "overflow-hidden",
       auto: "overflow-auto",
       scroll: "overflow-scroll",
-      unset: "",
     },
     overflowX: {
       visible: "overflow-x-visible",
       hidden: "overflow-x-hidden",
       auto: "overflow-x-auto",
       scroll: "overflow-x-scroll",
-      unset: "",
     },
     overflowY: {
       visible: "overflow-y-visible",
       hidden: "overflow-y-hidden",
       auto: "overflow-y-auto",
       scroll: "overflow-y-scroll",
-      unset: "",
     },
   },
 });

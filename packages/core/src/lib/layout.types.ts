@@ -3,8 +3,9 @@ import { ResponsiveValue } from "@basic-ui/react-utilities";
 export const spacingSteps = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] as const;
 export type SpacingStep = (typeof spacingSteps)[number];
 
-export const SizingValues = ["unset", "auto", "full", "min", "max", "fit", "screen"] as const;
+export const SizingValues = ["auto", "full", "min", "max", "fit", "screen"] as const;
 export type SizingType = (typeof SizingValues)[number];
+export type MaxSizingType = Exclude<SizingType, "auto"> | "none";
 
 export type PositionType = "static" | "relative" | "absolute" | "fixed" | "sticky";
 
@@ -23,6 +24,7 @@ export type OverflowType = "visible" | "hidden" | "auto" | "scroll";
  *
  * **Sizing Props (h, w, hMin, hMax, wMin, wMax):**
  * - Accept predefined tokenized values (`"auto"`, `"full"`, `"fit"`, `"screen"`, etc.) for consistency
+ * - Maximum dimensions use `"none"` instead of `"auto"` to remove a constraint
  * - For arbitrary Tailwind classes or custom CSS, use the component's `className` or `style` props instead
  *
  * **Spacing Props (p, m, gap, etc.):**
@@ -30,37 +32,37 @@ export type OverflowType = "visible" | "hidden" | "auto" | "scroll";
  * - All spacing is responsive
  */
 export interface LayoutProps {
-  p?: ResponsiveValue<SpacingStep | "unset">;
-  px?: ResponsiveValue<SpacingStep | "unset">;
-  py?: ResponsiveValue<SpacingStep | "unset">;
-  pt?: ResponsiveValue<SpacingStep | "unset">;
-  pr?: ResponsiveValue<SpacingStep | "unset">;
-  pb?: ResponsiveValue<SpacingStep | "unset">;
-  pl?: ResponsiveValue<SpacingStep | "unset">;
+  p?: ResponsiveValue<SpacingStep>;
+  px?: ResponsiveValue<SpacingStep>;
+  py?: ResponsiveValue<SpacingStep>;
+  pt?: ResponsiveValue<SpacingStep>;
+  pr?: ResponsiveValue<SpacingStep>;
+  pb?: ResponsiveValue<SpacingStep>;
+  pl?: ResponsiveValue<SpacingStep>;
 
-  m?: ResponsiveValue<SpacingStep | "unset">;
-  mx?: ResponsiveValue<SpacingStep | "unset">;
-  my?: ResponsiveValue<SpacingStep | "unset">;
-  mt?: ResponsiveValue<SpacingStep | "unset">;
-  mr?: ResponsiveValue<SpacingStep | "unset">;
-  mb?: ResponsiveValue<SpacingStep | "unset">;
-  ml?: ResponsiveValue<SpacingStep | "unset">;
+  m?: ResponsiveValue<SpacingStep>;
+  mx?: ResponsiveValue<SpacingStep>;
+  my?: ResponsiveValue<SpacingStep>;
+  mt?: ResponsiveValue<SpacingStep>;
+  mr?: ResponsiveValue<SpacingStep>;
+  mb?: ResponsiveValue<SpacingStep>;
+  ml?: ResponsiveValue<SpacingStep>;
 
-  gap?: ResponsiveValue<SpacingStep | "unset">;
+  gap?: ResponsiveValue<SpacingStep>;
 
   h?: ResponsiveValue<SizingType>;
   hMin?: ResponsiveValue<SizingType>;
-  hMax?: ResponsiveValue<SizingType>;
+  hMax?: ResponsiveValue<MaxSizingType>;
   w?: ResponsiveValue<SizingType>;
   wMin?: ResponsiveValue<SizingType>;
-  wMax?: ResponsiveValue<SizingType>;
+  wMax?: ResponsiveValue<MaxSizingType>;
 
   position?: ResponsiveValue<PositionType>;
   display?: ResponsiveValue<DisplayType>;
 
-  overflow?: ResponsiveValue<OverflowType | "unset">;
-  overflowX?: ResponsiveValue<OverflowType | "unset">;
-  overflowY?: ResponsiveValue<OverflowType | "unset">;
+  overflow?: ResponsiveValue<OverflowType>;
+  overflowX?: ResponsiveValue<OverflowType>;
+  overflowY?: ResponsiveValue<OverflowType>;
 }
 
 export default LayoutProps;

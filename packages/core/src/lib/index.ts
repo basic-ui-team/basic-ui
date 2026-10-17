@@ -2,6 +2,7 @@ export type {
   LayoutProps,
   SpacingStep,
   SizingType,
+  MaxSizingType,
   OverflowType,
   PositionType,
 } from "./layout.types";
