@@ -6,7 +6,9 @@ function utilitiesFor(prefixes: readonly string[], values: readonly (string | nu
 }
 
 const spacing = Object.keys(tokens.spacing);
-const dimensions = [...spacing, "auto", "full", "screen", "min", "max", "fit"];
+const numericDimensions = Array.from({ length: 25 }, (_, index) => index / 2);
+const fractionalSpacing = [0.5, 1.5, 2.5, 3.5];
+const dimensions = [...new Set([...spacing, ...numericDimensions]), "auto", "full", "screen", "min", "max", "fit"];
 const borderWidths = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 const gridTracks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
@@ -31,13 +33,13 @@ export const responsiveUtilityFamilies = {
       "gap-x",
       "gap-y",
     ],
-    spacing,
+    [...spacing, ...fractionalSpacing],
   ),
   sizing: [
     ...utilitiesFor(["h", "min-h", "w", "min-w"], dimensions),
     ...utilitiesFor(
       ["max-h", "max-w"],
-      [...spacing, "none", "full", "screen", "min", "max", "fit"],
+      [...new Set([...spacing, ...numericDimensions]), "none", "full", "screen", "min", "max", "fit"],
     ),
   ],
   borderWidth: utilitiesFor(
@@ -45,7 +47,7 @@ export const responsiveUtilityFamilies = {
     borderWidths,
   ),
   radius: utilitiesFor(["rounded"], Object.keys(tokens.radius)),
-  translation: utilitiesFor(["translate-x", "translate-y"], [...spacing, "1/2", "full"]),
+  translation: utilitiesFor(["translate-x", "translate-y"], [...new Set([...spacing, ...numericDimensions]), "1/2", "full"]),
   display: [
     "block",
     "inline",

@@ -6,6 +6,25 @@ export const toggleSizeClasses = {
   lg: "h-6 w-11 p-0.5",
 };
 
+export const toggleThumbGeometryVariants = cva("", {
+  variants: {
+    size: {
+      sm: "h-3 w-3",
+      md: "h-3.5 w-3.5",
+      lg: "h-4 w-4",
+    },
+    checked: {
+      true: "",
+      false: "translate-x-0",
+    },
+  },
+  compoundVariants: [
+    { size: "sm", checked: true, className: "translate-x-4" },
+    { size: "md", checked: true, className: "translate-x-4.5" },
+    { size: "lg", checked: true, className: "translate-x-6" },
+  ],
+});
+
 export const toggleVariants = cva(
   [
     "relative inline-flex items-center shrink-0 rounded-full",
@@ -15,7 +34,6 @@ export const toggleVariants = cva(
   ].join(" "),
   {
     variants: {
-      size: toggleSizeClasses,
       color: {
         primary: "",
         secondary: "",
@@ -41,14 +59,6 @@ export const toggleVariants = cva(
       { color: "success", checked: true, className: "bg-bg-success hover:bg-bg-success/85" },
       { color: "warning", checked: true, className: "bg-bg-warning hover:bg-bg-warning/85" },
       { color: "info", checked: true, className: "bg-bg-info hover:bg-bg-info/85" },
-      // thumb sizes per size
-      { size: "sm", className: "[&_[data-slot=thumb]]:h-3 [&_[data-slot=thumb]]:w-3" },
-      { size: "md", className: "[&_[data-slot=thumb]]:h-3.5 [&_[data-slot=thumb]]:w-3.5" },
-      { size: "lg", className: "[&_[data-slot=thumb]]:h-4 [&_[data-slot=thumb]]:w-4" },
-      // thumb travel per size when checked
-      { size: "sm", checked: true, className: "[&_[data-slot=thumb]]:translate-x-4" },
-      { size: "md", checked: true, className: "[&_[data-slot=thumb]]:translate-x-4.5" },
-      { size: "lg", checked: true, className: "[&_[data-slot=thumb]]:translate-x-6" },
       // thumb color: inverted on the muted off-track, white on colored on-tracks
       { checked: false, className: "[&_[data-slot=thumb]]:bg-fg-inverted" },
       { checked: true, color: "primary", className: "[&_[data-slot=thumb]]:bg-white" },
@@ -59,7 +69,6 @@ export const toggleVariants = cva(
       { checked: true, color: "info", className: "[&_[data-slot=thumb]]:bg-white" },
     ],
     defaultVariants: {
-      size: "md",
       color: "primary",
       checked: false,
       disabled: false,

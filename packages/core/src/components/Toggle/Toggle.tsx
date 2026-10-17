@@ -8,7 +8,7 @@ import {
 } from "@basic-ui/react-utilities";
 import { Box, BoxProps } from "../Box";
 import { AllowedToggleElements, ToggleOwnProps, ToggleProps } from "./toggle.types";
-import { toggleSizeClasses, toggleVariants } from "./toggle.variants";
+import { toggleSizeClasses, toggleVariants, toggleThumbGeometryVariants } from "./toggle.variants";
 
 /**
  * Toggle (switch) component for binary on/off choices.
@@ -77,7 +77,14 @@ export const Toggle = forwardRefWithAs<ToggleOwnProps, AllowedToggleElements>(
           onClick?.(e as React.MouseEvent<HTMLButtonElement>);
         }}
       >
-        <Box as="span" data-slot="thumb" aria-hidden="true" />
+        <Box
+          as="span"
+          data-slot="thumb"
+          aria-hidden="true"
+          className={getResponsiveClassNames(size, (value) =>
+            toggleThumbGeometryVariants({ size: value, checked: Boolean(checked) }),
+          )}
+        />
       </Box>
     );
   },

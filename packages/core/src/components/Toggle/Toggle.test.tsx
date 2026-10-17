@@ -4,6 +4,23 @@ import { renderWithProviders, screen, setupUser } from "../../test-utils";
 import { Toggle } from "./Toggle";
 
 describe("Toggle", () => {
+  it("coordinates responsive track, thumb, and travel through checked changes", async () => {
+    const user = setupUser();
+    renderWithProviders(<Toggle size={{ base: "sm", md: "md", lg: "lg" }} />);
+    const track = screen.getByRole("switch");
+    const thumb = track.querySelector("[data-slot=thumb]");
+    expect(track).toHaveClass("h-4", "w-8", "md:h-5", "md:w-9", "lg:h-6", "lg:w-11");
+    expect(track).not.toHaveClass("h-5", "w-9", "md:relative");
+    expect(thumb).toHaveClass("h-3", "w-3", "md:h-3.5", "md:w-3.5", "lg:h-4", "lg:w-4");
+    expect(thumb).toHaveClass("translate-x-0", "md:translate-x-0", "lg:translate-x-0");
+    await user.click(track);
+    expect(thumb).toHaveClass("translate-x-4", "md:translate-x-4.5", "lg:translate-x-6");
+    expect(thumb).not.toHaveClass("translate-x-0");
+    await user.click(track);
+    expect(thumb).toHaveClass("translate-x-0", "md:translate-x-0", "lg:translate-x-0");
+    expect(thumb).not.toHaveClass("translate-x-4");
+  });
+
   it("renders as a switch with aria-checked false by default", () => {
     renderWithProviders(<Toggle />);
     const toggle = screen.getByRole("switch");
