@@ -31,6 +31,15 @@ export const Default: Story = {
   },
 };
 
+export const ResponsiveGeometry: Story = {
+  render: () => (
+    <Toggle
+      aria-label="Responsive toggle"
+      size={{ base: "sm", md: "md", lg: "lg" }}
+    />
+  ),
+};
+
 export const Sizes: Story = {
   render: () => (
     <Flex direction="column" gap={3} align="start">

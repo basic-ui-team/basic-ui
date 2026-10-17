@@ -13,6 +13,18 @@ import {
 } from "./responsive-utilities";
 
 describe("shared responsive vocabulary", () => {
+  it("supports reviewed fixed-pixel geometry independently of token spacing", () => {
+    for (const value of [12, 14, 16, 20, 24, 32, 36, 44]) {
+      expect(responsiveUtilityFamilies.pixelGeometry).toContain(`h-[${value}px]`);
+      expect(responsiveUtilityFamilies.pixelGeometry).toContain(`w-[${value}px]`);
+    }
+    expect(responsiveUtilityFamilies.pixelGeometry).toContain("p-[2px]");
+    for (const value of [16, 18, 24]) {
+      expect(responsiveUtilityFamilies.pixelGeometry).toContain(`translate-x-[${value}px]`);
+      expect(responsiveUtilityFamilies.pixelGeometry).toContain(`translate-y-[${value}px]`);
+    }
+  });
+
   it("covers the token spacing scale for each supported spacing property", () => {
     for (const prefix of [
       "p",

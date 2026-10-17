@@ -1,17 +1,17 @@
 import { cva } from "class-variance-authority";
 
 export const toggleSizeClasses = {
-  sm: "h-4 w-8 p-0.5",
-  md: "h-5 w-9 p-0.5",
-  lg: "h-6 w-11 p-0.5",
+  sm: "h-[16px] w-[32px] p-[2px]",
+  md: "h-[20px] w-[36px] p-[2px]",
+  lg: "h-[24px] w-[44px] p-[2px]",
 };
 
 export const toggleThumbGeometryVariants = cva("", {
   variants: {
     size: {
-      sm: "h-3 w-3",
-      md: "h-3.5 w-3.5",
-      lg: "h-4 w-4",
+      sm: "h-[12px] w-[12px]",
+      md: "h-[14px] w-[14px]",
+      lg: "h-[16px] w-[16px]",
     },
     checked: {
       true: "",
@@ -19,9 +19,9 @@ export const toggleThumbGeometryVariants = cva("", {
     },
   },
   compoundVariants: [
-    { size: "sm", checked: true, className: "translate-x-4" },
-    { size: "md", checked: true, className: "translate-x-4.5" },
-    { size: "lg", checked: true, className: "translate-x-6" },
+    { size: "sm", checked: true, className: "translate-x-[16px]" },
+    { size: "md", checked: true, className: "translate-x-[18px]" },
+    { size: "lg", checked: true, className: "translate-x-[24px]" },
   ],
 });
 

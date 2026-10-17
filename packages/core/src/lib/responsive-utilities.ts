@@ -42,6 +42,11 @@ export const responsiveUtilityFamilies = {
       [...new Set([...spacing, ...numericDimensions]), "none", "full", "screen", "min", "max", "fit"],
     ),
   ],
+  pixelGeometry: [
+    ...utilitiesFor(["h", "w"], [12, 14, 16, 20, 24, 32, 36, 44].map((value) => `[${value}px]`)),
+    "p-[2px]",
+    ...utilitiesFor(["translate-x", "translate-y"], [16, 18, 24].map((value) => `[${value}px]`)),
+  ],
   borderWidth: utilitiesFor(
     ["border", "border-x", "border-y", "border-t", "border-r", "border-b", "border-l"],
     borderWidths,

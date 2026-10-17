@@ -9,16 +9,16 @@ describe("Toggle", () => {
     renderWithProviders(<Toggle size={{ base: "sm", md: "md", lg: "lg" }} />);
     const track = screen.getByRole("switch");
     const thumb = track.querySelector("[data-slot=thumb]");
-    expect(track).toHaveClass("h-4", "w-8", "md:h-5", "md:w-9", "lg:h-6", "lg:w-11");
-    expect(track).not.toHaveClass("h-5", "w-9", "md:relative");
-    expect(thumb).toHaveClass("h-3", "w-3", "md:h-3.5", "md:w-3.5", "lg:h-4", "lg:w-4");
+    expect(track).toHaveClass("h-[16px]", "w-[32px]", "p-[2px]", "md:h-[20px]", "md:w-[36px]", "lg:h-[24px]", "lg:w-[44px]");
+    expect(track).not.toHaveClass("h-[20px]", "w-[36px]", "md:relative");
+    expect(thumb).toHaveClass("h-[12px]", "w-[12px]", "md:h-[14px]", "md:w-[14px]", "lg:h-[16px]", "lg:w-[16px]");
     expect(thumb).toHaveClass("translate-x-0", "md:translate-x-0", "lg:translate-x-0");
     await user.click(track);
-    expect(thumb).toHaveClass("translate-x-4", "md:translate-x-4.5", "lg:translate-x-6");
+    expect(thumb).toHaveClass("translate-x-[16px]", "md:translate-x-[18px]", "lg:translate-x-[24px]");
     expect(thumb).not.toHaveClass("translate-x-0");
     await user.click(track);
     expect(thumb).toHaveClass("translate-x-0", "md:translate-x-0", "lg:translate-x-0");
-    expect(thumb).not.toHaveClass("translate-x-4");
+    expect(thumb).not.toHaveClass("translate-x-[16px]");
   });
 
   it("renders as a switch with aria-checked false by default", () => {
