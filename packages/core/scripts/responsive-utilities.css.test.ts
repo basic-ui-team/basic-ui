@@ -14,6 +14,7 @@ import {
   responsiveUtilities,
 } from "../src/lib/responsive-utilities";
 import { toggleSizeClasses, toggleThumbGeometryVariants } from "../src/components/Toggle/toggle.variants";
+import { badgeGeometryVariants } from "../src/components/Badge/badge.variants";
 
 const coreRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const fixture = readFileSync(
@@ -92,6 +93,21 @@ async function compileFixture(generatedSource?: string) {
 }
 
 describe("responsive utilities through the public CSS entry", () => {
+  it("covers count and dot Badge geometry at every breakpoint", async () => {
+    const css = await compileFixture();
+    for (const variant of ["count", "dot"] as const) {
+      for (const size of ["sm", "md", "lg"] as const) {
+        for (const utility of badgeGeometryVariants({ variant, size }).split(/\s+/)) {
+          for (const breakpoint of BREAKPOINT_ORDER) {
+            const candidate = breakpoint === "base" ? utility : `${breakpoint}:${utility}`;
+            const escaped = candidate.replace(/[^a-zA-Z0-9_-]/g, "\\$&").replace(/^2/, "\\32 ");
+            expect(css, `Missing CSS for Badge ${candidate}`).toContain(`.${escaped} {`);
+          }
+        }
+      }
+    }
+  });
+
   it("covers actual Toggle track and thumb recipes in both states", async () => {
     const css = await compileFixture();
     for (const size of ["sm", "md", "lg"] as const) {

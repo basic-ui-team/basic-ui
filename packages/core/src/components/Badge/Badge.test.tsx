@@ -7,6 +7,28 @@ import { Badge } from "./Badge";
 const Anchor = () => <button type="button">Notifications</button>;
 
 describe("Badge", () => {
+  it.each(["count", "dot"] as const)("keeps %s geometry responsive and appearance scalar", (variant) => {
+    const { container } = renderWithProviders(
+      <Badge
+        {...(variant === "count" ? { variant, content: 3 } : { variant })}
+        color="info"
+        size={{ base: "sm", md: "lg" }}
+        ping
+      >
+        <Anchor />
+      </Badge>,
+    );
+    const badge = container.querySelector("[data-slot=badge]");
+    const ping = container.querySelector("[data-slot=badge-ping]");
+    if (variant === "count") {
+      expect(badge).toHaveClass("min-h-5", "min-w-5", "md:min-h-7", "md:min-w-7", "md:px-3", "bg-bg-info");
+    } else {
+      expect(badge).toHaveClass("h-2", "w-2", "md:h-4", "md:w-4", "bg-border-info");
+    }
+    expect(ping).toHaveClass("h-2", "w-2", "md:h-4", "md:w-4");
+    expect(badge?.className).not.toMatch(/md:(?:bg-|absolute|top-|right-)/);
+  });
+
   it("renders count content over its anchor", () => {
     renderWithProviders(
       <Badge content={3} color="error">

@@ -1,8 +1,8 @@
 import React from "react";
 import { Box } from "../Box";
-import { cn } from "@basic-ui/react-utilities";
+import { cn, getResponsiveClassNames } from "@basic-ui/react-utilities";
 import type { BadgeProps } from "./badge.types";
-import { badgeVariants } from "./badge.variants";
+import { badgeVariants, badgeGeometryVariants } from "./badge.variants";
 
 export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
   (
@@ -43,10 +43,12 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
             className={cn(
               badgeVariants({
                 variant: "dot",
-                size,
                 color,
                 position,
               }),
+              getResponsiveClassNames(size, (value) =>
+                badgeGeometryVariants({ size: value, variant: "dot" }),
+              ),
               "motion-safe:animate-[ping_1.5s_ease-out_infinite]",
             )}
           />
@@ -55,7 +57,11 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
           as="span"
           ref={ref}
           data-slot="badge"
-          className={cn(badgeVariants({ variant, size, color, position }), className)}
+          className={cn(
+            badgeVariants({ variant, color, position }),
+            getResponsiveClassNames(size, (value) => badgeGeometryVariants({ size: value, variant })),
+            className,
+          )}
           style={style}
           aria-label={isDecorative ? undefined : ariaLabel}
           aria-hidden={isDecorative || undefined}
