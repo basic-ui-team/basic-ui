@@ -1,12 +1,12 @@
 import {
   cn,
   forwardRefWithAs,
+  getResponsiveClassNames,
   PolymorphicRef,
-  useResponsiveProps,
 } from "@basic-ui/react-utilities";
 import { AllowedSpinnerElements, SpinnerOwnProps, SpinnerProps } from "./spinner.types";
 import { Box, BoxProps } from "../Box";
-import { spinnerVariants } from "./spinner.variants";
+import { spinnerSizeClasses, spinnerVariants } from "./spinner.variants";
 
 export const _Spinner = <As extends AllowedSpinnerElements = "div">(
   {
@@ -15,13 +15,6 @@ export const _Spinner = <As extends AllowedSpinnerElements = "div">(
     color = "default",
     visible = true,
     ariaLabel,
-    m = "unset",
-    mx = "unset",
-    my = "unset",
-    mb = "unset",
-    ml = "unset",
-    mr = "unset",
-    mt = "unset",
     className,
     style,
     ...rest
@@ -30,8 +23,6 @@ export const _Spinner = <As extends AllowedSpinnerElements = "div">(
 ) => {
   const Comp = as || ("div" as AllowedSpinnerElements);
 
-  const { size: resolvedSize, color: resolvedColor } = useResponsiveProps({ size, color });
-
   if (!visible) {
     return null;
   }
@@ -39,22 +30,13 @@ export const _Spinner = <As extends AllowedSpinnerElements = "div">(
   return (
     <Box
       as={Comp}
-      m={m}
-      mx={mx}
-      my={my}
-      mb={mb}
-      ml={ml}
-      mr={mr}
-      mt={mt}
       ref={ref}
       role="status"
       aria-label={ariaLabel || "Loading"}
       aria-busy="true"
       className={cn(
-        spinnerVariants({
-          size: resolvedSize,
-          color: resolvedColor,
-        }),
+        spinnerVariants({ color }),
+        getResponsiveClassNames(size, (value) => spinnerSizeClasses[value]),
         className,
       )}
       style={style}

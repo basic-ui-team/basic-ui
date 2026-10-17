@@ -1,6 +1,6 @@
 import { cva } from "class-variance-authority";
 
-export const alertVariants = cva("flex gap-3 rounded-lg p-3", {
+export const alertVariants = cva("flex gap-3 rounded-lg p-3 items-center", {
   variants: {
     severity: {
       success: "text-fg-success",
@@ -63,7 +63,6 @@ export const alertVariants = cva("flex gap-3 rounded-lg p-3", {
 
 export const alertTitleVariants = cva("font-semibold text-sm");
 
-export const alertIconVariants = cva("flex-shrink-0 h-5 w-5");
 
 export const alertContentVariants = cva("flex-1 text-sm");
 

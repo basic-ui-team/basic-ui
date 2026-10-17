@@ -74,7 +74,7 @@ const _Divider = <As extends AllowedDividerElements = "hr">(
     >
       {/* NOTE: Replace this with proper label component when available */}
       {label && (
-        <span className="flex-shrink-0 bg-background px-2 text-muted-foreground text-sm">
+        <span className="shrink-0 bg-background px-2 text-muted-foreground text-sm">
           {label}
         </span>
       )}

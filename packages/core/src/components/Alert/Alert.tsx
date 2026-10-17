@@ -2,11 +2,9 @@ import React from "react";
 import { cn, forwardRefWithAs, PolymorphicRef, useDisclosure } from "@basic-ui/react-utilities";
 import { CheckCircleIcon, XCircleIcon, AlertTriangleIcon, InfoIcon, XIcon } from "@basic-ui/icons";
 import type { AlertOwnProps, AlertProps, AlertSeverity, AllowedAlertElements } from "./alert.types";
-
 import {
   alertVariants,
   alertTitleVariants,
-  alertIconVariants,
   alertContentVariants,
   alertActionVariants,
   alertDismissButtonVariants,
@@ -89,7 +87,7 @@ export const Alert = forwardRefWithAs<AlertOwnProps, AllowedAlertElements>(
         className={cn(alertVariants({ severity, variant }), className)}
         {...(props as any)}
       >
-        {iconElement !== null && <Icon icon={iconElement} className={alertIconVariants()} />}
+        {iconElement !== null && <Icon icon={iconElement} />}
 
         <Box as="div" className={alertContentVariants()}>
           {title && <Box className={alertTitleVariants()}>{title}</Box>}
@@ -106,7 +104,7 @@ export const Alert = forwardRefWithAs<AlertOwnProps, AllowedAlertElements>(
                 className={alertDismissButtonVariants()}
                 aria-label="Dismiss alert"
               >
-                <Icon icon={<XIcon />} size="sm" aria-hidden="true" />
+                <Icon icon={<XIcon />} aria-hidden="true" />
               </button>
             )}
           </Box>
