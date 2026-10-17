@@ -26,6 +26,7 @@ const alignContentValues = [
 const autoFlowValues = ["row", "column", "dense"] as const;
 const autoColsRowsValues = ["min", "max", "fr"] as const;
 const gridTemplatePresetValues = [
+  "none",
   "sidebar",
   "hero",
   "masonry",
@@ -69,7 +70,7 @@ export interface GridOwnProps extends Omit<LayoutProps, "display">, CommonProps 
   justifyItems?: ResponsiveValue<JustifyItemsOption>;
   /** alignContent controls the alignment of the grid's content along the block axis */
   alignContent?: ResponsiveValue<AlignContentOption>;
-  /** Preset grid templates for common layouts. If set, overrides `cols` and `rows`. */
+  /** Preset overrides cols/rows. "none" restores their latest values, or implicit tracks when omitted. */
   templatePreset?: ResponsiveValue<GridTemplatePresetOption>;
 }
 

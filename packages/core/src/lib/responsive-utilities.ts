@@ -74,6 +74,14 @@ export const responsiveUtilityFamilies = {
     ...utilitiesFor(["grid-flow"], ["row", "col", "dense", "row-dense", "col-dense"]),
     ...utilitiesFor(["auto-cols", "auto-rows"], ["auto", "min", "max", "fr"]),
   ],
+  gridTemplates: [
+    "grid-cols-[200px_1fr]",
+    "grid-cols-[1fr_400px]",
+    "grid-cols-[repeat(auto-fill,minmax(250px,1fr))]",
+    "grid-cols-[repeat(auto-fill,minmax(300px,1fr))]",
+    "grid-cols-[repeat(auto-fit,minmax(200px,1fr))]",
+    "grid-cols-[200px_1fr_300px]",
+  ],
   typography: [
     ...utilitiesFor(["text"], Object.keys(tokens.fontSize)),
     ...utilitiesFor(["leading"], Object.keys(tokens.lineHeight)),

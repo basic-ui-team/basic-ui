@@ -8,16 +8,16 @@ export type DividerColor = BuiltInSemanticColors;
 export type DividerThickness = "thin" | "medium" | "thick" | "none";
 
 export interface DividerOwnProps extends CommonProps {
-  /** Direction of the divider line. Supports responsive values. @default "horizontal" */
-  direction?: ResponsiveValue<DividerDirection>;
+  /** Scalar direction, shared by visual geometry and aria-orientation. @default "horizontal" */
+  direction?: DividerDirection;
 
   /** Whether the divider is decorative (visual only) or semantic (carries meaning).
    * Use `decorative={true}` for purely visual separators (will set `role="presentation"`).
    * Use `decorative={false}` for semantic dividers between sections. @default true */
   decorative?: boolean;
 
-  /** Visual appearance: "solid" for single line, "dashed" for dashed, "dotted" for dots. Supports responsive values. @default "solid" */
-  appearance?: ResponsiveValue<DividerAppearance>;
+  /** Scalar border style. @default "solid" */
+  appearance?: DividerAppearance;
 
   /** Thickness of the divider line. "thin" for 1px, "medium" for 2px, "thick" for 4px, "none" for no line. Supports responsive values. @default "medium" */
   thickness?: ResponsiveValue<DividerThickness>;
@@ -25,8 +25,8 @@ export interface DividerOwnProps extends CommonProps {
   /** Inset spacing from the edges. For horizontal dividers, this controls left/right padding; for vertical dividers, it controls top/bottom padding. Supports responsive values. @default 0 */
   inset?: ResponsiveValue<SpacingStep>;
 
-  /** Color of the divider line. Supports responsive values. Accepts built-in semantic tokens or a custom CSS color string. @default "base" */
-  color?: ResponsiveValue<DividerColor>;
+  /** Scalar semantic border color. @default "default" */
+  color?: DividerColor;
 
   /** Optional label for the divider, used for accessibility purposes. If provided, the divider will have `role="separator"` and the label will be announced by screen readers. */
   label?: string;

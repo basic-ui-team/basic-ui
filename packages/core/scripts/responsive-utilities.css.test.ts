@@ -15,6 +15,9 @@ import {
 } from "../src/lib/responsive-utilities";
 import { toggleSizeClasses, toggleThumbGeometryVariants } from "../src/components/Toggle/toggle.variants";
 import { badgeGeometryVariants } from "../src/components/Badge/badge.variants";
+import { gridVariants } from "../src/components/Grid/grid.variants";
+import { dividerThicknessClasses } from "../src/components/Divider/divider.variants";
+import { spacingSteps } from "../src/lib/layout.types";
 
 const coreRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const fixture = readFileSync(
@@ -93,6 +96,26 @@ async function compileFixture(generatedSource?: string) {
 }
 
 describe("responsive utilities through the public CSS entry", () => {
+  it("covers Grid presets, axis gaps, and directional Divider thickness", async () => {
+    const css = await compileFixture();
+    const classes = [
+      ...(["none", "sidebar", "hero", "masonry", "card-list", "symmetric", "asymmetric"] as const)
+        .map((templatePreset) => gridVariants({ templatePreset })),
+      ...spacingSteps.map((step) => gridVariants({
+        rowGap: step,
+        columnGap: step,
+      })),
+      ...Object.values(dividerThicknessClasses).flatMap((values) => Object.values(values)),
+    ];
+    for (const utility of classes.join(" ").split(/\s+/)) {
+      for (const breakpoint of BREAKPOINT_ORDER) {
+        const candidate = breakpoint === "base" ? utility : `${breakpoint}:${utility}`;
+        const escaped = candidate.replace(/[^a-zA-Z0-9_-]/g, "\\$&").replace(/^2/, "\\32 ");
+        expect(css, `Missing CSS for ${candidate}`).toContain(`.${escaped} {`);
+      }
+    }
+  });
+
   it("covers count and dot Badge geometry at every breakpoint", async () => {
     const css = await compileFixture();
     for (const variant of ["count", "dot"] as const) {

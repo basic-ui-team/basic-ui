@@ -1,6 +1,6 @@
 import { cva } from "class-variance-authority";
 
-export const gridVariants = cva("grid", {
+export const gridVariants = cva("", {
   variants: {
     cols: {
       1: "grid-cols-1",
@@ -43,28 +43,28 @@ export const gridVariants = cva("grid", {
       9: "gap-9",
     },
     rowGap: {
-      0: "row-gap-0",
-      1: "row-gap-1",
-      2: "row-gap-2",
-      3: "row-gap-3",
-      4: "row-gap-4",
-      5: "row-gap-5",
-      6: "row-gap-6",
-      7: "row-gap-7",
-      8: "row-gap-8",
-      9: "row-gap-9",
+      0: "gap-y-0",
+      1: "gap-y-1",
+      2: "gap-y-2",
+      3: "gap-y-3",
+      4: "gap-y-4",
+      5: "gap-y-5",
+      6: "gap-y-6",
+      7: "gap-y-7",
+      8: "gap-y-8",
+      9: "gap-y-9",
     },
     columnGap: {
-      0: "column-gap-0",
-      1: "column-gap-1",
-      2: "column-gap-2",
-      3: "column-gap-3",
-      4: "column-gap-4",
-      5: "column-gap-5",
-      6: "column-gap-6",
-      7: "column-gap-7",
-      8: "column-gap-8",
-      9: "column-gap-9",
+      0: "gap-x-0",
+      1: "gap-x-1",
+      2: "gap-x-2",
+      3: "gap-x-3",
+      4: "gap-x-4",
+      5: "gap-x-5",
+      6: "gap-x-6",
+      7: "gap-x-7",
+      8: "gap-x-8",
+      9: "gap-x-9",
     },
     autoFlow: {
       row: "grid-flow-row",
@@ -114,6 +114,7 @@ export const gridVariants = cva("grid", {
       true: "auto-rows-auto",
     },
     templatePreset: {
+      none: "grid-cols-none grid-rows-none",
       sidebar: "grid-cols-[200px_1fr]",
       hero: "grid-cols-[1fr_400px]",
       masonry: "grid-cols-[repeat(auto-fill,minmax(250px,1fr))]",
@@ -121,12 +122,5 @@ export const gridVariants = cva("grid", {
       symmetric: "grid-cols-[repeat(auto-fit,minmax(200px,1fr))]",
       asymmetric: "grid-cols-[200px_1fr_300px]",
     },
-  },
-  defaultVariants: {
-    autoFlow: "row",
-    alignItems: "stretch",
-    justifyItems: "stretch",
-    alignContent: "stretch",
-    justifyContent: "start",
   },
 });

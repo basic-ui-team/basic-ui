@@ -6,7 +6,7 @@ Responsive layout container for arranging items in rows and columns.
 import { Grid } from "@basic-ui/core";
 
 // Basic example
-<Grid cols={3} gap="md">
+<Grid cols={3} gap={3}>
   <div>Item A</div>
   <div>Item B</div>
   <div>Item C</div>
@@ -25,16 +25,16 @@ import { Grid } from "@basic-ui/core";
 
 ## Variants / Appearance
 
-- `templatePreset`: quick presets — `sidebar`, `hero`, `masonry`, `card-list`, `symmetric`, `asymmetric`.
+- `templatePreset`: quick presets — `sidebar`, `hero`, `masonry`, `card-list`, `symmetric`, `asymmetric`; `none` restores column and row counts.
 - Alignment props: `alignItems`, `justifyItems`, `alignContent`, `justifyContent` (tokenized options).
-- Spacing tokens: `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`.
+- Spacing tokens: numeric steps `0` through `9`.
 
 ## Examples
 
 ### Basic
 
 ```tsx
-<Grid cols={3} gap="md">
+<Grid cols={3} gap={3}>
   <div>Card 1</div>
   <div>Card 2</div>
   <div>Card 3</div>
@@ -44,7 +44,7 @@ import { Grid } from "@basic-ui/core";
 ### Template preset (masonry)
 
 ```tsx
-<Grid templatePreset="masonry" gap="md">
+<Grid templatePreset="masonry" gap={3}>
   <div className="h-40">Item 1</div>
   <div className="h-60">Item 2</div>
   <div className="h-48">Item 3</div>
@@ -54,7 +54,7 @@ import { Grid } from "@basic-ui/core";
 ### Responsive props
 
 ```tsx
-<Grid cols={{ base: 1, md: 3 }} gap={{ base: "sm", md: "md" }}>
+<Grid cols={{ base: 1, md: 3 }} gap={{ base: 2, md: 3 }}>
   <div>1</div>
   <div>2</div>
   <div>3</div>
@@ -89,8 +89,10 @@ import { Grid } from "@basic-ui/core";
 
 Notes:
 
-- Defaults are primarily defined in the `gridVariants` defaults: `gap: "none"`, `autoFlow: "row"`, `alignItems: "stretch"`, `justifyItems: "stretch"`, `alignContent: "stretch"`, `justifyContent: "start"`.
-- `templatePreset` uses Tailwind arbitrary values for `grid-template-columns` and will ignore `cols`/`rows` when present.
+- Defaults are `autoFlow: "row"`, `alignItems: "stretch"`, `justifyItems: "stretch"`, `alignContent: "stretch"`, and `justifyContent: "start"`. Gap is omitted unless provided.
+- Responsive props emit static breakpoint classes without viewport subscriptions.
+- An active `templatePreset` overrides both `cols` and `rows`. Set `templatePreset={{ base: "sidebar", lg: "none" }}` to restore their latest values at `lg`, or implicit tracks when counts are omitted.
+- `rowGap` and `columnGap` use `gap-y-*` and `gap-x-*`. All gap props accept numeric steps `0` through `9`.
 
 ## Accessibility
 
