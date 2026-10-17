@@ -4,85 +4,64 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it } from "vitest";
 import { BREAKPOINT_ORDER } from "../../react-utilities/src/hooks/useResponsive/constants";
-import { flexVariantsConfig } from "../src/components/Flex/flex.variants";
-import { layoutVariantsConfig } from "../src/lib/layout/layout.variants";
+import { tokens } from "../../tokens/src/generated/tokens";
 import {
-  collectResponsiveUtilities,
   createResponsiveUtilitySource,
   isUtilitySourceCurrent,
+  responsiveUtilities,
+  responsiveUtilityFamilies,
 } from "./responsive-utilities";
 
-describe("responsive utility collection", () => {
-  it("collects base, variant, and compound classes without emitting conditions or defaults", () => {
-    const utilities = collectResponsiveUtilities([
-      {
-        base: "inline-flex",
-        variants: { size: { sm: "h-4 w-8", md: "h-5 w-9" } },
-        compoundVariants: [
-          { size: "sm", checked: true, className: "[&_[data-slot=thumb]]:translate-x-4" },
-          { size: "md", checked: true, class: "[&_[data-slot=thumb]]:translate-x-4.5" },
-        ],
-        defaultVariants: { size: "sm" },
-      },
-    ]);
-
-    expect(utilities).toEqual([
-      "inline-flex",
-      "h-4",
-      "w-8",
-      "h-5",
-      "w-9",
-      "[&_[data-slot=thumb]]:translate-x-4",
-      "[&_[data-slot=thumb]]:translate-x-4.5",
-    ]);
+describe("shared responsive vocabulary", () => {
+  it("covers the token spacing scale for each supported spacing property", () => {
+    for (const prefix of [
+      "p", "px", "py", "pt", "pr", "pb", "pl",
+      "m", "mx", "my", "mt", "mr", "mb", "ml",
+      "gap", "gap-x", "gap-y",
+    ]) {
+      expect(responsiveUtilityFamilies.spacing).toEqual(
+        expect.arrayContaining(Object.keys(tokens.spacing).map((step) => `${prefix}-${step}`)),
+      );
+    }
   });
 
-  it("deduplicates within and across sources without merging alternatives or selectors", () => {
-    const sources = [
-      { variants: { size: { sm: " h-4  w-4\nh-4 ", md: "h-5" } } },
-      { variants: { size: { sm: "h-4 w-4", md: "[&_[data-slot=thumb]]:h-4" } } },
-    ];
-
-    expect(collectResponsiveUtilities(sources)).toEqual([
-      "h-4",
-      "w-4",
-      "h-5",
-      "[&_[data-slot=thumb]]:h-4",
-    ]);
-    expect(collectResponsiveUtilities(sources)).toEqual(collectResponsiveUtilities(sources));
+  it("supports complete border-width and grid-track ranges, not component selections", () => {
+    for (let width = 0; width <= 9; width++) {
+      expect(responsiveUtilityFamilies.borderWidth).toContain(`border-${width}`);
+    }
+    for (let tracks = 1; tracks <= 12; tracks++) {
+      expect(responsiveUtilityFamilies.grid).toContain(`grid-cols-${tracks}`);
+      expect(responsiveUtilityFamilies.grid).toContain(`grid-rows-${tracks}`);
+    }
   });
 
-  it("omits empty class strings", () => {
+  it("uses token names for typography and size-coupled rounding", () => {
+    for (const name of Object.keys(tokens.fontSize)) {
+      expect(responsiveUtilityFamilies.typography).toContain(`text-${name}`);
+    }
+    for (const name of Object.keys(tokens.radius)) {
+      expect(responsiveUtilityFamilies.radius).toContain(`rounded-${name}`);
+    }
+  });
+
+  it("contains only unique concrete utilities, without recipe keys or automatic modifiers", () => {
+    expect(responsiveUtilities).toEqual(
+      [...new Set(Object.values(responsiveUtilityFamilies).flat())],
+    );
     expect(
-      collectResponsiveUtilities([{ base: "", variants: { size: { unset: "", sm: " \n " } } }]),
-    ).toEqual([]);
-  });
-
-  it.each([
-    { source: null, error: "Responsive source 1.variants" },
-    { source: {}, error: "Responsive source 1.variants" },
-    { source: { variants: [] }, error: "Responsive source 1.variants" },
-    { source: { variants: { size: null } }, error: "variants.size must be a variant map" },
-    { source: { variants: { size: { sm: 4 } } }, error: "variants.size.sm must be a class string" },
-    { source: { base: ["h-4"], variants: {} }, error: "base must be a class string" },
-    { source: { variants: {}, compoundVariants: {} }, error: "compoundVariants must be an array" },
-    {
-      source: { variants: {}, compoundVariants: [{ size: "sm" }] },
-      error: "compoundVariants[0] must declare class or className",
-    },
-    {
-      source: { variants: {}, compoundVariants: [{ className: null }] },
-      error: "compoundVariants[0].className must be a class string",
-    },
-  ])("rejects malformed sources: $error", ({ source, error }) => {
-    expect(() => collectResponsiveUtilities([source])).toThrow(error);
+      responsiveUtilities.every((utility) => utility.length > 0 && !/\s|:/.test(utility)),
+    ).toBe(true);
+    for (const excluded of [
+      "sm", "md", "lg", "bg-primary-500", "font-bold", "shadow-s1", "animate-spin", "p-10",
+    ]) {
+      expect(responsiveUtilities).not.toContain(excluded);
+    }
   });
 });
 
 describe("responsive utility source", () => {
-  it("preserves the complete registered layout/Flex source and candidate count", () => {
-    const utilities = collectResponsiveUtilities([layoutVariantsConfig, flexVariantsConfig]);
-    const source = createResponsiveUtilitySource(BREAKPOINT_ORDER, utilities);
+  it("matches the generated stylesheet using only the shared vocabulary", () => {
+    const source = createResponsiveUtilitySource(BREAKPOINT_ORDER, responsiveUtilities);
     const committed = readFileSync(
       resolve(
         dirname(fileURLToPath(import.meta.url)),
@@ -91,10 +70,7 @@ describe("responsive utility source", () => {
       "utf8",
     );
 
-    expect(utilities).toHaveLength(227);
-    expect(utilities.length * BREAKPOINT_ORDER.length).toBe(1_362);
     expect(source).toBe(committed.replace(/\r\n/g, "\n"));
-    expect(Buffer.byteLength(source)).toBe(1_758);
   });
 
   it("emits only the supplied breakpoint forms and exact unique candidates", () => {

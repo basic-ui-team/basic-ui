@@ -8,7 +8,8 @@ import { compile } from "tailwindcss";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import corePackage from "../package.json";
 import tokensPackage from "../../tokens/package.json";
-import { collectResponsiveUtilities, createResponsiveUtilitySource } from "./responsive-utilities";
+import { BREAKPOINT_ORDER } from "../../react-utilities/src/hooks/useResponsive/constants";
+import { createResponsiveUtilitySource, responsiveUtilities } from "./responsive-utilities";
 
 const coreRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const fixture = readFileSync(
@@ -86,40 +87,39 @@ async function compileFixture(generatedSource?: string) {
 }
 
 describe("responsive utilities through the public CSS entry", () => {
-  it("compiles layout and Flex without scanning component or consumer source", async () => {
+  it("compiles every approved utility at every breakpoint without scanning source", async () => {
     const css = await compileFixture();
 
-    expect(css).toContain(".p-2");
-    expect(css).toContain(".md\\:gap-4");
-    expect(css).toContain(".md\\:flex-row");
-    expect(css).toContain(".\\32 xl\\:inline-flex");
+    for (const breakpoint of BREAKPOINT_ORDER) {
+      const prefix =
+        breakpoint === "base" ? "" : breakpoint === "2xl" ? "\\32 xl\\:" : `${breakpoint}\\:`;
+      for (const utility of responsiveUtilities) {
+        const selector = `.${prefix}${utility.replace(/[^a-zA-Z0-9_-]/g, "\\$&")}`;
+        expect(css.includes(`${selector} {`), `Missing CSS for ${breakpoint}:${utility}`).toBe(true);
+      }
+    }
     expect(css).toContain("@media (width >= 768px)");
-    expect(css).not.toContain(".md\\:bg-red-500");
+    expect(css).toContain("border-width: 9px");
+    expect(css).toContain("grid-template-columns: repeat(12, minmax(0, 1fr))");
+    for (const excluded of ["bg-red-500", "font-bold", "shadow-s1", "animate-spin"]) {
+      expect(css).not.toContain(`.md\\:${excluded} {`);
+    }
 
     console.info(
-      `Responsive CSS fixture: ${Buffer.byteLength(css)} raw bytes, ${gzipSync(css).length} gzip bytes`,
+      `Responsive CSS fixture: ${responsiveUtilities.length} utilities, ${responsiveUtilities.length * BREAKPOINT_ORDER.length} candidates, ${Buffer.byteLength(css)} raw bytes, ${gzipSync(css).length} gzip bytes`,
     );
   });
 
-  it("compiles compounds, modifiers, quoted selectors, and comma-containing arbitrary values", async () => {
-    const utilities = collectResponsiveUtilities([
-      {
-        variants: {
-          size: {
-            sm: [
-              "h-4 dark:h-5",
-              "content-['saved']",
-              'data-[state="checked"]:w-5',
-              "grid-cols-[repeat(2,minmax(0,1fr))]",
-            ].join(" "),
-          },
-        },
-        compoundVariants: [
-          { size: "sm", checked: true, className: "[&_[data-slot=thumb]]:translate-x-4" },
-          { size: "sm", checked: false, class: "data-[checked=true]:w-4" },
-        ],
-      },
-    ]);
+  it("preserves explicitly supplied modifiers, quoted selectors, and arbitrary values", async () => {
+    const utilities = [
+      "h-4",
+      "dark:h-5",
+      "content-['saved']",
+      'data-[state="checked"]:w-5',
+      "grid-cols-[repeat(2,minmax(0,1fr))]",
+      "[&_[data-slot=thumb]]:translate-x-4",
+      "data-[checked=true]:w-4",
+    ];
     const css = await compileFixture(createResponsiveUtilitySource(["base", "md"], utilities));
 
     for (const utility of utilities) {

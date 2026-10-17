@@ -1,75 +1,74 @@
 import { existsSync, readFileSync } from "node:fs";
+import { tokens } from "../../tokens/src/generated/tokens";
 
-export interface ResponsiveUtilitySource {
-  readonly base?: string;
-  readonly variants: Readonly<Record<string, Readonly<Record<string, string>>>>;
-  readonly compoundVariants?: readonly (Readonly<Record<string, unknown>> & {
-    readonly class?: string;
-    readonly className?: string;
-  })[];
+function utilitiesFor(prefixes: readonly string[], values: readonly (string | number)[]): string[] {
+  return prefixes.flatMap((prefix) => values.map((value) => `${prefix}-${value}`));
 }
 
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null && !Array.isArray(value);
-}
+const spacing = Object.keys(tokens.spacing);
+const dimensions = [...spacing, "auto", "full", "screen", "min", "max", "fit"];
+const borderWidths = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+const gridTracks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-export function collectResponsiveUtilities(sources: readonly unknown[]): string[] {
-  const utilities = new Set<string>();
+export const responsiveUtilityFamilies = {
+  spacing: utilitiesFor(
+    [
+      "p", "px", "py", "pt", "pr", "pb", "pl",
+      "m", "mx", "my", "mt", "mr", "mb", "ml",
+      "gap", "gap-x", "gap-y",
+    ],
+    spacing,
+  ),
+  sizing: [
+    ...utilitiesFor(["h", "min-h", "w", "min-w"], dimensions),
+    ...utilitiesFor(["max-h", "max-w"], [...spacing, "none", "full", "screen", "min", "max", "fit"]),
+  ],
+  borderWidth: utilitiesFor(
+    ["border", "border-x", "border-y", "border-t", "border-r", "border-b", "border-l"],
+    borderWidths,
+  ),
+  radius: utilitiesFor(["rounded"], Object.keys(tokens.radius)),
+  translation: utilitiesFor(["translate-x", "translate-y"], [...spacing, "1/2", "full"]),
+  display: ["block", "inline", "inline-block", "hidden", "flex", "inline-flex", "grid", "inline-grid"],
+  flex: utilitiesFor(
+    ["flex"],
+    ["row", "col", "row-reverse", "col-reverse", "nowrap", "wrap", "wrap-reverse"],
+  ),
+  alignment: [
+    ...utilitiesFor(
+      ["justify", "content"],
+      ["start", "end", "center", "between", "around", "evenly", "stretch"],
+    ),
+    ...utilitiesFor(["items", "justify-items"], ["start", "end", "center", "stretch"]),
+  ],
+  grid: [
+    ...utilitiesFor(["grid-cols", "grid-rows"], [...gridTracks, "none"]),
+    ...utilitiesFor(["grid-flow"], ["row", "col", "dense", "row-dense", "col-dense"]),
+    ...utilitiesFor(["auto-cols", "auto-rows"], ["auto", "min", "max", "fr"]),
+  ],
+  typography: [
+    ...utilitiesFor(["text"], Object.keys(tokens.fontSize)),
+    ...utilitiesFor(["leading"], Object.keys(tokens.lineHeight)),
+    ...utilitiesFor(
+      ["text"],
+      ["left", "center", "right", "wrap", "nowrap", "balance", "pretty", "ellipsis", "clip"],
+    ),
+    "truncate",
+    "whitespace-normal",
+    "whitespace-nowrap",
+  ],
+  position: ["static", "relative", "absolute", "fixed", "sticky"],
+  overflow: utilitiesFor(
+    ["overflow", "overflow-x", "overflow-y"],
+    ["visible", "hidden", "auto", "scroll"],
+  ),
+  media: [
+    ...utilitiesFor(["object"], ["cover", "contain", "fill", "none", "scale-down"]),
+    ...utilitiesFor(["aspect"], ["auto", "square", "video", "[4/3]", "[3/4]"]),
+  ],
+} satisfies Record<string, readonly string[]>;
 
-  function addClasses(value: unknown, location: string) {
-    if (typeof value !== "string") {
-      throw new TypeError(`${location} must be a class string.`);
-    }
-
-    for (const utility of value.split(/\s+/).filter(Boolean)) {
-      utilities.add(utility);
-    }
-  }
-
-  sources.forEach((source, index) => {
-    const location = `Responsive source ${index + 1}`;
-
-    if (!isRecord(source) || !isRecord(source.variants)) {
-      throw new TypeError(`${location}.variants must be a record of variant maps.`);
-    }
-
-    if (source.base !== undefined) {
-      addClasses(source.base, `${location}.base`);
-    }
-
-    for (const [name, values] of Object.entries(source.variants)) {
-      if (!isRecord(values)) {
-        throw new TypeError(`${location}.variants.${name} must be a variant map.`);
-      }
-
-      for (const [value, classes] of Object.entries(values)) {
-        addClasses(classes, `${location}.variants.${name}.${value}`);
-      }
-    }
-
-    if (source.compoundVariants !== undefined) {
-      if (!Array.isArray(source.compoundVariants)) {
-        throw new TypeError(`${location}.compoundVariants must be an array.`);
-      }
-
-      source.compoundVariants.forEach((compound: unknown, compoundIndex: number) => {
-        const compoundLocation = `${location}.compoundVariants[${compoundIndex}]`;
-
-        if (!isRecord(compound) || !("class" in compound || "className" in compound)) {
-          throw new TypeError(`${compoundLocation} must declare class or className.`);
-        }
-
-        for (const key of ["class", "className"]) {
-          if (key in compound) {
-            addClasses(compound[key], `${compoundLocation}.${key}`);
-          }
-        }
-      });
-    }
-  });
-
-  return [...utilities];
-}
+export const responsiveUtilities = [...new Set(Object.values(responsiveUtilityFamilies).flat())];
 
 export function createResponsiveUtilitySource(
   breakpointOrder: readonly string[],
