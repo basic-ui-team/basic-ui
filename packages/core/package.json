@@ -30,8 +30,8 @@
     "check:layout-utilities": "tsx scripts/generate-layout-utility-source.ts --check",
     "build": "pnpm generate:layout-utilities && tsc && vite build && node scripts/copy-styles.mjs",
     "preview": "vite preview",
-    "lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\" --cache",
-    "type-check": "tsc -b tsconfig.json",
+    "lint": "eslint \"{src,scripts}/**/*.{ts,tsx,js,jsx}\" --cache",
+    "type-check": "tsc -b tsconfig.json && tsc -p scripts/tsconfig.json",
     "test": "vitest",
     "test:watch": "vitest --watch",
     "test:coverage": "vitest run --coverage"
