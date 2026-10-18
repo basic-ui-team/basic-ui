@@ -1,5 +1,13 @@
 # @basic-ui/tokens
 
+## 0.4.0
+
+### Minor Changes
+
+- 7e0f682: Replace named spacing tokens with a configurable numeric spacing scale and resolve authored themes before CSS serialization. The `@basic-ui/tokens/pkg` subpath is removed.
+- 69422d1: Replace the z-index token scale with semantic local and global layering tiers, including dedicated overlay and popover layers.
+- f181617: Improve semantic color contrast, adopt amber for warning roles, and refine dark semantic surfaces.
+
 ## 0.3.0
 
 ### Minor Changes

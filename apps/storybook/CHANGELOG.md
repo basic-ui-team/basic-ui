@@ -1,5 +1,38 @@
 # @basic-ui/storybook
 
+## 0.0.6
+
+### Patch Changes
+
+- Updated dependencies [bbb0df6]
+- Updated dependencies [a0e9801]
+- Updated dependencies [16046dc]
+- Updated dependencies [39ecf88]
+- Updated dependencies [1b92507]
+- Updated dependencies [136ae28]
+- Updated dependencies [018df66]
+- Updated dependencies [aaedf17]
+- Updated dependencies [0a56a88]
+- Updated dependencies [88da429]
+- Updated dependencies [1db76d1]
+- Updated dependencies [7e0f682]
+- Updated dependencies [d6b049e]
+- Updated dependencies [577c035]
+- Updated dependencies [08c7362]
+- Updated dependencies [2891fc4]
+- Updated dependencies [d5d1db3]
+- Updated dependencies [54034d3]
+- Updated dependencies [69422d1]
+- Updated dependencies [f181617]
+- Updated dependencies [346c16e]
+- Updated dependencies [29ab118]
+- Updated dependencies [09c5d6b]
+- Updated dependencies [06c3562]
+- Updated dependencies [a8fb044]
+- Updated dependencies [c5e6787]
+  - @basic-ui/core@0.5.0
+  - @basic-ui/tokens@0.4.0
+
 ## 0.0.5
 
 ### Patch Changes
