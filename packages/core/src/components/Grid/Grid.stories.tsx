@@ -88,6 +88,24 @@ export const Responsive: Story = {
   ),
 };
 
+export const ResponsivePresetReset: Story = {
+  render: () => (
+    <Grid
+      data-testid="responsive-grid"
+      cols={{ base: 2, md: 4 }}
+      rows={{ base: 2, md: 1 }}
+      templatePreset={{ base: "none", sm: "sidebar", lg: "none" }}
+      rowGap={{ base: 1, md: 3 }}
+      columnGap={{ base: 2, md: 4 }}
+      p={{ base: 3, lg: 0 }}
+      wMax={{ base: "full", lg: "none" }}
+      overflow={{ base: "hidden", lg: "visible" }}
+    >
+      {["A", "B", "C", "D"].map((label) => <PlaceholderItem key={label} label={label} />)}
+    </Grid>
+  ),
+};
+
 const ALIGN_ITEMS = ["start", "end", "center", "stretch"] as const;
 const JUSTIFY_ITEMS = ["start", "end", "center", "stretch"] as const;
 const ALIGN_CONTENT = ["start", "end", "center", "stretch", "between", "around", "evenly"] as const;

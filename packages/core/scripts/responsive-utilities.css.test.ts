@@ -19,6 +19,24 @@ import { gridVariants } from "../src/components/Grid/grid.variants";
 import { dividerThicknessClasses } from "../src/components/Divider/divider.variants";
 import { spacingSteps } from "../src/lib/layout.types";
 import { generateLayoutClassNames } from "../src/lib/layout-utils";
+import { iconSizeClasses } from "../src/components/Icon/icon.variants";
+import { spinnerSizeClasses } from "../src/components/Spinner/spinner.variants";
+import { buttonSizeClasses } from "../src/components/Button/button.variants";
+import { headerSizeClasses, headerAlignClasses } from "../src/components/Header/header.variants";
+import { textSizeClasses, textAlignClasses } from "../src/components/Text/text.variants";
+import { imageObjectFitClasses, imageAspectRatioClasses } from "../src/components/Image/image.variants";
+import {
+  cardSectionSpacingClasses,
+  cardTitleSizeClasses,
+  cardDescriptionSizeClasses,
+  cardTextAlignClasses,
+  cardImageObjectFitClasses,
+  cardImageAspectRatioClasses,
+} from "../src/components/Card/card.variants";
+import { flexVariants } from "../src/components/Flex/flex.variants";
+import layoutVariants from "../src/lib/layout.variants";
+import { SizingValues } from "../src/lib/layout.types";
+import { getTextFlowClasses, textWrapClasses } from "../src/lib/text-flow";
 
 const coreRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const fixture = readFileSync(
@@ -72,9 +90,9 @@ afterAll(() => {
   }
 });
 
-async function compileFixture(generatedSource?: string) {
+async function compileFixture(generatedSource?: string, theme = "") {
   const require = createRequire(join(directory, "package.json"));
-  const compiler = await compile(fixture, {
+  const compiler = await compile(`${fixture}\n${theme}`, {
     base: directory,
     loadStylesheet: async (id, base) => {
       const path = require.resolve(id === "tailwindcss" ? "tailwindcss/index.css" : id, {
@@ -96,7 +114,87 @@ async function compileFixture(generatedSource?: string) {
   return compiler.build([]);
 }
 
+function expectUtilityCoverage(css: string, classes: readonly string[]) {
+  for (const utility of new Set(classes.join(" ").split(/\s+/).filter(Boolean))) {
+    for (const breakpoint of BREAKPOINT_ORDER) {
+      const candidate = breakpoint === "base" ? utility : `${breakpoint}:${utility}`;
+      const escaped = candidate.replace(/[^a-zA-Z0-9_-]/g, "\\$&").replace(/^2/, "\\32 ");
+      expect(css, `Missing CSS for ${candidate}`).toContain(`.${escaped} {`);
+    }
+  }
+}
+
+const geometryMaps = {
+  Icon: iconSizeClasses,
+  Spinner: spinnerSizeClasses,
+  Button: buttonSizeClasses,
+  HeaderSize: headerSizeClasses,
+  HeaderAlign: headerAlignClasses,
+  TextSize: textSizeClasses,
+  TextAlign: textAlignClasses,
+  ImageFit: imageObjectFitClasses,
+  ImageRatio: imageAspectRatioClasses,
+  CardSection: cardSectionSpacingClasses,
+  CardTitle: cardTitleSizeClasses,
+  CardDescription: cardDescriptionSizeClasses,
+  CardAlign: cardTextAlignClasses,
+  CardImageFit: cardImageObjectFitClasses,
+  CardImageRatio: cardImageAspectRatioClasses,
+  TextWrap: textWrapClasses,
+};
+
 describe("responsive utilities through the public CSS entry", () => {
+  it.each(Object.entries(geometryMaps))("covers the actual %s geometry map", async (_name, classes) => {
+    expectUtilityCoverage(await compileFixture(), Object.values(classes));
+  });
+
+  it("uses consumer CSS breakpoints rather than runtime breakpoint constants", async () => {
+    const css = await compileFixture(undefined, "@theme { --breakpoint-md: 900px; }");
+    expect(css).toContain("@media (width >= 900px)");
+    expect(css).not.toContain("@media (width >= 768px)");
+    expectUtilityCoverage(css, Object.values(iconSizeClasses));
+  });
+
+  it("covers every layout axis and Flex composition without scalar recipes", async () => {
+    const classes = [
+      ...spacingSteps.flatMap((step) =>
+        (["p", "px", "py", "pt", "pr", "pb", "pl", "m", "mx", "my", "mt", "mr", "mb", "ml", "gap"] as const)
+          .map((prop) => layoutVariants({ [prop]: step }))),
+      ...SizingValues.flatMap((value) =>
+        (["h", "hMin", "w", "wMin"] as const).map((prop) => layoutVariants({ [prop]: value }))),
+      ...(["none", "full", "screen", "min", "max", "fit"] as const)
+        .map((value) => layoutVariants({ hMax: value, wMax: value })),
+      ...(["visible", "hidden", "auto", "scroll"] as const)
+        .map((value) => layoutVariants({ overflow: value, overflowX: value, overflowY: value })),
+      ...(["static", "relative", "absolute", "fixed", "sticky"] as const)
+        .map((position) => layoutVariants({ position })),
+      ...(["block", "inline", "inline-block", "none"] as const)
+        .map((display) => layoutVariants({ display })),
+      ...(["row", "column", "row-reverse", "column-reverse"] as const)
+        .map((direction) => flexVariants({ direction })),
+      ...(["nowrap", "wrap", "reverse"] as const).map((wrap) => flexVariants({ wrap })),
+      ...(["start", "end", "center", "stretch"] as const)
+        .map((value) => flexVariants({ justify: value, align: value })),
+      ...(["between", "around", "evenly"] as const).map((justify) => flexVariants({ justify })),
+      flexVariants({ display: "flex" }), flexVariants({ display: "inline-flex" }),
+    ];
+    expectUtilityCoverage(await compileFixture(), classes);
+  });
+
+  it("covers actual text-flow truncation and restoration output", async () => {
+    const { className } = getTextFlowClasses({
+      truncate: { base: true, md: false, lg: true, xl: false },
+      wrap: { base: "pretty", xl: "nowrap" },
+      overflowX: { base: "auto", md: "scroll" },
+      overflowY: { base: "hidden", xl: "visible" },
+    });
+    const css = await compileFixture();
+    for (const candidate of className.split(/\s+/)) {
+      const escaped = candidate.replace(/[^a-zA-Z0-9_-]/g, "\\$&");
+      expect(css, `Missing CSS for ${candidate}`).toContain(`.${escaped} {`);
+    }
+  });
+
   it("compiles concrete layout resets including maximum dimensions", async () => {
     const css = await compileFixture();
     const { layoutClassNameString } = generateLayoutClassNames({
@@ -122,31 +220,31 @@ describe("responsive utilities through the public CSS entry", () => {
       ...(["none", "sidebar", "hero", "masonry", "card-list", "symmetric", "asymmetric"] as const)
         .map((templatePreset) => gridVariants({ templatePreset })),
       ...spacingSteps.map((step) => gridVariants({
+        gap: step,
         rowGap: step,
         columnGap: step,
       })),
+      ...([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const)
+        .map((count) => gridVariants({ cols: count, rows: count })),
+      ...(["row", "column", "dense"] as const).map((autoFlow) => gridVariants({ autoFlow })),
+      ...(["min", "max", "fr", true] as const)
+        .map((value) => gridVariants({ autoRows: value, autoCols: value })),
+      ...(["start", "end", "center", "stretch"] as const)
+        .map((value) => gridVariants({
+          alignItems: value, justifyItems: value, alignContent: value, justifyContent: value,
+        })),
+      ...(["between", "around", "evenly"] as const)
+        .map((value) => gridVariants({ alignContent: value, justifyContent: value })),
       ...Object.values(dividerThicknessClasses).flatMap((values) => Object.values(values)),
     ];
-    for (const utility of classes.join(" ").split(/\s+/)) {
-      for (const breakpoint of BREAKPOINT_ORDER) {
-        const candidate = breakpoint === "base" ? utility : `${breakpoint}:${utility}`;
-        const escaped = candidate.replace(/[^a-zA-Z0-9_-]/g, "\\$&").replace(/^2/, "\\32 ");
-        expect(css, `Missing CSS for ${candidate}`).toContain(`.${escaped} {`);
-      }
-    }
+    expectUtilityCoverage(css, classes);
   });
 
   it("covers count and dot Badge geometry at every breakpoint", async () => {
     const css = await compileFixture();
     for (const variant of ["count", "dot"] as const) {
       for (const size of ["sm", "md", "lg"] as const) {
-        for (const utility of badgeGeometryVariants({ variant, size }).split(/\s+/)) {
-          for (const breakpoint of BREAKPOINT_ORDER) {
-            const candidate = breakpoint === "base" ? utility : `${breakpoint}:${utility}`;
-            const escaped = candidate.replace(/[^a-zA-Z0-9_-]/g, "\\$&").replace(/^2/, "\\32 ");
-            expect(css, `Missing CSS for Badge ${candidate}`).toContain(`.${escaped} {`);
-          }
-        }
+        expectUtilityCoverage(css, [badgeGeometryVariants({ variant, size })]);
       }
     }
   });
@@ -155,14 +253,7 @@ describe("responsive utilities through the public CSS entry", () => {
     const css = await compileFixture();
     for (const size of ["sm", "md", "lg"] as const) {
       for (const checked of [false, true]) {
-        const classes = `${toggleSizeClasses[size]} ${toggleThumbGeometryVariants({ size, checked })}`;
-        for (const utility of classes.split(/\s+/)) {
-          for (const breakpoint of BREAKPOINT_ORDER) {
-            const candidate = breakpoint === "base" ? utility : `${breakpoint}:${utility}`;
-            const escaped = candidate.replace(/[^a-zA-Z0-9_-]/g, "\\$&").replace(/^2/, "\\32 ");
-            expect(css, `Missing CSS for Toggle ${candidate}`).toContain(`.${escaped} {`);
-          }
-        }
+        expectUtilityCoverage(css, [toggleSizeClasses[size], toggleThumbGeometryVariants({ size, checked })]);
       }
     }
   });

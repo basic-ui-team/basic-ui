@@ -2,18 +2,16 @@
 
 ## Status and purpose
 
-Agreed direction; implementation acceptance remains gated on proof.
+Migration implemented and verified against the acceptance criteria below.
+Generation consumes shared capability families, not component recipes. Core
+presentation no longer subscribes to viewport state; `useResponsiveProps` is
+removed from React utilities, while behavioral `useBreakpoint` remains.
 
-The original PR 1 collector was implemented and verified, then superseded by
-the shared-vocabulary decision below. Phase 1's first pass is implemented and
-verified: generation now consumes shared capability families, not component
-recipes. Component migration remains separate. The overall architecture is not
-accepted on the strength of infrastructure tests alone.
-
-Deliver this work in four scoped PRs. Start with source ownership and generation,
-not another component redesign. Each PR must leave the library buildable,
-testable, and usable. Temporary coexistence during migration is permitted; two
-permanent presentation engines are not the intended outcome.
+The four scoped delivery phases below are the original plan; implementation
+was delivered incrementally in stage commits. The historical collector and
+first-pass measurements are retained for comparison. Final component, compiler,
+browser, package, and footprint evidence is recorded below; infrastructure tests
+alone are not the acceptance proof.
 
 The objective is a simpler library a solo developer can maintain, not a general
 styling framework. This document restores the decisions reached during the
@@ -44,8 +42,8 @@ its owning PR. Do not hide those changes inside the infrastructure refactor.
 
 Components own their recipes, not every child they accept.
 
-- Button owns its root presentation and built-in fallback. A supplied loading
-  Icon owns its own size, including responsive size.
+- Button owns its root presentation. There is no built-in loading fallback.
+  A supplied loading Icon owns its own size, including responsive size.
 - Toggle owns its track and thumb. One public size selects coherent track
   dimensions, thumb dimensions, and checked travel. Do not expose independent
   track/thumb sizes.
@@ -171,7 +169,8 @@ color. Both support responsive size, alignment, wrapping, and truncation.
 
 Truncation uses single-line ellipsis and owns whitespace and overflow while
 active. When it turns off, the latest requested wrapping and overflow values
-are restored, with visible overflow when unspecified or `unset`. Consumer
+are restored, with visible overflow when unspecified. Use `"visible"` for an
+explicit overflow reset. Consumer
 `className` overrides remain last. For string children, enabling truncation at
 any breakpoint supplies stable full-text `title` and `aria-label` attributes
 unless either attribute was explicitly provided; these do not depend on the
@@ -200,8 +199,11 @@ utilities, so default fitting, ratio, or rounding cannot leak into another axis.
 The `auto` ratio explicitly resets a previous breakpoint's ratio.
 
 Off-scale recipe values, bespoke Grid templates, and descendant/state selector
-forms are not automatically harvested into the source. Review them during their
-owning migration; do not use a component-specific list to bypass that review.
+forms are not automatically harvested into the source. The reviewed additions
+are finite numeric/half-step dimensions, fractional spacing, fixed-pixel geometry,
+and the six existing literal Grid templates. They live in shared capabilities,
+not a recipe registry. Toggle applies geometry directly to its thumb; responsive
+descendant selectors are unnecessary.
 
 ## Bloat boundary
 
@@ -319,8 +321,8 @@ without separately exported variant configs.
   otherwise resolving direction at `md` could inject `md:flex` and overwrite an
   independently chosen display mode.
 - Box/Flex public props, defaults, class override precedence, ref forwarding,
-  layout ordering, and omitted/`unset` behavior stay unchanged. Reset semantics
-  and the remaining component migrations are separate work.
+  layout ordering, and omitted-value behavior stayed unchanged in this cleanup.
+  The later reset stage removes `unset`; see the final contract below.
 
 ## Four-PR delivery plan
 
@@ -431,8 +433,8 @@ Scope:
 - Resolve truncation/wrapping eligibility and accessibility behavior explicitly.
 - Finish shared layout reset/precedence cases.
 - Remove remaining viewport-selected presentation from Core. Decide and document
-  the public `useResponsiveProps` export's disposition; behavioral viewport hooks
-  are a separate capability.
+  the public `useResponsiveProps` export (decision: remove it); behavioral
+  viewport hooks are a separate capability.
 - Update component docs, stories, contribution conventions, and release notes.
 
 Exit criteria:
@@ -450,6 +452,80 @@ beyond what this contract requires. An unresolved decision is a blocker to name,
 not permission to grow the PR.
 
 ## Verification and acceptance
+
+### Final completion evidence
+
+Verified on 2026-10-18 with Tailwind 4.3.0. The public stylesheet fixture disables
+automatic source scanning and measures compiler output before minification.
+
+| Metric | Shared first pass | Final |
+| --- | ---: | ---: |
+| Unique utility candidates | 496 | 713 |
+| Base/breakpoint forms | 6 | 6 |
+| Expanded candidates | 2,976 | 4,278 |
+| Compiled CSS bytes | 304,905 | 446,470 |
+| Compiled CSS gzip bytes | 29,646 | 39,976 |
+
+The migration adds 217 utilities / 1,302 candidates and 10,330 gzip bytes over
+the shared first pass. This includes the reviewed fixed-pixel Toggle correction
+(23 utilities / 138 candidates / 1,216 gzip bytes). These are bounded availability
+costs, not per-application tree-shaken sizes.
+
+- Public CSS tests cover actual Icon, Spinner, Button, Header, Text, Image,
+  Card, and text-wrap maps; Badge count/dot compounds; Toggle track/thumb/checked
+  compounds; every Grid and Flex axis; shared layout and text-flow resets; and
+  both Divider orientations. These test-only imports do not author generation.
+- Browser checks passed below, at, and above `md` and `lg` for Toggle in both
+  states, Badge count/dot/ping, and Divider thickness/insets with stable ARIA.
+  Grid additionally passed around `sm`, with preset/count restoration and
+  spacing/max-width/overflow resets in both viewport directions.
+- Earlier component stages proved typography truncation, fixed heading mappings,
+  consumer overrides, image ratio resets, and supplied loading-icon ownership.
+- A no-application-JavaScript HTML fixture compiled from built public package CSS
+  with `source(none)` kept base geometry at 767, 768, and 899px, then applied
+  `md` geometry at 900 and 901px with a custom `--breakpoint-md: 900px`.
+- A source search found no `useResponsiveProps`, `useBreakpoint`, or `matchMedia`
+  references in Core. Built React-utilities exports omit `useResponsiveProps`
+  and retain `useBreakpoint`.
+
+Final commands and results:
+
+| Command | Result |
+| --- | --- |
+| `pnpm --filter @basic-ui/core exec vitest run --reporter=dot` | Passed: 525 tests, 32 files |
+| `pnpm --filter @basic-ui/react-utilities exec vitest run --reporter=dot` | Passed: 170 tests, 18 files |
+| `pnpm --filter @basic-ui/core type-check` | Passed, including scripts and stories |
+| `pnpm --filter @basic-ui/react-utilities type-check` | Passed |
+| `pnpm --filter @basic-ui/core lint` | Passed |
+| `pnpm --filter @basic-ui/react-utilities lint` | Passed |
+| `pnpm --filter @basic-ui/core check:layout-utilities` | Passed |
+| `pnpm --filter @basic-ui/core build` | Passed |
+| `pnpm --filter @basic-ui/react-utilities build` | Passed |
+| `git diff --check` | Passed |
+
+Intentional final contracts:
+
+- Omitted breakpoint entries retain the latest CSS value, not the base value.
+- `unset` is removed. Use `0`, `"auto"`, `"visible"`, or maximum-size `"none"`
+  for concrete resets. Maximum dimensions no longer accept unsupported `"auto"`.
+- Active Grid presets override columns and rows; preset `"none"` restores the
+  latest requested counts, or implicit tracks when counts are omitted.
+- Divider direction, appearance, and color are scalar; thickness and inset
+  remain responsive. Vertical inset uses vertical margins.
+- Toggle uses coherent fixed-pixel track/thumb/travel geometry instead of mixing
+  nonlinear spacing tokens with Tailwind's default numeric scale. Both checked
+  edges have 2px horizontal clearance; thumbs remain vertically centered.
+- Release notes list the Icon color rename/inheritance, Button fallback removal,
+  scalar narrowing, and explicit heading scaling decisions.
+
+Deferred: Button hover/active gating and color/theming redesign; new responsive
+Dialog sizing, Badge placement, footer stickiness, and container-query APIs.
+Existing React-utilities anchor-positioning tests emit `act` warnings; the Grid
+reset story exposes an existing `normalizeProps` warning for `wMax`, although
+layout classes and DOM filtering remain correct. Neither warning is suppressed
+or claimed fixed here.
+
+### Acceptance rules
 
 Use existing tooling. Keep checks focused per PR and escalate to package-wide
 tests/builds at completion.

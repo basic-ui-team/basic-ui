@@ -9,7 +9,6 @@ export type {
   PropsWithAs,
   RestrictedPropsWithAs,
 } from "./types/props";
-export { useResponsiveProps } from "./hooks/useResponsiveProps/useResponsiveProps";
 export { useBreakpoint, resetForTesting } from "./hooks/useBreakpoint/useBreakpoint";
 export { BREAKPOINTS, BREAKPOINT_ORDER } from "./hooks/useResponsive/constants";
 export type { Breakpoint, ResponsiveValue } from "./hooks/useResponsive/types";

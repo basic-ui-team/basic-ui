@@ -24,6 +24,28 @@ export const Default: Story = {
   ),
 };
 
+export const ResponsiveThickness: Story = {
+  render: () => (
+    <Box style={{ width: 320 }}>
+      <Divider
+        data-testid="responsive-horizontal-divider"
+        decorative={false}
+        thickness={{ base: "thick", md: "none", lg: "thin" }}
+        inset={{ base: 1, md: 3 }}
+      />
+      <Box style={{ height: 160 }}>
+        <Divider
+          data-testid="responsive-vertical-divider"
+          direction="vertical"
+          decorative={false}
+          thickness={{ base: "thin", md: "thick", lg: "none" }}
+          inset={{ base: 1, md: 3 }}
+        />
+      </Box>
+    </Box>
+  ),
+};
+
 export const AppearanceVariants: Story = {
   render: () => (
     <Flex direction="column" gap={3}>

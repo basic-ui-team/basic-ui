@@ -66,6 +66,12 @@ CSS overrides earlier declarations; it does not replace an entire recipe.
 When a value turns styling off, emit an explicit reset rather than an empty
 string. Test transitions in both directions.
 
+Omitted breakpoints inherit the last supplied value, not the base value.
+Layout props do not accept `unset`: use `0` for spacing, `"auto"` for dimensions,
+`"none"` for maximum dimensions, and `"visible"` for overflow resets.
+`useResponsiveProps` has been removed; reserve `useBreakpoint` for behavior,
+not presentation.
+
 Coordinate child parts when their geometry is coupled to the parent's size.
 Do not implicitly resize content supplied by the consumer.
 
@@ -86,7 +92,10 @@ pnpm --filter @basic-ui/core check:layout-utilities
 ```
 
 Test both the component's class output and the resulting CSS. A class appearing
-in the DOM does not prove that the stylesheet contains it. See the
+in the DOM does not prove that the stylesheet contains it. Add actual geometry
+maps or compound outputs to `scripts/responsive-utilities.css.test.ts`; test-only
+recipe imports are intentional, while the production generator stays independent.
+See the
 [responsive CSS design](../engineering/core-design/responsive-css.md) for the
 supported capabilities and current migration scope.
 

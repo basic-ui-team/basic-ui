@@ -81,7 +81,7 @@ describe("Button", () => {
     expect(button).toHaveClass(
       "px-2", "py-1", "text-sm", "gap-1", "rounded-md",
       "inline-flex", "border-border-success", "text-fg-success",
-      "cursor-not-allowed", "pointer-events-none",
+      "cursor-not-allowed",
     );
     expect([...button.classList].filter((name) => name.startsWith("md:"))).toEqual([
       "md:px-4", "md:py-3", "md:text-lg", "md:gap-3", "md:rounded-xl",
@@ -179,10 +179,13 @@ describe("Button", () => {
     expect(handle).not.toHaveBeenCalled();
   });
 
-  it("loading state sets pointer-events-none via styling", () => {
+  it("loading preserves cursor hit-testing while disabling native activation", () => {
     const { container } = renderWithProviders(<Button loading>Loading</Button>);
     const btn = container.querySelector("button");
-    expect(btn).toHaveClass("pointer-events-none");
+    expect(btn).toHaveClass("cursor-progress");
+    expect(btn).not.toHaveClass("pointer-events-none");
+    expect(btn).toBeDisabled();
+    expect(btn).toHaveAttribute("aria-busy", "true");
   });
 
   it("responds to keyboard navigation with Enter key", async () => {
@@ -228,18 +231,22 @@ describe("Button", () => {
     expect(anchor).toHaveAttribute("tabindex", "-1");
   });
 
-  it("loading state prevents anchor navigation", async () => {
+  it.each(["loading", "disabled"] as const)("%s prevents anchor navigation without pointer-event blocking", (state) => {
+    const handle = vi.fn();
     const { container } = renderWithProviders(
-      <Button as="a" href="/page" loading>
+      <Button as="a" href="/page" loading={state === "loading"} disabled={state === "disabled"} onClick={handle}>
         Navigate
       </Button>,
     );
     const anchor = container.querySelector("a") as HTMLAnchorElement;
 
-    // Verify loading state prevents navigation by checking accessibility attributes and styling
     expect(anchor).toHaveAttribute("aria-disabled", "true");
     expect(anchor).toHaveAttribute("tabindex", "-1");
-    expect(anchor).toHaveClass("pointer-events-none");
+    expect(anchor).not.toHaveClass("pointer-events-none");
+    const event = new MouseEvent("click", { bubbles: true, cancelable: true });
+    anchor.dispatchEvent(event);
+    expect(event.defaultPrevented).toBe(true);
+    expect(handle).not.toHaveBeenCalled();
   });
 
   it("defaults to type='button' on native button", () => {
