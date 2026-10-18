@@ -1,4 +1,5 @@
 import { cva } from "class-variance-authority";
+import type { ColorRecipe } from "../../lib/colorRecipes/colorRecipes";
 import { textWrapClasses } from "../../lib";
 
 export const headerSizeClasses = {
@@ -27,14 +28,8 @@ export const headerVariants = cva("font-sans font-normal leading-tight", {
     },
     color: {
       default: "text-fg-base",
-      primary: "text-primary-700 dark:text-primary-300",
-      secondary: "text-secondary-700 dark:text-secondary-300",
       muted: "text-fg-muted",
-      error: "text-fg-error",
-      success: "text-fg-success",
-      warning: "text-fg-warning",
-      info: "text-fg-info",
-      custom: "",
+      palette: "",
     },
     align: headerAlignClasses,
     truncate: {
@@ -52,3 +47,7 @@ export const headerVariants = cva("font-sans font-normal leading-tight", {
     wrap: "nowrap",
   },
 });
+
+export const headerPaletteRecipe: ColorRecipe = {
+  text: { value: "700", dark: { value: "300" } },
+};
