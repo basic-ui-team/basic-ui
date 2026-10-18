@@ -85,20 +85,20 @@ export const ColorVariants: Story = {
         <Divider color="secondary" />
       </Box>
       <Box p={3}>
-        <Text mb={3}>Error Color</Text>
-        <Divider color="error" />
+        <Text mb={3}>Red</Text>
+        <Divider color="red" />
       </Box>
       <Box p={3}>
-        <Text mb={3}>Success Color</Text>
-        <Divider color="success" />
+        <Text mb={3}>Green</Text>
+        <Divider color="green" />
       </Box>
       <Box p={3}>
-        <Text mb={3}>Warning Color</Text>
-        <Divider color="warning" />
+        <Text mb={3}>Amber</Text>
+        <Divider color="amber" />
       </Box>
       <Box p={3}>
-        <Text mb={3}>Info Color</Text>
-        <Divider color="info" />
+        <Text mb={3}>Sky</Text>
+        <Divider color="sky" />
       </Box>
     </Flex>
   ),

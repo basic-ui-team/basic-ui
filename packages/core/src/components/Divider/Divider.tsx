@@ -1,7 +1,8 @@
 import { cn, forwardRefWithAs, PolymorphicRef, getResponsiveClassNames } from "@basic-ui/react-utilities";
 import { AllowedDividerElements, DividerProps, DividerOwnProps } from "./divider.types";
 import { Box, BoxProps } from "../Box";
-import { dividerVariants, dividerThicknessClasses } from "./divider.variants";
+import { dividerVariants, dividerThicknessClasses, dividerPaletteRecipe } from "./divider.variants";
+import { cr, isPaletteColor } from "../../lib/colorRecipes/colorRecipes";
 
 /**
  * Divider
@@ -29,6 +30,8 @@ const _Divider = <As extends AllowedDividerElements = "hr">(
   ref: PolymorphicRef<As>,
 ) => {
   const Comp = (as || (label ? "div" : "hr")) as AllowedDividerElements;
+  const palette = isPaletteColor(color);
+  const cooked = palette ? cr(color, dividerPaletteRecipe) : null;
 
   // Treat the divider as semantic when the consumer explicitly sets `decorative={false}`
   // or provides a `label`. A labeled divider should be exposed to assistive tech.
@@ -57,12 +60,13 @@ const _Divider = <As extends AllowedDividerElements = "hr">(
         dividerVariants({
           direction,
           appearance,
-          color,
+          color: palette ? "palette" : color,
         }),
+        cooked && "border-(--cr-border)",
         getResponsiveClassNames(thickness, (value) => dividerThicknessClasses[direction][value]),
         className,
       )}
-      style={style}
+      style={{ ...cooked?.style, ...style }}
       {...(rest as BoxProps<As>)}
     >
       {/* NOTE: Replace this with proper label component when available */}

@@ -1,10 +1,10 @@
 import { CommonProps, ResponsiveValue, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
 import { SpacingStep } from "../../lib";
-import { BuiltInSemanticColors } from "../../theme";
+import { PaletteColor } from "../../lib/colorRecipes/colorRecipes";
 
 export type DividerDirection = "horizontal" | "vertical";
 export type DividerAppearance = "solid" | "dashed" | "dotted";
-export type DividerColor = BuiltInSemanticColors;
+export type DividerColor = "default" | "muted" | PaletteColor;
 export type DividerThickness = "thin" | "medium" | "thick" | "none";
 
 export interface DividerOwnProps extends CommonProps {
@@ -25,7 +25,7 @@ export interface DividerOwnProps extends CommonProps {
   /** Inset spacing from the edges. For horizontal dividers, this controls left/right padding; for vertical dividers, it controls top/bottom padding. Supports responsive values. @default 0 */
   inset?: ResponsiveValue<SpacingStep>;
 
-  /** Scalar semantic border color. @default "default" */
+  /** Border color: structural neutral, informational severity, or palette family. @default "default" */
   color?: DividerColor;
 
   /** Optional label for the divider, used for accessibility purposes. If provided, the divider will have `role="separator"` and the label will be announced by screen readers. */

@@ -15,7 +15,7 @@ describe("Divider - variants and behavior", () => {
           thickness={{ base: "thick", md: "none", lg: "thin" }}
           inset={{ base: 1, md: 3 }}
           appearance="dashed"
-          color="success"
+          color="green"
         />,
       );
       const axis = direction === "horizontal" ? "t" : "l";
@@ -28,7 +28,7 @@ describe("Divider - variants and behavior", () => {
       expect(markup).toContain(`md:${margin}-3`);
       expect(markup).toContain("border-dashed");
       expect(markup).not.toContain("md:border-dashed");
-      expect(markup).not.toContain("md:border-border-success");
+      expect(markup).not.toContain("md:border-(--cr-border)");
     },
   );
 
@@ -44,12 +44,6 @@ describe("Divider - variants and behavior", () => {
     ["appearance", "dotted"],
     ["color", "default"],
     ["color", "muted"],
-    ["color", "primary"],
-    ["color", "secondary"],
-    ["color", "error"],
-    ["color", "success"],
-    ["color", "warning"],
-    ["color", "info"],
   ])("should apply the correct classes for %s variant with value %s", (variant, value) => {
     const props = { [variant]: value } as any;
     const { container } = renderWithProviders(<Divider {...props} />);
@@ -75,12 +69,6 @@ describe("Divider - variants and behavior", () => {
     } else if (variant === "color") {
       if (value === "default") expect(el.className.includes("border-border-base")).toBe(true);
       if (value === "muted") expect(el.className.includes("border-border-muted")).toBe(true);
-      if (value === "primary") expect(el.className.includes("border-primary-700")).toBe(true);
-      if (value === "secondary") expect(el.className.includes("border-secondary-700")).toBe(true);
-      if (value === "error") expect(el.className.includes("border-border-error")).toBe(true);
-      if (value === "success") expect(el.className.includes("border-border-success")).toBe(true);
-      if (value === "warning") expect(el.className.includes("border-border-warning")).toBe(true);
-      if (value === "info") expect(el.className.includes("border-border-info")).toBe(true);
     }
   });
 

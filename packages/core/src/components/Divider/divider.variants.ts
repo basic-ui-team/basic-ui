@@ -1,4 +1,5 @@
 import { cva } from "class-variance-authority";
+import type { ColorRecipe } from "../../lib/colorRecipes/colorRecipes";
 
 export const dividerThicknessClasses = {
   horizontal: { thin: "border-t-1", medium: "border-t-2", thick: "border-t-4", none: "border-t-0" },
@@ -19,12 +20,8 @@ export const dividerVariants = cva("flex-shrink-0", {
     color: {
       default: "border-border-base",
       muted: "border-border-muted",
-      primary: "border-primary-700 dark:border-primary-300",
-      secondary: "border-secondary-700 dark:border-secondary-300",
-      error: "border-border-error",
-      success: "border-border-success",
-      warning: "border-border-warning",
-      info: "border-border-info",
+      // Sentinel used when a palette-family color applies the recipe variables.
+      palette: "",
     },
   },
   defaultVariants: {
@@ -33,3 +30,7 @@ export const dividerVariants = cva("flex-shrink-0", {
     appearance: "solid",
   },
 });
+
+export const dividerPaletteRecipe: ColorRecipe = {
+  border: { value: "300", dark: { value: "700" } },
+};
