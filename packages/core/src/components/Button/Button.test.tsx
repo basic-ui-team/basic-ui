@@ -309,10 +309,10 @@ describe("Button color recipes", () => {
     expect(style).toContain("--cr-text-dark: var(--color-white)");
   });
 
-  it("applies the ghost focus recipe with light fallback", () => {
+  it("applies explicit ghost focus paints in both themes", () => {
     renderWithProviders(<Button variant="ghost" color="teal">Ghost</Button>);
     const style = screen.getByRole("button", { name: "Ghost" }).getAttribute("style") ?? "";
-    expect(style).toContain("--cr-bg-focus: color-mix(in oklab, var(--color-teal-200) 30%, transparent)");
+    expect(style).toContain("--cr-bg-focus: var(--color-teal-500)");
     expect(style).toContain("--cr-bg-focus-dark: var(--color-teal-500)");
   });
 });
