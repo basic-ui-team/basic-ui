@@ -120,6 +120,11 @@ export const colorRecipeUtilityCandidates = Object.values(CHANNEL_CLASSES).flatM
 
 const FAMILY_SET = new Set<string>(PALETTE_FAMILIES);
 
+/** Non-throwing palette check, for discriminating component color props. */
+export function isPaletteColor(color: unknown): color is PaletteColor {
+  return typeof color === "string" && FAMILY_SET.has(color);
+}
+
 function validatePaletteColor(color: string): asserts color is PaletteColor {
   if (!FAMILY_SET.has(color)) {
     throw new Error(
