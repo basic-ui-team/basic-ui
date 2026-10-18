@@ -6,6 +6,7 @@
   },
   "include": [
     "*.ts",
+    "verify-package/*.ts",
     "../src/lib/responsive-utilities.ts",
     "../src/lib/responsive-utilities.test.ts"
   ]

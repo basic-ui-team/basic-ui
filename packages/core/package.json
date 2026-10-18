@@ -34,7 +34,7 @@
     "test": "vitest",
     "test:watch": "vitest --watch",
     "test:coverage": "vitest run --coverage",
-    "verify:package": "node scripts/verify-package.mjs"
+    "verify:package": "tsx scripts/verify-package/main.ts"
   },
   "peerDependencies": {
     "react": ">=18",
