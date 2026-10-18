@@ -8,9 +8,14 @@ import {
 } from "@basic-ui/react-utilities";
 import { Box, BoxProps } from "../../Box";
 import { AllowedHeaderElements, CardTitleOwnProps } from "../card.types";
-import { cardTitleVariants, cardTitleSizeClasses, cardTextAlignClasses } from "../card.variants";
+import {
+  cardTitleVariants,
+  cardTitleSizeClasses,
+  cardTextAlignClasses,
+  cardTextPaletteRecipe,
+} from "../card.variants";
+import { cr, isPaletteColor } from "../../../lib/colorRecipes/colorRecipes";
 import { getTextFlowClasses } from "../../../lib";
-import { BuiltInSemanticColors, isBuiltInSemanticColor } from "../../../theme";
 
 const _Title = <As extends AllowedHeaderElements = "h3">(
   {
@@ -23,6 +28,7 @@ const _Title = <As extends AllowedHeaderElements = "h3">(
     wrap = "nowrap",
     children,
     className,
+    style,
     overflow,
     overflowX,
     overflowY,
@@ -32,12 +38,13 @@ const _Title = <As extends AllowedHeaderElements = "h3">(
 ) => {
   const Comp = (as || "h3") as As;
   const flow = getTextFlowClasses({ truncate, wrap, overflow, overflowX, overflowY });
-  const isBuiltInColor = isBuiltInSemanticColor(color);
+  const palette = isPaletteColor(color);
+  const cooked = palette ? cr(color, cardTextPaletteRecipe) : null;
   const resolvedStyles = cn(
     cardTitleVariants({
       size: null,
       weight: weight,
-      color: isBuiltInColor ? (color as BuiltInSemanticColors) : "custom",
+      color: palette ? "palette" : color,
       align: null,
       truncate: null,
       wrap: null,
@@ -46,7 +53,7 @@ const _Title = <As extends AllowedHeaderElements = "h3">(
     getResponsiveClassNames(align, (value) => cardTextAlignClasses[value]),
     flow.className,
     className,
-    !isBuiltInColor && color ? color : null,
+    cooked?.className,
   );
   const accessibilityProps = getTruncateAccessibilityProps(children, flow.hasTruncation, rest);
   const normalizedRest = normalizeProps(rest);
@@ -55,6 +62,7 @@ const _Title = <As extends AllowedHeaderElements = "h3">(
       as={Comp}
       ref={ref}
       className={resolvedStyles}
+      style={{ ...cooked?.style, ...style }}
       {...accessibilityProps}
       {...(normalizedRest as BoxProps<As>)}
     >

@@ -5,7 +5,7 @@ import {
   RestrictedPropsWithAs,
 } from "@basic-ui/react-utilities";
 import { BoxProps } from "../Box";
-import { BuiltInSemanticColors } from "../../theme";
+import { PaletteColor } from "../../lib/colorRecipes/colorRecipes";
 import type { ImgHTMLAttributes } from "react";
 import { LayoutProps } from "../../lib";
 
@@ -109,6 +109,9 @@ export interface CardFooterProps extends BoxProps {
   sticky?: boolean;
 }
 
+/** Text color for CardTitle/CardDescription: structural neutral, informational severity, or palette family. */
+export type CardTextColor = "default" | "muted" | PaletteColor;
+
 /**
  * Allowed heading elements for CardTitle.
  */
@@ -124,7 +127,7 @@ export interface CardTitleOwnProps extends CommonProps, LayoutProps {
   /** Font weight. @default "normal" */
   weight?: "normal" | "medium" | "semibold" | "bold";
   /** Text color. @default "default" */
-  color?: BuiltInSemanticColors | string;
+  color?: CardTextColor;
   /** Text alignment. @default "left" */
   align?: ResponsiveValue<"left" | "center" | "right">;
   /** Single-line ellipsis. Overrides wrap and overflow while active. @default false */
@@ -153,7 +156,7 @@ export interface CardDescriptionOwnProps extends CommonProps, LayoutProps {
   /** Font weight. @default "normal" */
   weight?: "normal" | "medium" | "semibold" | "bold";
   /** Text color. @default "default" */
-  color?: BuiltInSemanticColors | string;
+  color?: CardTextColor;
   /** Text alignment. @default "left" */
   align?: ResponsiveValue<"left" | "center" | "right">;
   /** Single-line ellipsis. Overrides wrap and overflow while active. @default false */

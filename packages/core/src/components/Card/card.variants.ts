@@ -1,4 +1,5 @@
 import { cva } from "class-variance-authority";
+import type { ColorRecipe } from "../../lib/colorRecipes/colorRecipes";
 import { textWrapClasses } from "../../lib";
 
 export const cardSectionSpacingClasses = {
@@ -132,14 +133,8 @@ export const cardTitleVariants = cva("font-sans font-normal leading-tight", {
     },
     color: {
       default: "text-fg-base",
-      primary: "text-primary-700 dark:text-primary-300",
-      secondary: "text-secondary-700 dark:text-secondary-300",
       muted: "text-fg-muted",
-      error: "text-fg-error",
-      success: "text-fg-success",
-      warning: "text-fg-warning",
-      info: "text-fg-info",
-      custom: "",
+      palette: "",
     },
     align: cardTextAlignClasses,
     truncate: {
@@ -170,13 +165,7 @@ export const cardDescriptionVariants = cva("font-sans", {
     color: {
       default: "text-fg-base",
       muted: "text-fg-muted",
-      primary: "text-primary-700 dark:text-primary-300",
-      secondary: "text-secondary-700 dark:text-secondary-300",
-      error: "text-fg-error",
-      success: "text-fg-success",
-      warning: "text-fg-warning",
-      info: "text-fg-info",
-      custom: "",
+      palette: "",
     },
     align: cardTextAlignClasses,
     truncate: {
@@ -214,3 +203,7 @@ export const cardImageFitVariants = cva("inline-block overflow-hidden", {
     rounded: "none",
   },
 });
+
+export const cardTextPaletteRecipe: ColorRecipe = {
+  text: { value: "700", dark: { value: "300" } },
+};
