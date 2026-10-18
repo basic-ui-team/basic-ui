@@ -74,3 +74,29 @@ describe("cr", () => {
     expect(cooked.style["--cr-bg"]).toBe("var(--color-primary-700)");
   });
 });
+
+describe("cr dark recipes", () => {
+  it("uses dark recipe values in the dark variables", () => {
+    const cooked = cr("teal", {
+      bg: { value: "700", dark: { value: "600", hover: { value: "500" } } },
+    });
+    expect(cooked.style["--cr-bg"]).toBe("var(--color-teal-700)");
+    expect(cooked.style["--cr-bg-dark"]).toBe("var(--color-teal-600)");
+    expect(cooked.style["--cr-bg-hover-dark"]).toBe("var(--color-teal-500)");
+    expect(cooked.style["--cr-bg-active-dark"]).toBe("var(--color-teal-600)");
+  });
+
+  it("falls back to the whole light recipe when dark is omitted", () => {
+    const cooked = cr("teal", { bg: { value: "700", hover: { value: "600" } } });
+    expect(cooked.style["--cr-bg-dark"]).toBe("var(--color-teal-700)");
+    expect(cooked.style["--cr-bg-hover-dark"]).toBe("var(--color-teal-600)");
+  });
+
+  it("includes dark state utilities in the class candidates", () => {
+    const cooked = cr("teal", solidRecipe);
+    expect(cooked.className).toContain("dark:bg-(--cr-bg-dark)");
+    expect(cooked.className).toContain("dark:hover:bg-(--cr-bg-hover-dark)");
+    expect(cooked.className).toContain("dark:active:bg-(--cr-bg-active-dark)");
+    expect(cooked.className).toContain("dark:text-(color:--cr-text-dark)");
+  });
+});

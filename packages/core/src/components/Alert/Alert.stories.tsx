@@ -70,7 +70,7 @@ export const WithAction: Story = {
       severity="warning"
       title="Payment method expires soon"
       action={
-        <Button variant="link" color="warning" size="sm">
+        <Button variant="link" color="amber" size="sm">
           Update
         </Button>
       }

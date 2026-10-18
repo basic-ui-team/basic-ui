@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Button } from "./Button";
 import { Box } from "../Box";
 import { Spinner } from "../Spinner";
+import { PALETTE_FAMILIES } from "../../lib/colorRecipes/colorRecipes";
 
 const meta: Meta<typeof Button> = {
   title: "Components/Button",
@@ -18,7 +19,7 @@ const meta: Meta<typeof Button> = {
     },
     color: {
       control: "select",
-      options: ["default", "muted", "primary", "secondary", "error", "success", "warning", "info"],
+      options: [...PALETTE_FAMILIES],
     },
     size: {
       control: "select",
@@ -39,27 +40,19 @@ export const Default: Story = {
   },
 };
 
-export const Variants: Story = {
+export const Color: Story = {
   render: () => (
-    <Box className="flex gap-3 flex-col">
-      {(["solid", "ghost", "outline", "link"] as const).map((variant) => (
-        <Box key={variant} className="flex gap-2 items-center">
-          {(
-            [
-              "default",
-              "muted",
-              "primary",
-              "secondary",
-              "error",
-              "success",
-              "warning",
-              "info",
-            ] as const
-          ).map((color) => (
-            <Button key={`${variant}-${color}`} variant={variant} color={color} size="md">
-              {`${variant} / ${color}`}
-            </Button>
-          ))}
+    <Box className="flex flex-col flex-wrap gap-4 w-full" p={4}>
+      {PALETTE_FAMILIES.map((family) => (
+        <Box className="flex flex-wrap items-center">
+          <span className="font-bold w-24">{family}</span>
+          <Box className="flex justify-between gap-8">
+            {(["solid", "outline", "ghost", "link"] as const).map((variant) => (
+              <Button key={variant} color={family} variant={variant}>
+                {variant.substring(0, 1).toUpperCase() + variant.substring(1)}
+              </Button>
+            ))}
+          </Box>
         </Box>
       ))}
     </Box>

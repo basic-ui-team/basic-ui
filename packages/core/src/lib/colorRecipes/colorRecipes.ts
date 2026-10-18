@@ -35,9 +35,19 @@ export type PaintValue = {
   opacity?: number;
 };
 
-export type PaintRecipe = PaintValue & {
+/** One paint state set: base value plus optional hover and active overrides. */
+export type PaintState = PaintValue & {
   hover?: PaintValue;
   active?: PaintValue;
+};
+
+/**
+ * A channel paint recipe. `dark` replaces the whole state set in dark mode
+ * (with its own hover/active fallbacks); when omitted, dark mode uses the
+ * light recipe unchanged.
+ */
+export type PaintRecipe = PaintState & {
+  dark?: PaintState;
 };
 
 export type ColorRecipe = Partial<Record<ColorRecipeChannel, PaintRecipe>>;
@@ -48,16 +58,17 @@ export type CookedColorRecipe = {
 };
 
 /**
- * Complete, static utility candidates per channel. States always have a
- * utility and always get a variable; omitted recipe states fall back to the
- * base value, so no utility ever references an unset variable.
+ * Complete, static utility candidates per channel. States and themes always
+ * have a utility and always get a variable; omitted recipe states and themes
+ * fall back, so no utility ever references an unset variable.
  * The `text-(color:...)` form is explicit because `text-` is ambiguous
- * between font-size and color utilities.
+ * between font-size and color utilities. The `dark:` variants require the
+ * class-based dark custom variant emitted by the tokens theme.
  */
 const CHANNEL_CLASSES: Record<ColorRecipeChannel, string> = {
-  bg: "bg-(--cr-bg) hover:bg-(--cr-bg-hover) active:bg-(--cr-bg-active)",
-  text: "text-(color:--cr-text) hover:text-(color:--cr-text-hover) active:text-(color:--cr-text-active)",
-  border: "border border-(--cr-border) hover:border-(--cr-border-hover) active:border-(--cr-border-active)",
+  bg: "bg-(--cr-bg) hover:bg-(--cr-bg-hover) active:bg-(--cr-bg-active) dark:bg-(--cr-bg-dark) dark:hover:bg-(--cr-bg-hover-dark) dark:active:bg-(--cr-bg-active-dark)",
+  text: "text-(color:--cr-text) hover:text-(color:--cr-text-hover) active:text-(color:--cr-text-active) dark:text-(color:--cr-text-dark) dark:hover:text-(color:--cr-text-hover-dark) dark:active:text-(color:--cr-text-active-dark)",
+  border: "border border-(--cr-border) hover:border-(--cr-border-hover) active:border-(--cr-border-active) dark:border-(--cr-border-dark) dark:hover:border-(--cr-border-hover-dark) dark:active:border-(--cr-border-active-dark)",
 };
 
 /**
@@ -108,19 +119,25 @@ export function cr(color: PaletteColor, recipe: ColorRecipe): CookedColorRecipe 
   validatePaletteColor(color);
   const classes: string[] = [];
   const style: Record<string, string> = {};
+  // State values fall back per field: an omitted state inherits the base
+  // value and the base opacity independently.
+  const fill = (base: PaintValue, override?: PaintValue): PaintValue => ({
+    value: override?.value ?? base.value,
+    opacity: override?.opacity ?? base.opacity,
+  });
   for (const channel of Object.keys(recipe) as ColorRecipeChannel[]) {
     const paint = recipe[channel];
     if (!paint) continue;
     classes.push(CHANNEL_CLASSES[channel]);
-    // State values fall back per field: an omitted state inherits the base
-    // value and the base opacity independently.
-    const statePaint = (state?: PaintValue): PaintValue => ({
-      value: state?.value ?? paint.value,
-      opacity: state?.opacity ?? paint.opacity,
-    });
-    style[`--cr-${channel}`] = cssColor(color, paint);
-    style[`--cr-${channel}-hover`] = cssColor(color, statePaint(paint.hover));
-    style[`--cr-${channel}-active`] = cssColor(color, statePaint(paint.active));
+    const themes: [suffix: "" | "-dark", state: PaintState][] = [
+      ["", paint],
+      ["-dark", paint.dark ?? paint],
+    ];
+    for (const [suffix, state] of themes) {
+      style[`--cr-${channel}${suffix}`] = cssColor(color, state);
+      style[`--cr-${channel}-hover${suffix}`] = cssColor(color, fill(state, state.hover));
+      style[`--cr-${channel}-active${suffix}`] = cssColor(color, fill(state, state.active));
+    }
   }
   return { className: classes.join(" "), style };
 }

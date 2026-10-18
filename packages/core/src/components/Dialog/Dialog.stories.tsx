@@ -114,7 +114,7 @@ export const WithFooter: Story = {
           description="You have unsaved changes to this project."
           footer={
             <>
-              <Button variant="ghost" color="muted" onClick={() => setOpen(false)}>
+              <Button variant="ghost" color="slate" onClick={() => setOpen(false)}>
                 Cancel
               </Button>
               <Button color="primary" onClick={() => setOpen(false)}>

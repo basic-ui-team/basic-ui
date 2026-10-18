@@ -70,6 +70,9 @@ function generateTheme() {
   const css = `/* Auto-generated — run \`pnpm generate\` in packages/tokens to regenerate */
 
 @import "tailwindcss";
+/* Dark mode is class-based (apps toggle .dark on <html>). Without this,
+   Tailwind's dark: variant follows the OS preference instead. */
+@custom-variant dark (&:where(.dark, .dark *));
 
 
 /* ===== THEME CONFIGURATION ===== */

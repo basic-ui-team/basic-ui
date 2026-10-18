@@ -317,6 +317,8 @@ describe("color recipe utilities in the public CSS entry", () => {
       "active:bg-(--cr-bg-active)",
       "text-(color:--cr-text)",
       "border-(--cr-border)",
+      "dark:bg-(--cr-bg-dark)",
+      "dark:hover:bg-(--cr-bg-hover-dark)",
     ]) {
       expect(css, `Missing CSS for ${utility}`).toContain(`.${escape(utility)} {`);
     }

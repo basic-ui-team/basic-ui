@@ -1,10 +1,9 @@
 import { ResponsiveValue } from "@basic-ui/react-utilities";
-import { BuiltInSemanticColors } from "../../theme";
 import { CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
+import type { PaletteColor } from "../../lib/colorRecipes/colorRecipes";
 
 type buttonVariants = "solid" | "ghost" | "outline" | "link";
 type buttonSizes = "sm" | "md" | "lg";
-type buttonColors = BuiltInSemanticColors;
 export type AllowedButtonElements = "button" | "a";
 
 export interface ButtonOwnProps extends CommonProps {
@@ -12,8 +11,8 @@ export interface ButtonOwnProps extends CommonProps {
   variant?: buttonVariants;
   /** Size of the button, which can be responsive. */
   size?: ResponsiveValue<buttonSizes>;
-  /** Semantic color of the button, which maps to theme colors. */
-  color?: buttonColors;
+  /** Color of the button. */
+  color?: PaletteColor;
   /** If true, disables the button and applies appropriate disabled styles and attributes. */
   disabled?: boolean;
   /** If true, marks the button busy and disables interaction. */
