@@ -1,5 +1,182 @@
 # @basic-ui/core
 
+## 0.5.0
+
+### Minor Changes
+
+- 16046dc: Complete the pre-1.0 migration from viewport-selected presentation to static,
+  mobile-first responsive CSS delivered by `@basic-ui/core/styles.css`.
+
+  Breaking API changes:
+
+  - Remove `useResponsiveProps` from `@basic-ui/react-utilities`. Use responsive
+    component props or `getResponsiveClassNames` for presentation. `useBreakpoint`
+    remains available for behavioral viewport decisions.
+  - Icon's semantic `variant` is now `color`; remove the former light/dark `color`
+    override. Omitted `color` inherits the surrounding foreground.
+  - Button renders a supplied `loadingIcon` directly, without sizing or a wrapper.
+    There is no built-in fallback spinner; supply a styled Icon or Spinner when
+    needed. `loadingIcon` is optional without an explicit `false` union.
+  - Card root variant, typography weight/color, image rounding, and Divider
+    direction/appearance/color are scalar. Keep responsive values for reviewed
+    sizing and layout concerns.
+  - Header and Card.Title use fixed visual h1-h6 sizes; implicit md/lg heading
+    scaling is removed. Express scaling explicitly with responsive `size`.
+  - Text and Card typography use single-line truncation with explicit wrapping and
+    overflow restoration. Full-text accessibility attributes remain stable across
+    viewports when truncation is enabled at any breakpoint.
+
+  Omitted breakpoints retain the latest CSS value, not the base value. Use
+  `aspectRatio="auto"` to restore intrinsic image proportions. See the companion
+  layout, Grid/Divider, Badge, and Toggle notes for their API and geometry changes.
+
+  The Button hover/active gating and broader color/theming redesign remain deferred.
+
+- 39ecf88: Add per-component package exports to `@basic-ui/core` and repair the
+  published build surface.
+
+  New import forms (both tree-shake; existing root and stylesheet imports
+  keep working):
+
+  ```ts
+  import { Button, Card } from "@basic-ui/core";
+  import { Card, type CardProps } from "@basic-ui/core/Card";
+  import { TablePagination, LinkPagination } from "@basic-ui/core/Pagination";
+  ```
+
+  - Every `components/<Name>/index.ts` convention directory is a public entry,
+    advertised through a wildcard package export mapping to
+    `dist/components/<Name>/index.js` with matching declarations. Pagination
+    remains one grouped entry.
+  - New public exports: `Card`, `Header`, `Image`, and `Skeleton` (with their
+    prop types) are exported from the root barrel; `Card`'s compound members
+    and prop/component types are exported from its own entry; `Skeleton` gains
+    its component entry.
+  - Build fixes: declarations are no longer erased by the Vite build step
+    (`dist/index.d.ts` now really exists), React/React DOM including their
+    runtime subpaths are externalized instead of being bundled into Core
+    output, and story/test declarations are no longer emitted.
+  - Manifest: remove legacy `typesVersions`, declare
+    `sideEffects: ["**/*.css"]` after an import-time side-effect audit, and add
+    a workspace-only `dev` export condition so local tooling (Storybook) can
+    resolve Core source during development. `src/` remains unpublished.
+  - TypeScript types for TS < 4.7 / non-`exports`-aware tooling are no longer
+    supported via `typesVersions`.
+
+- aaedf17: Add the `Dialog` component (#75), ported from appiq onto the `useDialog` headless hook (M2).
+
+  - Modal/non-modal behavior via `useDialog`: focus trap, scroll lock, Escape, focus restore, `aria-modal` wiring
+  - Accessible-name guarantee: `title`, `aria-label`, or external `aria-labelledby`; description wired via `aria-describedby`
+  - `dismissOnOutside` for backdrop/outside dismissal (default on, opt-out supported); non-modal overlay wrapper is pointer-transparent so background content stays interactive
+  - Sizes (`sm`/`md`/`lg`) and `fullWidth` via CVA on basic-ui tokens
+  - `useDialog`: `hasDescription` now defaults to `false` (callers rendering a description opt in), and `dialogProps` types the optional `aria-describedby`
+
+- 0a56a88: Migrate Flex to generated responsive layout utilities for direction, justification, alignment, wrapping, and display. Flex no longer applies an implicit `gap-3`; set `gap` explicitly when spacing is desired.
+- 88da429: Add Core's Tailwind stylesheet entry and generated responsive layout utility source.
+- 577c035: Replace named layout spacing values with numeric steps from 0 through 9 across layout props, Flex, Grid, and Divider.
+- 08c7362: Modernize Alert with controlled visibility, explicit dismissal, semantic visual variants, and simplified icon composition.
+- 2891fc4: Modernize Badge as an attached semantic indicator with count and dot variants.
+- d5d1db3: Modernize Box with static responsive layout utilities, transparent defaults, shared display support, and native polymorphic prop forwarding.
+- 54034d3: Add `@basic-ui/react-utilities` package and extract shared React utilities from core.
+
+  - New `@basic-ui/react-utilities` package with `cn`, `normalizeProps`, `getTruncateAccessibilityProps`, `forwardRefWithAs` and polymorphic prop types (`CommonProps`, `PropsWithAs`, `RestrictedPropsWithAs`, `PolymorphicRef`), plus `useBreakpoint`, the `ResponsiveValue` type, and `BREAKPOINTS`
+  - `@basic-ui/core` depends on it via `workspace:*` and imports from it directly; the utilities are no longer re-exported from `@basic-ui/core`
+  - **BREAKING**: `cn`, `forwardRefWithAs`, `normalizeProps`, `getTruncateAccessibilityProps`, `useBreakpoint`, and the polymorphic prop types moved to `@basic-ui/react-utilities` — import them from there instead of `@basic-ui/core`
+
+- 346c16e: Accept responsive Badge sizes for both count and dot variants. The ping halo
+  shares the requested size using dot geometry. Colors, placement, announcements,
+  and count formatting remain scalar and unchanged.
+- 29ab118: Migrate Grid and Divider presentation to static responsive CSS.
+
+  - Grid presets override both column and row counts; `templatePreset="none"`
+    restores the latest counts, or implicit tracks when counts are absent.
+  - Correct Grid axis gap utilities to `gap-x-*` and `gap-y-*`.
+  - Divider direction, appearance, and color are scalar. Thickness and inset
+    remain responsive; vertical insets apply on the vertical axis.
+  - Support the finite existing Grid template vocabulary independently of recipes.
+
+- 09c5d6b: Remove `unset` from layout props. Omit a prop to emit no declaration; use a
+  concrete value to override an earlier breakpoint: `0` for spacing, `"auto"`
+  for dimensions, and `"visible"` for overflow.
+
+  Maximum dimensions now accept `"none"` instead of the unsupported `"auto"`.
+  For example, `wMax={{ base: "screen", md: "none" }}` removes the constraint
+  at `md`. Export `MaxSizingType` for the distinct maximum-dimension contract.
+
+- a8fb044: Add the `Toggle` (switch) component (#80), ported from appiq onto the headless M1 hooks.
+
+  - State via `useControllableState` (controlled `value`/`onChange` + uncontrolled `defaultValue`)
+  - id/aria wiring via `useAriaIds` so it composes with Field conventions (#56)
+  - `role="switch"` with `aria-checked`; Space/Enter activation via the native button base
+  - Sizes (`sm`/`md`/`lg`) and intent colors via CVA on basic-ui tokens
+
+- c5e6787: Add the `Tooltip` component (#77), ported from appiq onto the `useTooltip` headless hook (#72).
+
+  - All timing, hover/focus, and dismissal semantics from `useTooltip`; positioning from `useAnchorPositioning` (#70) via `usePopover`
+  - `delay`/`closeDelay` props; the panel stays open while hovered (WCAG 1.4.13); Escape dismissal configurable
+  - `role="tooltip"` + `aria-describedby` wiring from the hook; renders through a portal
+  - CVA variants ported to basic-ui tokens: sizes (`sm`/`md`/`lg`, responsive), semantic `color` surfaces, optional `bordered`
+  - `disabled` prop leaves the trigger untouched (no handlers, no aria wiring)
+
+### Patch Changes
+
+- bbb0df6: Use semantic z-index layers for dialog backdrops, modal surfaces, and sticky card sections.
+- a0e9801: Formalize `Box` as the ancestral primitive of `core` (#84).
+
+  - Decision documented in CONVENTIONS.md: `Box` stays in `@basic-ui/core` at `components/Box` by convention — the composition rule plus the CI check provide the structural guarantee; a separate package was considered and rejected as overhead without behavioral benefit
+  - All `Box` imports standardized to the relative form (`../Box`, depth-adjusted); the `@core/components`, `@core/components/Box` alias forms are gone from `components/**`
+  - The composition check now also fails on non-relative `Box` imports, keeping the primitive dependency explicit and refactor-safe
+  - No public API changes
+
+- 1b92507: Correct Toggle geometry that mixed nonlinear token spacing with Tailwind's
+  default numeric scale. Tracks now use explicit 32x16, 36x20, and 44x24px sizes,
+  12/14/16px thumbs, and 16/18/24px checked travel with 2px horizontal insets.
+  Thumbs remain vertically centered; medium and large sizes retain extra vertical
+  space. Both states use the same responsive size decision.
+
+  Add a finite reviewed fixed-pixel geometry vocabulary, independent of component
+  recipes, so these literal utilities are available through the public stylesheet.
+
+- 136ae28: Decouple Card anatomy parts from sibling-component imports per the component composition rule (#60, completes #87).
+
+  - `Card.Title`, `Card.Description` and `Card.Image` no longer wrap the public `Header`, `Text` and `Image` components; each renders on `Box` with styling owned by new `cardTitleVariants`, `cardDescriptionVariants` and `cardImageFitVariants` in `card.variants.ts`, with visual parity to the previous defaults
+  - `card.types.ts` now defines the parts' prop types (`CardTitleOwnProps`, `CardDescriptionOwnProps`, `CardImageOwnProps`) instead of re-exporting `HeaderProps`/`TextProps`/`ImageProps` — the exported `CardTitleProps`/`CardDescriptionProps`/`CardImageProps` aliases and the `Card.Title`/`Card.Description`/`Card.Image` APIs are unchanged
+  - Every component in `core` now imports only `Box`; the composition check runs fully strict with no grandfathered violations
+
+- 018df66: Decouple Button, Alert and Pagination from sibling-component imports per the component composition rule (#60).
+
+  - Button: loading state no longer renders `Spinner`/`Flex`/`Text` internally — the loader layout and spinner glyph are inlined via `buttonLoaderVariants`/`buttonSpinnerVariants` with identical markup behavior (`role="status"` and `aria-label` preserved); rendering output is unchanged for consumers
+  - Alert and Pagination: the `Icon` wrapper is no longer used internally; severity and chevron glyphs render directly from `@basic-ui/icons` with the same sizing (`sm` → `w-lg h-lg`, `md` → `w-xl h-xl`) and color inheritance
+  - No public API changes
+
+- 1db76d1: Allow Icon components to accept shared layout props without requiring an additional Box wrapper.
+- d6b049e: Consume the Milestone 1 headless hooks in core components (integration pass 1.5, per the plan on #55).
+
+  - `usePagination` now builds its page state on `useControllableState` instead of a hand-rolled controlled/uncontrolled pattern; pagination behavior (clamping, warnings, `onPageChange`) is unchanged
+  - `Alert` now uses `useDisclosure` for its dismissed state instead of a local `useState`; dismissal behavior and the `onDismiss` callback are unchanged
+
+- 06c3562: Coordinate Toggle track, thumb size, and checked travel from the same responsive size.
+  Thumb geometry is applied directly to the owned thumb; scalar colors and interaction
+  styles stay on the track. Extend the shared utility vocabulary with numeric dimensions
+  and translations from 0 through 12 in half steps, and fractional spacing from 0.5
+  through 3.5. Component recipe coverage is tested through the public CSS entry.
+- Updated dependencies [957afd2]
+- Updated dependencies [16046dc]
+- Updated dependencies [aaedf17]
+- Updated dependencies [e63b2dd]
+- Updated dependencies [7250ed1]
+- Updated dependencies [983382a]
+- Updated dependencies [78678dd]
+- Updated dependencies [7e0f682]
+- Updated dependencies [195b552]
+- Updated dependencies [54034d3]
+- Updated dependencies [69422d1]
+- Updated dependencies [f181617]
+- Updated dependencies [91321d4]
+- Updated dependencies [792add3]
+  - @basic-ui/react-utilities@0.2.0
+  - @basic-ui/tokens@0.4.0
+
 ## 0.4.0
 
 ### Minor Changes
