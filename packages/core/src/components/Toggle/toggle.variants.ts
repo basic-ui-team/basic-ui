@@ -59,7 +59,6 @@ export const toggleVariants = cva(
   },
 );
 
-/** Palette-family track recipe for the checked state. */
 export const toggleCheckedRecipe: ColorRecipe = {
   bg: { value: "600", hover: { value: "700" }, dark: { value: "500", hover: { value: "600" } } },
 };

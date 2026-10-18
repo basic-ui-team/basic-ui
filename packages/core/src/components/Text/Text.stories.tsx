@@ -31,31 +31,31 @@ export const SizeVariants: Story = {
     <div className="flex flex-col gap-3">
       <Text size="xs">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua.
+        ut labore et dolore magna aliqua."
       </Text>
       <Text size="sm">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua.
+        ut labore et dolore magna aliqua."
       </Text>
       <Text size="md">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua. (Default)
+        ut labore et dolore magna aliqua." (Default)
       </Text>
       <Text size="lg">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua.
+        ut labore et dolore magna aliqua."
       </Text>
       <Text size="xl">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua.
+        ut labore et dolore magna aliqua."
       </Text>
       <Text size="2xl">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua.
+        ut labore et dolore magna aliqua."
       </Text>
       <Text size="3xl">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua.
+        ut labore et dolore magna aliqua."
       </Text>
     </div>
   ),
@@ -66,19 +66,19 @@ export const WeightVariants: Story = {
     <div className="flex flex-col gap-3">
       <Text weight="normal">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua. (Default)
+        ut labore et dolore magna aliqua." (Default)
       </Text>
       <Text weight="medium">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua. (Medium)
+        ut labore et dolore magna aliqua." (Medium)
       </Text>
       <Text weight="semibold">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua. (Semibold)
+        ut labore et dolore magna aliqua." (Semibold)
       </Text>
       <Text weight="bold">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua. (Bold)
+        ut labore et dolore magna aliqua." (Bold)
       </Text>
     </div>
   ),
@@ -89,39 +89,39 @@ export const ColorVariants: Story = {
     <div className="flex flex-col gap-3">
       <Text color="default">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua. (Default)
+        ut labore et dolore magna aliqua." (Default)
       </Text>
       <Text color="muted">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua. (Muted)
+        ut labore et dolore magna aliqua." (Muted)
       </Text>
       <Text color="primary">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua. (Primary)
+        ut labore et dolore magna aliqua." (Primary)
       </Text>
       <Text color="secondary">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua. (Secondary)
+        ut labore et dolore magna aliqua." (Secondary)
       </Text>
-      <Text color="error">
+      <Text color="red">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua. (Error)
+        ut labore et dolore magna aliqua." (Red)
       </Text>
-      <Text color="success">
+      <Text color="green">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua. (Success)
+        ut labore et dolore magna aliqua." (Green)
       </Text>
-      <Text color="warning">
+      <Text color="amber">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua. (Warning)
+        ut labore et dolore magna aliqua." (Amber)
       </Text>
-      <Text color="info">
+      <Text color="sky">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua. (Info)
+        ut labore et dolore magna aliqua." (Sky)
       </Text>
-      <Text color="text-red-500">
+      <Text color="rose">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua. (Custom Tailwind Color)
+        ut labore et dolore magna aliqua." (Rose)
       </Text>
     </div>
   ),
@@ -132,15 +132,15 @@ export const AlignmentVariants: Story = {
     <Flex direction="column" gap={3}>
       <Text align="left">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua. (Left Aligned)
+        ut labore et dolore magna aliqua." (Left Aligned)
       </Text>
       <Text align="center">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua. (Center Aligned)
+        ut labore et dolore magna aliqua." (Center Aligned)
       </Text>
       <Text align="right">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua. (Right Aligned)
+        ut labore et dolore magna aliqua." (Right Aligned)
       </Text>
     </Flex>
   ),
@@ -151,7 +151,7 @@ export const TruncateVariant: Story = {
     <div className="w-64 border p-2 border-gray-300 rounded">
       <Text truncate>
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua. (Truncated)
+        ut labore et dolore magna aliqua." (Truncated)
       </Text>
     </div>
   ),
@@ -160,7 +160,7 @@ export const TruncateVariant: Story = {
 export const WrapVariants: Story = {
   render: () => (
     <Flex direction="column" align="center" gap={3}>
-      <div className="w-128 border p-2 border-gray-300 rounded">
+      <div className="w-lg border p-2 border-gray-300 rounded">
         <Text wrap="nowrap">
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
           ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
@@ -170,7 +170,7 @@ export const WrapVariants: Story = {
           est laborum." (No Wrap)
         </Text>
       </div>
-      <div className="w-128 border p-2 border-gray-300 rounded">
+      <div className="w-lg border p-2 border-gray-300 rounded">
         <Text wrap="wrap">
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
           ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
@@ -180,7 +180,7 @@ export const WrapVariants: Story = {
           est laborum." (Wrap)
         </Text>
       </div>
-      <div className="w-128 border p-2 border-gray-300 rounded">
+      <div className="w-lg border p-2 border-gray-300 rounded">
         <Text wrap="balance">
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
           ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
@@ -190,7 +190,7 @@ export const WrapVariants: Story = {
           est laborum." (Balance)
         </Text>
       </div>
-      <div className="w-128 border p-2 border-gray-300 rounded">
+      <div className="w-lg border p-2 border-gray-300 rounded">
         <Text wrap="pretty">
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
           ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
@@ -226,7 +226,7 @@ export const CombinedVariants: Story = {
     <div className="flex flex-col gap-3">
       <Text size="lg" weight="bold" color="primary" align="center" wrap="balance">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua. (Combined Variants)
+        ut labore et dolore magna aliqua." (Combined Variants)
       </Text>
     </div>
   ),
@@ -240,7 +240,7 @@ export const ComposedExample: Story = {
         different inline styles applied such as <strong>bold text</strong>. Maybe we can have some{" "}
         <em>italic text</em> as well. We can even have{" "}
         <span className="underline text-primary-500">underlined text</span> or text with a{" "}
-        <span className="text-gradient bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent">
+        <span className="text-gradient bg-linear-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent">
           gradient color
         </span>
         . The Text component is designed to be flexible and composable, allowing you to create
