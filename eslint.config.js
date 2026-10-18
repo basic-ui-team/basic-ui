@@ -2,6 +2,10 @@ import { defineConfig, globalIgnores } from "eslint/config";
 import tsParser from "@typescript-eslint/parser";
 import tsEslintPlugin from "@typescript-eslint/eslint-plugin";
 import jsxA11y from "eslint-plugin-jsx-a11y";
+import { dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const configRoot = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig([
   globalIgnores(["dist", "build", "coverage", "node_modules", ".next", "storybook-static"]),
@@ -26,6 +30,7 @@ export default defineConfig([
       parser: tsParser,
       parserOptions: {
         projectService: true,
+        tsconfigRootDir: configRoot,
       },
     },
     rules: {},
