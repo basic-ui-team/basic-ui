@@ -1,5 +1,5 @@
 import { CommonProps, ResponsiveValue, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
-import { LayoutProps } from "@core/lib";
+import { LayoutProps } from "../../lib";
 
 const flexValues = ["row", "column", "row-reverse", "column-reverse"] as const;
 const justifyValues = ["start", "end", "center", "between", "around", "evenly", "stretch"] as const;

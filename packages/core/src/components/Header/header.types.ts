@@ -1,7 +1,7 @@
 import { ResponsiveValue } from "@basic-ui/react-utilities";
 import { type CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
-import type { LayoutProps } from "@core/lib";
-import { BuiltInSemanticColors } from "@core/theme";
+import type { LayoutProps } from "../../lib";
+import { BuiltInSemanticColors } from "../../theme";
 
 export interface HeaderOwnProps extends CommonProps, LayoutProps {
   /** Fixed visual size, independent of heading semantics. Use responsive values for breakpoint changes. @default "h2" */

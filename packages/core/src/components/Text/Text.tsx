@@ -9,8 +9,8 @@ import {
 import type { AllowedTextElements, TextOwnProps, TextProps } from "./text.types";
 import { textVariants, textSizeClasses, textAlignClasses } from "./text.variants";
 import { Box, BoxProps } from "../Box";
-import { BuiltInSemanticColors, isBuiltInSemanticColor } from "@core/theme";
-import { getTextFlowClasses } from "@core/lib";
+import { BuiltInSemanticColors, isBuiltInSemanticColor } from "../../theme";
+import { getTextFlowClasses } from "../../lib";
 
 const _Text = <As extends AllowedTextElements = "p">(
   {

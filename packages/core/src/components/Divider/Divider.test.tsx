@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { Divider } from "./Divider";
-import { renderWithProviders } from "@core/test-utils/renderWithProviders";
+import { renderWithProviders } from "../../test-utils/renderWithProviders";
 import { axe } from "jest-axe";
 import { renderToString } from "react-dom/server";
 

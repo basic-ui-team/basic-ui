@@ -36,3 +36,29 @@ export type {
   BadgeSize,
   BadgeVariant,
 } from "./Badge";
+export { Card } from "./Card";
+export type {
+  AllowedCardElements,
+  CardBodyProps,
+  CardComponent,
+  CardDescriptionProps,
+  CardFooterProps,
+  CardHeaderProps,
+  CardImageProps,
+  CardProps,
+  CardRootProps,
+  CardTitleProps,
+  CardUnstyledProps,
+  CardVariant,
+} from "./Card";
+export { Header } from "./Header";
+export type { HeaderProps } from "./Header";
+export { Image } from "./Image";
+export type { AllowedImageElements, ImageOwnProps, ImageProps, ImageSource } from "./Image";
+export { Skeleton } from "./Skeleton";
+export type {
+  AllowedSkeletonComponent,
+  SkeletonOwnProps,
+  SkeletonProps,
+  SkeletonVariant,
+} from "./Skeleton";

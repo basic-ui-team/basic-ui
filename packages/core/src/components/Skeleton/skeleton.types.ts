@@ -1,5 +1,5 @@
 import { CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
-import { LayoutProps } from "@core/lib";
+import { LayoutProps } from "../../lib";
 
 export type AllowedSkeletonComponent = "div" | "span";
 export type SkeletonVariant = "text" | "rectangular" | "circular";

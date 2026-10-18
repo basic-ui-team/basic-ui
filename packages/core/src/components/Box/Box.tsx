@@ -1,7 +1,7 @@
 import { CommonProps, PolymorphicRef, cn, forwardRefWithAs } from "@basic-ui/react-utilities";
 import type { BoxProps } from "./box.types";
 import { ElementType } from "react";
-import { LayoutProps, splitLayoutProps, generateLayoutClassNames } from "@core/lib";
+import { LayoutProps, splitLayoutProps, generateLayoutClassNames } from "../../lib";
 
 export const Box = forwardRefWithAs<LayoutProps & CommonProps, ElementType>(
   <As extends ElementType = "div">(

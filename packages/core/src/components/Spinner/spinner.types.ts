@@ -1,6 +1,6 @@
 import { CommonProps, ResponsiveValue, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
-import { LayoutProps } from "@core/lib";
-import { BuiltInSemanticColors } from "@core/theme";
+import { LayoutProps } from "../../lib";
+import { BuiltInSemanticColors } from "../../theme";
 
 export type SpinnerColor = BuiltInSemanticColors;
 export type SpinnerSizes = "xs" | "sm" | "md" | "lg" | "xl";

@@ -13,8 +13,8 @@ import {
   cardDescriptionSizeClasses,
   cardTextAlignClasses,
 } from "../card.variants";
-import { getTextFlowClasses } from "@core/lib";
-import { BuiltInSemanticColors, isBuiltInSemanticColor } from "@core/theme";
+import { getTextFlowClasses } from "../../../lib";
+import { BuiltInSemanticColors, isBuiltInSemanticColor } from "../../../theme";
 
 const _Description = <As extends AllowedTextElements = "p">(
   {

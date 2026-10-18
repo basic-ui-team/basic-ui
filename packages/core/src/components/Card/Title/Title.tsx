@@ -9,8 +9,8 @@ import {
 import { Box, BoxProps } from "../../Box";
 import { AllowedHeaderElements, CardTitleOwnProps } from "../card.types";
 import { cardTitleVariants, cardTitleSizeClasses, cardTextAlignClasses } from "../card.variants";
-import { getTextFlowClasses } from "@core/lib";
-import { BuiltInSemanticColors, isBuiltInSemanticColor } from "@core/theme";
+import { getTextFlowClasses } from "../../../lib";
+import { BuiltInSemanticColors, isBuiltInSemanticColor } from "../../../theme";
 
 const _Title = <As extends AllowedHeaderElements = "h3">(
   {

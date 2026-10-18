@@ -1,5 +1,5 @@
 import { ResponsiveValue } from "@basic-ui/react-utilities";
-import { BuiltInSemanticColors } from "@core/theme";
+import { BuiltInSemanticColors } from "../../theme";
 import { CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
 
 type buttonVariants = "solid" | "ghost" | "outline" | "link";

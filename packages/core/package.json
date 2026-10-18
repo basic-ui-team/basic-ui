@@ -8,17 +8,16 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "types": "./dist/index.d.ts",
+      "dev": "./src/index.ts",
+      "import": "./dist/index.js"
     },
     "./styles.css": "./dist/styles.css",
-    "./package.json": "./package.json"
-  },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "./dist/*"
-      ]
+    "./package.json": "./package.json",
+    "./*": {
+      "types": "./dist/components/*/index.d.ts",
+      "dev": "./src/components/*/index.ts",
+      "import": "./dist/components/*/index.js"
     }
   },
   "files": [
@@ -28,13 +27,14 @@
     "dev": "vite",
     "generate:layout-utilities": "tsx scripts/generate-layout-utility-source.ts",
     "check:layout-utilities": "tsx scripts/generate-layout-utility-source.ts --check",
-    "build": "pnpm generate:layout-utilities && tsc && vite build && node scripts/copy-styles.mjs",
+    "build": "pnpm generate:layout-utilities && vite build && tsc -p tsconfig.build.json && node scripts/copy-styles.mjs",
     "preview": "vite preview",
     "lint": "eslint \"{src,scripts}/**/*.{ts,tsx,js,jsx}\" --cache",
     "type-check": "tsc -b tsconfig.json && tsc -p scripts/tsconfig.json",
     "test": "vitest",
     "test:watch": "vitest --watch",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "verify:package": "node scripts/verify-package.mjs"
   },
   "peerDependencies": {
     "react": ">=18",
@@ -57,5 +57,8 @@
     "tsx": "^4.21.0",
     "typescript": "^5.9.0",
     "vite": "^8.0.0"
-  }
+  },
+  "sideEffects": [
+    "**/*.css"
+  ]
 }

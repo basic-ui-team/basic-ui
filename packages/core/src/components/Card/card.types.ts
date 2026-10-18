@@ -5,9 +5,9 @@ import {
   RestrictedPropsWithAs,
 } from "@basic-ui/react-utilities";
 import { BoxProps } from "../Box";
-import { BuiltInSemanticColors } from "@core/theme";
+import { BuiltInSemanticColors } from "../../theme";
 import type { ImgHTMLAttributes } from "react";
-import { LayoutProps } from "@core/lib";
+import { LayoutProps } from "../../lib";
 
 export type AllowedCardElements = "div" | "button" | "a";
 export type CardVariant = "default" | "elevated" | "outlined" | "unstyled";

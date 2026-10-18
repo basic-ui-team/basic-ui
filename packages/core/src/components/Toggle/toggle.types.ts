@@ -1,5 +1,5 @@
 import { CommonProps, ResponsiveValue, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
-import { BuiltInSemanticColors } from "@core/theme";
+import { BuiltInSemanticColors } from "../../theme";
 
 type toggleSizes = "sm" | "md" | "lg";
 type toggleColors = Exclude<BuiltInSemanticColors, "default" | "muted">;

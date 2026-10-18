@@ -1,5 +1,5 @@
 import { cva } from "class-variance-authority";
-import { textWrapClasses } from "@core/lib";
+import { textWrapClasses } from "../../lib";
 
 export const textSizeClasses = {
   xs: "text-xs",

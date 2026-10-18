@@ -9,8 +9,8 @@ import {
 import { AllowedHeaderElements, HeaderOwnProps, HeaderProps } from "./header.types";
 import { headerVariants, headerSizeClasses, headerAlignClasses } from "./header.variants";
 import { Box, BoxProps } from "../Box";
-import { BuiltInSemanticColors, isBuiltInSemanticColor } from "@core/theme";
-import { getTextFlowClasses } from "@core/lib";
+import { BuiltInSemanticColors, isBuiltInSemanticColor } from "../../theme";
+import { getTextFlowClasses } from "../../lib";
 
 const _Header = <As extends AllowedHeaderElements = "h1">(
   {

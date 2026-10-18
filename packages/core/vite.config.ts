@@ -1,3 +1,4 @@
+import { existsSync, readdirSync } from "node:fs";
 import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import path from "path";
@@ -5,6 +6,21 @@ import { fileURLToPath } from "url";
 import tailwindcss from "@tailwindcss/vite";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const componentsDirectory = path.resolve(__dirname, "src/components");
+
+// Derive public component entries from the components/<Name>/index.ts convention.
+const componentEntries = Object.fromEntries(
+  readdirSync(componentsDirectory, { withFileTypes: true })
+    .filter(
+      (entry) =>
+        entry.isDirectory() && existsSync(path.resolve(componentsDirectory, entry.name, "index.ts")),
+    )
+    .map((entry) => [
+      `components/${entry.name}/index`,
+      path.resolve(componentsDirectory, entry.name, "index.ts"),
+    ]),
+);
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
@@ -47,19 +63,19 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: path.resolve(__dirname, "src/index.ts"),
-      name: "BasicUI",
-      fileName: "index",
+      entry: {
+        index: path.resolve(__dirname, "src/index.ts"),
+        ...componentEntries,
+      },
       formats: ["es"],
     },
-    rollupOptions: {
-      external: ["react", "react-dom", "tailwindcss", "@basic-ui/react-utilities"],
-      output: {
-        globals: {
-          react: "React",
-          "react-dom": "ReactDOM",
-        },
-      },
+    rolldownOptions: {
+      external: [
+        /^react(?:\/|$)/,
+        /^react-dom(?:\/|$)/,
+        "tailwindcss",
+        "@basic-ui/react-utilities",
+      ],
     },
     minify: "esbuild",
     sourcemap: true,

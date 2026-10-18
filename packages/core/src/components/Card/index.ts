@@ -21,3 +21,21 @@ export const CardModule = Object.assign(CardRoot, {
 export const Card: CardComponent = CardModule as CardComponent;
 
 (Card as unknown as { displayName?: string }).displayName = "Card";
+export type {
+  AllowedCardElements,
+  AllowedHeaderElements,
+  AllowedTextElements,
+  AspectRatioType,
+  ObjectFitType,
+  CardBodyProps,
+  CardComponent,
+  CardDescriptionProps,
+  CardFooterProps,
+  CardHeaderProps,
+  CardImageProps,
+  CardProps,
+  CardRootProps,
+  CardTitleProps,
+  CardUnstyledProps,
+  CardVariant,
+} from "./card.types";

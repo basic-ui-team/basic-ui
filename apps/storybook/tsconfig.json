@@ -7,6 +7,9 @@
     },
     "composite": true,
     "noEmit": false,
+    "customConditions": [
+      "dev"
+    ],
     "rewriteRelativeImportExtensions": true
   },
   "include": ["src", ".storybook"]

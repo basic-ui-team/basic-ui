@@ -101,17 +101,29 @@ supported capabilities and current migration scope.
 
 ## Exports & TypeScript
 
-- `packages/*/package.json` should include a main `exports` entry and `typesVersions` to help TS resolve deep imports. Example:
+- `packages/*/package.json` should include a main `exports` entry with a `types` condition per entry. Do not add `typesVersions`; the repo supports modern bundler resolution only. Core also advertises per-component entries through a wildcard:
 
 ```json
-"exports": { 
-  ".": { "import": "./dist/index.js", "types": "./dist/index.d.ts" },
-  "./package.json": "./package.json"
+"exports": {
+  ".": { "types": "./dist/index.d.ts", "dev": "./src/index.ts", "import": "./dist/index.js" },
+  "./styles.css": "./dist/styles.css",
+  "./package.json": "./package.json",
+  "./*": {
+    "types": "./dist/components/*/index.d.ts",
+    "dev": "./src/components/*/index.ts",
+    "import": "./dist/components/*/index.js"
+  }
 }
-"typesVersions": { "*": { "*": ["./dist/*"] } }
 ```
 
-- Prefer the package's main entrypoint for consumers: `import { Alert } from '@basic-ui/core'`.
+- `@basic-ui/core` supports two import forms. Both tree-shake; per-component imports are the preferred form for libraries and lean bundles:
+  - Root: `import { Alert } from "@basic-ui/core"` (convenience barrel)
+  - Per component: `import { Alert, type AlertProps } from "@basic-ui/core/Alert"`
+  - Every `src/components/<Name>/index.ts` is a public entry; `Pagination` stays one grouped entry (`@basic-ui/core/Pagination` exports `TablePagination` and `LinkPagination`).
+- The `dev` export condition maps to `src/` and is **workspace-only**: `src/` is not published (`files: ["dist"]`), so published/default consumers always resolve `dist/`. Local tooling must opt in explicitly — Storybook appends `dev` to Vite's default `resolve.conditions` and sets TS `customConditions: ["dev"]`. Note that TS resolves types through the `types` condition first, so editor types still come from the built declarations.
+- `@basic-ui/core` declares `sideEffects: ["**/*.css"]`; modules contain no import-time side effects, so bundlers may tree-shake unused component entries. Preserve this when adding components.
+- Verify packaging changes with `pnpm --filter @basic-ui/core verify:package`: clean double build, pack + extracted-tarball inspection (ships only dist, declarations resolve without workspace aliases, React externalized), runtime imports of every public entry, and an external-style TS fixture.
+
 
 ## Component composition rule (#60)
 

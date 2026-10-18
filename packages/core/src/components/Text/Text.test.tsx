@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { textVariants } from "./text.variants";
 import { Text } from "./Text";
-import { renderWithProviders } from "@core/test-utils/renderWithProviders";
+import { renderWithProviders } from "../../test-utils/renderWithProviders";
 import { axe } from "jest-axe";
 import { renderToString } from "react-dom/server";
 

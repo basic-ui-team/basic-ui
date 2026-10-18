@@ -2,7 +2,7 @@ import React from "react";
 import { describe, expect, it } from "vitest";
 import { headerVariants } from "./header.variants";
 import { Header } from "./Header";
-import { renderWithProviders } from "@core/test-utils/renderWithProviders";
+import { renderWithProviders } from "../../test-utils/renderWithProviders";
 import { axe } from "jest-axe";
 import { renderToString } from "react-dom/server";
 
