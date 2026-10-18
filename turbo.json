@@ -3,7 +3,7 @@
   "globalEnv": ["NODE_ENV", "CI"],
   "tasks": {
     "build": {
-      "outputs": ["dist/**"],
+      "outputs": ["dist/**", "storybook-static/**"],
       "cache": true,
       "dependsOn": ["^build"]
     },
@@ -19,11 +19,6 @@
       "cache": true
     },
     "type-check": {
-      "cache": true,
-      "dependsOn": ["^build"]
-    },
-    "storybook:build": {
-      "outputs": ["dist/**"],
       "cache": true,
       "dependsOn": ["^build"]
     }

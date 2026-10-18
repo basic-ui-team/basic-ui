@@ -4,5 +4,5 @@
     "composite": true,
     "noEmit": true
   },
-  "include": ["src", ".storybook"]
+  "include": [".storybook/**/*.ts", ".storybook/**/*.tsx"]
 }

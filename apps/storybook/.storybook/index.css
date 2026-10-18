@@ -1,4 +1,4 @@
-@import "../../../packages/core/src/styles.css";
+@import "@basic-ui/core/styles.css";
 
 /* Scan workspace packages for class names */
 @source "../../../packages/core/src";
