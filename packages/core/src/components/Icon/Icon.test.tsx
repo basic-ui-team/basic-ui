@@ -78,10 +78,7 @@ describe("Icon", () => {
     });
 
     it.each([
-      ["default", ["text-primary-700", "dark:text-primary-300"]],
       ["muted", ["text-fg-muted"]],
-      ["primary", ["text-primary-700", "dark:text-primary-300"]],
-      ["secondary", ["text-secondary-700", "dark:text-secondary-300"]],
       ["success", ["text-fg-success"]],
       ["error", ["text-fg-error"]],
       ["warning", ["text-fg-warning"]],
@@ -243,13 +240,13 @@ describe("Icon", () => {
           icon={<TestIcon />}
           aria-hidden={false}
           aria-label="Loading spinner"
-          color="primary"
+          color="error"
           size="md"
           className="animate-spin"
         />,
       );
       const img = screen.getByRole("img", { name: "Loading spinner" });
-      expect(img).toHaveClass("animate-spin", "text-primary-700", "w-6", "h-6");
+      expect(img).toHaveClass("animate-spin", "text-fg-error", "w-6", "h-6");
     });
 
     it("should apply only supplied responsive size variants", () => {

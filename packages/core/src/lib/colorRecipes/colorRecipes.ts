@@ -11,18 +11,47 @@
  */
 
 export type ColorShade =
-  | "50" | "100" | "200" | "300" | "400" | "500"
-  | "600" | "700" | "800" | "900" | "950";
+  | "50"
+  | "100"
+  | "200"
+  | "300"
+  | "400"
+  | "500"
+  | "600"
+  | "700"
+  | "800"
+  | "900"
+  | "950";
 
 export type PaletteColorValue = ColorShade | "white" | "black";
 
 /** Palette color families with a full shade ramp available as CSS variables. */
 export const PALETTE_FAMILIES = [
-  "red", "orange", "amber", "yellow", "lime", "green", "emerald", "teal",
-  "cyan", "sky", "blue", "indigo", "violet", "purple", "fuchsia", "pink",
-  "rose", "slate", "gray", "zinc", "neutral", "stone",
+  "red",
+  "orange",
+  "amber",
+  "yellow",
+  "lime",
+  "green",
+  "emerald",
+  "teal",
+  "cyan",
+  "sky",
+  "blue",
+  "indigo",
+  "violet",
+  "purple",
+  "fuchsia",
+  "pink",
+  "rose",
+  "slate",
+  "gray",
+  "zinc",
+  "neutral",
+  "stone",
   // Brand families defined by the basic-ui generated theme.
-  "primary", "secondary",
+  "primary",
+  "secondary",
 ] as const;
 
 export type PaletteColor = (typeof PALETTE_FAMILIES)[number];
@@ -35,10 +64,17 @@ export type PaintValue = {
   opacity?: number;
 };
 
-/** One paint state set: base value plus optional hover and active overrides. */
+/**
+ * One paint state set: base value plus optional hover, active, and focus
+ * overrides. `focus` emits variables only - consumed by focus-indication
+ * utilities (rings), never by channel utilities, because Tailwind sorts
+ * `focus:` after `hover:` and a `focus:bg-*` utility would suppress hover
+ * feedback on focused elements.
+ */
 export type PaintState = PaintValue & {
   hover?: PaintValue;
   active?: PaintValue;
+  focus?: PaintValue;
 };
 
 /**
@@ -68,7 +104,8 @@ export type CookedColorRecipe = {
 const CHANNEL_CLASSES: Record<ColorRecipeChannel, string> = {
   bg: "bg-(--cr-bg) hover:bg-(--cr-bg-hover) active:bg-(--cr-bg-active) dark:bg-(--cr-bg-dark) dark:hover:bg-(--cr-bg-hover-dark) dark:active:bg-(--cr-bg-active-dark)",
   text: "text-(color:--cr-text) hover:text-(color:--cr-text-hover) active:text-(color:--cr-text-active) dark:text-(color:--cr-text-dark) dark:hover:text-(color:--cr-text-hover-dark) dark:active:text-(color:--cr-text-active-dark)",
-  border: "border border-(--cr-border) hover:border-(--cr-border-hover) active:border-(--cr-border-active) dark:border-(--cr-border-dark) dark:hover:border-(--cr-border-hover-dark) dark:active:border-(--cr-border-active-dark)",
+  border:
+    "border border-(--cr-border) hover:border-(--cr-border-hover) active:border-(--cr-border-active) dark:border-(--cr-border-dark) dark:hover:border-(--cr-border-hover-dark) dark:active:border-(--cr-border-active-dark)",
 };
 
 /**
@@ -102,7 +139,9 @@ function cssColor(family: PaletteColor, paint: PaintValue): string {
     paint.value === "white" || paint.value === "black"
       ? `--color-${paint.value}`
       : `--color-${family}-${paint.value}`;
-  if (paint.opacity === undefined) {
+  // Full opacity collapses to the plain variable; only partial opacities pay
+  // the color-mix cost.
+  if (paint.opacity === undefined || paint.opacity === 100) {
     return `var(${token})`;
   }
   validateOpacity(paint.opacity);
@@ -137,6 +176,9 @@ export function cr(color: PaletteColor, recipe: ColorRecipe): CookedColorRecipe 
       style[`--cr-${channel}${suffix}`] = cssColor(color, state);
       style[`--cr-${channel}-hover${suffix}`] = cssColor(color, fill(state, state.hover));
       style[`--cr-${channel}-active${suffix}`] = cssColor(color, fill(state, state.active));
+      // Focus feeds rings, not backgrounds; the ring utilities read these
+      // variables, so the resting background is never affected by focus.
+      style[`--cr-${channel}-focus${suffix}`] = cssColor(color, fill(state, state.focus));
     }
   }
   return { className: classes.join(" "), style };

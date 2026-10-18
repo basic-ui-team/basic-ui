@@ -11,17 +11,17 @@ export const buttonVariants = cva(
   [
     "relative inline-flex items-center justify-center gap-2 font-medium select-none",
     "transition-all duration-slow ease-spring",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-500",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ring-offset-bg-base",
     "text-fg-base",
   ].join(" "),
   {
     variants: {
       size: buttonSizeClasses,
       variant: {
-        solid: "",
-        ghost: "",
-        outline: "",
-        link: "cursor-pointer underline",
+        solid: "focus-visible:ring-(--cr-bg-focus) dark:focus-visible:ring-(--cr-bg-focus-dark)",
+        ghost: "focus-visible:ring-(--cr-bg-focus) dark:focus-visible:ring-(--cr-bg-focus-dark)",
+        outline: "focus-visible:ring-(--cr-border-focus) dark:focus-visible:ring-(--cr-border-focus-dark)",
+        link: "cursor-pointer underline focus-visible:ring-(--cr-text-focus) dark:focus-visible:ring-(--cr-text-focus-dark)",
       },
       loading: {
         true: "opacity-70 cursor-progress hover:none active:none",
@@ -41,33 +41,29 @@ export const buttonVariants = cva(
   },
 );
 
-/**
- * Color recipes for the `color` prop: the consumer chooses a palette
- * family, the recipe owns the shade, state, and theme mapping per variant.
- * The light recipe is authoritative; `dark` replaces the state set in
- * dark mode (falling back to light when omitted).
- */
 export const buttonPaletteRecipes: Record<"solid" | "ghost" | "outline" | "link", ColorRecipe> = {
   solid: {
     bg: {
       value: "700",
       hover: { value: "600" },
       active: { value: "800" },
-      dark: { value: "600", hover: { value: "500" }, active: { value: "700" } },
+      dark: { value: "700", hover: { value: "500" }, active: { value: "700" } },
     },
     text: { value: "white" },
   },
   ghost: {
     bg: {
       value: "200",
-      opacity: 50,
-      hover: { value: "300", opacity: 70 },
-      active: { value: "300", opacity: 85 },
+      opacity: 30,
+      hover: { value: "200", opacity: 70 },
+      active: { value: "200", opacity: 85 },
+      focus: { value: "500", opacity: 100 },
       dark: {
         value: "300",
-        opacity: 50,
-        hover: { value: "50", opacity: 70 },
-        active: { value: "100" },
+        opacity: 30,
+        hover: { value: "300", opacity: 50 },
+        active: { value: "300", opacity: 85 },
+        focus: { value: "500", opacity: 100 },
       },
     },
     text: { value: "800", dark: { value: "200" } },
@@ -76,13 +72,14 @@ export const buttonPaletteRecipes: Record<"solid" | "ghost" | "outline" | "link"
     bg: {
       value: "white",
       opacity: 0,
-      hover: { value: "700", opacity: 10 },
+      hover: { value: "50", opacity: 10 },
       active: { value: "700", opacity: 15 },
       dark: {
         value: "white",
         opacity: 0,
         hover: { value: "50", opacity: 70 },
         active: { value: "100" },
+        focus: { value: "400", opacity: 100 },
       },
     },
     text: { value: "700", dark: { value: "300" } },

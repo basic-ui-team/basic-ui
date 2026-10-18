@@ -3,13 +3,12 @@ import type { ResponsiveValue } from "@basic-ui/react-utilities";
 import { LayoutProps } from "../../lib";
 
 /**
- * Explicit semantic colors aligned with design tokens.
+ * Explicit informational semantic colors aligned with design tokens.
+ * The primary path is inheritance: omit `color` and the icon follows the
+ * surrounding text color.
  */
 type IconColor =
-  | "default"
   | "muted"
-  | "primary"
-  | "secondary"
   | "success"
   | "error"
   | "warning"

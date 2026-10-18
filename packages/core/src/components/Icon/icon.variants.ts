@@ -12,10 +12,7 @@ export const iconVariants = cva("flex items-center justify-center", {
   variants: {
     size: iconSizeClasses,
     color: {
-      default: "text-primary-700 dark:text-primary-300",
       muted: "text-fg-muted",
-      primary: "text-primary-700 dark:text-primary-300",
-      secondary: "text-secondary-700 dark:text-secondary-300",
       success: "text-fg-success",
       error: "text-fg-error",
       warning: "text-fg-warning",

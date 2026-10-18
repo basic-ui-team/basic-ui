@@ -21,7 +21,7 @@ import { Box } from "../Box";
  * <Icon icon={CheckCircle} color="success" />
  *
  * // Custom SVG
- * <Icon icon={<svg>...</svg>} size="lg" color="primary" />
+ * <Icon icon={<svg>...</svg>} size="lg" color="success" />
  *
  * // Responsive: md=md, lg=lg
  * <Icon icon={CheckCircle} size={{ base: "sm", md: "md", lg: "lg" }} />

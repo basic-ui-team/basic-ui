@@ -111,7 +111,7 @@ const meta: Meta<typeof Icon> = {
     },
     color: {
       control: { type: "select" },
-      options: ["default", "muted", "primary", "secondary", "success", "error", "warning", "info"],
+      options: ["muted", "success", "error", "warning", "info"],
       description: "Optional semantic color. Inherits the parent's color when omitted.",
     },
   },
@@ -144,7 +144,7 @@ export const SemanticColors: Story = {
   render: () => (
     <div className="flex flex-wrap items-center gap-6">
       {(
-        ["default", "muted", "primary", "secondary", "success", "error", "warning", "info"] as const
+        ["muted", "success", "error", "warning", "info"] as const
       ).map((color) => (
         <div key={color} className="flex flex-col items-center gap-2">
           <Icon icon={<UsersIcon />} color={color} size="lg" />
@@ -194,7 +194,7 @@ export const CustomSvg: Story = {
       </svg>
     ),
     size: "xl",
-    color: "primary",
+    color: "muted",
   },
 };
 

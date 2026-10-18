@@ -290,7 +290,7 @@ describe("Button color recipes", () => {
     const style = btn.getAttribute("style") ?? "";
     expect(style).toContain("--cr-bg: var(--color-red-700)");
     expect(style).toContain("--cr-bg-hover: var(--color-red-600)");
-    expect(style).toContain("--cr-bg-dark: var(--color-red-600)");
+    expect(style).toContain("--cr-bg-dark: var(--color-red-700)");
   });
 
   it("cooks recipes per palette family and variant", () => {
@@ -298,8 +298,8 @@ describe("Button color recipes", () => {
     const btn = screen.getByRole("button", { name: "Link" });
     expect(btn).toHaveClass("text-(color:--cr-text)");
     const style = btn.getAttribute("style") ?? "";
-    expect(style).toContain("--cr-text: var(--color-teal-600)");
-    expect(style).toContain("--cr-text-dark: var(--color-teal-300)");
+    expect(style).toContain("--cr-text: var(--color-teal-700)");
+    expect(style).toContain("--cr-text-dark: var(--color-teal-200)");
   });
 
   it("falls back to the light recipe when a dark recipe is omitted", () => {
@@ -307,5 +307,12 @@ describe("Button color recipes", () => {
     const style = screen.getByRole("button", { name: "Plain" }).getAttribute("style") ?? "";
     expect(style).toContain("--cr-text: var(--color-white)");
     expect(style).toContain("--cr-text-dark: var(--color-white)");
+  });
+
+  it("applies the ghost focus recipe with light fallback", () => {
+    renderWithProviders(<Button variant="ghost" color="teal">Ghost</Button>);
+    const style = screen.getByRole("button", { name: "Ghost" }).getAttribute("style") ?? "";
+    expect(style).toContain("--cr-bg-focus: color-mix(in oklab, var(--color-teal-200) 30%, transparent)");
+    expect(style).toContain("--cr-bg-focus-dark: var(--color-teal-500)");
   });
 });

@@ -100,3 +100,39 @@ describe("cr dark recipes", () => {
     expect(cooked.className).toContain("dark:text-(color:--cr-text-dark)");
   });
 });
+
+describe("cr focus state", () => {
+  it("falls back to the base value for omitted focus", () => {
+    const cooked = cr("teal", { bg: { value: "700" } });
+    expect(cooked.style["--cr-bg-focus"]).toBe("var(--color-teal-700)");
+    expect(cooked.style["--cr-bg-focus-dark"]).toBe("var(--color-teal-700)");
+  });
+
+  it("resolves explicit focus values independently of the base opacity", () => {
+    const cooked = cr("teal", {
+      bg: { value: "200", opacity: 50, focus: { value: "500", opacity: 100 } },
+    });
+    expect(cooked.style["--cr-bg-focus"]).toBe("var(--color-teal-500)");
+  });
+
+  it("inherits the base opacity when focus omits one", () => {
+    const cooked = cr("teal", {
+      bg: { value: "200", opacity: 50, focus: { value: "500" } },
+    });
+    expect(cooked.style["--cr-bg-focus"]).toBe(
+      "color-mix(in oklab, var(--color-teal-500) 50%, transparent)",
+    );
+  });
+
+  it("uses the dark state set's own focus", () => {
+    const cooked = cr("teal", {
+      bg: { value: "700", dark: { value: "600", focus: { value: "400" } } },
+    });
+    expect(cooked.style["--cr-bg-focus-dark"]).toBe("var(--color-teal-400)");
+  });
+
+  it("emits no focus utilities in the class candidates", () => {
+    const cooked = cr("teal", { bg: { value: "700", focus: { value: "500" } } });
+    expect(cooked.className).not.toContain("focus:");
+  });
+});
