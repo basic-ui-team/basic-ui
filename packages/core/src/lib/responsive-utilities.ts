@@ -114,6 +114,8 @@ export const responsiveUtilities = [...new Set(Object.values(responsiveUtilityFa
 export function createResponsiveUtilitySource(
   breakpointOrder: readonly string[],
   utilities: readonly string[],
+  fixedCandidates: readonly string[] = [],
+  staticTheme = "",
 ): string {
   const prefixes = breakpointOrder
     .map((breakpoint) => (breakpoint === "base" ? "" : `${breakpoint}:`))
@@ -132,6 +134,21 @@ export function createResponsiveUtilitySource(
   }
 
   // Tailwind reads inline candidates literally, including backslash escapes.
+  const fixedGroups = new Map<string, string[]>();
+  for (const candidate of new Set(fixedCandidates)) {
+    const quote = candidate.includes('"') ? "'" : '"';
+    if (candidate.includes(quote)) {
+      throw new TypeError(`Cannot serialize a utility containing both quote types: ${candidate}`);
+    }
+    const group = fixedGroups.get(quote) ?? [];
+    group.push(candidate);
+    fixedGroups.set(quote, group);
+  }
+
+  const fixedDirectives = [...fixedGroups].map(
+    ([quote, candidates]) => `@source inline(${quote}${candidates.join(" ")}${quote});`,
+  );
+
   const directives = [...groups].map(
     ([quote, candidates]) =>
       `@source inline(${quote}{${prefixes}}{${candidates.join(",")}}${quote});`,
@@ -139,7 +156,7 @@ export function createResponsiveUtilitySource(
 
   return `/* Auto-generated \u2014 run \`pnpm generate:layout-utilities\` in packages/core to regenerate. */
 
-${directives.join("\n")}
+${[...directives, ...fixedDirectives, ...(staticTheme ? [staticTheme] : [])].join("\n")}
 `;
 }
 
