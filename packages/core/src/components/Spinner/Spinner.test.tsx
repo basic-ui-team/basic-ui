@@ -93,15 +93,15 @@ describe("Spinner", () => {
 
     it("applies responsive sizes without changing the semantic color", () => {
       const { container } = renderWithProviders(
-        <Spinner size={{ base: "xs", md: "xl" }} color="success" />,
+        <Spinner size={{ base: "xs", md: "xl" }} color="teal" />,
       );
       const spinner = container.firstChild as HTMLElement;
 
       expect(spinner).toHaveClass(
         "h-4", "w-4", "border-1", "md:h-8", "md:w-8", "md:border-5",
-        "border-border-success", "border-t-transparent",
+        "border-(--cr-border)", "border-t-transparent",
       );
-      expect(spinner).not.toHaveClass("h-6", "w-6", "md:border-border-success");
+      expect(spinner).not.toHaveClass("h-6", "w-6", "md:border-(--cr-border)");
     });
   });
 
@@ -109,12 +109,8 @@ describe("Spinner", () => {
     it.each([
       ["default", "border-border-base"],
       ["muted", "border-border-muted"],
-      ["primary", "border-primary-500"],
-      ["secondary", "border-secondary-500"],
-      ["success", "border-border-success"],
-      ["error", "border-border-error"],
-      ["warning", "border-border-warning"],
-      ["info", "border-border-info"],
+      ["teal", "border-(--cr-border)"],
+      ["rose", "border-(--cr-border)"],
     ] satisfies [SpinnerColor, string][])(
       "applies color variant '%s'",
       (color, borderColor) => {
@@ -129,6 +125,13 @@ describe("Spinner", () => {
       const { container } = renderWithProviders(<Spinner />);
       const el = container.firstChild as HTMLElement;
       expect(el.className).toContain("border-border-base");
+    });
+
+    it("cooks palette families as recipe variables", () => {
+      const { container } = renderWithProviders(<Spinner color="teal" />);
+      const el = container.firstChild as HTMLElement;
+      expect(el.getAttribute("style")).toContain("--cr-border: var(--color-teal-500)");
+      expect(el.getAttribute("style")).toContain("--cr-border-dark: var(--color-teal-400)");
     });
   });
 
@@ -186,14 +189,14 @@ describe("Spinner", () => {
     it("applies size and color together", () => {
       const { container } = renderWithProviders(<Spinner size="lg" color="primary" />);
       const spinner = container.firstChild as HTMLElement;
-      expect(spinner).toHaveClass("h-7", "w-7", "border-4", "border-primary-500");
+      expect(spinner).toHaveClass("h-7", "w-7", "border-4", "border-(--cr-border)");
     });
 
     it("applies all props together", () => {
       const { container } = renderWithProviders(
         <Spinner
           size="sm"
-          color="success"
+          color="teal"
           ariaLabel="Loading data"
           className="custom"
           m={4}
@@ -201,7 +204,7 @@ describe("Spinner", () => {
       );
       const spinner = container.firstChild as HTMLElement;
       expect(spinner).toHaveClass(
-        "h-5", "w-5", "border-2", "custom", "border-border-success",
+        "h-5", "w-5", "border-2", "custom", "border-(--cr-border)",
       );
       expect(spinner).toHaveAttribute("aria-label", "Loading data");
       expect(spinner).toHaveAttribute("role", "status");
