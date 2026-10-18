@@ -1,8 +1,7 @@
 import { CommonProps, ResponsiveValue, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
-import { BuiltInSemanticColors } from "../../theme";
+import { PaletteColor } from "../../lib/colorRecipes/colorRecipes";
 
 type toggleSizes = "sm" | "md" | "lg";
-type toggleColors = Exclude<BuiltInSemanticColors, "default" | "muted">;
 
 export type AllowedToggleElements = "button";
 
@@ -15,8 +14,8 @@ export interface ToggleOwnProps extends CommonProps {
   onChange?: (value: boolean) => void;
   /** Size of the toggle, which can be responsive. */
   size?: ResponsiveValue<toggleSizes>;
-  /** Semantic color applied when the switch is on. */
-  color?: toggleColors;
+  /** Palette family applied to the track when the switch is on. @default "primary" */
+  color?: PaletteColor;
   /** If true, disables the toggle. */
   disabled?: boolean;
 }
