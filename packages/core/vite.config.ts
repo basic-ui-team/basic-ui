@@ -14,7 +14,8 @@ const componentEntries = Object.fromEntries(
   readdirSync(componentsDirectory, { withFileTypes: true })
     .filter(
       (entry) =>
-        entry.isDirectory() && existsSync(path.resolve(componentsDirectory, entry.name, "index.ts")),
+        entry.isDirectory() &&
+        existsSync(path.resolve(componentsDirectory, entry.name, "index.ts")),
     )
     .map((entry) => [
       `components/${entry.name}/index`,
@@ -26,12 +27,8 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
-      "@core": path.resolve(__dirname, "src"),
-      "@tokens": path.resolve(__dirname, "../tokens/src"),
-      "@icons": path.resolve(__dirname, "../icons/src"),
       "@basic-ui/icons": path.resolve(__dirname, "../icons/src"),
       "@basic-ui/react-utilities": path.resolve(__dirname, "../react-utilities/src"),
-      "@shared": path.resolve(__dirname, "../shared/src"),
     },
   },
   test: {

@@ -21,24 +21,8 @@
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-
-    /* Path aliases */
-    "paths": {
-      "@core/*": ["./packages/core/src/*"],
-      "@react-utilities/*": ["./packages/react-utilities/src/*"],
-      "@tokens/*": ["./packages/tokens/src/*"],
-      "@icons/*": ["./packages/icons/src/*"],
-      "@storybook/*": ["./apps/storybook/src/*"],
-    }
+    "noFallthroughCasesInSwitch": true
   },
   "include": ["packages/*/src", "apps/*/src"],
-  "exclude": ["**/dist", "**/node_modules"],
-  "references": [
-    { "path": "./packages/react-utilities" },
-    { "path": "./packages/core" },
-    { "path": "./packages/tokens" },
-    { "path": "./packages/icons" },
-    { "path": "./apps/storybook" }
-  ]
+  "exclude": ["**/dist", "**/node_modules"]
 }

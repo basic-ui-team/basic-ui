@@ -109,10 +109,19 @@ pnpm lint
 
 React components, hooks, and utilities for building user interfaces.
 
-- 16 accessible, production-ready components
+- 19 accessible, production-ready components
 - Responsive prop system (`ResponsiveValue<T>`)
 - Dark mode support
 - Built with CVA for type-safe variants
+
+### `@basic-ui/react-utilities`
+
+First-party React foundation for `@basic-ui/core` - every core component is built on it.
+
+- Polymorphic component pattern (`forwardRefWithAs`, `PropsWithAs`, `PolymorphicRef`)
+- Responsive prop engine (`ResponsiveValue<T>`, `getResponsiveClassNames`) with `useBreakpoint` for behavioral viewport decisions
+- Overlay, dialog, select, popover, tooltip, focus-trap, anchor-positioning and controllable-state hooks
+- `Portal` for out-of-DOM rendering and `cn` (clsx + tailwind-merge) for class composition
 
 ### `@basic-ui/tokens`
 

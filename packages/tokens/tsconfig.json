@@ -1,17 +1,10 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "./dist",
-    "rootDir": "./src",
     "types": ["node"],
-    "declaration": true,
-    "emitDeclarationOnly": true,
-    "declarationMap": true,
-    "sourceMap": true,
     "lib": ["ES2020", "DOM"],
     "composite": true,
-    "noEmit": false,
-    "rewriteRelativeImportExtensions": true
+    "noEmit": true
   },
   "include": ["src"]
 }

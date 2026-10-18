@@ -1,26 +1,10 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "composite": true,
     "noEmit": true
   },
-  "include": [
-    "src"
-  ],
-  "references": [
-    {
-      "path": "../react-utilities"
-    },
-    {
-      "path": "../tokens"
-    },
-    {
-      "path": "../icons"
-    }
-  ]
+  "include": ["src"],
+  "exclude": ["src/lib/responsive-utilities.ts", "src/lib/responsive-utilities.test.ts"]
 }

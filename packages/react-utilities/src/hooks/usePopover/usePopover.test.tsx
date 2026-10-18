@@ -4,6 +4,7 @@ import * as React from "react";
 import { usePopover, type UsePopoverProps } from "./usePopover";
 import { resetOverlayStackForTesting } from "../useOverlay/useOverlay";
 import { Portal } from "../../portal/Portal";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { useDialog } from "../useDialog/useDialog";
 
 describe("usePopover", () => {

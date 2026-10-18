@@ -25,7 +25,6 @@ const config: StorybookConfig = {
     config.resolve.conditions = [...defaultConditions, "dev"];
     config.resolve.alias = {
       ...(config.resolve.alias ?? {}),
-      "@core": path.resolve(__dirname, "../../../packages/core/src"),
       "@basic-ui/tokens": path.resolve(__dirname, "../../../packages/tokens/src"),
       "@basic-ui/icons": path.resolve(__dirname, "../../../packages/icons/src"),
       "@basic-ui/react-utilities": path.resolve(__dirname, "../../../packages/react-utilities/src"),
