@@ -14,6 +14,8 @@
  *      exports its implementation, including Card compound members.
  *   4. ts-fixture   - external-style TS fixture compiles with root and
  *      component prop-type imports.
+ *   5. styles       - the published styles.css chain generates the responsive
+ *      vocabulary through @tailwindcss/vite.
  */
 import { rmSync } from "node:fs";
 import { fixtureRoot, publicComponents } from "./context";
@@ -22,6 +24,7 @@ import { phaseBuildTwice } from "./build-twice";
 import { phasePackAndExtract } from "./pack";
 import { phaseRuntimeEntries } from "./entries";
 import { phaseTypeScriptFixture } from "./ts-fixture";
+import { phaseStylesheetSmoke } from "./styles";
 
 async function main() {
   console.log(
@@ -32,6 +35,7 @@ async function main() {
   phasePackAndExtract();
   await phaseRuntimeEntries();
   phaseTypeScriptFixture();
+  await phaseStylesheetSmoke();
 
   if (failureCount() > 0) {
     console.log(

@@ -74,7 +74,6 @@ function generateTheme() {
 
 /* ===== THEME CONFIGURATION ===== */
 /* All design tokens with resolved values for Tailwind utility generation */
-/* Utilities will be prefixed with "bui:" (e.g., bui:bg-background-primary) */
 @theme {
 ${lightCSS}
 }
