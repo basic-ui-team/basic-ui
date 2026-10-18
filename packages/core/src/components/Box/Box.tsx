@@ -1,10 +1,7 @@
-import { CommonProps, PolymorphicRef } from "@basic-ui/react-utilities";
+import { CommonProps, PolymorphicRef, cn, forwardRefWithAs } from "@basic-ui/react-utilities";
 import type { BoxProps } from "./box.types";
-import { cn } from "@basic-ui/react-utilities";
-import { forwardRefWithAs } from "@basic-ui/react-utilities";
-import { generateLayoutClassNames, splitLayoutProps } from "../../lib/layout/layout-utils";
 import { ElementType } from "react";
-import { LayoutProps } from "@core/lib/layout";
+import { LayoutProps, splitLayoutProps, generateLayoutClassNames } from "../../lib";
 
 export const Box = forwardRefWithAs<LayoutProps & CommonProps, ElementType>(
   <As extends ElementType = "div">(
@@ -16,10 +13,8 @@ export const Box = forwardRefWithAs<LayoutProps & CommonProps, ElementType>(
     const { layout, rest } = splitLayoutProps(restProps);
     const { layoutClassNameString } = generateLayoutClassNames(layout);
 
-    const resolvedStyles = cn(layoutClassNameString, className);
-
     return (
-      <Comp ref={ref} className={resolvedStyles} style={style} {...rest}>
+      <Comp ref={ref} className={cn(layoutClassNameString, className)} style={style} {...rest}>
         {children}
       </Comp>
     );

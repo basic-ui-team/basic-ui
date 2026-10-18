@@ -1,10 +1,12 @@
 import { createContext } from "react";
 import { AllowedCardElements, CardProps, CardRootProps, CardVariant } from "./card.types";
 import { Box } from "../Box";
-import { cn, forwardRefWithAs } from "@basic-ui/react-utilities";
+import {
+  cn,
+  forwardRefWithAs,
+  PolymorphicRef,
+} from "@basic-ui/react-utilities";
 import { cardRootVariants } from "./card.variants";
-import { useResponsiveProps } from "@basic-ui/react-utilities";
-import { PolymorphicRef } from "@basic-ui/react-utilities";
 
 type CardContextValue = {
   variant: CardVariant;
@@ -45,13 +47,9 @@ export const _Card = <As extends AllowedCardElements = "div">(
     resolvedAs = as || "div";
   }
 
-  const resolvedProps = useResponsiveProps({
-    variant,
-  });
-
   const cardClassName = cn(
     cardRootVariants({
-      variant: resolvedProps.variant,
+      variant,
       isLink: !!href,
       interaction,
       selected,
@@ -76,7 +74,7 @@ export const _Card = <As extends AllowedCardElements = "div">(
   return (
     <CardContext.Provider
       value={{
-        variant: resolvedProps.variant || "default",
+        variant: variant || "default",
         disabled: disabled || false,
         selected: selected || false,
         isLink: !!href,

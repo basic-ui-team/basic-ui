@@ -1,5 +1,5 @@
 import { ResponsiveValue } from "@basic-ui/react-utilities";
-import { BuiltInSemanticColors } from "@core/theme";
+import { BuiltInSemanticColors } from "../../theme";
 import { CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
 
 type buttonVariants = "solid" | "ghost" | "outline" | "link";
@@ -16,11 +16,11 @@ export interface ButtonOwnProps extends CommonProps {
   color?: buttonColors;
   /** If true, disables the button and applies appropriate disabled styles and attributes. */
   disabled?: boolean;
-  /** If true, shows loading state with spinner/icon and optional loading text. */
+  /** If true, marks the button busy and disables interaction. */
   loading?: boolean;
-  /** Optional custom loading icon to display when in loading state. If not provided, will default to spinner or variant-specific icon. */
+  /** Optional loading icon element. Provide its own sizing and styling; no icon is rendered by default. */
   loadingIcon?: React.ReactNode;
-  /** Optional loading text to display when in loading state. If not provided, will just show spinner/icon. */
+  /** Optional text to replace children while loading. If omitted, children remain visible. */
   loadingText?: string;
   /**
    * Custom link component (e.g., Next.js `Link`, React Router `Link`).

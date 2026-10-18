@@ -19,6 +19,19 @@ export default meta;
 
 type Story = StoryObj<typeof Badge>;
 
+export const ResponsiveSizes: Story = {
+  render: () => (
+    <Flex gap={5}>
+      <Badge content={3} color="info" size={{ base: "sm", md: "md", lg: "lg" }}>
+        <span>Count</span>
+      </Badge>
+      <Badge variant="dot" color="success" size={{ base: "sm", md: "md", lg: "lg" }} ping>
+        <span>Status</span>
+      </Badge>
+    </Flex>
+  ),
+};
+
 const notificationButton = (
   <Button aria-label="Notifications" variant="outline">
     Notifications

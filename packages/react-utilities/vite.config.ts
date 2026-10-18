@@ -8,11 +8,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  resolve: {
-    alias: {
-      "@react-utilities": path.resolve(__dirname, "src"),
-    },
-  },
   test: {
     globals: true,
     environment: "jsdom",
@@ -44,18 +39,11 @@ export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname, "src/index.ts"),
-      name: "BasicUI",
       fileName: "index",
       formats: ["es"],
     },
-    rollupOptions: {
-      external: ["react", "react-dom", "tailwindcss"],
-      output: {
-        globals: {
-          react: "React",
-          "react-dom": "ReactDOM",
-        },
-      },
+    rolldownOptions: {
+      external: [/^react(?:\/|$)/, /^react-dom(?:\/|$)/],
     },
     minify: "esbuild",
     sourcemap: true,

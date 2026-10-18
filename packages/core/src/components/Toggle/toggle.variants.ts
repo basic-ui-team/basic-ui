@@ -1,5 +1,30 @@
 import { cva } from "class-variance-authority";
 
+export const toggleSizeClasses = {
+  sm: "h-[16px] w-[32px] p-[2px]",
+  md: "h-[20px] w-[36px] p-[2px]",
+  lg: "h-[24px] w-[44px] p-[2px]",
+};
+
+export const toggleThumbGeometryVariants = cva("", {
+  variants: {
+    size: {
+      sm: "h-[12px] w-[12px]",
+      md: "h-[14px] w-[14px]",
+      lg: "h-[16px] w-[16px]",
+    },
+    checked: {
+      true: "",
+      false: "translate-x-0",
+    },
+  },
+  compoundVariants: [
+    { size: "sm", checked: true, className: "translate-x-[16px]" },
+    { size: "md", checked: true, className: "translate-x-[18px]" },
+    { size: "lg", checked: true, className: "translate-x-[24px]" },
+  ],
+});
+
 export const toggleVariants = cva(
   [
     "relative inline-flex items-center shrink-0 rounded-full",
@@ -9,11 +34,6 @@ export const toggleVariants = cva(
   ].join(" "),
   {
     variants: {
-      size: {
-        sm: "h-4 w-8 p-0.5",
-        md: "h-5 w-9 p-0.5",
-        lg: "h-6 w-11 p-0.5",
-      },
       color: {
         primary: "",
         secondary: "",
@@ -39,14 +59,6 @@ export const toggleVariants = cva(
       { color: "success", checked: true, className: "bg-bg-success hover:bg-bg-success/85" },
       { color: "warning", checked: true, className: "bg-bg-warning hover:bg-bg-warning/85" },
       { color: "info", checked: true, className: "bg-bg-info hover:bg-bg-info/85" },
-      // thumb sizes per size
-      { size: "sm", className: "[&_[data-slot=thumb]]:h-3 [&_[data-slot=thumb]]:w-3" },
-      { size: "md", className: "[&_[data-slot=thumb]]:h-3.5 [&_[data-slot=thumb]]:w-3.5" },
-      { size: "lg", className: "[&_[data-slot=thumb]]:h-4 [&_[data-slot=thumb]]:w-4" },
-      // thumb travel per size when checked
-      { size: "sm", checked: true, className: "[&_[data-slot=thumb]]:translate-x-4" },
-      { size: "md", checked: true, className: "[&_[data-slot=thumb]]:translate-x-4.5" },
-      { size: "lg", checked: true, className: "[&_[data-slot=thumb]]:translate-x-6" },
       // thumb color: inverted on the muted off-track, white on colored on-tracks
       { checked: false, className: "[&_[data-slot=thumb]]:bg-fg-inverted" },
       { checked: true, color: "primary", className: "[&_[data-slot=thumb]]:bg-white" },
@@ -57,7 +69,6 @@ export const toggleVariants = cva(
       { checked: true, color: "info", className: "[&_[data-slot=thumb]]:bg-white" },
     ],
     defaultVariants: {
-      size: "md",
       color: "primary",
       checked: false,
       disabled: false,

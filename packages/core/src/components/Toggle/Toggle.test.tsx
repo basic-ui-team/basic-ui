@@ -4,6 +4,23 @@ import { renderWithProviders, screen, setupUser } from "../../test-utils";
 import { Toggle } from "./Toggle";
 
 describe("Toggle", () => {
+  it("coordinates responsive track, thumb, and travel through checked changes", async () => {
+    const user = setupUser();
+    renderWithProviders(<Toggle size={{ base: "sm", md: "md", lg: "lg" }} />);
+    const track = screen.getByRole("switch");
+    const thumb = track.querySelector("[data-slot=thumb]");
+    expect(track).toHaveClass("h-[16px]", "w-[32px]", "p-[2px]", "md:h-[20px]", "md:w-[36px]", "lg:h-[24px]", "lg:w-[44px]");
+    expect(track).not.toHaveClass("h-[20px]", "w-[36px]", "md:relative");
+    expect(thumb).toHaveClass("h-[12px]", "w-[12px]", "md:h-[14px]", "md:w-[14px]", "lg:h-[16px]", "lg:w-[16px]");
+    expect(thumb).toHaveClass("translate-x-0", "md:translate-x-0", "lg:translate-x-0");
+    await user.click(track);
+    expect(thumb).toHaveClass("translate-x-[16px]", "md:translate-x-[18px]", "lg:translate-x-[24px]");
+    expect(thumb).not.toHaveClass("translate-x-0");
+    await user.click(track);
+    expect(thumb).toHaveClass("translate-x-0", "md:translate-x-0", "lg:translate-x-0");
+    expect(thumb).not.toHaveClass("translate-x-[16px]");
+  });
+
   it("renders as a switch with aria-checked false by default", () => {
     renderWithProviders(<Toggle />);
     const toggle = screen.getByRole("switch");

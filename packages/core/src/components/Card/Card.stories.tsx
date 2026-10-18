@@ -12,6 +12,38 @@ export default meta;
 
 type Story = StoryObj<typeof Card>;
 
+export const ResponsiveLayout: Story = {
+  render: () => (
+    <Card variant="outlined" className="max-w-lg">
+      <Card.Image
+        src="https://placehold.co/800x600"
+        alt="Placeholder"
+        aspectRatio={{ base: "square", md: "video", lg: "auto" }}
+        objectFit={{ base: "cover", lg: "contain" }}
+        rounded="lg"
+      />
+      <Card.Header variant={{ base: "compact", md: "default" }}>
+        <Card.Title
+          size={{ base: "h4", md: "h3", lg: "h2" }}
+          truncate={{ base: true, md: false }}
+          wrap="balance"
+        >
+          A responsive card title that truncates on narrow screens and wraps on wider screens
+        </Card.Title>
+        <Card.Description
+          size={{ base: "sm", md: "md" }}
+          truncate={{ base: true, md: false }}
+          wrap={{ base: "nowrap", md: "pretty" }}
+        >
+          Resize the preview to change spacing, typography, wrapping, and image geometry.
+        </Card.Description>
+      </Card.Header>
+      <Card.Body variant={{ base: "compact", lg: "default" }}>Independent body spacing</Card.Body>
+      <Card.Footer sticky variant={{ base: "compact", md: "default" }}>Scalar sticky footer</Card.Footer>
+    </Card>
+  ),
+};
+
 export const Variants: Story = {
   render: () => (
     <div className="flex flex-col gap-3 w-5/6">

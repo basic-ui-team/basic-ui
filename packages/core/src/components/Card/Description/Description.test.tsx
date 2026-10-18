@@ -5,6 +5,16 @@ import { renderWithProviders } from "../../../test-utils";
 import { axe } from "jest-axe";
 
 describe("Card.Description", () => {
+  it("applies independent responsive size and alignment without scalar defaults leaking", () => {
+    const { container } = renderWithProviders(
+      <CardDescription size={{ base: "xs", lg: "2xl" }} align={{ base: "center", md: "right" }}>
+        Description
+      </CardDescription>,
+    );
+    expect(container.firstElementChild).toHaveClass("text-xs", "lg:text-2xl", "text-center", "md:text-right");
+    expect(container.firstElementChild).not.toHaveClass("text-md", "lg:font-sans");
+  });
+
   it("renders a p by default", () => {
     const { container } = renderWithProviders(<CardDescription>Description</CardDescription>);
     expect(container.querySelector("p")).toBeInTheDocument();

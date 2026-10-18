@@ -1,8 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { textVariants } from "./text.variants";
 import { Text } from "./Text";
-import { renderWithProviders } from "@core/test-utils/renderWithProviders";
+import { renderWithProviders } from "../../test-utils/renderWithProviders";
 import { axe } from "jest-axe";
+import { renderToString } from "react-dom/server";
 
   describe("variants", () => {
     it.each([
@@ -39,7 +40,11 @@ import { axe } from "jest-axe";
       const { container } = renderWithProviders(<Text {...props}>Test</Text>);
       const el = container.querySelector("p");
       expect(el).toBeInTheDocument();
-      expect(el).toHaveClass(textVariants({ [variant]: value }));
+      if (variant === "truncate" && value === true) {
+        expect(el).toHaveClass("overflow-hidden", "text-ellipsis", "whitespace-nowrap");
+      } else {
+        expect(el).toHaveClass(textVariants({ [variant]: value }));
+      }
     });
   });
 
@@ -102,8 +107,84 @@ import { axe } from "jest-axe";
         </Text>,
       );
       const truncatedElement = getByText("Truncated Text");
-      expect(truncatedElement).toHaveClass(textVariants({ truncate: true }));
+      expect(truncatedElement).toHaveClass("overflow-hidden", "text-ellipsis", "whitespace-nowrap");
       expect(truncatedElement).toHaveAttribute("title", "Full text");
+    });
+
+    describe("responsive CSS", () => {
+      it("renders independent responsive axes without viewport state", () => {
+        const markup = renderToString(
+          <Text
+            size={{ base: "xs", lg: "2xl" }}
+            align={{ base: "center", md: "right" }}
+            color="info"
+            weight="semibold"
+          >
+            Text
+          </Text>,
+        );
+        expect(markup).toContain("text-xs");
+        expect(markup).toContain("lg:text-2xl");
+        expect(markup).toContain("md:text-right");
+        expect(markup).toContain("text-fg-info");
+        expect(markup).not.toMatch(/(?:md|lg):(?:font-|text-fg-)/);
+      });
+
+      it("restores flow after truncation and keeps full-text attributes stable", () => {
+        const { container } = renderWithProviders(
+          <Text
+            truncate={{ base: true, md: false }}
+            wrap={{ base: "nowrap", sm: "pretty" }}
+            overflowX={{ base: "auto", lg: "scroll" }}
+          >
+            Full text
+          </Text>,
+        );
+        const text = container.firstElementChild!;
+        expect(text).toHaveClass(
+          "overflow-hidden", "text-ellipsis", "whitespace-nowrap",
+          "md:overflow-x-auto", "md:overflow-y-visible",
+          "md:text-clip", "md:whitespace-normal", "md:text-pretty",
+          "lg:overflow-x-scroll",
+        );
+        expect(text).toHaveAttribute("title", "Full text");
+        expect(text).toHaveAttribute("aria-label", "Full text");
+      });
+
+      it("adds stable full-text attributes when truncation begins at a later breakpoint", () => {
+        const { container } = renderWithProviders(
+          <Text truncate={{ base: false, md: true }}>Full text</Text>,
+        );
+        expect(container.firstElementChild).toHaveAttribute("title", "Full text");
+        expect(container.firstElementChild).toHaveAttribute("aria-label", "Full text");
+        expect(container.firstElementChild).toHaveClass("md:whitespace-nowrap");
+      });
+
+      it("preserves explicit accessibility attributes and consumer class overrides", () => {
+        const { container } = renderWithProviders(
+          <Text
+            truncate={{ base: true, md: false }}
+            title="Custom title"
+            aria-label="Custom label"
+            className="md:overflow-auto"
+          >
+            Text
+          </Text>,
+        );
+        const text = container.firstElementChild!;
+        expect(text).toHaveAttribute("title", "Custom title");
+        expect(text).toHaveAttribute("aria-label", "Custom label");
+        expect(text).toHaveClass("md:overflow-auto");
+        expect(text).not.toHaveClass("md:overflow-visible");
+      });
+
+      it("retains inline span alignment behavior", () => {
+        const { container } = renderWithProviders(
+          <Text as="span" align={{ base: "center", md: "right" }}>Inline</Text>,
+        );
+        expect(container.firstElementChild).toHaveClass("text-left");
+        expect(container.firstElementChild).not.toHaveClass("text-center", "md:text-right");
+      });
     });
 
     it("should pass an axe accessibility audit", async () => {

@@ -1,5 +1,5 @@
 import type React from "react";
-import type { CommonProps } from "@basic-ui/react-utilities";
+import type { CommonProps, ResponsiveValue } from "@basic-ui/react-utilities";
 
 export type BadgeVariant = "count" | "dot";
 export type BadgeSize = "sm" | "md" | "lg";
@@ -14,7 +14,7 @@ export interface BadgeSharedProps extends Omit<CommonProps, "children"> {
   color: BadgeColor;
 
   /** The size of the badge. @default "md" */
-  size?: BadgeSize;
+  size?: ResponsiveValue<BadgeSize>;
 
   /** The position of the badge relative to its parent element. @default "top-right" */
   position?: BadgePosition;

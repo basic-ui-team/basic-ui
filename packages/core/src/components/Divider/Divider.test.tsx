@@ -1,9 +1,37 @@
 import { describe, expect, it, vi } from "vitest";
 import { Divider } from "./Divider";
-import { renderWithProviders } from "@core/test-utils/renderWithProviders";
+import { renderWithProviders } from "../../test-utils/renderWithProviders";
 import { axe } from "jest-axe";
+import { renderToString } from "react-dom/server";
 
 describe("Divider - variants and behavior", () => {
+  it.each(["horizontal", "vertical"] as const)(
+    "keeps %s semantics scalar while thickness and inset change",
+    (direction) => {
+      const markup = renderToString(
+        <Divider
+          direction={direction}
+          decorative={false}
+          thickness={{ base: "thick", md: "none", lg: "thin" }}
+          inset={{ base: 1, md: 3 }}
+          appearance="dashed"
+          color="success"
+        />,
+      );
+      const axis = direction === "horizontal" ? "t" : "l";
+      const margin = direction === "horizontal" ? "mx" : "my";
+      expect(markup).toContain(`aria-orientation="${direction}"`);
+      expect(markup).toContain(`border-${axis}-4`);
+      expect(markup).toContain(`md:border-${axis}-0`);
+      expect(markup).toContain(`lg:border-${axis}-1`);
+      expect(markup).toContain(`${margin}-1`);
+      expect(markup).toContain(`md:${margin}-3`);
+      expect(markup).toContain("border-dashed");
+      expect(markup).not.toContain("md:border-dashed");
+      expect(markup).not.toContain("md:border-border-success");
+    },
+  );
+
   it.each([
     ["direction", "horizontal"],
     ["direction", "vertical"],

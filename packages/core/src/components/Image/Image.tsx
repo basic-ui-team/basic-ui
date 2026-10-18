@@ -1,9 +1,12 @@
-import { useResponsiveProps } from "@basic-ui/react-utilities";
-import { cn, forwardRefWithAs } from "@basic-ui/react-utilities";
+import {
+  cn,
+  forwardRefWithAs,
+  PolymorphicRef,
+  getResponsiveClassNames,
+} from "@basic-ui/react-utilities";
 import { Box, BoxProps } from "../Box";
-import { imageVariants } from "./image.variants";
+import { imageVariants, imageObjectFitClasses, imageAspectRatioClasses } from "./image.variants";
 import { AllowedImageElements, ImageOwnProps, ImageProps } from "./image.types";
-import { PolymorphicRef } from "@basic-ui/react-utilities";
 
 export const _Image = <As extends AllowedImageElements = "img">(
   {
@@ -21,25 +24,19 @@ export const _Image = <As extends AllowedImageElements = "img">(
   }: ImageProps<As>,
   ref: PolymorphicRef<As>,
 ) => {
-  const {
-    objectFit: resolvedObjectFit,
-    aspectRatio: resolvedAspectRatio,
-    rounded: resolvedRounded,
-  } = useResponsiveProps({ objectFit, aspectRatio, rounded });
-
   const Comp = as ? as : sources && sources.length > 0 ? "picture" : "img";
 
   const isPicture = Comp === "picture";
 
   // Split styles: Wrapper gets layout, Inner gets object-fit
   const wrapperClasses = cn(
-    resolvedAspectRatio ? imageVariants({ aspectRatio: resolvedAspectRatio }) : "",
-    resolvedRounded ? imageVariants({ rounded: resolvedRounded }) : "",
+    imageVariants({ objectFit: null, aspectRatio: null, rounded }),
+    getResponsiveClassNames(aspectRatio, (value) => imageAspectRatioClasses[value]),
     className,
   );
 
   const innerImgClasses = cn(
-    imageVariants({ objectFit: resolvedObjectFit }),
+    getResponsiveClassNames(objectFit, (value) => imageObjectFitClasses[value]),
     "w-full h-full", // Critical for picture element
   );
 
@@ -71,31 +68,33 @@ export const _Image = <As extends AllowedImageElements = "img">(
       decoding={decoding}
       className={cn(
         imageVariants({
-          objectFit: resolvedObjectFit,
-          aspectRatio: resolvedAspectRatio,
-          rounded: resolvedRounded,
+          objectFit: null,
+          aspectRatio: null,
+          rounded,
         }),
+        getResponsiveClassNames(objectFit, (value) => imageObjectFitClasses[value]),
+        getResponsiveClassNames(aspectRatio, (value) => imageAspectRatioClasses[value]),
         className,
       )}
-      {...(rest as BoxProps<As>)} 
+      {...(rest as BoxProps<As>)}
     />
   );
 };
 
 /**
  * Image component for rendering responsive images with art-direction support.
- * 
+ *
  * Supports both `img` and `picture` elements for flexible image rendering with:
  * - Responsive sizing through aspect-ratio presets
  * - Object-fit variants (cover, contain, fill, none, scale-down)
  * - Art-direction sources for responsive images
- * - Rounded corners with responsive values
+ * - Scalar rounded corners
  * - Performance optimizations (lazy loading, async decoding)
- * 
+ *
  * @example
  * // Basic image
  * <Image src="/photo.jpg" alt="A photo" />
- * 
+ *
  * @example
  * // Responsive picture element
  * <Image
@@ -104,7 +103,7 @@ export const _Image = <As extends AllowedImageElements = "img">(
  *   alt="Responsive"
  *   sources={[{ srcSet: "/small.jpg", media: "(max-width: 600px)" }]}
  * />
- * 
+ *
  * @example
  * // With aspect ratio and object-fit
  * <Image

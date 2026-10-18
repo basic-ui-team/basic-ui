@@ -1,7 +1,7 @@
 import { ImgHTMLAttributes } from "react";
 import { CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities"; // Your existing types
 import { ResponsiveValue } from "@basic-ui/react-utilities";
-import { LayoutProps } from "../../lib/layout";
+import { LayoutProps } from "../../lib";
 
 export type ObjectFitType = "cover" | "contain" | "fill" | "none" | "scale-down";
 
@@ -25,7 +25,8 @@ export interface ImageOwnProps
   loading?: "lazy" | "eager";
   /** Decoding strategy (async, sync, auto). */
   decoding?: "async" | "sync" | "auto";
-  rounded?: ResponsiveValue<"none" | "sm" | "md" | "lg" | "xl" | "full">;
+  /** Scalar corner rounding. */
+  rounded?: "none" | "sm" | "md" | "lg" | "xl" | "full";
 }
 
 export type ImageSource = {

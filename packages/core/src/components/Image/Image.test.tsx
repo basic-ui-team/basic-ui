@@ -2,8 +2,53 @@ import { describe, it, expect } from "vitest";
 import { renderWithProviders } from "../../test-utils";
 import { Image } from "./Image";
 import { axe } from "jest-axe";
+import { renderToString } from "react-dom/server";
 
 describe("Image", () => {
+  it.each(["img", "picture", "automatic-picture"] as const)(
+    "keeps responsive geometry on the correct elements for %s",
+    (mode) => {
+      const sources = [{ srcSet: "/small.jpg", media: "(max-width:600px)" }];
+      const { container } = renderWithProviders(
+        <Image
+          as={mode === "automatic-picture" ? undefined : mode}
+          src="/img.png"
+          alt="Responsive"
+          sources={mode === "img" ? undefined : sources}
+          objectFit={{ base: "cover", lg: "contain" }}
+          aspectRatio={{ base: "square", md: "auto" }}
+          rounded="lg"
+          loading="eager"
+          decoding="sync"
+          className="md:aspect-video"
+        />,
+      );
+      const root = container.firstElementChild!;
+      const img = container.querySelector("img")!;
+      expect(root).toHaveClass("aspect-square", "md:aspect-video", "rounded-lg");
+      expect(root).not.toHaveClass("aspect-auto", "md:aspect-auto", "md:rounded-lg", "md:inline-block");
+      expect(img).toHaveClass("object-cover", "lg:object-contain");
+      expect(img).toHaveAttribute("alt", "Responsive");
+      expect(img).toHaveAttribute("loading", "eager");
+      expect(img).toHaveAttribute("decoding", "sync");
+      if (mode !== "img") {
+        expect(root.tagName).toBe("PICTURE");
+        expect(root).not.toHaveClass("object-cover", "lg:object-contain");
+        expect(img).toHaveClass("w-full", "h-full");
+        expect(img).not.toHaveClass("aspect-auto", "rounded-none", "inline-block");
+        expect(container.querySelector("source")).toHaveAttribute("srcset", "/small.jpg");
+      }
+    },
+  );
+
+  it("emits the auto ratio reset without a provider or viewport state", () => {
+    const markup = renderToString(
+      <Image src="/img.png" alt="Responsive" aspectRatio={{ base: "square", md: "auto" }} />,
+    );
+    expect(markup).toContain("aspect-square");
+    expect(markup).toContain("md:aspect-auto");
+  });
+
   it("renders an img with provided src and alt", () => {
     const { container } = renderWithProviders(<Image src="/img.png" alt="img" />);
     const img = container.querySelector("img");

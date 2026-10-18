@@ -42,24 +42,88 @@ export const MyComp = forwardRefWithAs<MyCompOwnProps, AllowedElements>(_MyComp)
 
 - Do not use manual `forwardRef` + `as any` cast patterns — they are error-prone.
 
-## Hooks & responsive props
+## Responsive props
 
-- Use `useBreakpoint()` once inside `useResponsiveProps` and resolve responsive objects with a pure resolver function. Avoid calling `useResponsive` per prop.
-- Keep `orderedKeys` stable across renders when provided.
+Use `ResponsiveValue<T>` when size, spacing, or layout should adapt to the
+available space. Keep colors, cosmetic variants, interaction state, and
+accessibility attributes independent of viewport size. Use CSS for responsive
+presentation rather than selecting styles with a viewport hook.
+
+Keep styling in the component's variant file. Use `getResponsiveClassNames` to
+resolve each responsive value into its classes:
+
+```ts
+getResponsiveClassNames(size, currentSize =>
+  sizeVariants({ size: currentSize }),
+);
+```
+
+The callback should return only the styles controlled by that prop, not the
+whole component recipe. Keep unrelated defaults, colors, and focus styles out
+of it. Normal CVA compounds can still combine responsive size with scalar state.
+
+CSS overrides earlier declarations; it does not replace an entire recipe.
+When a value turns styling off, emit an explicit reset rather than an empty
+string. Test transitions in both directions.
+
+Omitted breakpoints inherit the last supplied value, not the base value.
+Layout props do not accept `unset`: use `0` for spacing, `"auto"` for dimensions,
+`"none"` for maximum dimensions, and `"visible"` for overflow resets.
+`useResponsiveProps` has been removed; reserve `useBreakpoint` for behavior,
+not presentation.
+
+Coordinate child parts when their geometry is coupled to the parent's size.
+Do not implicitly resize content supplied by the consumer.
+
+### Generating responsive CSS
+
+Responsive utilities must be present in the shipped stylesheet. Supported
+families and values live in
+[`responsive-utilities.ts`](../../packages/core/src/lib/responsive-utilities.ts).
+Composing existing utilities in a new recipe needs no generator registration.
+
+If a required utility is missing, review whether it belongs in a shared family
+and extend that family rather than adding a component-specific list. Regenerate
+the stylesheet and include it with your change:
+
+```sh
+pnpm --filter @basic-ui/core generate:layout-utilities
+pnpm --filter @basic-ui/core check:layout-utilities
+```
+
+Test both the component's class output and the resulting CSS. A class appearing
+in the DOM does not prove that the stylesheet contains it. Add actual geometry
+maps or compound outputs to `scripts/responsive-utilities.css.test.ts`; test-only
+recipe imports are intentional, while the production generator stays independent.
+See the
+[responsive CSS design](../engineering/core-design/responsive-css.md) for the
+supported capabilities and current migration scope.
 
 ## Exports & TypeScript
 
-- `packages/*/package.json` should include a main `exports` entry and `typesVersions` to help TS resolve deep imports. Example:
+- `packages/*/package.json` should include a main `exports` entry with a `types` condition per entry. Do not add `typesVersions`; the repo supports modern bundler resolution only. Core also advertises per-component entries through a wildcard:
 
 ```json
-"exports": { 
-  ".": { "import": "./dist/index.js", "types": "./dist/index.d.ts" },
-  "./package.json": "./package.json"
+"exports": {
+  ".": { "types": "./dist/index.d.ts", "dev": "./src/index.ts", "import": "./dist/index.js" },
+  "./styles.css": "./dist/styles.css",
+  "./package.json": "./package.json",
+  "./*": {
+    "types": "./dist/components/*/index.d.ts",
+    "dev": "./src/components/*/index.ts",
+    "import": "./dist/components/*/index.js"
+  }
 }
-"typesVersions": { "*": { "*": ["./dist/*"] } }
 ```
 
-- Prefer the package's main entrypoint for consumers: `import { Alert } from '@basic-ui/core'`.
+- `@basic-ui/core` supports two import forms. Both tree-shake; per-component imports are the preferred form for libraries and lean bundles:
+  - Root: `import { Alert } from "@basic-ui/core"` (convenience barrel)
+  - Per component: `import { Alert, type AlertProps } from "@basic-ui/core/Alert"`
+  - Every `src/components/<Name>/index.ts` is a public entry; `Pagination` stays one grouped entry (`@basic-ui/core/Pagination` exports `TablePagination` and `LinkPagination`).
+- The `dev` export condition maps to `src/` and is **workspace-only**: `src/` is not published (`files: ["dist"]`), so published/default consumers always resolve `dist/`. Local tooling must opt in explicitly — Storybook appends `dev` to Vite's default `resolve.conditions` and sets TS `customConditions: ["dev"]`. Note that TS resolves types through the `types` condition first, so editor types still come from the built declarations.
+- `@basic-ui/core` declares `sideEffects: ["**/*.css"]`; modules contain no import-time side effects, so bundlers may tree-shake unused component entries. Preserve this when adding components.
+- Verify packaging changes with `pnpm --filter @basic-ui/core verify:package`: clean double build, pack + extracted-tarball inspection (ships only dist, declarations resolve without workspace aliases, React externalized), runtime imports of every public entry, and an external-style TS fixture.
+
 
 ## Component composition rule (#60)
 
@@ -76,7 +140,12 @@ Enforced by `scripts/check-component-imports.mjs` in CI (see Enforcement below).
 
 ## Layout utilities
 
-- Keep layout helpers (e.g. `splitLayoutProps`, `generateLayoutClassNames`) under `packages/core/src/lib/layout` and export them from the library internal `layout` barrel.
+Use Box for shared spacing, sizing, and layout props instead of handling them
+again in each component. Layout props should become classes, not DOM attributes.
+
+Shared layout types, recipes, and helpers live in
+[`packages/core/src/lib`](../../packages/core/src/lib). Recipe keys match the
+public prop names, such as `p` and `hMin`.
 
 ## Tests & Accessibility
 

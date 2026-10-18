@@ -1,6 +1,5 @@
-import { ResponsiveValue } from "@basic-ui/react-utilities";
-import { CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
-import type { LayoutProps, SpacingStep } from "../../lib/layout/layout.types";
+import { CommonProps, ResponsiveValue, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
+import type { LayoutProps, SpacingStep } from "../../lib/layout.types";
 
 export type AllowedGridElements = "div" | "section" | "article" | "main" | "aside" | "nav";
 const COL_ROW_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const;
@@ -27,6 +26,7 @@ const alignContentValues = [
 const autoFlowValues = ["row", "column", "dense"] as const;
 const autoColsRowsValues = ["min", "max", "fr"] as const;
 const gridTemplatePresetValues = [
+  "none",
   "sidebar",
   "hero",
   "masonry",
@@ -70,7 +70,7 @@ export interface GridOwnProps extends Omit<LayoutProps, "display">, CommonProps 
   justifyItems?: ResponsiveValue<JustifyItemsOption>;
   /** alignContent controls the alignment of the grid's content along the block axis */
   alignContent?: ResponsiveValue<AlignContentOption>;
-  /** Preset grid templates for common layouts. If set, overrides `cols` and `rows`. */
+  /** Preset overrides cols/rows. "none" restores their latest values, or implicit tracks when omitted. */
   templatePreset?: ResponsiveValue<GridTemplatePresetOption>;
 }
 

@@ -1,6 +1,6 @@
 import { cva } from "class-variance-authority";
 
-export const layoutVariantsConfig = {
+export const layoutVariants = cva("", {
   variants: {
     position: {
       static: "static",
@@ -15,7 +15,7 @@ export const layoutVariantsConfig = {
       "inline-block": "inline-block",
       none: "hidden",
     },
-    padding: {
+    p: {
       0: "p-0",
       1: "p-1",
       2: "p-2",
@@ -26,9 +26,8 @@ export const layoutVariantsConfig = {
       7: "p-7",
       8: "p-8",
       9: "p-9",
-      unset: "",
     },
-    paddingX: {
+    px: {
       0: "px-0",
       1: "px-1",
       2: "px-2",
@@ -39,9 +38,8 @@ export const layoutVariantsConfig = {
       7: "px-7",
       8: "px-8",
       9: "px-9",
-      unset: "",
     },
-    paddingY: {
+    py: {
       0: "py-0",
       1: "py-1",
       2: "py-2",
@@ -52,9 +50,8 @@ export const layoutVariantsConfig = {
       7: "py-7",
       8: "py-8",
       9: "py-9",
-      unset: "",
     },
-    paddingTop: {
+    pt: {
       0: "pt-0",
       1: "pt-1",
       2: "pt-2",
@@ -65,9 +62,8 @@ export const layoutVariantsConfig = {
       7: "pt-7",
       8: "pt-8",
       9: "pt-9",
-      unset: "",
     },
-    paddingRight: {
+    pr: {
       0: "pr-0",
       1: "pr-1",
       2: "pr-2",
@@ -78,9 +74,8 @@ export const layoutVariantsConfig = {
       7: "pr-7",
       8: "pr-8",
       9: "pr-9",
-      unset: "",
     },
-    paddingBottom: {
+    pb: {
       0: "pb-0",
       1: "pb-1",
       2: "pb-2",
@@ -91,9 +86,8 @@ export const layoutVariantsConfig = {
       7: "pb-7",
       8: "pb-8",
       9: "pb-9",
-      unset: "",
     },
-    paddingLeft: {
+    pl: {
       0: "pl-0",
       1: "pl-1",
       2: "pl-2",
@@ -104,9 +98,8 @@ export const layoutVariantsConfig = {
       7: "pl-7",
       8: "pl-8",
       9: "pl-9",
-      unset: "",
     },
-    margin: {
+    m: {
       0: "m-0",
       1: "m-1",
       2: "m-2",
@@ -117,9 +110,8 @@ export const layoutVariantsConfig = {
       7: "m-7",
       8: "m-8",
       9: "m-9",
-      unset: "",
     },
-    marginX: {
+    mx: {
       0: "mx-0",
       1: "mx-1",
       2: "mx-2",
@@ -130,9 +122,8 @@ export const layoutVariantsConfig = {
       7: "mx-7",
       8: "mx-8",
       9: "mx-9",
-      unset: "",
     },
-    marginY: {
+    my: {
       0: "my-0",
       1: "my-1",
       2: "my-2",
@@ -143,9 +134,8 @@ export const layoutVariantsConfig = {
       7: "my-7",
       8: "my-8",
       9: "my-9",
-      unset: "",
     },
-    marginTop: {
+    mt: {
       0: "mt-0",
       1: "mt-1",
       2: "mt-2",
@@ -156,9 +146,8 @@ export const layoutVariantsConfig = {
       7: "mt-7",
       8: "mt-8",
       9: "mt-9",
-      unset: "",
     },
-    marginRight: {
+    mr: {
       0: "mr-0",
       1: "mr-1",
       2: "mr-2",
@@ -169,9 +158,8 @@ export const layoutVariantsConfig = {
       7: "mr-7",
       8: "mr-8",
       9: "mr-9",
-      unset: "",
     },
-    marginBottom: {
+    mb: {
       0: "mb-0",
       1: "mb-1",
       2: "mb-2",
@@ -182,9 +170,8 @@ export const layoutVariantsConfig = {
       7: "mb-7",
       8: "mb-8",
       9: "mb-9",
-      unset: "",
     },
-    marginLeft: {
+    ml: {
       0: "ml-0",
       1: "ml-1",
       2: "ml-2",
@@ -195,7 +182,6 @@ export const layoutVariantsConfig = {
       7: "ml-7",
       8: "ml-8",
       9: "ml-9",
-      unset: "",
     },
     gap: {
       0: "gap-0",
@@ -208,86 +194,74 @@ export const layoutVariantsConfig = {
       7: "gap-7",
       8: "gap-8",
       9: "gap-9",
-      unset: "",
     },
-    height: {
+    h: {
       auto: "h-auto",
       full: "h-full",
       screen: "h-screen",
       min: "h-min",
       max: "h-max",
       fit: "h-fit",
-      unset: "",
     },
-    heightMin: {
+    hMin: {
       auto: "min-h-auto",
       full: "min-h-full",
       screen: "min-h-screen",
       min: "min-h-min",
       max: "min-h-max",
       fit: "min-h-fit",
-      unset: "",
     },
-    heightMax: {
-      auto: "max-h-auto",
+    hMax: {
+      none: "max-h-none",
       full: "max-h-full",
       screen: "max-h-screen",
       min: "max-h-min",
       max: "max-h-max",
       fit: "max-h-fit",
-      unset: "",
     },
-    width: {
+    w: {
       auto: "w-auto",
       full: "w-full",
       screen: "w-screen",
       min: "w-min",
       max: "w-max",
       fit: "w-fit",
-      unset: "",
     },
-    widthMin: {
+    wMin: {
       auto: "min-w-auto",
       full: "min-w-full",
       screen: "min-w-screen",
       min: "min-w-min",
       max: "min-w-max",
       fit: "min-w-fit",
-      unset: "",
     },
-    widthMax: {
-      auto: "max-w-auto",
+    wMax: {
+      none: "max-w-none",
       full: "max-w-full",
       screen: "max-w-screen",
       min: "max-w-min",
       max: "max-w-max",
       fit: "max-w-fit",
-      unset: "",
     },
     overflow: {
       visible: "overflow-visible",
       hidden: "overflow-hidden",
       auto: "overflow-auto",
       scroll: "overflow-scroll",
-      unset: "",
     },
     overflowX: {
       visible: "overflow-x-visible",
       hidden: "overflow-x-hidden",
       auto: "overflow-x-auto",
       scroll: "overflow-x-scroll",
-      unset: "",
     },
     overflowY: {
       visible: "overflow-y-visible",
       hidden: "overflow-y-hidden",
       auto: "overflow-y-auto",
       scroll: "overflow-y-scroll",
-      unset: "",
     },
   },
-} as const;
-
-export const layoutVariants = cva("", layoutVariantsConfig);
+});
 
 export default layoutVariants;

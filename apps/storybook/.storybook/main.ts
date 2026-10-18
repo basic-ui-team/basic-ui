@@ -15,9 +15,16 @@ const config: StorybookConfig = {
   viteFinal: async (config) => {
     config.plugins = [...(config.plugins ?? []), tailwindcss()];
     config.resolve = config.resolve ?? {};
+    // Opt into @basic-ui/core's local "dev" condition without replacing Vite's
+    // default conditions, so package imports resolve to source during development.
+    const defaultConditions = config.resolve.conditions ?? [
+      "module",
+      "browser",
+      "development|production",
+    ];
+    config.resolve.conditions = [...defaultConditions, "dev"];
     config.resolve.alias = {
       ...(config.resolve.alias ?? {}),
-      "@core": path.resolve(__dirname, "../../../packages/core/src"),
       "@basic-ui/tokens": path.resolve(__dirname, "../../../packages/tokens/src"),
       "@basic-ui/icons": path.resolve(__dirname, "../../../packages/icons/src"),
       "@basic-ui/react-utilities": path.resolve(__dirname, "../../../packages/react-utilities/src"),

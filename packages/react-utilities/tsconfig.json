@@ -1,17 +1,10 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "types": ["@testing-library/jest-dom", "vitest/globals", "node"],
     "composite": true,
-    "noEmit": false,
-    "rewriteRelativeImportExtensions": true
+    "noEmit": true
   },
-  "include": ["src"],
-  "references": []
+  "include": ["src"]
 }

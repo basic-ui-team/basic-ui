@@ -48,44 +48,47 @@ describe("Icon", () => {
     it("should apply size variant classes", () => {
       const { container } = render(<Icon icon={<TestIcon />} size="lg" />);
       const span = container.querySelector("span");
-      expect(span).toHaveClass("w-6", "h-6");
+      expect(span).toHaveClass("w-7", "h-7");
     });
 
-    it("should apply all size variants", () => {
-      const sizes: IconProps["size"][] = ["xs", "sm", "md", "lg", "xl"];
-
-      sizes.forEach((size) => {
+    it.each([
+      ["xs", "w-4", "h-4"],
+      ["sm", "w-5", "h-5"],
+      ["md", "w-6", "h-6"],
+      ["lg", "w-7", "h-7"],
+      ["xl", "w-8", "h-8"],
+    ] satisfies [IconProps["size"], string, string][])(
+      "should preserve %s size classes",
+      (size, width, height) => {
         const { container } = render(<Icon icon={<TestIcon />} size={size} />);
-        const span = container.querySelector("span");
-        expect(span).toHaveClass("flex", "items-center", "justify-center");
-      });
+        expect(container.querySelector("span")).toHaveClass(
+          "flex", "items-center", "justify-center", width, height,
+        );
+      },
+    );
+
+    it("keeps semantic color scalar when size changes across breakpoints", () => {
+      const { container } = render(
+        <Icon icon={<TestIcon />} size={{ base: "xs", md: "xl" }} color="success" />,
+      );
+      const span = container.querySelector("span");
+      expect(span).toHaveClass("w-4", "h-4", "md:w-8", "md:h-8", "text-fg-success");
+      expect(span).not.toHaveClass("w-6", "h-6", "md:text-fg-success");
+      expect(span).not.toHaveAttribute("color");
     });
 
-    it("should apply semantic variant classes", () => {
-      const variants = [
-        "default",
-        "muted",
-        "primary",
-        "secondary",
-        "success",
-        "error",
-        "warning",
-        "info",
-      ] as const;
-
-      variants.forEach((variant) => {
-        const { container } = render(<Icon icon={<TestIcon />} variant={variant} />);
-        const span = container.querySelector("span");
-        expect(span?.className).toBeTruthy();
-      });
-    });
-
-    it("should apply color override classes", () => {
-      const { container: containerLight } = render(<Icon icon={<TestIcon />} color="light" />);
-      expect(containerLight.querySelector("span")).toHaveClass("text-light");
-
-      const { container: containerDark } = render(<Icon icon={<TestIcon />} color="dark" />);
-      expect(containerDark.querySelector("span")).toHaveClass("text-dark");
+    it.each([
+      ["default", ["text-primary-700", "dark:text-primary-300"]],
+      ["muted", ["text-fg-muted"]],
+      ["primary", ["text-primary-700", "dark:text-primary-300"]],
+      ["secondary", ["text-secondary-700", "dark:text-secondary-300"]],
+      ["success", ["text-fg-success"]],
+      ["error", ["text-fg-error"]],
+      ["warning", ["text-fg-warning"]],
+      ["info", ["text-fg-info"]],
+    ] as const)("should apply %s semantic color classes", (color, classes) => {
+      const { container } = render(<Icon icon={<TestIcon />} color={color} />);
+      expect(container.querySelector("span")).toHaveClass(...classes);
     });
   });
 
@@ -96,17 +99,15 @@ describe("Icon", () => {
       expect(span).toHaveClass("w-6", "h-6"); // md size
     });
 
-    it('should use "default" as default variant', () => {
-      const { container } = render(<Icon icon={<TestIcon />} />);
-      const span = container.querySelector("span");
-      expect(span).toHaveClass("text-primary"); // default variant color
-    });
-
-    it('should use "default" as default color', () => {
-      const { container } = render(<Icon icon={<TestIcon />} variant="success" />);
-      const span = container.querySelector("span");
-      expect(span).toHaveClass("text-success");
-      expect(span).not.toHaveClass("text-light", "text-dark");
+    it("inherits the parent's color when color is omitted", () => {
+      render(
+        <div style={{ color: "rgb(12, 34, 56)" }}>
+          <Icon icon={<TestIcon />} data-testid="inherited-icon" />
+        </div>,
+      );
+      const span = screen.getByTestId("inherited-icon");
+      expect(span.className).not.toMatch(/(?:^|\s)(?:\S+:)?text-/);
+      expect(getComputedStyle(span).color).toBe("rgb(12, 34, 56)");
     });
   });
 
@@ -160,7 +161,7 @@ describe("Icon", () => {
         <Icon icon={<TestIcon />} className="hover:opacity-75" size="sm" />,
       );
       const span = container.querySelector("span");
-      expect(span).toHaveClass("w-4", "h-4", "hover:opacity-75");
+      expect(span).toHaveClass("w-5", "h-5", "hover:opacity-75");
     });
 
     it("should apply layout props to its existing wrapper", () => {
@@ -177,7 +178,7 @@ describe("Icon", () => {
       );
       const span = container.querySelector("span");
 
-      expect(span).toHaveClass("p-1");
+      expect(span).toHaveClass("p-1", "md:p-4");
       expect(container.querySelectorAll("span")).toHaveLength(1);
     });
   });
@@ -227,14 +228,12 @@ describe("Icon", () => {
   });
 
   describe("Combination scenarios", () => {
-    it("should combine size, variant, and color (color overrides variant)", () => {
+    it("should combine size and semantic color", () => {
       const { container } = render(
-        <Icon icon={<TestIcon />} size="lg" variant="success" color="dark" />,
+        <Icon icon={<TestIcon />} size="lg" color="success" />,
       );
       const span = container.querySelector("span");
-      // Note: color override (text-dark) replaces variant color
-      expect(span).toHaveClass("w-6", "h-6", "text-dark");
-      expect(span).not.toHaveClass("text-success");
+      expect(span).toHaveClass("w-7", "h-7", "text-fg-success");
       expect(span).toHaveAttribute("aria-hidden", "true");
     });
 
@@ -244,25 +243,20 @@ describe("Icon", () => {
           icon={<TestIcon />}
           aria-hidden={false}
           aria-label="Loading spinner"
-          variant="primary"
+          color="primary"
           size="md"
           className="animate-spin"
         />,
       );
       const img = screen.getByRole("img", { name: "Loading spinner" });
-      expect(img).toHaveClass("animate-spin", "text-primary", "w-6", "h-6");
+      expect(img).toHaveClass("animate-spin", "text-primary-700", "w-6", "h-6");
     });
 
-    it("should work with responsive size as object", () => {
+    it("should apply only supplied responsive size variants", () => {
       const { container } = render(<Icon icon={<TestIcon />} size={{ base: "sm", md: "lg" }} />);
       const span = container.querySelector("span");
-      expect(span).toBeInTheDocument();
-    });
-
-    it("should work with responsive size as primitive", () => {
-      const { container } = render(<Icon icon={<TestIcon />} size="md" />);
-      const span = container.querySelector("span");
-      expect(span).toBeInTheDocument();
+      expect(span).toHaveClass("w-5", "h-5", "md:w-7", "md:h-7");
+      expect(span).not.toHaveClass("w-6", "h-6");
     });
   });
 

@@ -1,7 +1,6 @@
-import { ResponsiveValue } from "@basic-ui/react-utilities";
-import { CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
-import { LayoutProps } from "../../lib/layout";
-import { BuiltInSemanticColors } from "@core/theme/colors";
+import { CommonProps, ResponsiveValue, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
+import { LayoutProps } from "../../lib";
+import { BuiltInSemanticColors } from "../../theme/colors";
 
 export type AllowedTextElements = "span" | "p" | "div";
 
@@ -9,14 +8,14 @@ export interface TextOwnProps extends CommonProps, LayoutProps {
   /** Size of the text. @default "md" */
   size?: ResponsiveValue<"xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl">;
   /** Font weight. @default "normal" */
-  weight?: ResponsiveValue<"normal" | "medium" | "semibold" | "bold">;
+  weight?: "normal" | "medium" | "semibold" | "bold";
   /** Text color. @default "default" */
-  color?: ResponsiveValue<BuiltInSemanticColors | string>;
+  color?: BuiltInSemanticColors | string;
   /** Text alignment. @default "left" */
   align?: ResponsiveValue<"left" | "center" | "right">;
-  /** Truncate text with ellipsis. @default false */
+  /** Single-line ellipsis. Overrides wrap and overflow while active. @default false */
   truncate?: ResponsiveValue<boolean>;
-  /** Text wrapping behavior. @default "nowrap" */
+  /** Text wrapping behavior. @default "wrap" */
   wrap?: ResponsiveValue<"nowrap" | "wrap" | "balance" | "pretty">;
 }
 

@@ -3,6 +3,7 @@ import { describe, it, expect } from "vitest";
 import { renderWithProviders } from "../../test-utils";
 import { Spinner } from "./Spinner";
 import { axe } from "jest-axe";
+import type { SpinnerColor, SpinnerSizes } from "./spinner.types";
 
 describe("Spinner", () => {
   describe("rendering", () => {
@@ -69,51 +70,58 @@ describe("Spinner", () => {
   });
 
   describe("size variants", () => {
-    it.each<[string]>([["xs"], ["sm"], ["md"], ["lg"], ["xl"]])(
+    it.each([
+      ["xs", "h-4", "w-4", "border-1"],
+      ["sm", "h-5", "w-5", "border-2"],
+      ["md", "h-6", "w-6", "border-3"],
+      ["lg", "h-7", "w-7", "border-4"],
+      ["xl", "h-8", "w-8", "border-5"],
+    ] satisfies [SpinnerSizes, string, string, string][])(
       "applies size variant '%s'",
-      (size) => {
-        const { container } = renderWithProviders(<Spinner size={size as any} />);
+      (size, height, width, borderWidth) => {
+        const { container } = renderWithProviders(<Spinner size={size} />);
         const spinner = container.firstChild as HTMLElement;
 
-        if (size === "xs") expect(spinner).toHaveClass("h-3", "w-3", "border-2");
-        if (size === "sm") expect(spinner).toHaveClass("h-4", "w-4", "border-3");
-        if (size === "md") expect(spinner).toHaveClass("h-5", "w-5", "border-4");
-        if (size === "lg") expect(spinner).toHaveClass("h-6", "w-6", "border-5");
-        if (size === "xl") expect(spinner).toHaveClass("h-7", "w-7", "border-6");
+        expect(spinner).toHaveClass(height, width, borderWidth);
       },
     );
 
     it("defaults to md size", () => {
       const { container } = renderWithProviders(<Spinner />);
-      expect(container.firstChild).toHaveClass("h-5", "w-5", "border-4");
+      expect(container.firstChild).toHaveClass("h-6", "w-6", "border-3");
+    });
+
+    it("applies responsive sizes without changing the semantic color", () => {
+      const { container } = renderWithProviders(
+        <Spinner size={{ base: "xs", md: "xl" }} color="success" />,
+      );
+      const spinner = container.firstChild as HTMLElement;
+
+      expect(spinner).toHaveClass(
+        "h-4", "w-4", "border-1", "md:h-8", "md:w-8", "md:border-5",
+        "border-border-success", "border-t-transparent",
+      );
+      expect(spinner).not.toHaveClass("h-6", "w-6", "md:border-border-success");
     });
   });
 
   describe("color variants", () => {
-    it.each<[string]>([
-      ["default"],
-      ["muted"],
-      ["primary"],
-      ["secondary"],
-      ["success"],
-      ["error"],
-      ["warning"],
-      ["info"],
-    ])(
+    it.each([
+      ["default", "border-border-base"],
+      ["muted", "border-border-muted"],
+      ["primary", "border-primary-500"],
+      ["secondary", "border-secondary-500"],
+      ["success", "border-border-success"],
+      ["error", "border-border-error"],
+      ["warning", "border-border-warning"],
+      ["info", "border-border-info"],
+    ] satisfies [SpinnerColor, string][])(
       "applies color variant '%s'",
-      (color) => {
-        const { container } = renderWithProviders(<Spinner color={color as any} />);
+      (color, borderColor) => {
+        const { container } = renderWithProviders(<Spinner color={color} />);
         const spinner = container.firstChild as HTMLElement;
 
-        // Color classes are applied directionally (e.g., border-l-primary-500)
-        if (color === "default") expect(spinner.className).toContain("border-border-base");
-        if (color === "muted") expect(spinner.className).toContain("border-border-muted");
-        if (color === "primary") expect(spinner.className).toContain("border-primary-500");
-        if (color === "secondary") expect(spinner.className).toContain("border-secondary-500");
-        if (color === "success") expect(spinner.className).toContain("border-success");
-        if (color === "error") expect(spinner.className).toContain("border-error");
-        if (color === "warning") expect(spinner.className).toContain("border-warning");
-        if (color === "info") expect(spinner.className).toContain("border-info");
+        expect(spinner).toHaveClass(borderColor, "border-t-transparent");
       },
     );
 
@@ -144,19 +152,17 @@ describe("Spinner", () => {
   });
 
   describe("spacing props", () => {
-    it.each<[string]>([
-      ["m"],
-      ["mx"],
-      ["my"],
-      ["mb"],
-      ["ml"],
-      ["mr"],
-      ["mt"],
-    ] as const)("applies %s spacing prop", (prop) => {
-      const props: Record<string, string> = { [prop]: "md" };
+    it.each([
+      ["m", { m: 3 }, "m-3"],
+      ["mx", { mx: 3 }, "mx-3"],
+      ["my", { my: 3 }, "my-3"],
+      ["mb", { mb: 3 }, "mb-3"],
+      ["ml", { ml: 3 }, "ml-3"],
+      ["mr", { mr: 3 }, "mr-3"],
+      ["mt", { mt: 3 }, "mt-3"],
+    ] as const)("applies %s spacing prop", (_prop, props, expectedClass) => {
       const { container } = renderWithProviders(<Spinner {...props} />);
-      // The Box component handles these, so we just verify it renders without error
-      expect(container.firstChild).toBeInTheDocument();
+      expect(container.firstChild).toHaveClass(expectedClass);
     });
   });
 
@@ -180,8 +186,7 @@ describe("Spinner", () => {
     it("applies size and color together", () => {
       const { container } = renderWithProviders(<Spinner size="lg" color="primary" />);
       const spinner = container.firstChild as HTMLElement;
-      expect(spinner).toHaveClass("h-6", "w-6", "border-5");
-      expect(spinner.className).toContain("border-primary-500");
+      expect(spinner).toHaveClass("h-7", "w-7", "border-4", "border-primary-500");
     });
 
     it("applies all props together", () => {
@@ -195,8 +200,9 @@ describe("Spinner", () => {
         />,
       );
       const spinner = container.firstChild as HTMLElement;
-      expect(spinner).toHaveClass("h-4", "w-4", "border-3", "custom");
-      expect(spinner.className).toContain("border-success");
+      expect(spinner).toHaveClass(
+        "h-5", "w-5", "border-2", "custom", "border-border-success",
+      );
       expect(spinner).toHaveAttribute("aria-label", "Loading data");
       expect(spinner).toHaveAttribute("role", "status");
     });

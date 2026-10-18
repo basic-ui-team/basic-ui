@@ -1,15 +1,18 @@
-import { PolymorphicRef } from "@basic-ui/react-utilities";
+import {
+  cn,
+  forwardRefWithAs,
+  normalizeProps,
+  PolymorphicRef,
+  getResponsiveClassNames,
+} from "@basic-ui/react-utilities";
 import {
   type GridProps,
   type AllowedGridElements,
   type GridOwnProps,
-  ColRowNumber,
 } from "./grid.types";
-import type { SpacingStep } from "@core/lib/layout";
-import { useResponsiveProps } from "@basic-ui/react-utilities";
 import { gridVariants } from "./grid.variants";
-import { cn, forwardRefWithAs, normalizeProps } from "@basic-ui/react-utilities";
 import { Box, BoxProps } from "../Box";
+import { getGridTemplateClasses } from "./grid-template-utils";
 
 const _Grid = <As extends AllowedGridElements = "div">(
   {
@@ -19,13 +22,13 @@ const _Grid = <As extends AllowedGridElements = "div">(
     gap,
     rowGap,
     columnGap,
-    autoFlow,
+    autoFlow = "row",
     autoRows,
     autoCols,
-    alignItems,
-    justifyItems,
-    alignContent,
-    justifyContent,
+    alignItems = "stretch",
+    justifyItems = "stretch",
+    alignContent = "stretch",
+    justifyContent = "start",
     templatePreset,
     className,
     children,
@@ -36,52 +39,19 @@ const _Grid = <As extends AllowedGridElements = "div">(
 ) => {
   const Comp = (as || "div") as As;
 
-  const {
-    cols: resolvedCols,
-    rows: resolvedRows,
-    gap: resolvedGap,
-    rowGap: resolvedRowGap,
-    columnGap: resolvedColumnGap,
-    autoFlow: resolvedAutoFlow,
-    autoRows: resolvedAutoRows,
-    autoCols: resolvedAutoCols,
-    alignItems: resolvedAlignItems,
-    justifyItems: resolvedJustifyItems,
-    alignContent: resolvedAlignContent,
-    justifyContent: resolvedJustifyContent,
-    templatePreset: resolvedTemplatePreset,
-  } = useResponsiveProps({
-    cols,
-    rows,
-    gap,
-    rowGap,
-    columnGap,
-    autoFlow,
-    autoRows,
-    autoCols,
-    alignItems,
-    justifyItems,
-    alignContent,
-    justifyContent,
-    templatePreset,
-  });
-
   const resolvedStyles = cn(
-    gridVariants({
-      cols: templatePreset ? undefined : (resolvedCols as ColRowNumber),
-      rows: templatePreset ? undefined : (resolvedRows as ColRowNumber),
-      gap: resolvedGap as SpacingStep,
-      rowGap: resolvedRowGap as SpacingStep,
-      columnGap: resolvedColumnGap as SpacingStep,
-      autoFlow: resolvedAutoFlow,
-      autoRows: resolvedAutoRows,
-      autoCols: resolvedAutoCols,
-      alignItems: resolvedAlignItems,
-      justifyItems: resolvedJustifyItems,
-      alignContent: resolvedAlignContent,
-      justifyContent: resolvedJustifyContent,
-      templatePreset: resolvedTemplatePreset,
-    }),
+    "grid",
+    getGridTemplateClasses({ cols, rows, templatePreset }),
+    getResponsiveClassNames(gap, (value) => gridVariants({ gap: value })),
+    getResponsiveClassNames(rowGap, (value) => gridVariants({ rowGap: value })),
+    getResponsiveClassNames(columnGap, (value) => gridVariants({ columnGap: value })),
+    getResponsiveClassNames(autoFlow, (value) => gridVariants({ autoFlow: value })),
+    getResponsiveClassNames(autoRows, (value) => gridVariants({ autoRows: value })),
+    getResponsiveClassNames(autoCols, (value) => gridVariants({ autoCols: value })),
+    getResponsiveClassNames(alignItems, (value) => gridVariants({ alignItems: value })),
+    getResponsiveClassNames(justifyItems, (value) => gridVariants({ justifyItems: value })),
+    getResponsiveClassNames(alignContent, (value) => gridVariants({ alignContent: value })),
+    getResponsiveClassNames(justifyContent, (value) => gridVariants({ justifyContent: value })),
     className,
   );
 

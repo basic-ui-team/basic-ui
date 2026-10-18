@@ -17,8 +17,8 @@ describe("getResponsiveClassNames", () => {
 
   it("does not emit unspecified breakpoints or unresolved values", () => {
     const classNames = getResponsiveClassNames(
-      { base: "visible", lg: "hidden", xl: "unset" },
-      (value) => (value === "unset" ? undefined : `overflow-${value}`),
+      { base: "visible", lg: "hidden", xl: "skip" },
+      (value) => (value === "skip" ? undefined : `overflow-${value}`),
     );
 
     expect(classNames).toBe("overflow-visible lg:overflow-hidden");

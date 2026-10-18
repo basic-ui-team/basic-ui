@@ -19,7 +19,8 @@
       "cache": true
     },
     "type-check": {
-      "cache": true
+      "cache": true,
+      "dependsOn": ["^build"]
     },
     "storybook:build": {
       "outputs": ["dist/**"],

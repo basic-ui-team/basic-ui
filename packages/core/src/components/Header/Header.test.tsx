@@ -2,8 +2,9 @@ import React from "react";
 import { describe, expect, it } from "vitest";
 import { headerVariants } from "./header.variants";
 import { Header } from "./Header";
-import { renderWithProviders } from "@core/test-utils/renderWithProviders";
+import { renderWithProviders } from "../../test-utils/renderWithProviders";
 import { axe } from "jest-axe";
+import { renderToString } from "react-dom/server";
 
 describe("variants", () => {
   const sizeMap: Record<string, string> = {
@@ -11,7 +12,7 @@ describe("variants", () => {
     h2: "text-2xl",
     h3: "text-xl",
     h4: "text-lg",
-    h5: "text-base",
+    h5: "text-md",
     h6: "text-sm",
   };
 
@@ -108,6 +109,76 @@ describe("variants", () => {
     } else if (variant === "wrap") {
       expect(el).toHaveClass(wrapMap[String(value)]);
     }
+  });
+});
+
+describe("responsive CSS", () => {
+  it("renders independent responsive axes without viewport state", () => {
+    const markup = renderToString(
+      <Header
+        as="h3"
+        size={{ base: "h6", lg: "h1" }}
+        align={{ base: "left", md: "right" }}
+        color="success"
+        weight="bold"
+      >
+        Heading
+      </Header>,
+    );
+    expect(markup).toContain("<h3");
+    expect(markup).toContain("text-sm");
+    expect(markup).toContain("lg:text-3xl");
+    expect(markup).toContain("md:text-right");
+    expect(markup).toContain("text-fg-success");
+    expect(markup).not.toMatch(/(?:md|lg):(?:font-|text-fg-|leading-)/);
+  });
+
+  it.each(["h1", "h2", "h3", "h4", "h5", "h6"] as const)(
+    "does not automatically scale a scalar %s size",
+    (size) => {
+      const { container } = renderWithProviders(<Header size={size}>Heading</Header>);
+      expect(container.firstElementChild?.className).not.toMatch(/(?:^|\s)(?:md|lg):/);
+    },
+  );
+
+  it("restores flow after truncation and keeps full-text attributes stable", () => {
+    const { container } = renderWithProviders(
+      <Header
+        truncate={{ base: false, sm: true, lg: false }}
+        wrap={{ base: "nowrap", md: "balance" }}
+        overflow="auto"
+      >
+        Full heading
+      </Header>,
+    );
+    const heading = container.firstElementChild!;
+    expect(heading).toHaveClass(
+      "overflow-auto", "text-clip", "text-nowrap",
+      "sm:overflow-hidden", "sm:text-ellipsis", "sm:whitespace-nowrap",
+      "md:overflow-hidden", "md:whitespace-nowrap",
+      "lg:overflow-auto", "lg:text-clip", "lg:whitespace-normal", "lg:text-balance",
+    );
+    expect(heading).toHaveAttribute("title", "Full heading");
+    expect(heading).toHaveAttribute("aria-label", "Full heading");
+  });
+
+  it("preserves explicit accessibility attributes and consumer overrides", () => {
+    const { container } = renderWithProviders(
+      <Header
+        truncate={{ base: true, md: false }}
+        size={{ base: "h6", md: "h1" }}
+        title="Custom title"
+        aria-label="Custom label"
+        className="md:text-lg md:overflow-scroll"
+      >
+        Heading
+      </Header>,
+    );
+    const heading = container.firstElementChild!;
+    expect(heading).toHaveClass("md:text-lg", "md:overflow-scroll");
+    expect(heading).not.toHaveClass("md:text-3xl", "md:overflow-visible");
+    expect(heading).toHaveAttribute("title", "Custom title");
+    expect(heading).toHaveAttribute("aria-label", "Custom label");
   });
 });
 

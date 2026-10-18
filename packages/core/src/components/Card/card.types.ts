@@ -1,9 +1,13 @@
-import { ResponsiveValue } from "@basic-ui/react-utilities";
+import {
+  CommonProps,
+  PropsWithAs,
+  ResponsiveValue,
+  RestrictedPropsWithAs,
+} from "@basic-ui/react-utilities";
 import { BoxProps } from "../Box";
-import { CommonProps, PropsWithAs, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
-import type { LayoutProps } from "../../lib/layout";
-import { BuiltInSemanticColors } from "@core/theme";
+import { BuiltInSemanticColors } from "../../theme";
 import type { ImgHTMLAttributes } from "react";
+import { LayoutProps } from "../../lib";
 
 export type AllowedCardElements = "div" | "button" | "a";
 export type CardVariant = "default" | "elevated" | "outlined" | "unstyled";
@@ -18,7 +22,7 @@ export interface CardRootProps extends BoxProps<AllowedCardElements> {
    * Visual style variant.
    * @default "default"
    */
-  variant?: ResponsiveValue<CardVariant>;
+  variant?: CardVariant;
 
   /**
    * Determines the interaction behavior.
@@ -115,15 +119,15 @@ export type AllowedHeaderElements = `h${1 | 2 | 3 | 4 | 5 | 6}`;
  * Owns its heading styling fully via card.variants.
  */
 export interface CardTitleOwnProps extends CommonProps, LayoutProps {
-  /** Heading level used for sizing. @default "h3" */
+  /** Visual size, independent of the heading element. Use responsive values for breakpoint changes. @default "h2" */
   size?: ResponsiveValue<"h1" | "h2" | "h3" | "h4" | "h5" | "h6">;
   /** Font weight. @default "normal" */
-  weight?: ResponsiveValue<"normal" | "medium" | "semibold" | "bold">;
+  weight?: "normal" | "medium" | "semibold" | "bold";
   /** Text color. @default "default" */
-  color?: ResponsiveValue<BuiltInSemanticColors | string>;
+  color?: BuiltInSemanticColors | string;
   /** Text alignment. @default "left" */
   align?: ResponsiveValue<"left" | "center" | "right">;
-  /** Truncate the text. @default false */
+  /** Single-line ellipsis. Overrides wrap and overflow while active. @default false */
   truncate?: ResponsiveValue<boolean>;
   /** Text wrapping behavior. @default "nowrap" */
   wrap?: ResponsiveValue<"wrap" | "nowrap" | "pretty" | "balance">;
@@ -144,15 +148,15 @@ export type AllowedTextElements = "span" | "p" | "div";
  * Owns its text styling fully via card.variants.
  */
 export interface CardDescriptionOwnProps extends CommonProps, LayoutProps {
-  /** Size of the text. @default "sm" */
+  /** Size of the text. @default "md" */
   size?: ResponsiveValue<"xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl">;
   /** Font weight. @default "normal" */
-  weight?: ResponsiveValue<"normal" | "medium" | "semibold" | "bold">;
-  /** Text color. @default "muted" */
-  color?: ResponsiveValue<BuiltInSemanticColors | string>;
+  weight?: "normal" | "medium" | "semibold" | "bold";
+  /** Text color. @default "default" */
+  color?: BuiltInSemanticColors | string;
   /** Text alignment. @default "left" */
   align?: ResponsiveValue<"left" | "center" | "right">;
-  /** Truncate text with ellipsis. @default false */
+  /** Single-line ellipsis. Overrides wrap and overflow while active. @default false */
   truncate?: ResponsiveValue<boolean>;
   /** Text wrapping behavior. @default "wrap" */
   wrap?: ResponsiveValue<"nowrap" | "wrap" | "balance" | "pretty">;
@@ -187,7 +191,7 @@ export interface CardImageOwnProps
   loading?: "lazy" | "eager";
   /** Decoding strategy. @default "auto" */
   decoding?: "async" | "sync" | "auto";
-  rounded?: ResponsiveValue<"none" | "sm" | "md" | "lg" | "xl" | "full">;
+  rounded?: "none" | "sm" | "md" | "lg" | "xl" | "full";
 }
 
 export type CardImageProps = PropsWithAs<CardImageOwnProps, "img">;

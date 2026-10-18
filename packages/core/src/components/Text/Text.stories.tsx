@@ -11,6 +11,21 @@ export default meta;
 
 type Story = StoryObj<typeof Text>;
 
+export const ResponsiveLayout: Story = {
+  render: () => (
+    <div className="max-w-lg">
+      <Text
+        size={{ base: "sm", md: "md", lg: "lg" }}
+        align={{ base: "left", lg: "center" }}
+        truncate={{ base: true, md: false }}
+        wrap="pretty"
+      >
+        Text that truncates on narrow screens and restores wrapping on wider screens.
+      </Text>
+    </div>
+  ),
+};
+
 export const SizeVariants: Story = {
   render: () => (
     <div className="flex flex-col gap-3">

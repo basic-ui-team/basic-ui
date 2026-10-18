@@ -1,9 +1,7 @@
-import { PolymorphicRef } from "@basic-ui/react-utilities";
+import { cn, forwardRefWithAs, PolymorphicRef, getResponsiveClassNames } from "@basic-ui/react-utilities";
 import { AllowedDividerElements, DividerProps, DividerOwnProps } from "./divider.types";
-import { useResponsiveProps } from "@basic-ui/react-utilities";
 import { Box, BoxProps } from "../Box";
-import { cn, forwardRefWithAs } from "@basic-ui/react-utilities";
-import { dividerVariants } from "./divider.variants";
+import { dividerVariants, dividerThicknessClasses } from "./divider.variants";
 
 /**
  * Divider
@@ -44,31 +42,24 @@ const _Divider = <As extends AllowedDividerElements = "hr">(
     );
   }
 
-  const {
-    direction: resolvedDirection,
-    thickness: resolvedThickness,
-    appearance: resolvedAppearance,
-    color: resolvedColor,
-    inset: resolvedInset,
-  } = useResponsiveProps({ direction, thickness, appearance, color, inset });
-
   return (
     <Box
       as={Comp}
       m={m}
       p={p}
-      mx={resolvedDirection === "horizontal" ? resolvedInset : undefined}
+      mx={direction === "horizontal" ? inset : undefined}
+      my={direction === "vertical" ? inset : undefined}
       ref={ref}
       role={isDecorative ? "presentation" : "separator"}
       aria-label={isSemantic && label ? label : undefined}
-      aria-orientation={isDecorative ? undefined : (resolvedDirection as "horizontal" | "vertical")}
+      aria-orientation={isDecorative ? undefined : direction}
       className={cn(
         dividerVariants({
-          direction: resolvedDirection,
-          appearance: resolvedAppearance,
-          color: resolvedColor,
-          thickness: resolvedThickness,
+          direction,
+          appearance,
+          color,
         }),
+        getResponsiveClassNames(thickness, (value) => dividerThicknessClasses[direction][value]),
         className,
       )}
       style={style}
@@ -76,7 +67,7 @@ const _Divider = <As extends AllowedDividerElements = "hr">(
     >
       {/* NOTE: Replace this with proper label component when available */}
       {label && (
-        <span className="flex-shrink-0 bg-background px-2 text-muted-foreground text-sm">
+        <span className="shrink-0 bg-background px-2 text-muted-foreground text-sm">
           {label}
         </span>
       )}

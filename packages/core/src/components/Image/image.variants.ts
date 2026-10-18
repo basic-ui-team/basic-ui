@@ -1,21 +1,25 @@
 import { cva } from "class-variance-authority";
 
+export const imageObjectFitClasses = {
+  cover: "object-cover",
+  contain: "object-contain",
+  fill: "object-fill",
+  none: "object-none",
+  "scale-down": "object-scale-down",
+} as const;
+
+export const imageAspectRatioClasses = {
+  square: "aspect-square",
+  video: "aspect-video",
+  landscape: "aspect-[4/3]",
+  portrait: "aspect-[3/4]",
+  auto: "aspect-auto",
+} as const;
+
 export const imageVariants = cva("inline-block overflow-hidden", {
   variants: {
-    objectFit: {
-      cover: "object-cover",
-      contain: "object-contain",
-      fill: "object-fill",
-      none: "object-none",
-      "scale-down": "object-scale-down",
-    },
-    aspectRatio: {
-      square: "aspect-square",
-      video: "aspect-video",
-      landscape: "aspect-[4/3]",
-      portrait: "aspect-[3/4]",
-      auto: "",
-    },
+    objectFit: imageObjectFitClasses,
+    aspectRatio: imageAspectRatioClasses,
     rounded: {
       none: "rounded-none",
       sm: "rounded-sm",

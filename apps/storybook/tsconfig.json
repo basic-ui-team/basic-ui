@@ -1,13 +1,8 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "paths": {
-      "@/*": ["./src/*"]
-    },
     "composite": true,
-    "noEmit": false,
-    "rewriteRelativeImportExtensions": true
+    "noEmit": true
   },
   "include": ["src", ".storybook"]
 }

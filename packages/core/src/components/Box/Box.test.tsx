@@ -54,6 +54,49 @@ describe("Box", () => {
   });
 
   describe("variants", () => {
+    it("preserves concrete resets and matching consumer overrides", () => {
+      const { container } = renderWithProviders(
+        <Box
+          p={{ base: 4, md: 0 }}
+          hMax={{ base: "screen", md: "none" }}
+          wMax={{ base: "full", md: "none" }}
+          overflow={{ base: "hidden", md: "visible" }}
+          className="md:p-1 lg:max-w-screen"
+        />,
+      );
+      expect(container.firstChild).toHaveClass(
+        "p-4", "md:p-1", "max-h-screen", "md:max-h-none",
+        "max-w-full", "md:max-w-none", "lg:max-w-screen",
+        "overflow-hidden", "md:overflow-visible",
+      );
+      expect(container.firstChild).not.toHaveClass("md:p-0");
+    });
+
+    it("preserves layout precedence and consumer overrides without leaking props", () => {
+      const style = { color: "red" };
+      renderWithProviders(
+        <Box
+          data-testid="layout-box"
+          p={2}
+          px={3}
+          hMin={{ base: "min", md: "full" }}
+          overflowY={{ base: "hidden", lg: "auto" }}
+          className="p-4 md:min-h-screen"
+          style={style}
+        />,
+      );
+
+      const box = screen.getByTestId("layout-box");
+      expect(box).toHaveClass(
+        "p-4", "min-h-min", "md:min-h-screen", "overflow-y-hidden", "lg:overflow-y-auto",
+      );
+      expect(box).not.toHaveClass("p-2", "px-3", "md:min-h-full");
+      expect(box.style.color).toBe("red");
+      for (const prop of ["p", "px", "hMin", "overflowY"]) {
+        expect(box).not.toHaveAttribute(prop);
+      }
+    });
+
     it("applies display classes", () => {
       const { container } = renderWithProviders(<Box display="inline">Test</Box>);
       expect(container.firstChild).toHaveClass("inline");

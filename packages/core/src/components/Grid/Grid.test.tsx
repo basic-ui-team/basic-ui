@@ -3,8 +3,39 @@ import { describe, it, expect } from "vitest";
 import { renderWithProviders, screen } from "../../test-utils";
 import { Grid } from "./Grid";
 import { axe } from "jest-axe";
+import { renderToString } from "react-dom/server";
 
 describe("Grid", () => {
+  it("restores latest column and row counts after a preset without viewport state", () => {
+    const markup = renderToString(
+      <Grid
+        cols={{ base: 2, md: 4 }}
+        rows={{ base: 3, lg: 5 }}
+        templatePreset={{ base: "none", sm: "sidebar", xl: "none" }}
+        rowGap={{ base: 1, md: 3 }}
+        columnGap={{ base: 2, lg: 4 }}
+      />,
+    );
+    expect(markup).toContain("grid-cols-2");
+    expect(markup).toContain("grid-rows-3");
+    expect(markup).toContain("sm:grid-cols-[200px_1fr]");
+    expect(markup).toContain("sm:grid-rows-none");
+    expect(markup).toContain("md:grid-cols-[200px_1fr]");
+    expect(markup).toContain("xl:grid-cols-4");
+    expect(markup).toContain("xl:grid-rows-5");
+    expect(markup).toContain("md:gap-y-3");
+    expect(markup).toContain("lg:gap-x-4");
+    expect(markup).not.toContain("md:grid ");
+  });
+
+  it("preserves explicit class overrides at matching breakpoints", () => {
+    const { container } = renderWithProviders(
+      <Grid cols={{ base: 2, md: 4 }} className="md:grid-cols-6" />,
+    );
+    expect(container.firstChild).toHaveClass("grid-cols-2", "md:grid-cols-6");
+    expect(container.firstChild).not.toHaveClass("md:grid-cols-4");
+  });
+
   describe("rendering", () => {
     it("renders children and applies className", () => {
       const { container } = renderWithProviders(<Grid className="custom-class">Hello</Grid>);
@@ -67,8 +98,8 @@ describe("Grid", () => {
           Test
         </Grid>,
       );
-      expect(container.firstChild).toHaveClass("row-gap-2");
-      expect(container.firstChild).toHaveClass("column-gap-4");
+      expect(container.firstChild).toHaveClass("gap-y-2");
+      expect(container.firstChild).toHaveClass("gap-x-4");
     });
 
     it("applies alignment classes", () => {

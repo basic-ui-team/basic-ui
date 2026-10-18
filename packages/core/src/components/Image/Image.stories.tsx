@@ -14,6 +14,36 @@ export default meta;
 
 type Story = StoryObj<typeof Image>;
 
+export const ResponsiveGeometry: Story = {
+  render: () => {
+    const src = `data:image/svg+xml,${encodeURIComponent(
+      "<svg xmlns='http://www.w3.org/2000/svg' width='600' height='400'><rect width='600' height='400' fill='indigo'/></svg>",
+    )}`;
+    return (
+      <div className="flex flex-col gap-3">
+        <Image
+          src={src}
+          alt="Responsive image"
+          aspectRatio={{ base: "square", md: "video", lg: "auto" }}
+          objectFit={{ base: "cover", lg: "contain" }}
+          rounded="lg"
+          className="w-full max-w-md"
+        />
+        <Image
+          as="picture"
+          src={src}
+          sources={[{ srcSet: src, media: "(min-width: 768px)" }]}
+          alt="Responsive picture"
+          aspectRatio={{ base: "square", md: "video", lg: "auto" }}
+          objectFit={{ base: "cover", lg: "contain" }}
+          rounded="lg"
+          className="w-full max-w-md"
+        />
+      </div>
+    );
+  },
+};
+
 export const Basic: Story = {
   render: () => (
     <Image src="https://placehold.co/600x400" alt="Placeholder image" className="w-72 h-48" />

@@ -1,14 +1,10 @@
 import React from "react";
-import { cn, forwardRefWithAs, useDisclosure } from "@basic-ui/react-utilities";
+import { cn, forwardRefWithAs, PolymorphicRef, useDisclosure } from "@basic-ui/react-utilities";
 import { CheckCircleIcon, XCircleIcon, AlertTriangleIcon, InfoIcon, XIcon } from "@basic-ui/icons";
-import type { AlertOwnProps, AlertProps, AlertSeverity } from "./alert.types";
-import type { PolymorphicRef } from "@basic-ui/react-utilities";
-import type { AllowedAlertElements } from "./alert.types";
-
+import type { AlertOwnProps, AlertProps, AlertSeverity, AllowedAlertElements } from "./alert.types";
 import {
   alertVariants,
   alertTitleVariants,
-  alertIconVariants,
   alertContentVariants,
   alertActionVariants,
   alertDismissButtonVariants,
@@ -73,8 +69,7 @@ export const Alert = forwardRefWithAs<AlertOwnProps, AllowedAlertElements>(
     const { open: isOpen, onClose } = useDisclosure({ open, defaultOpen, onOpenChange });
 
     const Comp = (as || "div") as As;
-    const iconElement =
-      icon === false ? null : (icon ?? React.createElement(ICON_MAP[severity]));
+    const iconElement = icon === false ? null : icon ?? React.createElement(ICON_MAP[severity]);
     const hasActions = Boolean(action) || dismissible;
 
     if (!isOpen) {
@@ -92,7 +87,7 @@ export const Alert = forwardRefWithAs<AlertOwnProps, AllowedAlertElements>(
         className={cn(alertVariants({ severity, variant }), className)}
         {...(props as any)}
       >
-        {iconElement !== null && <Icon icon={iconElement} className={alertIconVariants()} />}
+        {iconElement !== null && <Icon icon={iconElement} />}
 
         <Box as="div" className={alertContentVariants()}>
           {title && <Box className={alertTitleVariants()}>{title}</Box>}
@@ -103,14 +98,14 @@ export const Alert = forwardRefWithAs<AlertOwnProps, AllowedAlertElements>(
           <Box as="div" className={alertActionVariants()}>
             {action}
             {dismissible && (
-            <button
-              type="button"
-              onClick={onClose}
-              className={alertDismissButtonVariants()}
-              aria-label="Dismiss alert"
-            >
-              <Icon icon={<XIcon />} size="sm" aria-hidden="true" />
-            </button>
+              <button
+                type="button"
+                onClick={onClose}
+                className={alertDismissButtonVariants()}
+                aria-label="Dismiss alert"
+              >
+                <Icon icon={<XIcon />} aria-hidden="true" />
+              </button>
             )}
           </Box>
         )}
