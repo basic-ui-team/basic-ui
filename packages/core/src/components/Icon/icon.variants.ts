@@ -1,4 +1,5 @@
 import { cva } from "class-variance-authority";
+import type { ColorRecipe } from "../../lib/colorRecipes/colorRecipes";
 
 export const iconSizeClasses = {
   xs: "w-4 h-4",
@@ -13,11 +14,13 @@ export const iconVariants = cva("flex items-center justify-center", {
     size: iconSizeClasses,
     color: {
       muted: "text-fg-muted",
-      success: "text-fg-success",
-      error: "text-fg-error",
-      warning: "text-fg-warning",
-      info: "text-fg-info",
+      // Sentinel used when a palette-family color applies the recipe variables.
+      palette: "",
     },
   },
   defaultVariants: { size: "md" },
 });
+
+export const iconPaletteRecipe: ColorRecipe = {
+  text: { value: "600", dark: { value: "400" } },
+};
