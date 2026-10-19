@@ -8,16 +8,17 @@ import {
   alertContentVariants,
   alertActionVariants,
   alertDismissButtonVariants,
+  alertPaletteRecipe,
 } from "./alert.variants";
-import { Box } from "../Box";
+import { Box, BoxProps } from "../Box";
 import { Icon } from "../Icon";
+import { cr, type PaletteColor } from "../../lib/colorRecipes/colorRecipes";
 
-// Map alert severities to icon components
-const ICON_MAP: Record<AlertSeverity, React.ComponentType> = {
-  success: CheckCircleIcon,
-  error: XCircleIcon,
-  warning: AlertTriangleIcon,
-  info: InfoIcon,
+const ICON_MAP: Record<AlertSeverity, { icon: React.ComponentType; color: string }> = {
+  success: { icon: CheckCircleIcon, color: "green" },
+  error: { icon: XCircleIcon, color: "red" },
+  warning: { icon: AlertTriangleIcon, color: "amber" },
+  info: { icon: InfoIcon, color: "sky" },
 };
 
 /**
@@ -52,7 +53,8 @@ export const Alert = forwardRefWithAs<AlertOwnProps, AllowedAlertElements>(
     {
       as,
       severity = "info",
-      variant = "subtle",
+      variant = "filled",
+      color,
       icon,
       title,
       action,
@@ -61,6 +63,7 @@ export const Alert = forwardRefWithAs<AlertOwnProps, AllowedAlertElements>(
       defaultOpen = true,
       onOpenChange,
       className,
+      style,
       children,
       ...props
     }: AlertProps<As>,
@@ -69,7 +72,8 @@ export const Alert = forwardRefWithAs<AlertOwnProps, AllowedAlertElements>(
     const { open: isOpen, onClose } = useDisclosure({ open, defaultOpen, onOpenChange });
 
     const Comp = (as || "div") as As;
-    const iconElement = icon === false ? null : icon ?? React.createElement(ICON_MAP[severity]);
+    const iconElement =
+      icon === false ? null : icon ?? React.createElement(ICON_MAP[severity].icon);
     const hasActions = Boolean(action) || dismissible;
 
     if (!isOpen) {
@@ -79,13 +83,17 @@ export const Alert = forwardRefWithAs<AlertOwnProps, AllowedAlertElements>(
     // Semantic role: alert for urgent messages, status for polite notifications
     const role = severity === "error" || severity === "warning" ? "alert" : "status";
 
+    const effectiveColor = color ?? (ICON_MAP[severity].color as PaletteColor);
+    const cooked = cr(effectiveColor, alertPaletteRecipe[variant]);
+
     return (
       <Box
         as={Comp}
         ref={ref}
         role={role}
-        className={cn(alertVariants({ severity, variant }), className)}
-        {...(props as any)}
+        className={cn(alertVariants({ variant }), cooked?.className, className)}
+        style={{ ...cooked.style, ...style }}
+        {...(props as BoxProps<As>)}
       >
         {iconElement !== null && <Icon icon={iconElement} />}
 
