@@ -1,4 +1,9 @@
-import { cn, forwardRefWithAs, PolymorphicRef, getResponsiveClassNames } from "@basic-ui/react-utilities";
+import {
+  cn,
+  forwardRefWithAs,
+  PolymorphicRef,
+  getResponsiveClassNames,
+} from "@basic-ui/react-utilities";
 import { AllowedDividerElements, DividerProps, DividerOwnProps } from "./divider.types";
 import { Box, BoxProps } from "../Box";
 import { dividerVariants, dividerThicknessClasses, dividerPaletteRecipe } from "./divider.variants";
@@ -62,18 +67,15 @@ const _Divider = <As extends AllowedDividerElements = "hr">(
           appearance,
           color: palette ? "palette" : color,
         }),
-        cooked && "border-(--cr-border)",
+        cooked?.className,
         getResponsiveClassNames(thickness, (value) => dividerThicknessClasses[direction][value]),
         className,
       )}
       style={{ ...cooked?.style, ...style }}
       {...(rest as BoxProps<As>)}
     >
-      {/* NOTE: Replace this with proper label component when available */}
       {label && (
-        <span className="shrink-0 bg-background px-2 text-muted-foreground text-sm">
-          {label}
-        </span>
+        <span className="shrink-0 bg-background px-2 text-muted-foreground text-sm">{label}</span>
       )}
     </Box>
   );
