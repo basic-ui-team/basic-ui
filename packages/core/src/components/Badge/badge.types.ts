@@ -1,17 +1,18 @@
 import type React from "react";
 import type { CommonProps, ResponsiveValue } from "@basic-ui/react-utilities";
+import type { PaletteColor } from "../../lib/colorRecipes/colorRecipes";
 
 export type BadgeVariant = "count" | "dot";
 export type BadgeSize = "sm" | "md" | "lg";
 export type BadgePosition = "top-left" | "top-right" | "bottom-left" | "bottom-right";
-export type BadgeColor = "error" | "success" | "warning" | "info";
+export type BadgeColor = "default" | PaletteColor;
 
 export interface BadgeSharedProps extends Omit<CommonProps, "children"> {
   /** The element to which the badge is attached. */
   children: React.ReactElement;
 
-  /** The semantic color of the badge. */
-  color: BadgeColor;
+  /** Palette family for the badge. "default" renders slate. @default "default" */
+  color?: BadgeColor;
 
   /** The size of the badge. @default "md" */
   size?: ResponsiveValue<BadgeSize>;

@@ -19,19 +19,6 @@ export default meta;
 
 type Story = StoryObj<typeof Badge>;
 
-export const ResponsiveSizes: Story = {
-  render: () => (
-    <Flex gap={5}>
-      <Badge content={3} color="info" size={{ base: "sm", md: "md", lg: "lg" }}>
-        <span>Count</span>
-      </Badge>
-      <Badge variant="dot" color="success" size={{ base: "sm", md: "md", lg: "lg" }} ping>
-        <span>Status</span>
-      </Badge>
-    </Flex>
-  ),
-};
-
 const notificationButton = (
   <Button aria-label="Notifications" variant="outline">
     Notifications
@@ -40,7 +27,7 @@ const notificationButton = (
 
 export const NotificationCount: Story = {
   render: () => (
-    <Badge content={3} color="error">
+    <Badge content={3} color="red">
       {notificationButton}
     </Badge>
   ),
@@ -48,7 +35,7 @@ export const NotificationCount: Story = {
 
 export const CountOverflow: Story = {
   render: () => (
-    <Badge content={100} max={99} color="error">
+    <Badge content={100} max={99} color="red">
       {notificationButton}
     </Badge>
   ),
@@ -56,7 +43,7 @@ export const CountOverflow: Story = {
 
 export const StatusDot: Story = {
   render: () => (
-    <Badge variant="dot" color="success" position="bottom-right">
+    <Badge variant="dot" color="green" position="bottom-right">
       <Box className="flex h-7 w-7 items-center justify-center rounded-full bg-surface-base">
         <Icon icon="A" size="sm" />
       </Box>
@@ -66,7 +53,7 @@ export const StatusDot: Story = {
 
 export const PingingStatus: Story = {
   render: () => (
-    <Badge variant="dot" color="success" position="bottom-right" ping>
+    <Badge variant="dot" color="green" position="bottom-right" ping>
       <Box className="flex h-7 w-7 items-center justify-center rounded-full bg-surface-base">
         <Icon icon="A" size="sm" />
       </Box>
@@ -74,10 +61,10 @@ export const PingingStatus: Story = {
   ),
 };
 
-export const SemanticColors: Story = {
+export const Colors: Story = {
   render: () => (
     <Flex gap={4}>
-      {(["info", "success", "warning", "error"] as const).map((color) => (
+      {(["sky", "green", "amber", "red"] as const).map((color) => (
         <Badge key={color} content={color.slice(0, 1).toUpperCase()} color={color}>
           <Box className="flex h-7 w-7 items-center justify-center rounded-lg bg-surface-base">
             <Icon icon={<BellIcon />} size="sm" />
@@ -92,7 +79,7 @@ export const Positions: Story = {
   render: () => (
     <Flex justify="evenly" align="center" wrap="wrap">
       {(["top-left", "top-right", "bottom-left", "bottom-right"] as const).map((position) => (
-        <Badge key={position} content="3" color="info" position={position}>
+        <Badge key={position} content="3" color="sky" position={position}>
           <Box className="flex p-4 items-center justify-center rounded-lg bg-surface-base text-md">
             {position.replace("-", " ")}
           </Box>

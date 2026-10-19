@@ -1,4 +1,5 @@
 import { cva } from "class-variance-authority";
+import type { ColorRecipe } from "../../lib/colorRecipes/colorRecipes";
 
 export const badgeGeometryVariants = cva("", {
   variants: {
@@ -23,12 +24,6 @@ export const badgeVariants = cva(
         count: "rounded-full font-semibold leading-none whitespace-nowrap",
         dot: "rounded-full",
       },
-      color: {
-        success: "",
-        warning: "",
-        error: "",
-        info: "",
-      },
       position: {
         "top-left": "top-0 left-0 translate-x-[-50%] translate-y-[-50%]",
         "top-right": "top-0 right-0 translate-x-[50%] translate-y-[-50%]",
@@ -36,51 +31,14 @@ export const badgeVariants = cva(
         "bottom-right": "bottom-0 right-0 translate-x-[50%] translate-y-[50%]",
       },
     },
-    compoundVariants: [
-      {
-        variant: "count",
-        color: "success",
-        className: "bg-bg-success text-fg-success",
-      },
-      {
-        variant: "count",
-        color: "warning",
-        className: "bg-bg-warning text-fg-warning",
-      },
-      {
-        variant: "count",
-        color: "error",
-        className: "bg-bg-error text-fg-error",
-      },
-      {
-        variant: "count",
-        color: "info",
-        className: "bg-bg-info text-fg-info",
-      },
-      {
-        variant: "dot",
-        color: "success",
-        className: "bg-border-success",
-      },
-      {
-        variant: "dot",
-        color: "warning",
-        className: "bg-border-warning",
-      },
-      {
-        variant: "dot",
-        color: "error",
-        className: "bg-border-error",
-      },
-      {
-        variant: "dot",
-        color: "info",
-        className: "bg-border-info",
-      },
-    ],
     defaultVariants: {
       variant: "count",
       position: "top-right",
     },
   },
 );
+
+export const badgePaletteRecipe: ColorRecipe = {
+  bg: { value: "200", dark: { value: "700" } },
+  text: { value: "black", dark: { value: "white" } },
+};

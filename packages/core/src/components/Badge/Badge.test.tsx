@@ -11,7 +11,7 @@ describe("Badge", () => {
     const { container } = renderWithProviders(
       <Badge
         {...(variant === "count" ? { variant, content: 3 } : { variant })}
-        color="info"
+        color="sky"
         size={{ base: "sm", md: "lg" }}
         ping
       >
@@ -21,9 +21,9 @@ describe("Badge", () => {
     const badge = container.querySelector("[data-slot=badge]");
     const ping = container.querySelector("[data-slot=badge-ping]");
     if (variant === "count") {
-      expect(badge).toHaveClass("min-h-5", "min-w-5", "md:min-h-7", "md:min-w-7", "md:px-3", "bg-bg-info");
+      expect(badge).toHaveClass("min-h-5", "min-w-5", "md:min-h-7", "md:min-w-7", "md:px-3", "bg-(--cr-bg)");
     } else {
-      expect(badge).toHaveClass("h-2", "w-2", "md:h-4", "md:w-4", "bg-border-info");
+      expect(badge).toHaveClass("h-2", "w-2", "md:h-4", "md:w-4", "bg-(--cr-bg)");
     }
     expect(ping).toHaveClass("h-2", "w-2", "md:h-4", "md:w-4");
     expect(badge?.className).not.toMatch(/md:(?:bg-|absolute|top-|right-)/);
@@ -31,7 +31,7 @@ describe("Badge", () => {
 
   it("renders count content over its anchor", () => {
     renderWithProviders(
-      <Badge content={3} color="error">
+      <Badge content={3} color="red">
         <Anchor />
       </Badge>,
     );
@@ -42,7 +42,7 @@ describe("Badge", () => {
 
   it("formats numeric counts above max", () => {
     renderWithProviders(
-      <Badge content={100} max={99} color="error">
+      <Badge content={100} max={99} color="red">
         <Anchor />
       </Badge>,
     );
@@ -56,7 +56,7 @@ describe("Badge", () => {
     ["lg", "min-h-7", "min-w-7"],
   ] as const)("uses the %s count size recipe", (size, minHeight, minWidth) => {
     renderWithProviders(
-      <Badge content="3" color="info" size={size}>
+      <Badge content="3" color="sky" size={size}>
         <Anchor />
       </Badge>,
     );
@@ -65,37 +65,51 @@ describe("Badge", () => {
   });
 
   it.each([
-    ["success", "bg-border-success"],
-    ["warning", "bg-border-warning"],
-    ["error", "bg-border-error"],
-    ["info", "bg-border-info"],
-  ] as const)("uses the stronger %s token for dots", (color, expectedClass) => {
+    ["green", "var(--color-green-200)"],
+    ["amber", "var(--color-amber-200)"],
+    ["red", "var(--color-red-200)"],
+    ["sky", "var(--color-sky-200)"],
+  ] as const)("cooks the %s family recipe for dots", (color, bgVariable) => {
     const { container } = renderWithProviders(
       <Badge variant="dot" color={color}>
         <Anchor />
       </Badge>,
     );
 
-    expect(container.querySelector("[data-slot='badge']")).toHaveClass(expectedClass);
-    expect(container.querySelector("[data-slot='badge']")).toHaveTextContent("");
+    const badge = container.querySelector("[data-slot='badge']") as HTMLElement;
+    expect(badge).toHaveClass("bg-(--cr-bg)");
+    expect(badge.getAttribute("style")).toContain(`--cr-bg: ${bgVariable}`);
+    expect(badge).toHaveTextContent("");
   });
 
-  it("uses semantic background and foreground tokens for count badges", () => {
+  it("cooks the family recipe for count badges", () => {
     renderWithProviders(
-      <Badge content="New" color="success">
+      <Badge content="New" color="green">
         <Anchor />
       </Badge>,
     );
 
-    expect(screen.getByText("New")).toHaveClass(
-      "bg-bg-success",
-      "text-fg-success",
+    const badge = screen.getByText("New");
+    expect(badge).toHaveClass("bg-(--cr-bg)", "text-(color:--cr-text)");
+    expect(badge.getAttribute("style")).toContain("--cr-bg: var(--color-green-200)");
+    expect(badge.getAttribute("style")).toContain("--cr-text: var(--color-black)");
+  });
+
+  it("renders the default color as the slate family", () => {
+    const { container } = renderWithProviders(
+      <Badge content="3">
+        <Anchor />
+      </Badge>,
     );
+
+    const style =
+      container.querySelector("[data-slot='badge']")?.getAttribute("style") ?? "";
+    expect(style).toContain("--cr-bg: var(--color-slate-200)");
   });
 
   it("is decorative by default", () => {
     const { container } = renderWithProviders(
-      <Badge content="3" color="info">
+      <Badge content="3" color="sky">
         <Anchor />
       </Badge>,
     );
@@ -108,7 +122,7 @@ describe("Badge", () => {
     const { container } = renderWithProviders(
       <Badge
         content="3"
-        color="info"
+        color="sky"
         aria-label="3 unread notifications"
         aria-live="polite"
       >
@@ -124,7 +138,7 @@ describe("Badge", () => {
 
   it("renders a decorative ping halo behind a stable visible dot", () => {
     const { container } = renderWithProviders(
-      <Badge variant="dot" color="success" ping>
+      <Badge variant="dot" color="green" ping>
         <Anchor />
       </Badge>,
     );
@@ -139,7 +153,7 @@ describe("Badge", () => {
   it("warns when an exposed badge has no accessible name", () => {
     const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
     renderWithProviders(
-      <Badge content="3" color="info" aria-hidden={false}>
+      <Badge content="3" color="sky" aria-hidden={false}>
         <Anchor />
       </Badge>,
     );
@@ -151,7 +165,7 @@ describe("Badge", () => {
   it("forwards its ref to the visible indicator", () => {
     const ref = React.createRef<HTMLSpanElement>();
     renderWithProviders(
-      <Badge content="3" color="info" ref={ref}>
+      <Badge content="3" color="sky" ref={ref}>
         <Anchor />
       </Badge>,
     );

@@ -2,14 +2,15 @@ import React from "react";
 import { Box } from "../Box";
 import { cn, getResponsiveClassNames } from "@basic-ui/react-utilities";
 import type { BadgeProps } from "./badge.types";
-import { badgeVariants, badgeGeometryVariants } from "./badge.variants";
+import { badgeVariants, badgeGeometryVariants, badgePaletteRecipe } from "./badge.variants";
+import { cr } from "../../lib/colorRecipes/colorRecipes";
 
 export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
   (
     {
       content,
       max,
-      color,
+      color = "default",
       variant = "count",
       size = "md",
       position = "top-right",
@@ -32,6 +33,9 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
       console.warn("An exposed Badge requires an aria-label.");
     }
 
+    const family = color === "default" ? "slate" : color;
+    const cooked = cr(family, badgePaletteRecipe);
+
     return (
       <Box as="span" className="relative inline-block" data-slot="badge-anchor">
         {children}
@@ -43,14 +47,15 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
             className={cn(
               badgeVariants({
                 variant: "dot",
-                color,
                 position,
               }),
+              cooked.className,
               getResponsiveClassNames(size, (value) =>
                 badgeGeometryVariants({ size: value, variant: "dot" }),
               ),
               "motion-safe:animate-[ping_1.5s_ease-out_infinite]",
             )}
+            style={{ ...cooked.style, ...style }}
           />
         )}
         <Box
@@ -58,11 +63,14 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
           ref={ref}
           data-slot="badge"
           className={cn(
-            badgeVariants({ variant, color, position }),
-            getResponsiveClassNames(size, (value) => badgeGeometryVariants({ size: value, variant })),
+            badgeVariants({ variant, position }),
+            cooked.className,
+            getResponsiveClassNames(size, (value) =>
+              badgeGeometryVariants({ size: value, variant }),
+            ),
             className,
           )}
-          style={style}
+          style={{ ...cooked.style, ...style }}
           aria-label={isDecorative ? undefined : ariaLabel}
           aria-hidden={isDecorative || undefined}
           aria-live={isDecorative ? undefined : ariaLive}
