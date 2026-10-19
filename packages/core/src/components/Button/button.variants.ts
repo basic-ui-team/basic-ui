@@ -20,7 +20,8 @@ export const buttonVariants = cva(
       variant: {
         solid: "focus-visible:ring-(--cr-bg-focus) dark:focus-visible:ring-(--cr-bg-focus-dark)",
         ghost: "focus-visible:ring-(--cr-bg-focus) dark:focus-visible:ring-(--cr-bg-focus-dark)",
-        outline: "focus-visible:ring-(--cr-border-focus) dark:focus-visible:ring-(--cr-border-focus-dark)",
+        outline:
+          "border border-2 focus-visible:ring-(--cr-border-focus) dark:focus-visible:ring-(--cr-border-focus-dark)",
         link: "cursor-pointer underline focus-visible:ring-(--cr-text-focus) dark:focus-visible:ring-(--cr-text-focus-dark)",
       },
       loading: {
