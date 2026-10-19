@@ -33,7 +33,7 @@ describe("cr", () => {
     expect(cooked.className).toContain("hover:bg-(--cr-bg-hover)");
     expect(cooked.className).toContain("active:bg-(--cr-bg-active)");
     expect(cooked.className).toContain("text-(color:--cr-text)");
-    expect(cooked.className).toContain("border border-(--cr-border)");
+    expect(cooked.className).toContain("border-(--cr-border)");
   });
 
   it("encodes opacity as a color-mix instead of interpolating utilities", () => {

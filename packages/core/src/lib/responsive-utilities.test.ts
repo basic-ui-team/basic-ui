@@ -4,6 +4,8 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it } from "vitest";
 import { BREAKPOINT_ORDER } from "../../../react-utilities/src/hooks/useResponsive/constants";
+import { colorRecipeUtilityCandidates } from "./colorRecipes/colorRecipes";
+import { buildPaletteStaticTheme } from "../../scripts/palette-theme";
 import { tokens } from "../../../tokens/src/generated/tokens";
 import {
   createResponsiveUtilitySource,
@@ -93,8 +95,13 @@ describe("shared responsive vocabulary", () => {
 });
 
 describe("responsive utility source", () => {
-  it("matches the generated stylesheet using only the shared vocabulary", () => {
-    const source = createResponsiveUtilitySource(BREAKPOINT_ORDER, responsiveUtilities);
+  it("matches the generated stylesheet from the shared vocabulary, recipe candidates, and static palette theme", () => {
+    const source = createResponsiveUtilitySource(
+      BREAKPOINT_ORDER,
+      responsiveUtilities,
+      colorRecipeUtilityCandidates,
+      buildPaletteStaticTheme(),
+    );
     const committed = readFileSync(
       resolve(
         dirname(fileURLToPath(import.meta.url)),

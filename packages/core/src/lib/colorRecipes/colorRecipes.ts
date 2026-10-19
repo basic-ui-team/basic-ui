@@ -105,7 +105,7 @@ const CHANNEL_CLASSES: Record<ColorRecipeChannel, string> = {
   bg: "bg-(--cr-bg) hover:bg-(--cr-bg-hover) active:bg-(--cr-bg-active) dark:bg-(--cr-bg-dark) dark:hover:bg-(--cr-bg-hover-dark) dark:active:bg-(--cr-bg-active-dark)",
   text: "text-(color:--cr-text) hover:text-(color:--cr-text-hover) active:text-(color:--cr-text-active) dark:text-(color:--cr-text-dark) dark:hover:text-(color:--cr-text-hover-dark) dark:active:text-(color:--cr-text-active-dark)",
   border:
-    "border border-(--cr-border) hover:border-(--cr-border-hover) active:border-(--cr-border-active) dark:border-(--cr-border-dark) dark:hover:border-(--cr-border-hover-dark) dark:active:border-(--cr-border-active-dark)",
+    "border-(--cr-border) hover:border-(--cr-border-hover) active:border-(--cr-border-active) dark:border-(--cr-border-dark) dark:hover:border-(--cr-border-hover-dark) dark:active:border-(--cr-border-active-dark)",
 };
 
 /**
