@@ -40,7 +40,6 @@ export const _Spinner = <As extends AllowedSpinnerElements = "div">(
       aria-busy="true"
       className={cn(
         spinnerVariants({ color: palette ? "palette" : color }),
-        cooked && "border-(--cr-border) border-t-transparent",
         getResponsiveClassNames(size, (value) => spinnerSizeClasses[value]),
         className,
       )}

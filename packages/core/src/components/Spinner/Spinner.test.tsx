@@ -99,9 +99,9 @@ describe("Spinner", () => {
 
       expect(spinner).toHaveClass(
         "h-4", "w-4", "border-1", "md:h-8", "md:w-8", "md:border-5",
-        "border-(--cr-border)", "border-t-transparent",
+        "border-x-(--cr-border)", "border-t-transparent",
       );
-      expect(spinner).not.toHaveClass("h-6", "w-6", "md:border-(--cr-border)");
+      expect(spinner).not.toHaveClass("h-6", "w-6", "md:border-x-(--cr-border)");
     });
   });
 
@@ -109,8 +109,8 @@ describe("Spinner", () => {
     it.each([
       ["default", "border-border-base"],
       ["muted", "border-border-muted"],
-      ["teal", "border-(--cr-border)"],
-      ["rose", "border-(--cr-border)"],
+      ["teal", "border-x-(--cr-border)"],
+      ["rose", "border-x-(--cr-border)"],
     ] satisfies [SpinnerColor, string][])(
       "applies color variant '%s'",
       (color, borderColor) => {
@@ -189,7 +189,7 @@ describe("Spinner", () => {
     it("applies size and color together", () => {
       const { container } = renderWithProviders(<Spinner size="lg" color="primary" />);
       const spinner = container.firstChild as HTMLElement;
-      expect(spinner).toHaveClass("h-7", "w-7", "border-4", "border-(--cr-border)");
+      expect(spinner).toHaveClass("h-7", "w-7", "border-4", "border-x-(--cr-border)");
     });
 
     it("applies all props together", () => {
@@ -204,7 +204,7 @@ describe("Spinner", () => {
       );
       const spinner = container.firstChild as HTMLElement;
       expect(spinner).toHaveClass(
-        "h-5", "w-5", "border-2", "custom", "border-(--cr-border)",
+        "h-5", "w-5", "border-2", "custom", "border-x-(--cr-border)",
       );
       expect(spinner).toHaveAttribute("aria-label", "Loading data");
       expect(spinner).toHaveAttribute("role", "status");
