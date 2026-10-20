@@ -20,12 +20,6 @@ import { renderToString } from "react-dom/server";
       ["weight", "bold"],
       ["color", "default"],
       ["color", "muted"],
-      ["color", "primary"],
-      ["color", "secondary"],
-      ["color", "error"],
-      ["color", "success"],
-      ["color", "warning"],
-      ["color", "info"],
       ["align", "left"],
       ["align", "center"],
       ["align", "right"],
@@ -48,25 +42,18 @@ import { renderToString } from "react-dom/server";
     });
   });
 
-  describe("custom colors", () => {
-    it("should apply custom color classes", () => {
-      const { container } = renderWithProviders(<Text color="text-red-500">Test</Text>);
-      const el = container.firstChild;
-      expect(el).toBeInTheDocument();
-      expect(el).toHaveClass("text-red-500");
-    });
-    it("should apply custom color classes with arbitrary values", () => {
-      const { container } = renderWithProviders(<Text color="text-[var(--my-color)]">Test</Text>);
-      const el = container.firstChild;
-      expect(el).toBeInTheDocument();
-      expect(el).toHaveClass("text-[var(--my-color)]");
+  describe("palette colors", () => {
+    it("should apply palette recipe utilities and variables", () => {
+      const { container } = renderWithProviders(<Text color="teal">Test</Text>);
+      const el = container.firstChild as HTMLElement;
+      expect(el).toHaveClass("text-(color:--cr-text)");
+      expect(el.getAttribute("style")).toContain("--cr-text: var(--color-teal-700)");
+      expect(el.getAttribute("style")).toContain("--cr-text-dark: var(--color-teal-300)");
     });
 
-    it("should not apply built-in color classes when a custom color is provided", () => {
-      const { container } = renderWithProviders(<Text color="text-red-500">Test</Text>);
-      const el = container.firstChild;
-      expect(el).toBeInTheDocument();
-      expect(el).not.toHaveClass(textVariants({ color: "primary" }));
+    it("should not apply structural color classes when a palette color is provided", () => {
+      const { container } = renderWithProviders(<Text color="teal">Test</Text>);
+      expect(container.firstChild).not.toHaveClass(textVariants({ color: "default" }));
     });
   });
 
@@ -117,7 +104,7 @@ import { renderToString } from "react-dom/server";
           <Text
             size={{ base: "xs", lg: "2xl" }}
             align={{ base: "center", md: "right" }}
-            color="info"
+            color="sky"
             weight="semibold"
           >
             Text
@@ -126,7 +113,7 @@ import { renderToString } from "react-dom/server";
         expect(markup).toContain("text-xs");
         expect(markup).toContain("lg:text-2xl");
         expect(markup).toContain("md:text-right");
-        expect(markup).toContain("text-fg-info");
+        expect(markup).toContain("text-(color:--cr-text)");
         expect(markup).not.toMatch(/(?:md|lg):(?:font-|text-fg-)/);
       });
 

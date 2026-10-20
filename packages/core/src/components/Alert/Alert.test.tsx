@@ -5,7 +5,7 @@ import { renderWithProviders, screen, setupUser } from "../../test-utils";
 import { Alert } from "./Alert";
 
 describe("Alert", () => {
-  it("renders visible subtle alert content with its title and default icon", () => {
+  it("renders visible filled alert content with its title and default icon", () => {
     const { container } = renderWithProviders(
       <Alert title="Updated">Your profile was updated.</Alert>,
     );
@@ -13,7 +13,10 @@ describe("Alert", () => {
     expect(screen.getByText("Updated")).toBeInTheDocument();
     expect(screen.getByText("Your profile was updated.")).toBeInTheDocument();
     expect(container.querySelector("svg")).toBeInTheDocument();
-    expect(container.firstChild).toHaveClass("border", "bg-bg-info");
+    expect(container.firstChild).toHaveClass("bg-(--cr-bg)", "text-(color:--cr-text)");
+    expect((container.firstChild as HTMLElement).getAttribute("style")).toContain(
+      "--cr-bg: var(--color-sky-200)",
+    );
   });
 
   it.each<["error" | "warning" | "info" | "success", "alert" | "status"]>([
@@ -34,8 +37,12 @@ describe("Alert", () => {
       </Alert>,
     );
 
-    expect(container.firstChild).toHaveClass("border-2", "bg-surface-base", "border-border-warning");
-    expect(container.firstChild).not.toHaveClass("bg-bg-warning");
+    expect(container.firstChild).toHaveClass("border-2", "border-(--cr-border)");
+    expect(container.firstChild).not.toHaveClass("bg-(--cr-bg)");
+    expect(container.firstChild).not.toHaveClass("bg-(--cr-bg)");
+    expect((container.firstChild as HTMLElement).getAttribute("style")).toContain(
+      "--cr-border: var(--color-amber-300)",
+    );
   });
 
   it("supports custom icons and removes the icon slot when disabled", () => {
@@ -57,11 +64,7 @@ describe("Alert", () => {
 
     expect(container.firstChild?.childNodes).toHaveLength(2);
 
-    rerender(
-      <Alert action={<button type="button">Retry</button>}>
-        Message
-      </Alert>,
-    );
+    rerender(<Alert action={<button type="button">Retry</button>}>Message</Alert>);
 
     expect(screen.getByRole("button", { name: "Retry" })).toBeInTheDocument();
   });
@@ -106,6 +109,38 @@ describe("Alert", () => {
       </Alert>,
     );
     expect(screen.getByText("Message")).toBeInTheDocument();
+  });
+
+  it("cooks a custom color override while keeping the severity role", () => {
+    const { container } = renderWithProviders(
+      <Alert severity="error" color="teal">
+        Message
+      </Alert>,
+    );
+
+    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect((container.firstChild as HTMLElement).getAttribute("style")).toContain(
+      "--cr-bg: var(--color-teal-200)",
+    );
+    expect((container.firstChild as HTMLElement).getAttribute("style")).toContain(
+      "--cr-text: var(--color-teal-800)",
+    );
+  });
+
+  it("renders a filled alert with an opaque family background", () => {
+    const { container } = renderWithProviders(
+      <Alert severity="info" variant="filled">
+        Message
+      </Alert>,
+    );
+
+    expect(container.firstChild).toHaveClass("bg-(--cr-bg)", "text-(color:--cr-text)");
+    expect((container.firstChild as HTMLElement).getAttribute("style")).toContain(
+      "--cr-bg: var(--color-sky-200)",
+    );
+    expect((container.firstChild as HTMLElement).getAttribute("style")).toContain(
+      "--cr-text: var(--color-sky-800)",
+    );
   });
 
   it("forwards refs and supports section roots", () => {

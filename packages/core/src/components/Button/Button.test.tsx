@@ -33,7 +33,7 @@ describe("Button", () => {
 
   it("leaves custom loading icon sizing and styling untouched", () => {
     const LoadingIcon = () => (
-      <svg data-testid="styled-loader" className="h-9 w-9 text-fg-info" />
+      <svg data-testid="styled-loader" className="h-9 w-9 text-sky-600" />
     );
     renderWithProviders(
       <Button loading size={{ base: "sm", md: "lg" }} loadingIcon={<LoadingIcon />}>
@@ -41,7 +41,7 @@ describe("Button", () => {
       </Button>,
     );
     const icon = screen.getByTestId("styled-loader");
-    expect(icon).toHaveAttribute("class", "h-9 w-9 text-fg-info");
+    expect(icon).toHaveAttribute("class", "h-9 w-9 text-sky-600");
     expect(icon.parentElement).toBe(screen.getByRole("button", { name: "Submit" }));
   });
 
@@ -58,8 +58,8 @@ describe("Button", () => {
 
   it.each([
     ["sm", "px-2 py-1 text-sm gap-1 rounded-md"],
-    ["md", "px-3 py-2 text-md gap-2 rounded-lg"],
-    ["lg", "px-4 py-3 text-lg gap-3 rounded-xl"],
+    ["md", "px-4 py-2 text-md gap-2 rounded-lg"],
+    ["lg", "px-6 py-3 text-lg gap-3 rounded-xl"],
   ] as const)("preserves %s size utilities", (size, classes) => {
     renderWithProviders(<Button size={size}>Submit</Button>);
     expect(screen.getByRole("button")).toHaveClass(...classes.split(" "));
@@ -70,7 +70,7 @@ describe("Button", () => {
       <Button
         size={{ base: "sm", md: "lg", xl: "md" }}
         variant="outline"
-        color="success"
+        color="emerald"
         disabled
         loading
       >
@@ -80,19 +80,22 @@ describe("Button", () => {
     const button = screen.getByRole("button");
     expect(button).toHaveClass(
       "px-2", "py-1", "text-sm", "gap-1", "rounded-md",
-      "inline-flex", "border-border-success", "text-fg-success",
+      "inline-flex", "border-2",
+      "text-(color:--cr-text)",
       "cursor-not-allowed",
     );
+    expect(button.getAttribute("style")).toContain("--cr-text: var(--color-emerald-700)");
     expect([...button.classList].filter((name) => name.startsWith("md:"))).toEqual([
-      "md:px-4", "md:py-3", "md:text-lg", "md:gap-3", "md:rounded-xl",
+      "md:px-6", "md:py-3", "md:text-lg", "md:gap-3", "md:rounded-xl",
     ]);
     expect([...button.classList].filter((name) => name.startsWith("xl:"))).toEqual([
-      "xl:px-3", "xl:py-2", "xl:text-md", "xl:gap-2", "xl:rounded-lg",
+      "xl:px-4", "xl:py-2", "xl:text-md", "xl:gap-2", "xl:rounded-lg",
     ]);
     expect(button).toBeDisabled();
     expect(button).toHaveAttribute("aria-busy", "true");
     expect(button).not.toHaveAttribute("size");
   });
+
 
   it("preserves consumer class overrides with responsive sizing", () => {
     renderWithProviders(
@@ -276,5 +279,40 @@ describe("Button", () => {
     const anchor2 = c2.querySelector("a") as HTMLAnchorElement;
     await user.click(anchor2);
     expect(handle2).not.toHaveBeenCalled();
+  });
+});
+
+describe("Button color recipes", () => {
+  it("applies recipe utilities and variables for the default color", () => {
+    renderWithProviders(<Button>Painted</Button>);
+    const btn = screen.getByRole("button", { name: "Painted" });
+    expect(btn).toHaveClass("bg-(--cr-bg)");
+    const style = btn.getAttribute("style") ?? "";
+    expect(style).toContain("--cr-bg: var(--color-red-700)");
+    expect(style).toContain("--cr-bg-hover: var(--color-red-600)");
+    expect(style).toContain("--cr-bg-dark: var(--color-red-700)");
+  });
+
+  it("cooks recipes per palette family and variant", () => {
+    renderWithProviders(<Button color="teal" variant="link">Link</Button>);
+    const btn = screen.getByRole("button", { name: "Link" });
+    expect(btn).toHaveClass("text-(color:--cr-text)");
+    const style = btn.getAttribute("style") ?? "";
+    expect(style).toContain("--cr-text: var(--color-teal-700)");
+    expect(style).toContain("--cr-text-dark: var(--color-teal-200)");
+  });
+
+  it("falls back to the light recipe when a dark recipe is omitted", () => {
+    renderWithProviders(<Button color="teal">Plain</Button>);
+    const style = screen.getByRole("button", { name: "Plain" }).getAttribute("style") ?? "";
+    expect(style).toContain("--cr-text: var(--color-white)");
+    expect(style).toContain("--cr-text-dark: var(--color-white)");
+  });
+
+  it("applies explicit ghost focus paints in both themes", () => {
+    renderWithProviders(<Button variant="ghost" color="teal">Ghost</Button>);
+    const style = screen.getByRole("button", { name: "Ghost" }).getAttribute("style") ?? "";
+    expect(style).toContain("--cr-bg-focus: var(--color-teal-500)");
+    expect(style).toContain("--cr-bg-focus-dark: var(--color-teal-500)");
   });
 });

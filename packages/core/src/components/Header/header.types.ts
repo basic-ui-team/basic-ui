@@ -1,7 +1,9 @@
 import { ResponsiveValue } from "@basic-ui/react-utilities";
 import { type CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
 import type { LayoutProps } from "../../lib";
-import { BuiltInSemanticColors } from "../../theme";
+import { PaletteColor } from "../../lib/colorRecipes/colorRecipes";
+
+export type HeaderColor = "default" | "muted" | PaletteColor;
 
 export interface HeaderOwnProps extends CommonProps, LayoutProps {
   /** Fixed visual size, independent of heading semantics. Use responsive values for breakpoint changes. @default "h2" */
@@ -9,7 +11,7 @@ export interface HeaderOwnProps extends CommonProps, LayoutProps {
   /** Font weight. @default "normal" */
   weight?: "normal" | "medium" | "semibold" | "bold";
   /** Color of the header. @default "default" */
-  color?: BuiltInSemanticColors | string;
+  color?: HeaderColor;
   /** Text alignment. @default "left" */
   align?: ResponsiveValue<"left" | "center" | "right">;
   /** Single-line ellipsis. Overrides wrap and overflow while active. @default false */

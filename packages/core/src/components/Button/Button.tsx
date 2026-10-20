@@ -5,15 +5,16 @@ import {
   PolymorphicRef,
   getResponsiveClassNames,
 } from "@basic-ui/react-utilities";
-import { buttonVariants, buttonSizeClasses } from "./button.variants";
+import { buttonVariants, buttonSizeClasses, buttonPaletteRecipes } from "./button.variants";
 import { Box, BoxProps } from "../Box";
+import { cr } from "../../lib/colorRecipes/colorRecipes";
 
 /**
  * Button component with support for multiple variants, colors, sizes, and states.
  *
  * Features:
  * - Multiple variants: solid, ghost, outline, link
- * - Semantic color support (primary, secondary, error, success, warning, info, etc.)
+ * - Palette color recipes: the color prop accepts any registered palette family
  * - Responsive sizing (sm, md, lg)
  * - Loading state with optional loading text and custom icon
  * - Disabled state with proper accessibility attributes
@@ -22,7 +23,7 @@ import { Box, BoxProps } from "../Box";
  *
  * @example
  * // Basic button
- * <Button variant="solid" color="primary">Click me</Button>
+ * <Button variant="solid" color="teal">Click me</Button>
  *
  * // Loading state
  * <Button loading loadingText="Submitting">Submit</Button>
@@ -38,13 +39,14 @@ export const Button = forwardRefWithAs<ButtonOwnProps, AllowedButtonElements>(
     {
       as,
       variant = "solid",
-      color = "default",
+      color = "red",
       size = "md",
       disabled = false,
       loading = false,
       loadingText,
       loadingIcon,
       linkComponent,
+      style,
       className,
       children,
       ...rest
@@ -54,8 +56,11 @@ export const Button = forwardRefWithAs<ButtonOwnProps, AllowedButtonElements>(
     // Use custom link component when rendering as 'a', otherwise use default 'as' prop
     const Comp = (as === "a" && linkComponent ? linkComponent : as || "button") as As;
 
+    const paletteRecipe = cr(color, buttonPaletteRecipes[variant]);
+
     const resolvedStyles = cn(
-      buttonVariants({ variant, color, size: null, disabled, loading }),
+      buttonVariants({ variant, size: null, disabled, loading }),
+      paletteRecipe.className,
       getResponsiveClassNames(size, (value) => buttonSizeClasses[value]),
       className,
     );
@@ -96,6 +101,7 @@ export const Button = forwardRefWithAs<ButtonOwnProps, AllowedButtonElements>(
         as={Comp}
         ref={ref}
         className={resolvedStyles}
+        style={{ ...paletteRecipe.style, ...style }}
         aria-busy={loading}
         {...(restProps as BoxProps<As>)}
       >

@@ -25,7 +25,25 @@ const messages = {
   error: "We could not save your changes.",
 } as const;
 
-export const Severities: Story = {
+export const Basic: Story = {
+  render: () => (
+    <Alert severity="info" title="A new version is available." className="max-w-full" />
+  ),
+};
+
+export const Description: Story = {
+  render: () => (
+    <Alert
+      severity="success"
+      title="Changes saved"
+      className="max-w-full"
+    >
+      Your changes are now live and visible to everyone on your team.
+    </Alert>
+  ),
+};
+
+export const Severity: Story = {
   render: () => (
     <Flex direction="column" gap={3} className="max-w-full">
       {(Object.keys(messages) as Array<keyof typeof messages>).map((severity) => (
@@ -41,11 +59,26 @@ export const Variants: Story = {
   render: () => (
     <Flex direction="column" gap={3} className="max-w-full">
       <Alert severity="info" variant="subtle" title="Subtle">
-        A tinted surface with a semantic border.
+        A lightly tinted surface.
+      </Alert>
+      <Alert severity="info" variant="filled" title="Filled">
+        A solid family-colored surface.
       </Alert>
       <Alert severity="info" variant="outline" title="Outline">
-        A base surface with a stronger semantic border.
+        A transparent surface with a family-colored border.
       </Alert>
+    </Flex>
+  ),
+};
+
+export const Color: Story = {
+  render: () => (
+    <Flex direction="column" gap={3} className="max-w-full">
+      {(["teal", "violet", "rose"] as const).map((color) => (
+        <Alert key={color} severity="info" color={color} title={color}>
+          The severity keeps the role and icon; the family sets the colors.
+        </Alert>
+      ))}
     </Flex>
   ),
 };
@@ -70,7 +103,7 @@ export const WithAction: Story = {
       severity="warning"
       title="Payment method expires soon"
       action={
-        <Button variant="link" color="warning" size="sm">
+        <Button variant="link" color="amber" size="sm">
           Update
         </Button>
       }
@@ -80,7 +113,20 @@ export const WithAction: Story = {
   ),
 };
 
-export const Dismissible: Story = {
+export const WithCloseButton: Story = {
+  render: () => (
+    <Alert
+      severity="warning"
+      title="Trial expiring"
+      dismissible
+      className="max-w-full"
+    >
+      Your trial expires in three days. Upgrade to keep your workspace.
+    </Alert>
+  ),
+};
+
+export const Controlled: Story = {
   render: () => {
     const [open, setOpen] = useState(true);
 

@@ -36,6 +36,7 @@ import {
   XIcon,
 } from "@basic-ui/icons";
 import { Icon } from "./Icon";
+import { PALETTE_FAMILIES } from "../../lib/colorRecipes/colorRecipes";
 
 type LibraryIcon = ComponentType<SVGProps<SVGSVGElement>>;
 
@@ -111,7 +112,7 @@ const meta: Meta<typeof Icon> = {
     },
     color: {
       control: { type: "select" },
-      options: ["default", "muted", "primary", "secondary", "success", "error", "warning", "info"],
+      options: ["muted", ...PALETTE_FAMILIES],
       description: "Optional semantic color. Inherits the parent's color when omitted.",
     },
   },
@@ -144,7 +145,7 @@ export const SemanticColors: Story = {
   render: () => (
     <div className="flex flex-wrap items-center gap-6">
       {(
-        ["default", "muted", "primary", "secondary", "success", "error", "warning", "info"] as const
+        ["muted", ...PALETTE_FAMILIES] as const
       ).map((color) => (
         <div key={color} className="flex flex-col items-center gap-2">
           <Icon icon={<UsersIcon />} color={color} size="lg" />
@@ -158,7 +159,7 @@ export const SemanticColors: Story = {
 export const InheritedColor: Story = {
   render: () => (
     <div className="flex flex-wrap gap-6">
-      <div className="flex items-center gap-3 rounded-lg bg-surface-base p-4 text-fg-success">
+      <div className="flex items-center gap-3 rounded-lg bg-surface-base p-4 text-green-700">
         <Icon icon={<SunIcon />} size="lg" />
         <span>Inherits the parent's semantic color</span>
       </div>
@@ -174,7 +175,7 @@ export const ResponsiveSizes: Story = {
   args: {
     icon: <BellIcon />,
     size: { base: "sm", md: "md", lg: "xl" },
-    color: "info",
+    color: "sky",
   },
   parameters: {
     docs: {
@@ -194,14 +195,14 @@ export const CustomSvg: Story = {
       </svg>
     ),
     size: "xl",
-    color: "primary",
+    color: "muted",
   },
 };
 
 export const AccessibleMeaningfulIcon: Story = {
   args: {
     icon: <CheckCircleIcon />,
-    color: "success",
+    color: "green",
     "aria-hidden": false,
     "aria-label": "Saved successfully",
   },

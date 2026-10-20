@@ -5,9 +5,11 @@ import { PaginationViewProps } from "./pagination.types";
 import { cn } from "@basic-ui/react-utilities";
 import {
   paginationButtonVariants,
+  paginationButtonPaletteRecipes,
   paginationEllipsisVariants,
   paginationVariants,
 } from "./pagination.variants";
+import { cr } from "../../../lib/colorRecipes/colorRecipes";
 import { ChevronLeftIcon, ChevronRightIcon } from "@basic-ui/icons";
 import { Box } from "../../Box";
 
@@ -31,6 +33,9 @@ export const Pagination = React.forwardRef<HTMLElement, PaginationViewProps>(
     },
     ref,
   ) => {
+    const cookedResting = cr(color, paginationButtonPaletteRecipes.default);
+    const cookedActive = cr(color, paginationButtonPaletteRecipes.active);
+
     if (totalPages <= 1) return null;
 
     return (
@@ -67,18 +72,20 @@ export const Pagination = React.forwardRef<HTMLElement, PaginationViewProps>(
         {renderControl(
           "first",
           !hasPrev,
-          cn(paginationButtonVariants({ size: "md", shape, variant, color })),
+          cn(paginationButtonVariants({ size: "md", shape, variant }), cookedResting.className),
           "Go to first page",
           handlePageChange ? () => handlePageChange(1) : undefined,
           customIcons?.first || <ChevronLeftIcon />,
+          cookedResting.style,
         )}
         {renderControl(
           "prev",
           !hasPrev,
-          cn(paginationButtonVariants({ size: "md", shape, variant, color })),
+          cn(paginationButtonVariants({ size: "md", shape, variant }), cookedResting.className),
           "Go to previous page",
           handlePageChange ? () => handlePageChange(activePage - 1) : undefined,
           customIcons?.previous || <ChevronLeftIcon />,
+          cookedResting.style,
         )}
         {pageNumbers.map((pageNumber, idx) =>
           pageNumber === "ellipsis" ? (
@@ -98,32 +105,30 @@ export const Pagination = React.forwardRef<HTMLElement, PaginationViewProps>(
               handlePageChange ? () => handlePageChange(pageNumber as number) : undefined,
               pageNumber === activePage ? -1 : undefined,
               cn(
-                paginationButtonVariants({
-                  size: "md",
-                  shape,
-                  variant,
-                  color,
-                  active: pageNumber === activePage,
-                }),
+                paginationButtonVariants({ size: "md", shape, variant }),
+                pageNumber === activePage ? cookedActive.className : cookedResting.className,
               ),
+              pageNumber === activePage ? cookedActive.style : cookedResting.style,
             )
           ),
         )}
         {renderControl(
           "next",
           !hasNext,
-          cn(paginationButtonVariants({ size: "md", shape, variant, color })),
+          cn(paginationButtonVariants({ size: "md", shape, variant }), cookedResting.className),
           "Go to next page",
           handlePageChange ? () => handlePageChange(activePage + 1) : undefined,
           customIcons?.next || <ChevronRightIcon />,
+          cookedResting.style,
         )}
         {renderControl(
           "last",
           !hasNext,
-          cn(paginationButtonVariants({ size: "md", shape, variant, color })),
+          cn(paginationButtonVariants({ size: "md", shape, variant }), cookedResting.className),
           "Go to last page",
           handlePageChange ? () => handlePageChange(totalPages) : undefined,
           customIcons?.last || <ChevronRightIcon />,
+          cookedResting.style,
         )}
       </Box>
     );

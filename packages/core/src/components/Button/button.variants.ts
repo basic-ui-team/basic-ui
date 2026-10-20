@@ -1,237 +1,98 @@
 import { cva } from "class-variance-authority";
+import type { ColorRecipe } from "../../lib/colorRecipes/colorRecipes";
 
 export const buttonSizeClasses = {
   sm: "px-2 py-1 text-sm gap-1 rounded-md",
-  md: "px-3 py-2 text-md gap-2 rounded-lg",
-  lg: "px-4 py-3 text-lg gap-3 rounded-xl",
+  md: "px-4 py-2 text-md gap-2 rounded-lg",
+  lg: "px-6 py-3 text-lg gap-3 rounded-xl",
 } as const;
 
 export const buttonVariants = cva(
   [
     "relative inline-flex items-center justify-center gap-2 font-medium select-none",
     "transition-all duration-slow ease-spring",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-500",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ring-offset-bg-base",
     "text-fg-base",
   ].join(" "),
   {
     variants: {
       size: buttonSizeClasses,
       variant: {
-        solid: "",
-        ghost: "",
-        outline: "",
-        link: "cursor-pointer",
-      },
-      color: {
-        default: "",
-        muted: "",
-        primary: "",
-        secondary: "",
-        error: "",
-        success: "",
-        warning: "",
-        info: "",
+        solid: "focus-visible:ring-(--cr-bg-focus) dark:focus-visible:ring-(--cr-bg-focus-dark)",
+        ghost: "focus-visible:ring-(--cr-bg-focus) dark:focus-visible:ring-(--cr-bg-focus-dark)",
+        outline:
+          "border-2 focus-visible:ring-(--cr-border-focus) dark:focus-visible:ring-(--cr-border-focus-dark)",
+        link: "cursor-pointer underline focus-visible:ring-(--cr-text-focus) dark:focus-visible:ring-(--cr-text-focus-dark)",
       },
       loading: {
-        true: "opacity-70 cursor-progress hover:none active:none",
+        true: "opacity-65 cursor-progress disabled:hover:bg-(--cr-bg) disabled:active:bg-(--cr-bg)",
         false: "",
       },
       disabled: {
-        true: "opacity-40 cursor-not-allowed hover:none active:none",
+        true: "opacity-65 cursor-not-allowed disabled:hover:bg-(--cr-bg) disabled:active:bg-(--cr-bg)",
         false: "",
       },
     },
-    compoundVariants: [
-      // --- solid ---
-      {
-        variant: "solid",
-        color: "default",
-        className:
-          "bg-bg-inverted text-fg-inverted hover:bg-bg-inverted/85 active:bg-bg-inverted/70",
-      },
-      {
-        variant: "solid",
-        color: "muted",
-        className: "bg-bg-muted text-fg-muted hover:bg-bg-hover active:bg-bg-active",
-      },
-      {
-        variant: "solid",
-        color: "primary",
-        className: "bg-primary-700 text-white hover:bg-primary-600 active:bg-primary-700",
-      },
-      {
-        variant: "solid",
-        color: "secondary",
-        className: "bg-secondary-700 text-white hover:bg-secondary-600 active:bg-secondary-700",
-      },
-      {
-        variant: "solid",
-        color: "error",
-        className: "bg-bg-error text-fg-base hover:bg-bg-error/85 active:bg-bg-error/70",
-      },
-      {
-        variant: "solid",
-        color: "success",
-        className: "bg-bg-success text-fg-base hover:bg-bg-success/85 active:bg-bg-success/70",
-      },
-      {
-        variant: "solid",
-        color: "warning",
-        className: "bg-bg-warning text-fg-base hover:bg-bg-warning/85 active:bg-bg-warning/70",
-      },
-      {
-        variant: "solid",
-        color: "info",
-        className: "bg-bg-info text-fg-base hover:bg-bg-info/85 active:bg-bg-info/70",
-      },
-
-      // --- ghost (transparent, interaction highlights) ---
-      {
-        variant: "ghost",
-        color: "default",
-        className: "bg-transparent text-fg-base hover:bg-bg-hover active:bg-bg-active",
-      },
-      {
-        variant: "ghost",
-        color: "muted",
-        className: "bg-transparent text-fg-muted hover:bg-bg-hover active:bg-bg-active",
-      },
-      {
-        variant: "ghost",
-        color: "primary",
-        className: "bg-transparent text-primary-600 hover:bg-primary-50 active:bg-primary-100",
-      },
-      {
-        variant: "ghost",
-        color: "secondary",
-        className:
-          "bg-transparent text-secondary-500 hover:bg-secondary-50 active:bg-secondary-100",
-      },
-      {
-        variant: "ghost",
-        color: "error",
-        className: "bg-transparent text-fg-error hover:bg-bg-error active:bg-surface-error",
-      },
-      {
-        variant: "ghost",
-        color: "success",
-        className: "bg-transparent text-fg-success hover:bg-bg-success active:bg-surface-success",
-      },
-      {
-        variant: "ghost",
-        color: "warning",
-        className: "bg-transparent text-fg-warning hover:bg-bg-warning active:bg-surface-warning",
-      },
-      {
-        variant: "ghost",
-        color: "info",
-        className: "bg-transparent text-fg-info hover:bg-bg-info active:bg-surface-info",
-      },
-
-      // --- outline (bordered) ---
-      {
-        variant: "outline",
-        color: "default",
-        className:
-          "bg-transparent text-fg-base border border-border-base hover:bg-bg-hover active:bg-bg-active",
-      },
-      {
-        variant: "outline",
-        color: "muted",
-        className:
-          "bg-transparent text-fg-muted border border-border-muted hover:bg-bg-hover active:bg-bg-active",
-      },
-      {
-        variant: "outline",
-        color: "primary",
-        className:
-          "bg-transparent text-primary-600 border border-primary-500 hover:bg-primary-50 active:bg-primary-100",
-      },
-      {
-        variant: "outline",
-        color: "secondary",
-        className:
-          "bg-transparent text-secondary-500 border border-secondary-500 hover:bg-secondary-50 active:bg-secondary-100",
-      },
-      {
-        variant: "outline",
-        color: "error",
-        className:
-          "bg-transparent text-fg-error border border-border-error hover:bg-bg-error active:bg-surface-error",
-      },
-      {
-        variant: "outline",
-        color: "success",
-        className:
-          "bg-transparent text-fg-success border border-border-success hover:bg-bg-success active:bg-surface-success",
-      },
-      {
-        variant: "outline",
-        color: "warning",
-        className:
-          "bg-transparent text-fg-warning border border-border-warning hover:bg-bg-warning active:bg-surface-warning",
-      },
-      {
-        variant: "outline",
-        color: "info",
-        className:
-          "bg-transparent text-fg-info border border-border-info hover:bg-bg-info active:bg-surface-info",
-      },
-
-      // --- link (text-only) ---
-      {
-        variant: "link",
-        color: "default",
-        className: "bg-transparent text-fg-base underline hover:text-fg-active active:no-underline",
-      },
-      {
-        variant: "link",
-        color: "muted",
-        className: "bg-transparent text-fg-muted underline hover:text-fg-base active:no-underline",
-      },
-      {
-        variant: "link",
-        color: "primary",
-        className:
-          "bg-transparent text-primary-600 underline hover:text-primary-700 active:no-underline",
-      },
-      {
-        variant: "link",
-        color: "secondary",
-        className:
-          "bg-transparent text-secondary-500 underline hover:text-secondary-600 active:no-underline",
-      },
-      {
-        variant: "link",
-        color: "error",
-        className: "bg-transparent text-fg-error underline hover:text-fg-error active:no-underline",
-      },
-      {
-        variant: "link",
-        color: "success",
-        className:
-          "bg-transparent text-fg-success underline hover:text-fg-success active:no-underline",
-      },
-      {
-        variant: "link",
-        color: "warning",
-        className:
-          "bg-transparent text-fg-warning underline hover:text-fg-warning active:no-underline",
-      },
-      {
-        variant: "link",
-        color: "info",
-        className: "bg-transparent text-fg-info underline hover:text-fg-info active:no-underline",
-      },
-    ],
     defaultVariants: {
       size: "md",
       variant: "solid",
-      color: "default",
       loading: false,
       disabled: false,
     },
   },
 );
+
+export const buttonPaletteRecipes: Record<"solid" | "ghost" | "outline" | "link", ColorRecipe> = {
+  solid: {
+    bg: {
+      value: "700",
+      hover: { value: "600" },
+      active: { value: "800" },
+      dark: { value: "700", hover: { value: "500" }, active: { value: "700" } },
+    },
+    text: { value: "white" },
+  },
+  ghost: {
+    bg: {
+      value: "200",
+      opacity: 30,
+      hover: { value: "200", opacity: 70 },
+      active: { value: "200", opacity: 85 },
+      focus: { value: "500", opacity: 100 },
+      dark: {
+        value: "300",
+        opacity: 30,
+        hover: { value: "300", opacity: 50 },
+        active: { value: "300", opacity: 85 },
+        focus: { value: "500", opacity: 100 },
+      },
+    },
+    text: { value: "800", dark: { value: "200" } },
+  },
+  outline: {
+    bg: {
+      value: "white",
+      opacity: 0,
+      hover: { value: "50", opacity: 10 },
+      active: { value: "700", opacity: 15 },
+      dark: {
+        value: "white",
+        opacity: 0,
+        hover: { value: "50", opacity: 70 },
+        active: { value: "100" },
+        focus: { value: "400", opacity: 100 },
+      },
+    },
+    text: { value: "700", dark: { value: "300" } },
+    border: { value: "500" },
+  },
+  link: {
+    text: {
+      value: "700",
+      hover: { value: "800" },
+      dark: { value: "200", hover: { value: "400" } },
+    },
+  },
+};
 
 export default buttonVariants;

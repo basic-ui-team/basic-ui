@@ -5,6 +5,7 @@ import { Text } from "../Text";
 import { useState } from "react";
 import { Box } from "../Box";
 import { Divider } from "../Divider";
+import { PALETTE_FAMILIES } from "../../lib/colorRecipes/colorRecipes";
 
 const sizes = ["xs", "sm", "md", "lg", "xl"] as const;
 
@@ -38,24 +39,13 @@ export const AllSizes: Story = {
 
 export const AllColors: Story = {
   render: () => (
-    <Flex gap={4} wrap="wrap" align="start" className="h-full">
-      {sizes.map((size) => (
-        <Flex
-          key={size}
-          direction="column"
-          gap={3}
-          align="center"
-          justify="center"
-          className="h-full"
-        >
-          <Spinner size={size} color="default" />
-          <Spinner size={size} color="muted" />
-          <Spinner size={size} color="primary" />
-          <Spinner size={size} color="secondary" />
-          <Spinner size={size} color="success" />
-          <Spinner size={size} color="error" />
-          <Spinner size={size} color="warning" />
-          <Spinner size={size} color="info" />
+    <Flex direction="column" gap={4} wrap="wrap" align="start" className="h-full">
+      {(["muted", "default", ...PALETTE_FAMILIES] as const).map((color) => (
+        <Flex direction="row" gap={6} align="center" key={color}>
+          {sizes.map((size) => (
+            <Spinner key={size} size={size} color={color} />
+          ))}
+          <Text color={color}>{color}</Text>
         </Flex>
       ))}
     </Flex>
@@ -119,10 +109,10 @@ export const SizeAndColorCombinations: Story = {
     <Flex gap={4} wrap="wrap">
       <Spinner size="sm" color="primary" />
       <Spinner size="md" color="secondary" />
-      <Spinner size="lg" color="success" />
-      <Spinner size="md" color="error" />
-      <Spinner size="lg" color="warning" />
-      <Spinner size="md" color="info" />
+      <Spinner size="lg" color="green" />
+      <Spinner size="md" color="red" />
+      <Spinner size="lg" color="amber" />
+      <Spinner size="md" color="sky" />
       <Spinner size="sm" color="muted" />
       <Spinner size="xl" color="primary" />
     </Flex>
@@ -149,7 +139,7 @@ export const WithSpacing: Story = {
       <Box>
         <Text>Spinner with vertical margin</Text>
         <Box className="border border-border-base w-max">
-          <Spinner color="success" my={3} />
+          <Spinner color="green" my={3} />
         </Box>
       </Box>
       <Divider />

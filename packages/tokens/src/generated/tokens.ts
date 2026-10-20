@@ -16,11 +16,7 @@ export const tokens = {
       "hover": "bg-hover",
       "active": "bg-active",
       "disabled": "bg-disabled",
-      "inverted": "bg-inverted",
-      "error": "bg-error",
-      "success": "bg-success",
-      "warning": "bg-warning",
-      "info": "bg-info"
+      "inverted": "bg-inverted"
     },
     "fg": {
       "base": "fg-base",
@@ -29,10 +25,6 @@ export const tokens = {
       "active": "fg-active",
       "disabled": "fg-disabled",
       "inverted": "fg-inverted",
-      "error": "fg-error",
-      "success": "fg-success",
-      "warning": "fg-warning",
-      "info": "fg-info",
       "skeleton": "fg-skeleton"
     },
     "surface": {
@@ -40,11 +32,7 @@ export const tokens = {
       "hover": "surface-hover",
       "active": "surface-active",
       "disabled": "surface-disabled",
-      "inverted": "surface-inverted",
-      "error": "surface-error",
-      "success": "surface-success",
-      "warning": "surface-warning",
-      "info": "surface-info"
+      "inverted": "surface-inverted"
     },
     "border": {
       "base": "border-base",
@@ -52,11 +40,7 @@ export const tokens = {
       "hover": "border-hover",
       "active": "border-active",
       "disabled": "border-disabled",
-      "inverted": "border-inverted",
-      "error": "border-error",
-      "success": "border-success",
-      "warning": "border-warning",
-      "info": "border-info"
+      "inverted": "border-inverted"
     },
     "primary": {
       "50": "primary-50",
@@ -222,11 +206,7 @@ export const darkTokens = {
       "hover": "bg-hover",
       "active": "bg-active",
       "disabled": "bg-disabled",
-      "inverted": "bg-inverted",
-      "error": "bg-error",
-      "success": "bg-success",
-      "warning": "bg-warning",
-      "info": "bg-info"
+      "inverted": "bg-inverted"
     },
     "fg": {
       "base": "fg-base",
@@ -235,10 +215,6 @@ export const darkTokens = {
       "active": "fg-active",
       "disabled": "fg-disabled",
       "inverted": "fg-inverted",
-      "error": "fg-error",
-      "success": "fg-success",
-      "warning": "fg-warning",
-      "info": "fg-info",
       "skeleton": "fg-skeleton"
     },
     "surface": {
@@ -246,11 +222,7 @@ export const darkTokens = {
       "hover": "surface-hover",
       "active": "surface-active",
       "disabled": "surface-disabled",
-      "inverted": "surface-inverted",
-      "error": "surface-error",
-      "success": "surface-success",
-      "warning": "surface-warning",
-      "info": "surface-info"
+      "inverted": "surface-inverted"
     },
     "border": {
       "base": "border-base",
@@ -258,11 +230,7 @@ export const darkTokens = {
       "hover": "border-hover",
       "active": "border-active",
       "disabled": "border-disabled",
-      "inverted": "border-inverted",
-      "error": "border-error",
-      "success": "border-success",
-      "warning": "border-warning",
-      "info": "border-info"
+      "inverted": "border-inverted"
     },
     "primary": {
       "50": "primary-50",

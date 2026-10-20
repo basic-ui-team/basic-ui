@@ -99,7 +99,7 @@ export const PositionAndOverflow: Story = {
         <Text as="span">A positioned ancestor</Text>
         <Box
           position="absolute"
-          className="right-2 top-2 rounded bg-bg-info px-2 py-1 text-fg-info"
+          className="right-2 top-2 rounded bg-sky-100 px-2 py-1 text-sky-800"
         >
           Pinned
         </Box>

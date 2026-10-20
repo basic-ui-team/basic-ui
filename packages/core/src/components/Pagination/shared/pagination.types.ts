@@ -1,4 +1,5 @@
 import { CommonProps } from "@basic-ui/react-utilities";
+import type { PaletteColor } from "../../../lib/colorRecipes/colorRecipes";
 
 /** Icons used for the navigation controls (first/prev/next/last). */
 export interface PageNavigationIcons {
@@ -53,8 +54,8 @@ export interface SharedPaginationProps extends Omit<CommonProps, "children"> {
   shape?: "rounded" | "square" | "circular";
   /** Variant style for page number buttons. Defaults to `default`. */
   variant?: "default" | "outlined";
-  /** Color style for page number buttons. Defaults to `default`. */
-  color?: "default" | "primary" | "secondary";
+  /** Palette family for page buttons. The current page paints solid; resting buttons tint. @default "primary" */
+  color?: PaletteColor;
   /** Handler invoked when a page number is requested. */
   onPageChange?: (page: number) => void;
 }
@@ -71,7 +72,7 @@ export interface PaginationViewProps {
   hasNext: boolean;
   shape: "rounded" | "square" | "circular";
   variant: "default" | "outlined";
-  color: "default" | "primary" | "secondary";
+  color: PaletteColor;
   className?: string;
   customIcons?: Partial<PageNavigationIcons>;
 
@@ -84,6 +85,7 @@ export interface PaginationViewProps {
     onClick?: () => void,
     tabIndex?: number,
     className?: string,
+    style?: React.CSSProperties,
   ) => React.ReactNode;
 
   /** Render function for navigation controls (first/prev/next/last). */
@@ -94,6 +96,7 @@ export interface PaginationViewProps {
     ariaLabel?: string,
     onClick?: () => void,
     icon?: React.ReactNode,
+    style?: React.CSSProperties,
   ) => React.ReactNode;
 
   /** Handler invoked when a page number is requested. */

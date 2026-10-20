@@ -25,8 +25,7 @@ describe("variants", () => {
 
   const colorMap: Record<string, string> = {
     default: "text-fg-base",
-    primary: "text-primary-700",
-    secondary: "text-secondary-700",
+    muted: "text-fg-muted",
   };
 
   const alignMap: Record<string, string> = {
@@ -54,8 +53,7 @@ describe("variants", () => {
     ["weight", "semibold"],
     ["weight", "bold"],
     ["color", "default"],
-    ["color", "primary"],
-    ["color", "secondary"],
+    ["color", "muted"],
     ["align", "left"],
     ["align", "center"],
     ["align", "right"],
@@ -76,7 +74,7 @@ describe("variants", () => {
         element = <Header as="h1" weight={value as "normal" | "medium" | "semibold" | "bold"}>Test</Header>;
         break;
       case "color":
-        element = <Header as="h1" color={value as "default" | "primary" | "secondary"}>Test</Header>;
+        element = <Header as="h1" color={value as "default" | "muted"}>Test</Header>;
         break;
       case "align":
         element = <Header as="h1" align={value as "left" | "center" | "right"}>Test</Header>;
@@ -119,7 +117,7 @@ describe("responsive CSS", () => {
         as="h3"
         size={{ base: "h6", lg: "h1" }}
         align={{ base: "left", md: "right" }}
-        color="success"
+        color="green"
         weight="bold"
       >
         Heading
@@ -129,7 +127,7 @@ describe("responsive CSS", () => {
     expect(markup).toContain("text-sm");
     expect(markup).toContain("lg:text-3xl");
     expect(markup).toContain("md:text-right");
-    expect(markup).toContain("text-fg-success");
+    expect(markup).toContain("text-(color:--cr-text)");
     expect(markup).not.toMatch(/(?:md|lg):(?:font-|text-fg-|leading-)/);
   });
 
@@ -182,15 +180,18 @@ describe("responsive CSS", () => {
   });
 });
 
-describe("custom colors", () => {
-  it("should apply custom color classes", () => {
-    const { container } = renderWithProviders(<Header color="text-red-500">Test</Header>);
-    expect(container.firstChild).toHaveClass("text-red-500");
+describe("palette colors", () => {
+  it("should apply palette recipe utilities and variables", () => {
+    const { container } = renderWithProviders(<Header color="teal">Test</Header>);
+    const header = container.firstChild as HTMLElement;
+    expect(header).toHaveClass("text-(color:--cr-text)");
+    expect(header.getAttribute("style")).toContain("--cr-text: var(--color-teal-700)");
+    expect(header.getAttribute("style")).toContain("--cr-text-dark: var(--color-teal-300)");
   });
 
-  it("should not apply built-in color classes when a custom color is provided", () => {
-    const { container } = renderWithProviders(<Header color="text-red-500">Test</Header>);
-    expect(container.firstChild).not.toHaveClass(headerVariants({ color: "primary" }));
+  it("should not apply structural color classes when a palette color is provided", () => {
+    const { container } = renderWithProviders(<Header color="teal">Test</Header>);
+    expect(container.firstChild).not.toHaveClass(headerVariants({ color: "default" }));
   });
 });
 

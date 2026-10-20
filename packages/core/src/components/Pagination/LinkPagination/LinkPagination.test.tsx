@@ -170,4 +170,24 @@ describe("LinkPagination", () => {
     // current page link should prevent navigation
     expect(events.some((e) => e.href === "/p/2" && e.defaultPrevented)).toBeTruthy();
   });
+
+  it("cooks page links from the color family recipes", () => {
+    renderWithProviders(
+      <LinkPagination
+        pageCount={5}
+        currentPage={2}
+        color="violet"
+        getPageHref={(p) => `/p/${p}`}
+      />,
+    );
+
+    const active = screen.getByLabelText("Go to page 2");
+    expect(active).toHaveClass("bg-(--cr-bg)", "text-(color:--cr-text)");
+    expect(active.getAttribute("style")).toContain("--cr-bg: var(--color-violet-600)");
+
+    const resting = screen.getByLabelText("Go to page 3");
+    expect(resting.getAttribute("style")).toContain(
+      "--cr-bg: color-mix(in oklab, var(--color-violet-100) 30%, transparent)",
+    );
+  });
 });

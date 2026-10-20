@@ -7,9 +7,9 @@ import {
   getResponsiveClassNames,
 } from "@basic-ui/react-utilities";
 import { AllowedHeaderElements, HeaderOwnProps, HeaderProps } from "./header.types";
-import { headerVariants, headerSizeClasses, headerAlignClasses } from "./header.variants";
+import { headerVariants, headerSizeClasses, headerAlignClasses, headerPaletteRecipe } from "./header.variants";
+import { cr, isPaletteColor } from "../../lib/colorRecipes/colorRecipes";
 import { Box, BoxProps } from "../Box";
-import { BuiltInSemanticColors, isBuiltInSemanticColor } from "../../theme";
 import { getTextFlowClasses } from "../../lib";
 
 const _Header = <As extends AllowedHeaderElements = "h1">(
@@ -23,6 +23,7 @@ const _Header = <As extends AllowedHeaderElements = "h1">(
     wrap = "nowrap",
     children,
     className,
+    style,
     overflow,
     overflowX,
     overflowY,
@@ -33,13 +34,14 @@ const _Header = <As extends AllowedHeaderElements = "h1">(
   const Comp = (as || "h1") as As;
 
   const flow = getTextFlowClasses({ truncate, wrap, overflow, overflowX, overflowY });
-  const isBuiltInColor = isBuiltInSemanticColor(color);
+  const palette = isPaletteColor(color);
+  const cooked = palette ? cr(color, headerPaletteRecipe) : null;
 
   const resolvedStyles = cn(
     headerVariants({
       size: null,
       weight,
-      color: isBuiltInColor ? (color as BuiltInSemanticColors) : "custom",
+      color: palette ? "palette" : color,
       align: null,
       truncate: null,
       wrap: null,
@@ -48,7 +50,7 @@ const _Header = <As extends AllowedHeaderElements = "h1">(
     getResponsiveClassNames(align, (value) => headerAlignClasses[value]),
     flow.className,
     className,
-    !isBuiltInColor && color ? color : null,
+    cooked?.className,
   );
 
   const accessibilityProps = getTruncateAccessibilityProps(children, flow.hasTruncation, rest);
@@ -61,6 +63,7 @@ const _Header = <As extends AllowedHeaderElements = "h1">(
       as={Comp}
       ref={ref}
       className={resolvedStyles}
+      style={{ ...cooked?.style, ...style }}
       {...accessibilityProps}
       {...(normalizedRest as BoxProps<As>)}
     >

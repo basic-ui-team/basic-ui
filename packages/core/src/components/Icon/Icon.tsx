@@ -1,7 +1,8 @@
 import React from "react";
 import type { IconProps } from "./icon.types";
 import { cn, getResponsiveClassNames } from "@basic-ui/react-utilities";
-import { iconSizeClasses, iconVariants } from "./icon.variants";
+import { iconSizeClasses, iconVariants, iconPaletteRecipe } from "./icon.variants";
+import { cr, isPaletteColor } from "../../lib/colorRecipes/colorRecipes";
 import { Box } from "../Box";
 
 /**
@@ -18,10 +19,10 @@ import { Box } from "../Box";
  * @example
  * // From @basic-ui/icons
  * import { CheckCircle } from "@basic-ui/icons";
- * <Icon icon={CheckCircle} color="success" />
+ * <Icon icon={CheckCircle} color="green" />
  *
  * // Custom SVG
- * <Icon icon={<svg>...</svg>} size="lg" color="primary" />
+ * <Icon icon={<svg>...</svg>} size="lg" color="teal" />
  *
  * // Responsive: md=md, lg=lg
  * <Icon icon={CheckCircle} size={{ base: "sm", md: "md", lg: "lg" }} />
@@ -36,24 +37,30 @@ export const Icon = React.forwardRef<HTMLSpanElement, IconProps>(
       size = "md",
       color,
       className,
+      style,
       "aria-hidden": ariaHidden = true,
       "aria-label": ariaLabel,
       ...props
     },
     ref,
   ) => {
+    const palette = isPaletteColor(color);
+    const cooked = palette ? cr(color, iconPaletteRecipe) : null;
+
     return (
       <Box
         as="span"
         ref={ref}
         className={cn(
-          iconVariants({ color, size: null }),
+          iconVariants({ color: palette ? "palette" : color, size: null }),
+          cooked?.className,
           getResponsiveClassNames(size, (value) => iconSizeClasses[value]),
           className,
         )}
         aria-hidden={ariaHidden}
         aria-label={ariaLabel}
         role={ariaLabel ? "img" : undefined}
+        style={cooked ? { ...cooked.style, ...style } : style}
         {...props}
       >
         {icon}

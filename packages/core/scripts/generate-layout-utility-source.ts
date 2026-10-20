@@ -2,15 +2,23 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { BREAKPOINT_ORDER } from "../../react-utilities/src/hooks/useResponsive/constants";
+import { colorRecipeUtilityCandidates } from "../src/lib/colorRecipes/colorRecipes";
 import {
   createResponsiveUtilitySource,
   isUtilitySourceCurrent,
   responsiveUtilities,
 } from "../src/lib/responsive-utilities";
+import { buildPaletteStaticTheme } from "./palette-theme";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const outputPath = resolve(__dirname, "../src/generated/layout-utilities.generated.css");
-const source = createResponsiveUtilitySource(BREAKPOINT_ORDER, responsiveUtilities);
+
+const source = createResponsiveUtilitySource(
+  BREAKPOINT_ORDER,
+  responsiveUtilities,
+  colorRecipeUtilityCandidates,
+  buildPaletteStaticTheme(),
+);
 
 if (process.argv.includes("--check")) {
   if (!isUtilitySourceCurrent(outputPath, source)) {

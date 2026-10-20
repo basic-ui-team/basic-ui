@@ -1,8 +1,8 @@
 import { CommonProps, ResponsiveValue, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
 import { LayoutProps } from "../../lib";
-import { BuiltInSemanticColors } from "../../theme";
+import { PaletteColor } from "../../lib/colorRecipes/colorRecipes";
 
-export type SpinnerColor = BuiltInSemanticColors;
+export type SpinnerColor = "default" | "muted" | PaletteColor;
 export type SpinnerSizes = "xs" | "sm" | "md" | "lg" | "xl";
 
 export type AllowedSpinnerElements = "div" | "span";
@@ -13,7 +13,7 @@ export interface SpinnerOwnProps
   /** Size of the spinner. @default "md" */
   size?: ResponsiveValue<SpinnerSizes>;
 
-  /** Color of the spinner. Accepts built-in semantic colors. @default "default" */
+  /** Color of the spinner: structural neutral, informational severity, or palette family. @default "default" */
   color?: SpinnerColor;
 
   /** Whether the spinner is visible or hidden. @default true */

@@ -1,23 +1,10 @@
 import React from "react";
 import type { ResponsiveValue } from "@basic-ui/react-utilities";
 import { LayoutProps } from "../../lib";
+import { PaletteColor } from "../../lib/colorRecipes/colorRecipes";
 
-/**
- * Explicit semantic colors aligned with design tokens.
- */
-type IconColor =
-  | "default"
-  | "muted"
-  | "primary"
-  | "secondary"
-  | "success"
-  | "error"
-  | "warning"
-  | "info";
+export type IconColor = "muted" | PaletteColor;
 
-/**
- * Icon size variants using design token scale
- */
 type IconSize = "xs" | "sm" | "md" | "lg" | "xl";
 
 export interface IconProps extends LayoutProps, React.HTMLAttributes<HTMLSpanElement> {
@@ -34,7 +21,8 @@ export interface IconProps extends LayoutProps, React.HTMLAttributes<HTMLSpanEle
   size?: ResponsiveValue<IconSize>;
 
   /**
-   * Optional semantic color. Inherits the parent's color when omitted.
+   * Optional color: `muted` or a palette family. Inherits the parent's
+   * color when omitted.
    */
   color?: IconColor;
 }

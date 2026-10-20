@@ -69,24 +69,19 @@ describe("Icon", () => {
 
     it("keeps semantic color scalar when size changes across breakpoints", () => {
       const { container } = render(
-        <Icon icon={<TestIcon />} size={{ base: "xs", md: "xl" }} color="success" />,
+        <Icon icon={<TestIcon />} size={{ base: "xs", md: "xl" }} color="muted" />,
       );
       const span = container.querySelector("span");
-      expect(span).toHaveClass("w-4", "h-4", "md:w-8", "md:h-8", "text-fg-success");
-      expect(span).not.toHaveClass("w-6", "h-6", "md:text-fg-success");
+      expect(span).toHaveClass("w-4", "h-4", "md:w-8", "md:h-8", "text-fg-muted");
+      expect(span).not.toHaveClass("w-6", "h-6", "md:text-fg-muted");
       expect(span).not.toHaveAttribute("color");
     });
 
     it.each([
-      ["default", ["text-primary-700", "dark:text-primary-300"]],
       ["muted", ["text-fg-muted"]],
-      ["primary", ["text-primary-700", "dark:text-primary-300"]],
-      ["secondary", ["text-secondary-700", "dark:text-secondary-300"]],
-      ["success", ["text-fg-success"]],
-      ["error", ["text-fg-error"]],
-      ["warning", ["text-fg-warning"]],
-      ["info", ["text-fg-info"]],
-    ] as const)("should apply %s semantic color classes", (color, classes) => {
+      ["teal", ["text-(color:--cr-text)"]],
+      ["rose", ["text-(color:--cr-text)"]],
+    ] as const)("should apply %s color classes", (color, classes) => {
       const { container } = render(<Icon icon={<TestIcon />} color={color} />);
       expect(container.querySelector("span")).toHaveClass(...classes);
     });
@@ -230,10 +225,10 @@ describe("Icon", () => {
   describe("Combination scenarios", () => {
     it("should combine size and semantic color", () => {
       const { container } = render(
-        <Icon icon={<TestIcon />} size="lg" color="success" />,
+        <Icon icon={<TestIcon />} size="lg" color="teal" />,
       );
       const span = container.querySelector("span");
-      expect(span).toHaveClass("w-7", "h-7", "text-fg-success");
+      expect(span).toHaveClass("w-7", "h-7", "text-(color:--cr-text)");
       expect(span).toHaveAttribute("aria-hidden", "true");
     });
 
@@ -243,13 +238,13 @@ describe("Icon", () => {
           icon={<TestIcon />}
           aria-hidden={false}
           aria-label="Loading spinner"
-          color="primary"
+          color="teal"
           size="md"
           className="animate-spin"
         />,
       );
       const img = screen.getByRole("img", { name: "Loading spinner" });
-      expect(img).toHaveClass("animate-spin", "text-primary-700", "w-6", "h-6");
+      expect(img).toHaveClass("animate-spin", "text-(color:--cr-text)", "w-6", "h-6");
     });
 
     it("should apply only supplied responsive size variants", () => {
