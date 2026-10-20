@@ -12,10 +12,6 @@ export const darkTheme: ThemeConfig = {
       active: "var(--color-neutral-700)",
       disabled: "var(--color-neutral-900)",
       inverted: "var(--color-white)",
-      error: "var(--color-red-950)",
-      success: "var(--color-green-950)",
-      warning: "var(--color-amber-950)",
-      info: "var(--color-blue-950)",
     },
     fg: {
       base: "var(--color-white)",
@@ -24,10 +20,6 @@ export const darkTheme: ThemeConfig = {
       active: "var(--color-neutral-100)",
       disabled: "var(--color-neutral-500)",
       inverted: "var(--color-black)",
-      error: "var(--color-red-200)",
-      success: "var(--color-green-400)",
-      warning: "var(--color-amber-400)",
-      info: "var(--color-blue-200)",
       skeleton: "var(--color-neutral-700)",
     },
     surface: {
@@ -36,10 +28,6 @@ export const darkTheme: ThemeConfig = {
       active: "var(--color-neutral-700)",
       disabled: "var(--color-neutral-900)",
       inverted: "var(--color-neutral-50)",
-      error: "var(--color-red-950)",
-      success: "var(--color-green-950)",
-      warning: "var(--color-amber-950)",
-      info: "var(--color-blue-950)",
     },
     border: {
       base: "var(--color-neutral-700)",
@@ -48,10 +36,6 @@ export const darkTheme: ThemeConfig = {
       active: "var(--color-neutral-500)",
       disabled: "var(--color-neutral-900)",
       inverted: "var(--color-neutral-100)",
-      error: "var(--color-red-500)",
-      success: "var(--color-green-500)",
-      warning: "var(--color-amber-500)",
-      info: "var(--color-blue-500)",
     },
   },
   shadow: {

@@ -20,10 +20,6 @@ type SemanticState =
   | "active"
   | "disabled"
   | "inverted"
-  | "error"
-  | "warning"
-  | "success"
-  | "info"
   | "skeleton";
 
 /** Numeric spacing scale positions. */

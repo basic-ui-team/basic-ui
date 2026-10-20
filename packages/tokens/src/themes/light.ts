@@ -12,10 +12,6 @@ export const lightTheme: ThemeConfig = {
       active: "var(--color-neutral-200)",
       disabled: "var(--color-neutral-100)",
       inverted: "var(--color-black)",
-      error: "var(--color-red-100)",
-      success: "var(--color-green-100)",
-      warning: "var(--color-amber-100)",
-      info: "var(--color-blue-100)",
     },
     fg: {
       base: "var(--color-black)",
@@ -24,10 +20,6 @@ export const lightTheme: ThemeConfig = {
       active: "var(--color-neutral-900)",
       disabled: "var(--color-neutral-500)",
       inverted: "var(--color-white)",
-      error: "var(--color-red-800)",
-      success: "var(--color-green-800)",
-      warning: "var(--color-amber-800)",
-      info: "var(--color-blue-800)",
       skeleton: "var(--color-neutral-200)",
     },
     surface: {
@@ -36,10 +28,6 @@ export const lightTheme: ThemeConfig = {
       active: "var(--color-neutral-300)",
       disabled: "var(--color-neutral-100)",
       inverted: "var(--color-neutral-800)",
-      error: "var(--color-red-100)",
-      success: "var(--color-green-100)",
-      warning: "var(--color-amber-100)",
-      info: "var(--color-blue-100)",
     },
     border: {
       base: "var(--color-neutral-200)",
@@ -48,10 +36,6 @@ export const lightTheme: ThemeConfig = {
       active: "var(--color-neutral-400)",
       disabled: "var(--color-neutral-100)",
       inverted: "var(--color-neutral-700)",
-      error: "var(--color-red-500)",
-      success: "var(--color-green-700)",
-      warning: "var(--color-amber-700)",
-      info: "var(--color-blue-500)",
     },
     primary: {
       50: "oklch(98.2% 0.018 155.826)",

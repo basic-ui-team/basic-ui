@@ -2,25 +2,21 @@ import { describe, expect, it } from "vitest";
 import { lightTheme } from "./light";
 
 describe("lightTheme", () => {
-  it("defines accessible semantic color roles", () => {
+  it("defines structural semantic color roles", () => {
     expect(lightTheme.color).toMatchObject({
       bg: {
-        error: "var(--color-red-100)",
-        success: "var(--color-green-100)",
-        warning: "var(--color-amber-100)",
-        info: "var(--color-blue-100)",
+        base: "var(--color-white)",
+        muted: "var(--color-neutral-50)",
+        inverted: "var(--color-black)",
       },
       fg: {
-        error: "var(--color-red-800)",
-        success: "var(--color-green-800)",
-        warning: "var(--color-amber-800)",
-        info: "var(--color-blue-800)",
+        base: "var(--color-black)",
+        muted: "var(--color-neutral-700)",
+        inverted: "var(--color-white)",
       },
       border: {
-        error: "var(--color-red-500)",
-        success: "var(--color-green-700)",
-        warning: "var(--color-amber-700)",
-        info: "var(--color-blue-500)",
+        base: "var(--color-neutral-200)",
+        inverted: "var(--color-neutral-700)",
       },
     });
   });
