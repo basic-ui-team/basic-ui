@@ -62,11 +62,19 @@ export const Default: Story = {
     itemsPerPage: 10,
   },
   render: (args) => {
+    return <TablePagination {...args} />;
+  },
+};
+
+/** Palette families: resting buttons tint, the current page paints solid. */
+export const Colors: Story = {
+  args: { ...Default.args, currentPage: 3 },
+  render: (args) => {
     return (
       <Flex direction="column" align="center" gap={3}>
-        <TablePagination {...args} />
-        <TablePagination {...args} color="primary" />
-        <TablePagination {...args} color="secondary" />
+        {(["teal", "violet", "rose", "amber"] as const).map((color) => (
+          <TablePagination key={color} {...args} color={color} />
+        ))}
       </Flex>
     );
   },
@@ -94,13 +102,7 @@ export const OutlinedVariant: Story = {
     variant: "outlined",
   },
   render: (args) => {
-    return (
-      <Flex direction="column" align="center" gap={3}>
-        <TablePagination {...args} />
-        <TablePagination {...args} color="primary" />
-        <TablePagination {...args} color="secondary" />
-      </Flex>
-    );
+    return <TablePagination {...args} />;
   },
 };
 

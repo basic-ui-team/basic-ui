@@ -42,7 +42,7 @@ export const LinkPagination = React.forwardRef<
       maxBoundaryButtons = 1,
       shape = "rounded",
       variant: variant = "default",
-      color = "default",
+      color = "primary",
       className,
       ...rest
     },
@@ -66,6 +66,7 @@ export const LinkPagination = React.forwardRef<
       ariaLabel?: string,
       onClick?: () => void,
       icon?: React.ReactNode,
+      style?: React.CSSProperties,
     ) => {
       if ((type === "first" || type === "last") && !showFirstLast) return null;
       if ((type === "prev" || type === "next") && !showPrevNext) return null;
@@ -95,6 +96,7 @@ export const LinkPagination = React.forwardRef<
           onClick={handleAnchorClick}
           aria-label={ariaLabel}
           className={className}
+          style={style}
           aria-disabled={disabled}
           tabIndex={disabled ? -1 : undefined}
         >
@@ -120,6 +122,7 @@ export const LinkPagination = React.forwardRef<
       onClick?: () => void,
       tabIndex?: number | undefined,
       className?: string,
+      style?: React.CSSProperties,
     ) => {
       const href = getPageHref(clamp(page, 1, totalPages));
       const effectiveTabIndex = isDisabled || isActive ? -1 : tabIndex;
@@ -141,6 +144,7 @@ export const LinkPagination = React.forwardRef<
           onClick={handleAnchorClick}
           tabIndex={effectiveTabIndex}
           className={className}
+          style={style}
           aria-disabled={isDisabled || isActive}
           aria-current={isActive ? "page" : undefined}
         >

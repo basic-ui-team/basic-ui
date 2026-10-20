@@ -38,7 +38,7 @@ export const TablePagination = React.forwardRef<HTMLElement, TablePaginationProp
       maxBoundaryButtons = 1,
       shape = "rounded",
       variant: variant = "default",
-      color = "default",
+      color = "primary",
       className,
       initialPage,
       ...rest
@@ -63,6 +63,7 @@ export const TablePagination = React.forwardRef<HTMLElement, TablePaginationProp
       ariaLabel?: string,
       onClick?: () => void,
       icon?: React.ReactNode,
+      style?: React.CSSProperties,
     ) => {
       if ((type === "first" || type === "last") && !showFirstLast) return null;
       if ((type === "prev" || type === "next") && !showPrevNext) return null;
@@ -77,6 +78,7 @@ export const TablePagination = React.forwardRef<HTMLElement, TablePaginationProp
           aria-label={ariaLabel}
           aria-disabled={disabled}
           className={className}
+          style={style}
         >
           <Box
             as="span"
@@ -100,6 +102,7 @@ export const TablePagination = React.forwardRef<HTMLElement, TablePaginationProp
       onClick?: () => void,
       tabIndex?: number | undefined,
       className?: string,
+      style?: React.CSSProperties,
     ) => {
       return (
         <Box
@@ -109,6 +112,7 @@ export const TablePagination = React.forwardRef<HTMLElement, TablePaginationProp
           disabled={isDisabled}
           aria-disabled={isDisabled}
           className={className}
+          style={style}
           aria-current={isActive ? "page" : undefined}
           aria-label={ariaLabel}
           tabIndex={tabIndex}

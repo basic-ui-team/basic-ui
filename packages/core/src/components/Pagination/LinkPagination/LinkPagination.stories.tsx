@@ -27,11 +27,16 @@ export const Default: Story = {
     currentPage: 1,
     getPageHref: (p: number) => `/${p}`,
   },
+  render: (args) => <LinkPagination {...args} />,
+};
+
+export const Colors: Story = {
+  args: { ...Default.args, currentPage: 3 },
   render: (args) => (
     <Flex direction="column" align="center" gap={3}>
-      <LinkPagination {...args} />
-      <LinkPagination {...args} color="primary" />
-      <LinkPagination {...args} color="secondary" />
+      {(["teal", "violet", "rose", "amber"] as const).map((color) => (
+        <LinkPagination key={color} {...args} color={color} />
+      ))}
     </Flex>
   ),
 };

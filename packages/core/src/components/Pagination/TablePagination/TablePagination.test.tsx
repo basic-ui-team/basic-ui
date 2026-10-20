@@ -110,4 +110,21 @@ describe("TablePagination", () => {
     );
     expect(screen.getByRole("navigation")).toHaveClass("test-class");
     });
+
+  it("cooks the active page solid and resting buttons tinted", () => {
+    renderWithProviders(
+      <TablePagination pageCount={5} currentPage={2} color="teal" onPageChange={() => {}} />,
+    );
+
+    const active = screen.getByLabelText("Go to page 2");
+    expect(active).toHaveAttribute("aria-current", "page");
+    expect(active).toHaveClass("bg-(--cr-bg)", "text-(color:--cr-text)");
+    expect(active.getAttribute("style")).toContain("--cr-bg: var(--color-teal-600)");
+    expect(active.getAttribute("style")).toContain("--cr-text: var(--color-white)");
+
+    const resting = screen.getByLabelText("Go to page 3");
+    expect(resting.getAttribute("style")).toContain(
+      "--cr-bg: color-mix(in oklab, var(--color-teal-100) 30%, transparent)",
+    );
+  });
 });
