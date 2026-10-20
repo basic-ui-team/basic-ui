@@ -49,10 +49,7 @@ export const cardImageAspectRatioClasses = {
 } as const;
 
 export const cardRootVariants = cva(
-  [
-    "transition-all duration-normal ease-spring",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2",
-  ].join(" "),
+  "transition-all duration-normal ease-spring",
   {
     variants: {
       variant: {
@@ -63,14 +60,14 @@ export const cardRootVariants = cva(
         unstyled: "",
       },
       isLink: {
-        true: "no-underline text-inherit decoration-transparent",
+        true: "no-underline text-inherit decoration-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current ring-offset-bg-base focus-visible:ring-offset-2",
         false: "",
       },
       interaction: {
         static: "",
-        clickable: "cursor-pointer",
+        clickable: "cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current ring-offset-bg-base focus-visible:ring-offset-2",
         draggable: "cursor-move",
-        both: "cursor-move",
+        both: "cursor-move focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current ring-offset-bg-base focus-visible:ring-offset-2",
       },
       selected: {
         true: "border border-2 border-border-success",
