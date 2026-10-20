@@ -48,45 +48,43 @@ export const cardImageAspectRatioClasses = {
   auto: "aspect-auto",
 } as const;
 
-export const cardRootVariants = cva(
-  "transition-all duration-normal ease-spring",
-  {
-    variants: {
-      variant: {
-        default: "bg-surface-base rounded-lg shadow-s2 hover:shadow-s3 active:shadow-s1",
-        elevated: "bg-surface-base rounded-lg shadow-s4 hover:shadow-s5 active:shadow-s3",
-        outlined:
-          "bg-surface-base border border-border-base rounded-lg shadow-s2 hover:shadow-s3 active:shadow-s1", // duplication so we don't set a base styling.
-        unstyled: "",
-      },
-      isLink: {
-        true: "no-underline text-inherit decoration-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current ring-offset-bg-base focus-visible:ring-offset-2",
-        false: "",
-      },
-      interaction: {
-        static: "",
-        clickable: "cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current ring-offset-bg-base focus-visible:ring-offset-2",
-        draggable: "cursor-move",
-        both: "cursor-move focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current ring-offset-bg-base focus-visible:ring-offset-2",
-      },
-      selected: {
-        true: "bg-bg-inverted text-fg-inverted",
-        false: "",
-      },
-      disabled: {
-        true: "opacity-50 cursor-not-allowed pointer-events-none",
-        false: "",
-      },
+export const cardRootVariants = cva("transition-all duration-normal ease-spring", {
+  variants: {
+    variant: {
+      default: "bg-surface-base rounded-lg shadow-s2 hover:shadow-s3 active:shadow-s1",
+      elevated: "bg-surface-base rounded-lg shadow-s4 hover:shadow-s5 active:shadow-s3",
+      outlined:
+        "bg-surface-base border border-border-base rounded-lg shadow-s2 hover:shadow-s3 active:shadow-s1", // duplication so we don't set a base styling.
+      unstyled: "",
     },
-    defaultVariants: {
-      variant: "default",
-      isLink: false,
-      interaction: "static",
-      selected: false,
-      disabled: false,
+    isLink: {
+      true: "no-underline text-inherit decoration-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current ring-offset-bg-base focus-visible:ring-offset-2",
+      false: "",
+    },
+    interaction: {
+      static: "",
+      clickable:
+        "cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current ring-offset-bg-base focus-visible:ring-offset-2",
+      draggable: "cursor-move",
+      both: "cursor-move focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current ring-offset-bg-base focus-visible:ring-offset-2",
+    },
+    selected: {
+      true: "bg-bg-inverted text-fg-inverted",
+      false: "",
+    },
+    disabled: {
+      true: "opacity-50 cursor-not-allowed pointer-events-none",
+      false: "",
     },
   },
-);
+  defaultVariants: {
+    variant: "default",
+    isLink: false,
+    interaction: "static",
+    selected: false,
+    disabled: false,
+  },
+});
 
 export const cardSectionVariants = cva("", {
   variants: {
@@ -132,6 +130,7 @@ export const cardTitleVariants = cva("font-sans font-normal leading-tight", {
       default: "text-fg-base",
       muted: "text-fg-muted",
       palette: "",
+      inherit: "",
     },
     align: cardTextAlignClasses,
     truncate: {
@@ -163,6 +162,7 @@ export const cardDescriptionVariants = cva("font-sans", {
       default: "text-fg-base",
       muted: "text-fg-muted",
       palette: "",
+      inherit: "",
     },
     align: cardTextAlignClasses,
     truncate: {

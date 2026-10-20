@@ -55,7 +55,7 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
               ),
               "motion-safe:animate-[ping_1.5s_ease-out_infinite]",
             )}
-            style={{ ...cooked.style, ...style }}
+            style={cooked.style}
           />
         )}
         <Box

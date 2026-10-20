@@ -16,13 +16,15 @@ import {
 } from "../card.variants";
 import { getTextFlowClasses } from "../../../lib";
 import { cr, isPaletteColor } from "../../../lib/colorRecipes/colorRecipes";
+import { useContext } from "react";
+import { CardContext } from "../Card";
 
 const _Description = <As extends AllowedTextElements = "p">(
   {
     as,
     size = "md",
     weight = "normal",
-    color = "default",
+    color,
     align = "left",
     truncate = false,
     wrap = "wrap",
@@ -38,13 +40,17 @@ const _Description = <As extends AllowedTextElements = "p">(
 ) => {
   const Comp = (as || "p") as As;
   const flow = getTextFlowClasses({ truncate, wrap, overflow, overflowX, overflowY });
+  const selected = useContext(CardContext)?.selected;
   const palette = isPaletteColor(color);
   const cooked = palette ? cr(color, cardTextPaletteRecipe) : null;
+
+  const colorVariant = palette ? "palette" : color ?? (selected ? "inherit" : "default");
+
   const resolvedStyles = cn(
     cardDescriptionVariants({
       size: null,
       weight: weight,
-      color: palette ? "palette" : color,
+      color: colorVariant,
       align: null,
       truncate: null,
       wrap: null,

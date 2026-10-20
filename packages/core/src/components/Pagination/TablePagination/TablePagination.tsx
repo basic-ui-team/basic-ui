@@ -69,8 +69,8 @@ export const TablePagination = React.forwardRef<HTMLElement, TablePaginationProp
       if ((type === "prev" || type === "next") && !showPrevNext) return null;
 
       return (
-        <Box          
-        as="button"
+        <Box
+          as="button"
           key={`control-${type}`}
           type="button"
           onClick={onClick}

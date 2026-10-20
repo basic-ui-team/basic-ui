@@ -25,11 +25,11 @@ export const buttonVariants = cva(
         link: "cursor-pointer underline focus-visible:ring-(--cr-text-focus) dark:focus-visible:ring-(--cr-text-focus-dark)",
       },
       loading: {
-        true: "opacity-70 cursor-progress hover:none active:none",
+        true: "opacity-65 cursor-progress disabled:hover:bg-(--cr-bg) disabled:active:bg-(--cr-bg)",
         false: "",
       },
       disabled: {
-        true: "opacity-40 cursor-not-allowed hover:none active:none",
+        true: "opacity-65 cursor-not-allowed disabled:hover:bg-(--cr-bg) disabled:active:bg-(--cr-bg)",
         false: "",
       },
     },

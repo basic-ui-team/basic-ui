@@ -161,3 +161,17 @@ Relevant checks:
   source freshness.
 - `pnpm --filter @basic-ui/core verify:package` checks the published package
   stylesheet boundary.
+
+## Known follow-ups
+
+- Disabled pagination buttons and anchors still receive recipe hover tints;
+  suppression is deferred to the pagination refinement, likely when
+  `usePagination` and the shared utils move to a headless-hooks space.
+- CardTitle and CardDescription inherit the inverted root when the card is
+  `selected` and no explicit color is given; explicit `muted`/palette colors
+  still apply. A card styling rework is planned (structure holds; styling and
+  native element behavior need work).
+- Issue #125: the outline Button hover tint is too faint to read as color;
+  recipe tuning, not code.
+- Open RFC decisions: custom brand registration, automated contrast checks,
+  `transparent`/`current` named values.

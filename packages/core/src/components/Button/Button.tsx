@@ -60,7 +60,7 @@ export const Button = forwardRefWithAs<ButtonOwnProps, AllowedButtonElements>(
 
     const resolvedStyles = cn(
       buttonVariants({ variant, size: null, disabled, loading }),
-      paletteRecipe?.className,
+      paletteRecipe.className,
       getResponsiveClassNames(size, (value) => buttonSizeClasses[value]),
       className,
     );
@@ -101,7 +101,7 @@ export const Button = forwardRefWithAs<ButtonOwnProps, AllowedButtonElements>(
         as={Comp}
         ref={ref}
         className={resolvedStyles}
-        style={{ ...paletteRecipe?.style, ...style }}
+        style={{ ...paletteRecipe.style, ...style }}
         aria-busy={loading}
         {...(restProps as BoxProps<As>)}
       >

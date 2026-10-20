@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority";
 import type { ColorRecipe } from "../../lib/colorRecipes/colorRecipes";
 
-export const alertVariants = cva("flex gap-3 rounded-lg p-3 items-center", {
+export const alertVariants = cva("flex gap-3 rounded-lg px-4 py-2", {
   variants: {
     variant: {
       subtle: "",
@@ -21,7 +21,7 @@ export const alertContentVariants = cva("flex-1 text-sm");
 export const alertActionVariants = cva("ml-auto flex items-center gap-2");
 
 export const alertDismissButtonVariants = cva(
-  "shrink-0 -mr-2 -my-2 rounded p-2 transition-colors hover:bg-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current",
+  "rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current cursor-pointer",
 );
 
 export const alertPaletteRecipe: Record<"subtle" | "outline" | "filled", ColorRecipe> = {
@@ -35,6 +35,6 @@ export const alertPaletteRecipe: Record<"subtle" | "outline" | "filled", ColorRe
   },
   filled: {
     bg: { value: "200", dark: { value: "700" } },
-    text: { value: "black", dark: { value: "white" } },
+    text: { value: "800", dark: { value: "100" } },
   },
 };

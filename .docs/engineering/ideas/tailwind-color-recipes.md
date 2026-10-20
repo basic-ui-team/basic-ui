@@ -59,7 +59,7 @@ type ColorShade =
 type PaletteColorValue = ColorShade | "white" | "black";
 
 type PaintValue = { value: PaletteColorValue; opacity?: number };
-type PaintState = PaintValue & { hover?: PaintValue; active?: PaintValue };
+type PaintState = PaintValue & { hover?: PaintValue; active?: PaintValue; focus?: PaintValue };
 type PaintRecipe = PaintState & { dark?: PaintState };
 type ColorRecipe = Partial<Record<"bg" | "text" | "border", PaintRecipe>>;
 ```

@@ -39,7 +39,9 @@ export const ResponsiveLayout: Story = {
         </Card.Description>
       </Card.Header>
       <Card.Body variant={{ base: "compact", lg: "default" }}>Independent body spacing</Card.Body>
-      <Card.Footer sticky variant={{ base: "compact", md: "default" }}>Scalar sticky footer</Card.Footer>
+      <Card.Footer sticky variant={{ base: "compact", md: "default" }}>
+        Scalar sticky footer
+      </Card.Footer>
     </Card>
   ),
 };
@@ -180,13 +182,13 @@ export const Composition: Story = {
         <Card.Footer>
           <Flex justify="end" gap={2}>
             <button
-              className="bg-primary-500 text-foreground-primary px-3 py-2 rounded-sm"
+              className="bg-primary-500 px-3 py-2 rounded-sm"
               onClick={() => alert("Followed")}
             >
               Follow
             </button>
             <button
-              className="bg-secondary-400 text-foreground-primary px-3 py-2 rounded-sm"
+              className="bg-secondary-400 px-3 py-2 rounded-sm"
               onClick={() => alert("Message sent")}
             >
               Message
@@ -213,7 +215,7 @@ export const Composition: Story = {
         <Card.Footer sticky>
           <Flex justify="end" gap={2}>
             <button
-              className="bg-primary-500 text-foreground-primary px-3 py-2 rounded-sm "
+              className="bg-primary-500 px-3 py-2 rounded-sm "
               onClick={() => alert("Action clicked")}
             >
               Action
