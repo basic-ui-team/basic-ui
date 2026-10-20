@@ -64,11 +64,7 @@ describe("Alert", () => {
 
     expect(container.firstChild?.childNodes).toHaveLength(2);
 
-    rerender(
-      <Alert action={<button type="button">Retry</button>}>
-        Message
-      </Alert>,
-    );
+    rerender(<Alert action={<button type="button">Retry</button>}>Message</Alert>);
 
     expect(screen.getByRole("button", { name: "Retry" })).toBeInTheDocument();
   });
@@ -127,7 +123,7 @@ describe("Alert", () => {
       "--cr-bg: var(--color-teal-200)",
     );
     expect((container.firstChild as HTMLElement).getAttribute("style")).toContain(
-      "--cr-text: var(--color-black)",
+      "--cr-text: var(--color-teal-800)",
     );
   });
 
@@ -143,7 +139,7 @@ describe("Alert", () => {
       "--cr-bg: var(--color-sky-200)",
     );
     expect((container.firstChild as HTMLElement).getAttribute("style")).toContain(
-      "--cr-text: var(--color-black)",
+      "--cr-text: var(--color-sky-800)",
     );
   });
 
