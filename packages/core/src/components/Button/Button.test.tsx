@@ -33,7 +33,7 @@ describe("Button", () => {
 
   it("leaves custom loading icon sizing and styling untouched", () => {
     const LoadingIcon = () => (
-      <svg data-testid="styled-loader" className="h-9 w-9 text-fg-info" />
+      <svg data-testid="styled-loader" className="h-9 w-9 text-sky-600" />
     );
     renderWithProviders(
       <Button loading size={{ base: "sm", md: "lg" }} loadingIcon={<LoadingIcon />}>
@@ -41,7 +41,7 @@ describe("Button", () => {
       </Button>,
     );
     const icon = screen.getByTestId("styled-loader");
-    expect(icon).toHaveAttribute("class", "h-9 w-9 text-fg-info");
+    expect(icon).toHaveAttribute("class", "h-9 w-9 text-sky-600");
     expect(icon.parentElement).toBe(screen.getByRole("button", { name: "Submit" }));
   });
 
@@ -80,7 +80,7 @@ describe("Button", () => {
     const button = screen.getByRole("button");
     expect(button).toHaveClass(
       "px-2", "py-1", "text-sm", "gap-1", "rounded-md",
-      "inline-flex", "border",
+      "inline-flex", "border-2",
       "text-(color:--cr-text)",
       "cursor-not-allowed",
     );

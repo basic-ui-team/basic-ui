@@ -70,7 +70,7 @@ export const cardRootVariants = cva(
         both: "cursor-move focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current ring-offset-bg-base focus-visible:ring-offset-2",
       },
       selected: {
-        true: "border border-2 border-border-success",
+        true: "bg-bg-inverted text-fg-inverted",
         false: "",
       },
       disabled: {

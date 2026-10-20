@@ -159,7 +159,7 @@ export const SemanticColors: Story = {
 export const InheritedColor: Story = {
   render: () => (
     <div className="flex flex-wrap gap-6">
-      <div className="flex items-center gap-3 rounded-lg bg-surface-base p-4 text-fg-success">
+      <div className="flex items-center gap-3 rounded-lg bg-surface-base p-4 text-green-700">
         <Icon icon={<SunIcon />} size="lg" />
         <span>Inherits the parent's semantic color</span>
       </div>

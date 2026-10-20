@@ -72,6 +72,6 @@ export const dialogFooterVariants = cva("flex items-center justify-end gap-2 p-3
 export const dialogCloseVariants = cva(
   [
     "shrink-0 p-2 rounded-sm text-fg-muted hover:text-fg-base hover:bg-black/5",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current ring-offset-bg-base focus-visible:ring-offset-2",
   ].join(" "),
 );

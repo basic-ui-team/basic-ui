@@ -219,7 +219,7 @@ export const Composition: Story = {
               Action
             </button>
             <button
-              className="bg-error text-foreground-primary px-3 py-2 rounded-sm"
+              className="bg-red-100 text-red-800 px-3 py-2 rounded-sm"
               onClick={() => alert("Cancel clicked")}
             >
               Cancel
