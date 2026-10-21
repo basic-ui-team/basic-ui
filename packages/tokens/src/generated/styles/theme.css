@@ -9,6 +9,7 @@
 /* ===== THEME CONFIGURATION ===== */
 /* All design tokens with resolved values for Tailwind utility generation */
 @theme {
+  --spacing: 4px;
   --color-white: #fff;
   --color-black: #000;
   --color-bg-base: #fff;

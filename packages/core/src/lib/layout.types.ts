@@ -1,19 +1,15 @@
 import { ResponsiveValue } from "@basic-ui/react-utilities";
 
 /**
- * Spacing values use Tailwind's numeric spacing scale: every value is a
- * multiple of the theme's `--spacing`. The values below are the guaranteed
- * range — whole steps 0 to 12 plus the fractional steps up to 3.5 — the
- * shipped stylesheet safelists CSS for each of these at every breakpoint.
- * Values outside this range still type-check but only generate CSS when the
- * consumer's build discovers them. Fractional steps above 3.5 are deliberately
- * not guaranteed: they are unused by the library and cost ~5 KB gzipped CSS.
+ * Spacing values use the design system's 9-point token scale, backed by the
+ * `--spacing-0..9` theme variables. Values outside the scale — fractionals
+ * like `p-1.5`, or steps beyond 9 — are a `className` concern: the theme's
+ * base `--spacing` token makes every bare numeric utility resolve through
+ * Tailwind's `calc(var(--spacing) * N)` fallback, discovered by the
+ * consumer's own scanner.
  */
-export const spacingSteps = [
-  0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4,
-  5, 6, 7, 8, 9, 10, 11, 12,
-] as const;
-export type SpacingStep = number;
+export const spacingSteps = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] as const;
+export type SpacingStep = (typeof spacingSteps)[number];
 
 export const SizingValues = ["auto", "full", "min", "max", "fit", "screen"] as const;
 export type SizingType = (typeof SizingValues)[number];
@@ -40,8 +36,8 @@ export type OverflowType = "visible" | "hidden" | "auto" | "scroll";
  * - For arbitrary Tailwind classes or custom CSS, use the component's `className` or `style` props instead
  *
  * **Spacing Props (p, m, gap, etc.):**
- * - Accept Tailwind numeric spacing values (multiples of the theme's `--spacing`)
- * - `spacingSteps` lists the guaranteed range; all spacing is responsive
+ * - Accept the 9-point tokenized spacing scale for consistent spacing across components
+ * - All spacing is responsive; fractionals and steps beyond 9 go through `className`
  */
 export interface LayoutProps {
   p?: ResponsiveValue<SpacingStep>;

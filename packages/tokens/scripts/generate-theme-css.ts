@@ -2,6 +2,7 @@ import { lightTheme } from "../src/themes/light";
 import { darkTheme } from "../src/themes/dark";
 import { resolveTheme } from "../src/runtime/resolveTheme";
 import { themeToCSSVariables } from "../src/serialization/themeToCSSVariables";
+import { DEFAULT_SPACING_SCALE } from "../src/scales/spacing";
 import {
   BRAND_PALETTE_FAMILIES,
   TAILWIND_PALETTE_FAMILIES,
@@ -62,9 +63,13 @@ function generateTheme() {
   });
 
   // Generate CSS string for light theme
-  const lightCSS = Object.entries(resolvedLightProps)
-    .map(([key, value]) => `  ${key}: ${value};`)
-    .join("\n");
+  // Tailwind's base spacing multiplier: bare numeric utilities outside the
+  // token scale (p-0.5, p-12, anything authored in className) resolve to
+  // calc(var(--spacing) * N); derived from the scale's base unit.
+  const lightCSS = [
+    `  --spacing: ${DEFAULT_SPACING_SCALE.base}${DEFAULT_SPACING_SCALE.unit};`,
+    ...Object.entries(resolvedLightProps).map(([key, value]) => `  ${key}: ${value};`),
+  ].join("\n");
 
   // Generate CSS string for dark theme (only include overrides that differ from light theme)
   const darkCSS = Object.entries(resolvedDarkProps)

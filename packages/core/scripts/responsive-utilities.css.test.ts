@@ -291,6 +291,7 @@ describe("responsive utilities through the public CSS entry", () => {
   it("preserves explicitly supplied modifiers, quoted selectors, and arbitrary values", async () => {
     const utilities = [
       "h-4",
+      "p-0.5",
       "dark:h-5",
       "content-['saved']",
       'data-[state="checked"]:w-5',
@@ -306,6 +307,10 @@ describe("responsive utilities through the public CSS entry", () => {
     }
     expect(css).toContain("@media (width >= 768px)");
     expect(css).not.toContain(".md\\:flex-row");
+    // Fractionals are a className concern, not a prop: the theme's base
+    // --spacing token makes them resolve through Tailwind's calc fallback.
+    expect(css).toContain("calc(var(--spacing) * 0.5)");
+    expect(css).toContain("--spacing: 4px");
   });
 });
 
