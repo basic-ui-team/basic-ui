@@ -14,7 +14,6 @@ import {
   responsiveUtilities,
 } from "../src/lib/responsive-utilities";
 import { toggleSizeClasses, toggleThumbGeometryVariants } from "../src/components/Toggle/toggle.variants";
-import { badgeGeometryVariants } from "../src/components/Badge/badge.variants";
 import { gridVariants } from "../src/components/Grid/grid.variants";
 import { dividerThicknessClasses } from "../src/components/Divider/divider.variants";
 import { spacingSteps } from "../src/lib/layout.types";
@@ -113,8 +112,10 @@ async function compileFixture(generatedSource?: string, theme = "") {
 
   expect(compiler.root).toBe("none");
   // Automatic detection is off; the only registered source is the package's
-  // self-registration (`@source "./"` in the shipped stylesheet), which scans
-  // the staged dist for component-authored literals.
+  // self-registration (`@source "./"` in the shipped stylesheet), pointing at
+  // the package dist for consumer builds to scan. Component-authored literal
+  // coverage is asserted by verify-package's consumer build, not here — this
+  // file verifies the responsive safelist vocabulary.
   expect(compiler.sources).toEqual([
     {
       base: join(directory, "node_modules", "@basic-ui", "core", "dist"),
@@ -249,15 +250,6 @@ describe("responsive utilities through the public CSS entry", () => {
       ...Object.values(dividerThicknessClasses).flatMap((values) => Object.values(values)),
     ];
     expectUtilityCoverage(css, classes);
-  });
-
-  it("covers count and dot Badge geometry at every breakpoint", async () => {
-    const css = await compileFixture();
-    for (const variant of ["count", "dot"] as const) {
-      for (const size of ["sm", "md", "lg"] as const) {
-        expectUtilityCoverage(css, [badgeGeometryVariants({ variant, size })]);
-      }
-    }
   });
 
   it("covers actual Toggle track and thumb recipes in both states", async () => {
