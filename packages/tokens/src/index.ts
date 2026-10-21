@@ -33,3 +33,11 @@ export { mergeTheme } from "./runtime/mergeTheme";
 export { lightTheme } from "./themes/light";
 export { darkTheme } from "./themes/dark";
 export { DEFAULT_SPACING_SCALE } from "./scales/spacing";
+
+// Palette registry
+export {
+  PALETTE_FAMILIES,
+  TAILWIND_PALETTE_FAMILIES,
+  BRAND_PALETTE_FAMILIES,
+  type PaletteColor,
+} from "./palette";

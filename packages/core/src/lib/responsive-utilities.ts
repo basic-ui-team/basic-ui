@@ -1,5 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
 import { tokens } from "../../../tokens/src/generated/tokens";
+import { spacingSteps } from "./layout.types";
 
 function utilitiesFor(prefixes: readonly string[], values: readonly (string | number)[]): string[] {
   return prefixes.flatMap((prefix) => values.map((value) => `${prefix}-${value}`));
@@ -7,7 +8,6 @@ function utilitiesFor(prefixes: readonly string[], values: readonly (string | nu
 
 const spacing = Object.keys(tokens.spacing);
 const numericDimensions = Array.from({ length: 25 }, (_, index) => index / 2);
-const fractionalSpacing = [0.5, 1.5, 2.5, 3.5];
 const dimensions = [...new Set([...spacing, ...numericDimensions]), "auto", "full", "screen", "min", "max", "fit"];
 const borderWidths = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 const gridTracks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -33,7 +33,7 @@ export const responsiveUtilityFamilies = {
       "gap-x",
       "gap-y",
     ],
-    [...spacing, ...fractionalSpacing],
+    spacingSteps,
   ),
   sizing: [
     ...utilitiesFor(["h", "min-h", "w", "min-w"], dimensions),
@@ -115,7 +115,6 @@ export function createResponsiveUtilitySource(
   breakpointOrder: readonly string[],
   utilities: readonly string[],
   fixedCandidates: readonly string[] = [],
-  staticTheme = "",
 ): string {
   const prefixes = breakpointOrder
     .map((breakpoint) => (breakpoint === "base" ? "" : `${breakpoint}:`))
@@ -156,7 +155,7 @@ export function createResponsiveUtilitySource(
 
   return `/* Auto-generated \u2014 run \`pnpm generate:layout-utilities\` in packages/core to regenerate. */
 
-${[...directives, ...fixedDirectives, ...(staticTheme ? [staticTheme] : [])].join("\n")}
+${[...directives, ...fixedDirectives].join("\n")}
 `;
 }
 

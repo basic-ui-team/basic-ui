@@ -1,12 +1,16 @@
 import { copyFileSync, mkdirSync } from "node:fs";
-import { dirname } from "node:path";
+import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const srcCss = `${__dirname}/../src/generated/styles/theme.css`;
+const srcDir = `${__dirname}/../src/generated/styles`;
 const destDir = `${__dirname}/../dist/generated/styles`;
-const destCss = `${destDir}/theme.css`;
 
 mkdirSync(destDir, { recursive: true });
-copyFileSync(srcCss, destCss);
-console.log(`✓ Copied theme.css to dist/generated/styles/`);
+
+const files = ["theme.css", "palette-static.css"];
+
+for (const file of files) {
+  copyFileSync(join(srcDir, file), join(destDir, file));
+  console.log(`✓ Copied ${file} to dist/generated/styles/`);
+}

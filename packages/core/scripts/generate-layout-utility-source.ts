@@ -8,7 +8,6 @@ import {
   isUtilitySourceCurrent,
   responsiveUtilities,
 } from "../src/lib/responsive-utilities";
-import { buildPaletteStaticTheme } from "./palette-theme";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const outputPath = resolve(__dirname, "../src/generated/layout-utilities.generated.css");
@@ -17,7 +16,6 @@ const source = createResponsiveUtilitySource(
   BREAKPOINT_ORDER,
   responsiveUtilities,
   colorRecipeUtilityCandidates,
-  buildPaletteStaticTheme(),
 );
 
 if (process.argv.includes("--check")) {

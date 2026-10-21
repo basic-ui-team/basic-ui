@@ -2,7 +2,12 @@ import { lightTheme } from "../src/themes/light";
 import { darkTheme } from "../src/themes/dark";
 import { resolveTheme } from "../src/runtime/resolveTheme";
 import { themeToCSSVariables } from "../src/serialization/themeToCSSVariables";
-import { writeFileSync, mkdirSync } from "node:fs";
+import {
+  BRAND_PALETTE_FAMILIES,
+  TAILWIND_PALETTE_FAMILIES,
+} from "../src/palette";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { createRequire } from "node:module";
 import { resolve, dirname, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -121,3 +126,63 @@ export const darkTokens = ${JSON.stringify(darkThemeObj.tokens, null, 2)};
 }
 
 generateTheme();
+
+/**
+ * Emits the full palette as `@theme static` variables. Color recipes in
+ * downstream packages reference any palette family/shade at runtime through
+ * `var(--color-<family>-<shade>)`, and Tailwind tree-shakes unused `@theme`
+ * variables — so the palette must be emitted regardless of utility usage.
+ *
+ * Neutral families come from the installed Tailwind theme (staying
+ * version-synced); the brand families come from this package's generated
+ * theme. Authored here so downstream packages consume tokens instead of
+ * re-deriving values.
+ */
+function generatePaletteStaticTheme() {
+  const __dirname = dirname(fileURLToPath(import.meta.url));
+  const require = createRequire(import.meta.url);
+  const tailwindThemeCss = readFileSync(require.resolve("tailwindcss/theme.css"), "utf8");
+  const tokensThemeCss = readFileSync(
+    resolve(__dirname, "../src/generated/styles/theme.css"),
+    "utf8",
+  );
+
+  const shaded = /^ {2}(--color-[a-z]+-\d+): ([^;]+);$/gm;
+  const collectShaded = (css: string, families?: readonly string[]) =>
+    [...css.matchAll(shaded)]
+      .map((match) => `  ${match[1]}: ${match[2]};`)
+      .filter((line) =>
+        families === undefined ? true : families.some((family) => line.includes(`--color-${family}-`)),
+      )
+      .sort();
+
+  const neutralVars = collectShaded(tailwindThemeCss, TAILWIND_PALETTE_FAMILIES);
+  neutralVars.push("  --color-white: #fff;", "  --color-black: #000;");
+  const brandVars = collectShaded(tokensThemeCss, BRAND_PALETTE_FAMILIES);
+
+  // Fail fast if the registry drifts from the installed theme files.
+  for (const family of TAILWIND_PALETTE_FAMILIES) {
+    if (!neutralVars.some((line) => line.includes(`--color-${family}-`))) {
+      throw new Error(`Palette family "${family}" has no variables in the installed Tailwind theme.`);
+    }
+  }
+  for (const family of BRAND_PALETTE_FAMILIES) {
+    if (!brandVars.some((line) => line.includes(`--color-${family}-`))) {
+      throw new Error(`Palette family "${family}" has no variables in the generated tokens theme.`);
+    }
+  }
+
+  const css = `/* Auto-generated — run \`pnpm generate\` in packages/tokens to regenerate. */
+
+/* Always-on palette variables: recipes reference any family/shade at runtime,
+   and Tailwind tree-shakes unused @theme variables. */
+@theme static {
+${[...neutralVars, ...brandVars].join("\n")}
+}
+`;
+  const outPath = resolve(__dirname, "../src/generated/styles/palette-static.css");
+  writeFileSync(outPath, css, "utf-8");
+  console.log(`✓ Generated ${relative(process.cwd(), outPath)}`);
+}
+
+generatePaletteStaticTheme();

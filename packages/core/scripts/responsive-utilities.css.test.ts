@@ -34,7 +34,7 @@ import {
   cardImageAspectRatioClasses,
 } from "../src/components/Card/card.variants";
 import { flexVariants } from "../src/components/Flex/flex.variants";
-import layoutVariants from "../src/lib/layout.variants";
+import { resolveLayoutClass } from "../src/lib/layout-utils";
 import { SizingValues } from "../src/lib/layout.types";
 import { getTextFlowClasses, textWrapClasses } from "../src/lib/text-flow";
 
@@ -73,6 +73,8 @@ beforeAll(() => {
   });
   stageStyles(tokensPackage, resolve(coreRoot, "../tokens"), {
     "src/generated/styles/theme.css": tokensPackage.exports["./styles/theme.css"],
+    "src/generated/styles/palette-static.css":
+      tokensPackage.exports["./styles/palette-static.css"],
   });
   generatedPath = join(
     directory,
@@ -110,7 +112,16 @@ async function compileFixture(generatedSource?: string, theme = "") {
   });
 
   expect(compiler.root).toBe("none");
-  expect(compiler.sources).toEqual([]);
+  // Automatic detection is off; the only registered source is the package's
+  // self-registration (`@source "./"` in the shipped stylesheet), which scans
+  // the staged dist for component-authored literals.
+  expect(compiler.sources).toEqual([
+    {
+      base: join(directory, "node_modules", "@basic-ui", "core", "dist"),
+      pattern: "./",
+      negated: false,
+    },
+  ]);
   return compiler.build([]);
 }
 
@@ -158,18 +169,18 @@ describe("responsive utilities through the public CSS entry", () => {
   it("covers every layout axis and Flex composition without scalar recipes", async () => {
     const classes = [
       ...spacingSteps.flatMap((step) =>
-        (["p", "px", "py", "pt", "pr", "pb", "pl", "m", "mx", "my", "mt", "mr", "mb", "ml", "gap"] as const)
-          .map((prop) => layoutVariants({ [prop]: step }))),
+        (["p", "px", "py", "pt", "pr", "pb", "pl", "m", "mx", "my", "mt", "mr", "mb", "ml", "gap", "gapX", "gapY"] as const)
+          .map((prop) => resolveLayoutClass(prop, step))),
       ...SizingValues.flatMap((value) =>
-        (["h", "hMin", "w", "wMin"] as const).map((prop) => layoutVariants({ [prop]: value }))),
+        (["h", "hMin", "w", "wMin"] as const).map((prop) => resolveLayoutClass(prop, value))),
       ...(["none", "full", "screen", "min", "max", "fit"] as const)
-        .map((value) => layoutVariants({ hMax: value, wMax: value })),
+        .map((value) => `${resolveLayoutClass("hMax", value)} ${resolveLayoutClass("wMax", value)}`),
       ...(["visible", "hidden", "auto", "scroll"] as const)
-        .map((value) => layoutVariants({ overflow: value, overflowX: value, overflowY: value })),
+        .map((value) => `${resolveLayoutClass("overflow", value)} ${resolveLayoutClass("overflowX", value)} ${resolveLayoutClass("overflowY", value)}`),
       ...(["static", "relative", "absolute", "fixed", "sticky"] as const)
-        .map((position) => layoutVariants({ position })),
+        .map((position) => resolveLayoutClass("position", position)),
       ...(["block", "inline", "inline-block", "none"] as const)
-        .map((display) => layoutVariants({ display })),
+        .map((display) => resolveLayoutClass("display", display)),
       ...(["row", "column", "row-reverse", "column-reverse"] as const)
         .map((direction) => flexVariants({ direction })),
       ...(["nowrap", "wrap", "reverse"] as const).map((wrap) => flexVariants({ wrap })),
@@ -219,11 +230,11 @@ describe("responsive utilities through the public CSS entry", () => {
     const classes = [
       ...(["none", "sidebar", "hero", "masonry", "card-list", "symmetric", "asymmetric"] as const)
         .map((templatePreset) => gridVariants({ templatePreset })),
-      ...spacingSteps.map((step) => gridVariants({
-        gap: step,
-        rowGap: step,
-        columnGap: step,
-      })),
+      ...spacingSteps.flatMap((step) => [
+        resolveLayoutClass("gap", step),
+        resolveLayoutClass("gapY", step),
+        resolveLayoutClass("gapX", step),
+      ]),
       ...([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const)
         .map((count) => gridVariants({ cols: count, rows: count })),
       ...(["row", "column", "dense"] as const).map((autoFlow) => gridVariants({ autoFlow })),

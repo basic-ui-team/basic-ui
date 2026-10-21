@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it } from "vitest";
 import { BREAKPOINT_ORDER } from "../../../react-utilities/src/hooks/useResponsive/constants";
 import { colorRecipeUtilityCandidates } from "./colorRecipes/colorRecipes";
-import { buildPaletteStaticTheme } from "../../scripts/palette-theme";
+import { spacingSteps } from "./layout.types";
 import { tokens } from "../../../tokens/src/generated/tokens";
 import {
   createResponsiveUtilitySource,
@@ -27,7 +27,7 @@ describe("shared responsive vocabulary", () => {
     }
   });
 
-  it("covers the token spacing scale for each supported spacing property", () => {
+  it("covers the guaranteed spacing scale for each supported spacing property", () => {
     for (const prefix of [
       "p",
       "px",
@@ -48,7 +48,7 @@ describe("shared responsive vocabulary", () => {
       "gap-y",
     ]) {
       expect(responsiveUtilityFamilies.spacing).toEqual(
-        expect.arrayContaining(Object.keys(tokens.spacing).map((step) => `${prefix}-${step}`)),
+        expect.arrayContaining([...spacingSteps].map((step) => `${prefix}-${step}`)),
       );
     }
   });
@@ -87,7 +87,7 @@ describe("shared responsive vocabulary", () => {
       "font-bold",
       "shadow-s1",
       "animate-spin",
-      "p-10",
+      "p-0.25",
     ]) {
       expect(responsiveUtilities).not.toContain(excluded);
     }
@@ -95,12 +95,11 @@ describe("shared responsive vocabulary", () => {
 });
 
 describe("responsive utility source", () => {
-  it("matches the generated stylesheet from the shared vocabulary, recipe candidates, and static palette theme", () => {
+  it("matches the generated stylesheet from the shared vocabulary and recipe candidates", () => {
     const source = createResponsiveUtilitySource(
       BREAKPOINT_ORDER,
       responsiveUtilities,
       colorRecipeUtilityCandidates,
-      buildPaletteStaticTheme(),
     );
     const committed = readFileSync(
       resolve(

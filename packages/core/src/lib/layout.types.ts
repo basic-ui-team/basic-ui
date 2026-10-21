@@ -1,7 +1,19 @@
 import { ResponsiveValue } from "@basic-ui/react-utilities";
 
-export const spacingSteps = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] as const;
-export type SpacingStep = (typeof spacingSteps)[number];
+/**
+ * Spacing values use Tailwind's numeric spacing scale: every value is a
+ * multiple of the theme's `--spacing`. The values below are the guaranteed
+ * range — whole steps 0 to 12 plus the fractional steps up to 3.5 — the
+ * shipped stylesheet safelists CSS for each of these at every breakpoint.
+ * Values outside this range still type-check but only generate CSS when the
+ * consumer's build discovers them. Fractional steps above 3.5 are deliberately
+ * not guaranteed: they are unused by the library and cost ~5 KB gzipped CSS.
+ */
+export const spacingSteps = [
+  0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4,
+  5, 6, 7, 8, 9, 10, 11, 12,
+] as const;
+export type SpacingStep = number;
 
 export const SizingValues = ["auto", "full", "min", "max", "fit", "screen"] as const;
 export type SizingType = (typeof SizingValues)[number];
@@ -28,8 +40,8 @@ export type OverflowType = "visible" | "hidden" | "auto" | "scroll";
  * - For arbitrary Tailwind classes or custom CSS, use the component's `className` or `style` props instead
  *
  * **Spacing Props (p, m, gap, etc.):**
- * - Accept tokenized spacing values for consistent spacing across components
- * - All spacing is responsive
+ * - Accept Tailwind numeric spacing values (multiples of the theme's `--spacing`)
+ * - `spacingSteps` lists the guaranteed range; all spacing is responsive
  */
 export interface LayoutProps {
   p?: ResponsiveValue<SpacingStep>;
@@ -49,6 +61,8 @@ export interface LayoutProps {
   ml?: ResponsiveValue<SpacingStep>;
 
   gap?: ResponsiveValue<SpacingStep>;
+  gapX?: ResponsiveValue<SpacingStep>;
+  gapY?: ResponsiveValue<SpacingStep>;
 
   h?: ResponsiveValue<SizingType>;
   hMin?: ResponsiveValue<SizingType>;
