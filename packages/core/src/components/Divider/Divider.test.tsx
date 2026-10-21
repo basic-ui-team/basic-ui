@@ -92,6 +92,7 @@ describe("Divider - variants and behavior", () => {
     const el = container.firstChild as HTMLElement;
     expect(el).toHaveAttribute("role", "separator");
     expect(getByText("Section Break")).toBeInTheDocument();
+    expect(getByText("Section Break")).toHaveClass("bg-bg-base", "text-fg-muted");
   });
 
   it("warns when using a non-hr element for a semantic divider", () => {
