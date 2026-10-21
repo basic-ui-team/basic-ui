@@ -1,8 +1,8 @@
 import React from "react";
 import { Box } from "../Box";
-import { cn, getResponsiveClassNames } from "@basic-ui/react-utilities";
+import { cn } from "@basic-ui/react-utilities";
 import type { BadgeProps } from "./badge.types";
-import { badgeVariants, badgeGeometryVariants, badgePaletteRecipe } from "./badge.variants";
+import { badgeVariants, badgePaletteRecipe } from "./badge.variants";
 import { cr } from "../../lib/colorRecipes/colorRecipes";
 
 export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
@@ -12,7 +12,6 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
       max,
       color = "default",
       variant = "count",
-      size = "md",
       position = "top-right",
       ping = false,
       className,
@@ -50,9 +49,6 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
                 position,
               }),
               cooked.className,
-              getResponsiveClassNames(size, (value) =>
-                badgeGeometryVariants({ size: value, variant: "dot" }),
-              ),
               "motion-safe:animate-[ping_1.5s_ease-out_infinite]",
             )}
             style={cooked.style}
@@ -62,14 +58,7 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
           as="span"
           ref={ref}
           data-slot="badge"
-          className={cn(
-            badgeVariants({ variant, position }),
-            cooked.className,
-            getResponsiveClassNames(size, (value) =>
-              badgeGeometryVariants({ size: value, variant }),
-            ),
-            className,
-          )}
+          className={cn(badgeVariants({ variant, position }), cooked.className, className)}
           style={{ ...cooked.style, ...style }}
           aria-label={isDecorative ? undefined : ariaLabel}
           aria-hidden={isDecorative || undefined}

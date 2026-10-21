@@ -20,7 +20,7 @@ export default meta;
 type Story = StoryObj<typeof Badge>;
 
 const notificationButton = (
-  <Button aria-label="Notifications" variant="outline">
+  <Button aria-label="Notifications" color="green">
     Notifications
   </Button>
 );
