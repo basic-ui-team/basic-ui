@@ -63,7 +63,7 @@ export const PingingStatus: Story = {
 
 export const Colors: Story = {
   render: () => (
-    <Flex gap={4}>
+    <Flex className="gap-4">
       {(["sky", "green", "amber", "red"] as const).map((color) => (
         <Badge key={color} content={color.slice(0, 1).toUpperCase()} color={color}>
           <Box className="flex h-7 w-7 items-center justify-center rounded-lg bg-surface-base">

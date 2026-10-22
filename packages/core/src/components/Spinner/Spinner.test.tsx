@@ -154,21 +154,6 @@ describe("Spinner", () => {
     });
   });
 
-  describe("spacing props", () => {
-    it.each([
-      ["m", { m: 3 }, "m-3"],
-      ["mx", { mx: 3 }, "mx-3"],
-      ["my", { my: 3 }, "my-3"],
-      ["mb", { mb: 3 }, "mb-3"],
-      ["ml", { ml: 3 }, "ml-3"],
-      ["mr", { mr: 3 }, "mr-3"],
-      ["mt", { mt: 3 }, "mt-3"],
-    ] as const)("applies %s spacing prop", (_prop, props, expectedClass) => {
-      const { container } = renderWithProviders(<Spinner {...props} />);
-      expect(container.firstChild).toHaveClass(expectedClass);
-    });
-  });
-
   describe("ref forwarding", () => {
     it("forwards ref to the root element", () => {
       const ref = React.createRef<HTMLDivElement>();
@@ -199,7 +184,6 @@ describe("Spinner", () => {
           color="teal"
           ariaLabel="Loading data"
           className="custom"
-          m={4}
         />,
       );
       const spinner = container.firstChild as HTMLElement;

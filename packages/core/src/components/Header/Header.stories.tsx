@@ -29,7 +29,7 @@ export const ResponsiveLayout: Story = {
 
 export const SizeVariants: Story = {
   render: () => (
-    <Flex direction="column" gap={3}>
+    <Flex direction="column" className="gap-3">
       <Header size="h1">Heading H1</Header>
       <Header size="h2">Heading H2</Header>
       <Header size="h3">Heading H3</Header>
@@ -42,7 +42,7 @@ export const SizeVariants: Story = {
 
 export const WeightVariants: Story = {
   render: () => (
-    <Flex direction="column" gap={3}>
+    <Flex direction="column" className="gap-3">
       <Header weight="normal">Normal weight</Header>
       <Header weight="medium">Medium weight</Header>
       <Header weight="semibold">Semibold weight</Header>
@@ -53,7 +53,7 @@ export const WeightVariants: Story = {
 
 export const ColorVariants: Story = {
   render: () => (
-    <Flex direction="column" gap={3}>
+    <Flex direction="column" className="gap-3">
       <Header color="default">Default color</Header>
       <Header color="primary">Primary color</Header>
       <Header color="secondary">Secondary color</Header>
@@ -69,7 +69,7 @@ export const ColorVariants: Story = {
 
 export const AlignmentVariants: Story = {
   render: () => (
-    <Flex direction="column" gap={3}>
+    <Flex direction="column" className="gap-3">
       <Header align="left">Left aligned</Header>
       <Header align="center">Center aligned</Header>
       <Header align="right">Right aligned</Header>
@@ -90,7 +90,7 @@ export const TruncateVariant: Story = {
 
 export const WrapVariants: Story = {
   render: () => (
-    <Flex direction="column" align="center" gap={3}>
+    <Flex direction="column" align="center" className="gap-3">
       <div className="w-128 border p-2 border-gray-300 rounded">
         <Header wrap="nowrap">No wrap header example with long text that overflows.</Header>
       </div>
@@ -109,7 +109,7 @@ export const WrapVariants: Story = {
 
 export const PolymorphicVariants: Story = {
   render: () => (
-    <Flex direction="column" gap={3}>
+    <Flex direction="column" className="gap-3">
       <Header as="h1">This is an H1 element (default)</Header>
       <Header as="h2">This is an H2 element</Header>
       <Header as="h3">This is an H3 element</Header>
@@ -122,7 +122,7 @@ export const PolymorphicVariants: Story = {
 
 export const CombinedVariants: Story = {
   render: () => (
-    <Flex direction="column" gap={3}>
+    <Flex direction="column" className="gap-3">
       <Header size="h2" weight="bold" color="primary" align="center" wrap="balance">
         Combined header variants example
       </Header>
@@ -154,7 +154,7 @@ export const Playground: Story = {
 
 export const Clickable: Story = {
   render: () => (
-    <Flex direction="column" gap={3}>
+    <Flex direction="column" className="gap-3">
       <Header as="h2">
         <a
           href="#"

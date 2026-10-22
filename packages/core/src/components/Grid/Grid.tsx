@@ -13,16 +13,12 @@ import {
 import { gridVariants } from "./grid.variants";
 import { Box, BoxProps } from "../Box";
 import { getGridTemplateClasses } from "./grid-template-utils";
-import { resolveLayoutClass } from "../../lib";
 
 const _Grid = <As extends AllowedGridElements = "div">(
   {
     as,
     cols,
     rows,
-    gap,
-    rowGap,
-    columnGap,
     autoFlow = "row",
     autoRows,
     autoCols,
@@ -43,9 +39,6 @@ const _Grid = <As extends AllowedGridElements = "div">(
   const resolvedStyles = cn(
     "grid",
     getGridTemplateClasses({ cols, rows, templatePreset }),
-    getResponsiveClassNames(gap, (value) => resolveLayoutClass("gap", value)),
-    getResponsiveClassNames(rowGap, (value) => resolveLayoutClass("gapY", value)),
-    getResponsiveClassNames(columnGap, (value) => resolveLayoutClass("gapX", value)),
     getResponsiveClassNames(autoFlow, (value) => gridVariants({ autoFlow: value })),
     getResponsiveClassNames(autoRows, (value) => gridVariants({ autoRows: value })),
     getResponsiveClassNames(autoCols, (value) => gridVariants({ autoCols: value })),

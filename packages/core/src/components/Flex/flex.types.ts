@@ -1,5 +1,4 @@
 import { CommonProps, ResponsiveValue, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
-import { LayoutProps } from "../../lib";
 
 const flexValues = ["row", "column", "row-reverse", "column-reverse"] as const;
 const justifyValues = ["start", "end", "center", "between", "around", "evenly", "stretch"] as const;
@@ -11,7 +10,7 @@ type justifyContent = (typeof justifyValues)[number];
 type alignItems = (typeof alignValues)[number];
 type flexWrap = (typeof wrapValues)[number];
 
-export interface FlexOwnProps extends Omit<LayoutProps, "display">, CommonProps {
+export interface FlexOwnProps extends CommonProps {
   direction?: ResponsiveValue<flexDirection>;
   justify?: ResponsiveValue<justifyContent>;
   align?: ResponsiveValue<alignItems>;

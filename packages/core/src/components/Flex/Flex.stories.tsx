@@ -23,7 +23,7 @@ const PlaceholderItem = ({ label = "Item", className }: { label?: string; classN
 
 export const Row: Story = {
   render: () => (
-    <Flex gap={3} align="center" className="w-full ">
+    <Flex align="center" className="gap-3 w-full">
       <PlaceholderItem label="Column 1" />
       <PlaceholderItem label="Column 2" />
       <PlaceholderItem label="Column 3" />
@@ -33,7 +33,7 @@ export const Row: Story = {
 
 export const Column: Story = {
   render: () => (
-    <Flex direction="column" gap={3}>
+    <Flex direction="column" className="gap-3">
       <PlaceholderItem label="Row 1" />
       <PlaceholderItem label="Row 2" />
       <PlaceholderItem label="Row 3" />
@@ -43,13 +43,13 @@ export const Column: Story = {
 
 export const GapAndPadding: Story = {
   render: () => (
-    <Flex direction="column" w="full" gap={3}>
-      <Flex gap={2} p={2}>
+    <Flex direction="column" className="w-full gap-3">
+      <Flex className="gap-2 p-2">
         <PlaceholderItem label="Small gap 1 and padding" className="flex-1" />
         <PlaceholderItem label="Small gap 2 and padding" className="flex-1" />
       </Flex>
 
-      <Flex gap={4} p={4}>
+      <Flex className="gap-4 p-4">
         <PlaceholderItem label="Large gap 1 and padding" className="flex-1" />
         <PlaceholderItem label="Large gap 2 and padding" className="flex-1" />
       </Flex>
@@ -59,11 +59,11 @@ export const GapAndPadding: Story = {
 
 export const InlineExample: Story = {
   render: () => (
-    <Flex align="center" gap={3}>
+    <Flex align="center" className="gap-3">
       <Text as="span" size="2xl">
         This is some text with an inline flex container:
       </Text>
-      <Flex display="inline-flex" gap={2} p={2}>
+      <Flex className="inline-flex gap-2 p-2">
         <PlaceholderItem label="Inline 1" className="flex-1" />
         <PlaceholderItem label="Inline 2" className="flex-1" />
       </Flex>
@@ -73,12 +73,12 @@ export const InlineExample: Story = {
 
 export const Polymorphic: Story = {
   render: () => (
-    <Flex direction="column" gap={2}>
+    <Flex direction="column" className="gap-2">
       <Header size="h4">Polymorphic example</Header>
       <Text as="span" size="lg">
         This is a nav element using Flex with polymorphic "as" prop:
       </Text>
-      <Flex as="nav" gap={3} aria-label="Main navigation">
+      <Flex as="nav" className="gap-3" aria-label="Main navigation">
         <Text as="span" className="border border-transparent border-b-border-base">
           <a href="#">Home</a>
         </Text>
@@ -92,12 +92,12 @@ export const Polymorphic: Story = {
 
 export const Responsive: Story = {
   render: () => (
-    <Flex direction="column" w="full" gap={3}>
+    <Flex direction="column" className="w-full gap-3">
       <Header size="h4">Responsive example</Header>
       <Text as="span" size="md">
         Resize the preview viewport to see layout change
       </Text>
-      <Flex direction={{ base: "column", md: "row" }} gap={{ base: 2, md: 3 }}>
+      <Flex direction={{ base: "column", md: "row" }} className="gap-2 md:gap-3">
         <PlaceholderItem label="1" className="flex-1" />
         <PlaceholderItem label="2" className="flex-1" />
         <PlaceholderItem label="3" className="flex-1" />
@@ -108,27 +108,27 @@ export const Responsive: Story = {
 
 export const Align: Story = {
   render: () => (
-    <Flex direction="column" gap={3}>
+    <Flex direction="column" className="gap-3">
       <Header size="h4">Align variants</Header>
-      <Flex align="start" gap={3} className="border border-border-base p-2">
+      <Flex align="start" className="gap-3 border border-border-base p-2">
         <Text className="border p-2 h-8">Start A</Text>
         <Text className="border p-2 h-16">Start B (tall)</Text>
         <Text className="border p-2 h-12">Start C</Text>
       </Flex>
 
-      <Flex align="center" gap={3} className="border border-border-base p-2">
+      <Flex align="center" className="gap-3 border border-border-base p-2">
         <Text className="border p-2 h-8">Center A</Text>
         <Text className="border p-2 h-16">Center B (tall)</Text>
         <Text className="border p-2 h-12">Center C</Text>
       </Flex>
 
-      <Flex align="end" gap={3} className="border border-border-base p-2">
+      <Flex align="end" className="gap-3 border border-border-base p-2">
         <Text className="border p-2 h-8">End A</Text>
         <Text className="border p-2 h-16">End B (tall)</Text>
         <Text className="border p-2 h-12">End C</Text>
       </Flex>
 
-      <Flex align="stretch" gap={3} className="border border-border-base p-2">
+      <Flex align="stretch" className="gap-3 border border-border-base p-2">
         <Text className="border p-2">Stretch A</Text>
         <Text className="border p-2">Stretch B</Text>
         <Text className="border p-2">Stretch C</Text>
@@ -139,40 +139,40 @@ export const Align: Story = {
 
 export const Justify: Story = {
   render: () => (
-    <Flex direction="column" gap={3}>
+    <Flex direction="column" className="gap-3">
       <Header size="h4">Justify variants</Header>
 
-      <Flex justify="start" gap={3} className="border border-border-base p-2">
+      <Flex justify="start" className="gap-3 border border-border-base p-2">
         <Text className="border p-2">Start 1</Text>
         <Text className="border p-2">Start 2</Text>
         <Text className="border p-2">Start 3</Text>
       </Flex>
 
-      <Flex justify="center" gap={3} className="border border-border-base p-2">
+      <Flex justify="center" className="gap-3 border border-border-base p-2">
         <Text className="border p-2">Center 1</Text>
         <Text className="border p-2">Center 2</Text>
         <Text className="border p-2">Center 3</Text>
       </Flex>
 
-      <Flex justify="end" gap={3} className="border border-border-base p-2">
+      <Flex justify="end" className="gap-3 border border-border-base p-2">
         <Text className="border p-2">End 1</Text>
         <Text className="border p-2">End 2</Text>
         <Text className="border p-2">End 3</Text>
       </Flex>
 
-      <Flex justify="between" gap={3} className="border border-border-base p-2">
+      <Flex justify="between" className="gap-3 border border-border-base p-2">
         <Text className="border p-2">Between 1</Text>
         <Text className="border p-2">Between 2</Text>
         <Text className="border p-2">Between 3</Text>
       </Flex>
 
-      <Flex justify="around" gap={3} className="border border-border-base p-2">
+      <Flex justify="around" className="gap-3 border border-border-base p-2">
         <Text className="border p-2">Around 1</Text>
         <Text className="border p-2">Around 2</Text>
         <Text className="border p-2">Around 3</Text>
       </Flex>
 
-      <Flex justify="evenly" gap={3} className="border border-border-base p-2">
+      <Flex justify="evenly" className="gap-3 border border-border-base p-2">
         <Text className="border p-2">Evenly 1</Text>
         <Text className="border p-2">Evenly 2</Text>
         <Text className="border p-2">Evenly 3</Text>

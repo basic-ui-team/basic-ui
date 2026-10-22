@@ -7,7 +7,7 @@ import {
 import { BoxProps } from "../Box";
 import { PaletteColor } from "../../lib/colorRecipes/colorRecipes";
 import type { ImgHTMLAttributes } from "react";
-import { LayoutProps } from "../../lib";
+import { type TextFlowOverflowProps } from "../../lib";
 
 export type AllowedCardElements = "div" | "button" | "a";
 export type CardVariant = "default" | "elevated" | "outlined" | "unstyled";
@@ -121,7 +121,7 @@ export type AllowedHeaderElements = `h${1 | 2 | 3 | 4 | 5 | 6}`;
  * Props for the CardTitle component, which is a subcomponent of Card.
  * Owns its heading styling fully via card.variants.
  */
-export interface CardTitleOwnProps extends CommonProps, LayoutProps {
+export interface CardTitleOwnProps extends CommonProps, TextFlowOverflowProps {
   /** Visual size, independent of the heading element. Use responsive values for breakpoint changes. @default "h2" */
   size?: ResponsiveValue<"h1" | "h2" | "h3" | "h4" | "h5" | "h6">;
   /** Font weight. @default "normal" */
@@ -150,7 +150,7 @@ export type AllowedTextElements = "span" | "p" | "div";
  * Props for the CardDescription component, which is a subcomponent of Card.
  * Owns its text styling fully via card.variants.
  */
-export interface CardDescriptionOwnProps extends CommonProps, LayoutProps {
+export interface CardDescriptionOwnProps extends CommonProps, TextFlowOverflowProps {
   /** Size of the text. @default "md" */
   size?: ResponsiveValue<"xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl">;
   /** Font weight. @default "normal" */
@@ -180,8 +180,7 @@ export type AspectRatioType = "square" | "video" | "landscape" | "portrait" | "a
  */
 export interface CardImageOwnProps
   extends Omit<ImgHTMLAttributes<HTMLImageElement>, "width" | "height" | "src" | "alt">,
-    CommonProps,
-    LayoutProps {
+    CommonProps {
   /** The source URL of the image. */
   src: string;
   /** Alt text for accessibility. */

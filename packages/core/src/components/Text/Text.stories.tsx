@@ -129,7 +129,7 @@ export const ColorVariants: Story = {
 
 export const AlignmentVariants: Story = {
   render: () => (
-    <Flex direction="column" gap={3}>
+    <Flex direction="column" className="gap-3">
       <Text align="left">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
         ut labore et dolore magna aliqua." (Left Aligned)
@@ -159,7 +159,7 @@ export const TruncateVariant: Story = {
 
 export const WrapVariants: Story = {
   render: () => (
-    <Flex direction="column" align="center" gap={3}>
+    <Flex direction="column" align="center" className="gap-3">
       <div className="w-lg border p-2 border-gray-300 rounded">
         <Text wrap="nowrap">
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt

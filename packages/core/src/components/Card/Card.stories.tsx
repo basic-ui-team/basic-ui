@@ -172,7 +172,7 @@ export const Composition: Story = {
           <Card.Title>Profile</Card.Title>
           <Card.Description as="span">@username</Card.Description>
         </Card.Header>
-        <Card.Image p={3} src="https://placehold.co/600x400" alt="banner" objectFit="cover" />
+        <Card.Image className="p-3" src="https://placehold.co/600x400" alt="banner" objectFit="cover" />
         <Card.Body>
           <Text>
             This is an example of a composed Card using Header, Image, Body and Footer
@@ -180,7 +180,7 @@ export const Composition: Story = {
           </Text>
         </Card.Body>
         <Card.Footer>
-          <Flex justify="end" gap={2}>
+          <Flex justify="end" className="gap-2">
             <button
               className="bg-primary-500 px-3 py-2 rounded-sm"
               onClick={() => alert("Followed")}
@@ -201,7 +201,7 @@ export const Composition: Story = {
         <Card.Header>
           <Card.Title>Sticky footer example</Card.Title>
         </Card.Header>
-        <Card.Body overflowY="scroll" style={{ height: 120 }}>
+        <Card.Body className="overflow-y-scroll" style={{ height: 120 }}>
           <Text truncate={true}>
             Card body with enough content to demonstrate sticky footer behavior. This content needs
             to be really long so we're able to see the sticky footer in action. Lorem ipsum dolor
@@ -213,7 +213,7 @@ export const Composition: Story = {
           </Text>
         </Card.Body>
         <Card.Footer sticky>
-          <Flex justify="end" gap={2}>
+          <Flex justify="end" className="gap-2">
             <button
               className="bg-primary-500 px-3 py-2 rounded-sm "
               onClick={() => alert("Action clicked")}

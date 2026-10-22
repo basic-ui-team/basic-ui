@@ -24,10 +24,7 @@ const _Divider = <As extends AllowedDividerElements = "hr">(
     appearance = "solid",
     thickness = "medium",
     color = "default",
-    inset = 0,
     label,
-    m = 0,
-    p = 0,
     className,
     style,
     ...rest
@@ -53,10 +50,6 @@ const _Divider = <As extends AllowedDividerElements = "hr">(
   return (
     <Box
       as={Comp}
-      m={m}
-      p={p}
-      mx={direction === "horizontal" ? inset : undefined}
-      my={direction === "vertical" ? inset : undefined}
       ref={ref}
       role={isDecorative ? "presentation" : "separator"}
       aria-label={isSemantic && label ? label : undefined}

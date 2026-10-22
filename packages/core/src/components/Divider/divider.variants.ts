@@ -6,7 +6,7 @@ export const dividerThicknessClasses = {
   vertical: { thin: "border-l-1 border-t-0", medium: "border-l-2 border-t-0", thick: "border-l-4 border-t-0", none: "border-l-0 border-t-0" },
 } as const;
 
-export const dividerVariants = cva("flex-shrink-0", {
+export const dividerVariants = cva("m-0 p-0 flex-shrink-0", {
   variants: {
     direction: {
       horizontal: "h-px",

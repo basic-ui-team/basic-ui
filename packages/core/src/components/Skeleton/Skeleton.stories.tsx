@@ -20,14 +20,6 @@ const meta: Meta<typeof Skeleton> = {
       control: "boolean",
       description: "Whether the skeleton should be animated",
     },
-    w: {
-      control: "text",
-      description: "Width of the skeleton (e.g., 'full', 'auto')",
-    },
-    h: {
-      control: "text",
-      description: "Height of the skeleton (e.g., 'auto')",
-    },
     className: {
       control: "text",
       description: "Additional CSS classes",
@@ -97,20 +89,16 @@ export const LargeCircular: Story = {
 };
 
 export const FullWidth: Story = {
-  args: {
-    variant: "rectangular",
-    animated: true,
-    w: "full",
-  },
+  render: () => <Skeleton variant="rectangular" animated className="w-full" />,
 };
 
 export const LoadingList: Story = {
   render: () => (
-    <Flex direction="column" gap={2} className="w-80">
+    <Flex direction="column" className="gap-2 w-80">
       <Skeleton variant="text" animated />
       <Skeleton variant="text" animated />
-      <Box pt={2}>
-        <Skeleton variant="rectangular" animated h="full" className="h-40 w-full" />
+      <Box className="pt-2">
+        <Skeleton variant="rectangular" animated className="h-40 w-full" />
       </Box>
     </Flex>
   ),
@@ -119,14 +107,14 @@ export const LoadingList: Story = {
 export const UserCard: Story = {
   render: () => (
     <Box className="border border-border-base rounded-lg p-4 w-80">
-      <Flex align="center" gap={2} pb={2} w="full">
+      <Flex align="center" className="gap-2 pb-2 w-full">
         <Skeleton variant="circular" animated className="h-12 w-12" />
-        <Flex direction="column" gap={2} align="end" w="full">
-          <Skeleton variant="text" animated w="full" className="w-48" />
-          <Skeleton variant="text" animated w="full" className="w-24" />
+        <Flex direction="column" align="end" className="gap-2 w-full">
+          <Skeleton variant="text" animated className="w-48" />
+          <Skeleton variant="text" animated className="w-24" />
         </Flex>
       </Flex>
-      <Skeleton variant="rectangular" animated w="full" h="full" className="h-24" />
+      <Skeleton variant="rectangular" animated className="w-full h-24" />
     </Box>
   ),
 };

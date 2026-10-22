@@ -34,9 +34,9 @@ export const Default: Story = {
 
 export const Sizes: Story = {
   render: () => (
-    <Flex direction="row" gap={3} align="start">
+    <Flex direction="row" className="gap-3" align="start">
       {(["sm", "md", "lg"] as const).map((size) => (
-        <Flex key={size} gap={2} align="center">
+        <Flex key={size} className="gap-2" align="center">
           <Toggle size={size} defaultValue />
           <Text as="span" size="sm">
             {size}
@@ -49,9 +49,9 @@ export const Sizes: Story = {
 
 export const Colors: Story = {
   render: () => (
-    <Flex direction="row" gap={3} align="start" wrap="wrap">
+    <Flex direction="row" className="gap-3" align="start" wrap="wrap">
       {PALETTE_FAMILIES.map((color) => (
-        <Flex key={color} gap={2} align="center">
+        <Flex key={color} className="gap-2" align="center">
           <Toggle color={color} defaultValue />
           <Text as="span" size="sm">
             {color}
@@ -64,7 +64,7 @@ export const Colors: Story = {
 
 export const Disabled: Story = {
   render: () => (
-    <Flex gap={4} align="center">
+    <Flex className="gap-4" align="center">
       <Toggle disabled />
       <Toggle disabled defaultValue />
     </Flex>
@@ -74,8 +74,8 @@ export const Disabled: Story = {
 function ControlledDemo() {
   const [notifications, setNotifications] = useState(true);
   return (
-    <Flex direction="column" gap={3} align="start">
-      <Flex gap={2} align="center">
+    <Flex direction="column" className="gap-3" align="start">
+      <Flex className="gap-2" align="center">
         <Toggle
           value={notifications}
           onChange={setNotifications}

@@ -32,15 +32,13 @@ function HeadlessSelectDemo({
 } = {}) {
   const select = useSelect({ options });
   return (
-    <Flex direction="column" gap={2} align="start">
+    <Flex direction="column" className="gap-2" align="start">
       <Text as="span" weight="medium" {...select.labelProps}>
         {label}
       </Text>
       <Box
         as="div"
-        px={2}
-        py={1}
-        className="min-w-40 cursor-pointer rounded-md border bg-white"
+        className="px-2 py-1 min-w-40 cursor-pointer rounded-md border bg-white"
         {...select.comboboxProps}
       >
         {select.selectedLabel ?? "Choose a Fruit"}
@@ -49,17 +47,14 @@ function HeadlessSelectDemo({
         <Portal>
           <Box
             as="div"
-            p={1}
-            className="rounded-md border bg-white shadow-md"
+            className="p-1 rounded-md border bg-white shadow-md"
             {...select.listboxProps}
           >
             {options.map((option, index) => (
               <Box
                 as="div"
                 key={option.value}
-                px={2}
-                py={1}
-                className={`rounded-sm ${select.activeIndex === index ? "bg-gray-100" : ""} ${
+                className={`px-2 py-1 rounded-sm ${select.activeIndex === index ? "bg-gray-100" : ""} ${
                   option.disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"
                 }`}
                 {...select.getOptionProps(index)}

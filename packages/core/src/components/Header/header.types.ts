@@ -1,11 +1,11 @@
 import { ResponsiveValue } from "@basic-ui/react-utilities";
 import { type CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
-import type { LayoutProps } from "../../lib";
+import type { TextFlowOverflowProps } from "../../lib";
 import { PaletteColor } from "../../lib/colorRecipes/colorRecipes";
 
 export type HeaderColor = "default" | "muted" | PaletteColor;
 
-export interface HeaderOwnProps extends CommonProps, LayoutProps {
+export interface HeaderOwnProps extends CommonProps, TextFlowOverflowProps {
   /** Fixed visual size, independent of heading semantics. Use responsive values for breakpoint changes. @default "h2" */
   size?: ResponsiveValue<"h1" | "h2" | "h3" | "h4" | "h5" | "h6">;
   /** Font weight. @default "normal" */
