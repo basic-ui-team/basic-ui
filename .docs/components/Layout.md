@@ -1,60 +1,76 @@
-# Layout primitives
+# Layout
 
-Three primitives cover structural layout in Basic UI:
-
-- [Box](./Box.md) — the polymorphic shell. Renders any element, styles nothing, passes your classes through.
-- [Flex](./Flex.md) — a flex container with typed props for direction, alignment, wrapping, and display.
-- [Grid](./Grid.md) — a grid container with typed props for tracks, placement, alignment axes, and named template presets.
+Build page structure with [Box](./Box.md), [Flex](./Flex.md), and
+[Grid](./Grid.md). Choose a primitive for how content relates, then use
+Tailwind utilities in `className` for spacing, sizing, and other styling.
 
 ```tsx
 import { Box, Flex, Grid } from "@basic-ui/core";
 
-<Flex direction="column" className="gap-4">
-  <Box as="header" className="p-4">Header</Box>
-  <Grid cols={{ base: 1, md: 3 }} className="gap-3">
-    <Box className="p-4 rounded-lg border border-border-base">Card</Box>
-    <Box className="p-4 rounded-lg border border-border-base">Card</Box>
-    <Box className="p-4 rounded-lg border border-border-base">Card</Box>
+<Flex as="main" direction="column" className="gap-6 p-4">
+  <Box as="header" className="text-xl font-semibold">
+    Projects
+  </Box>
+  <Grid cols={{ base: 1, md: 3 }} className="gap-4">
+    <Box className="rounded-lg border border-border-base p-4">Project one</Box>
+    <Box className="rounded-lg border border-border-base p-4">Project two</Box>
+    <Box className="rounded-lg border border-border-base p-4">Project three</Box>
   </Grid>
 </Flex>;
 ```
 
-## The design principle: Tailwind first
+## Choose a primitive
 
-Basic UI is Tailwind-first. Utility classes authored in `className` are the
-styling layer — including spacing, sizing, position, display, gap, and
-overflow. The theme's base `--spacing` token makes every bare numeric
-utility resolve, fractionals included (`p-1.5` works out of the box).
+| Primitive | Use it for |
+| --- | --- |
+| [Box](./Box.md) | A semantic or generic wrapper. Choose its element with `as`; Box adds no layout styles. |
+| [Flex](./Flex.md) | Arranging items along a row or column, with focused props for direction, alignment, wrapping, and display. |
+| [Grid](./Grid.md) | Arranging items in rows and columns, with props for track counts, alignment, and named template presets. |
 
-The primitives deliberately do **not** expose 1:1 pass-through props for
-those utilities: a `p` prop would only shadow the `p-4` class you can
-already write, in a parallel vocabulary users must learn and the library
-must keep in sync.
+See each guide for its full API and examples. Standard HTML attributes are
+accepted; `as` is unrestricted on Box and limited to supported elements on
+Flex and Grid.
 
-A primitive earns a style prop only when it buys something a class cannot:
+## How props and classes fit together
 
-- **A mix** — one intent composing several classes (`templatePreset`,
-  truncation flow).
-- **A state** — behavior wiring, not styling.
-- **A default** — the prop carries the component's identity (`Flex`
-  defaults to `display="flex"`; `Badge` defaults its position to
-  `top-right`).
-- **A semantic** — a closed, named vocabulary (`direction`, `severity`).
+Flex and Grid expose focused props for structural choices, such as direction,
+alignment, and tracks. These describe how content is arranged. Common spacing,
+sizing, and margin values are styling concerns, so use Tailwind utilities in
+`className` rather than maintaining a parallel set of component props.
 
-Everything else stays in `className`, and user-authored classes always win
-over the library's own.
+This does not mean that components never have style props. Higher-level
+components use props when they express intent or select a coordinated recipe:
+[Button](./Button.md)'s `variant` and `size` choose bundled styles, while
+`loading` changes behavior. [Alert](./Alert.md)'s `severity` conveys meaning
+and affects its appearance and semantic role. These focused choices complement
+Tailwind; open-ended styling such as margins, gaps, and widths stays in
+`className`.
 
-## Responsive values
+## Responsive layouts
 
-Earned props accept either a single value or a responsive object:
+Flex and Grid props accept responsive values, for example:
 
 ```tsx
-<Flex direction={{ base: "column", md: "row" }} />
+<Flex direction={{ base: "column", md: "row" }} className="gap-2 md:gap-4">
+  {/* content */}
+</Flex>
 ```
 
-- `base` is required; the other breakpoints (`sm`, `md`, `lg`, `xl`,
-  `2xl`) are optional and inherit the last supplied value.
-- Resolution is pure CSS: a mobile-first cascade of breakpoint-prefixed
-  utilities, with no viewport JavaScript, no listeners, and no rerender.
-- In `className`, use Tailwind's own responsive prefixes instead:
-  `className="gap-2 md:gap-4"`.
+Use Tailwind's responsive prefixes in `className`; Box uses these classes for
+responsive styling too. See Tailwind's
+[responsive design](https://tailwindcss.com/docs/responsive-design) guide.
+
+## Tailwind v4 references
+
+For the utilities used in `className`, see Tailwind's documentation for
+[display](https://tailwindcss.com/docs/display),
+[flex direction](https://tailwindcss.com/docs/flex-direction),
+[flex wrapping](https://tailwindcss.com/docs/flex-wrap),
+[alignment](https://tailwindcss.com/docs/align-items),
+[justification](https://tailwindcss.com/docs/justify-content),
+[grid columns](https://tailwindcss.com/docs/grid-template-columns),
+[gap](https://tailwindcss.com/docs/gap),
+[padding](https://tailwindcss.com/docs/padding),
+[margin](https://tailwindcss.com/docs/margin),
+[width](https://tailwindcss.com/docs/width), and
+[maximum width](https://tailwindcss.com/docs/max-width).
