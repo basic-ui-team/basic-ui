@@ -1,12 +1,11 @@
 # Grid
 
-Responsive layout container for arranging items in rows and columns.
+A grid container with typed, responsive props for tracks, placement, alignment, and named templates.
 
 ```tsx
 import { Grid } from "@basic-ui/core";
 
-// Basic example
-<Grid cols={3} gap={3}>
+<Grid cols={3} className="gap-3">
   <div>Item A</div>
   <div>Item B</div>
   <div>Item C</div>
@@ -15,102 +14,78 @@ import { Grid } from "@basic-ui/core";
 
 ## Overview
 
-`Grid` is a presentational, polymorphic layout component that maps a small, well-typed set of props to Tailwind-based utility classes. It supports tokenized spacing (`gap`, `rowGap`, `columnGap`), responsive values, alignment controls, auto-placement options, and a set of `templatePreset` layouts for common patterns (masonry, card list, sidebar, hero, etc.).
+`Grid` renders a grid container and exposes the decisions that benefit from a typed, closable vocabulary: column and row counts, auto-placement, four alignment axes, and a set of named template presets. Gap, padding, and sizing are authored in `className` with Tailwind utilities.
 
-## When to use
+Every prop accepts a [responsive value](./Layout.md): a single value or an object of breakpoints.
 
-- Arrange a collection of items into a responsive grid (cards, gallery, dashboard tiles).
-- Use `templatePreset` for common layout patterns (sidebar, hero, masonry).
-- Avoid using `Grid` when you need fine-grained, content-aware grid-template areas — prefer explicit `style` or a dedicated CSS module instead.
+## API
 
-## Variants / Appearance
+| Prop             | Type                                                                                             | Default  | Description                                                       |
+| ---------------- | ------------------------------------------------------------------------------------------------ | -------- | ----------------------------------------------------------------- |
+| `cols`           | `ResponsiveValue<1 \| 2 \| ... \| 12>`                                                          | —        | Number of equal columns.                                          |
+| `rows`           | `ResponsiveValue<1 \| 2 \| ... \| 12>`                                                          | —        | Number of equal rows.                                             |
+| `templatePreset` | `ResponsiveValue<"none" \| "sidebar" \| "hero" \| "masonry" \| "card-list" \| "symmetric" \| "asymmetric">` | — | Named template. `"none"` restores the latest column and row counts. |
+| `autoFlow`       | `ResponsiveValue<"row" \| "column" \| "dense">`                                                  | `"row"`  | How auto-placed items flow.                                       |
+| `autoRows`       | `ResponsiveValue<"min" \| "max" \| "fr" \| true>`                                               | —        | Size of implicitly created rows (`true` maps to `auto`).           |
+| `autoCols`       | `ResponsiveValue<"min" \| "max" \| "fr" \| true>`                                                | —        | Size of implicitly created columns.                               |
+| `alignItems`     | `ResponsiveValue<"start" \| "end" \| "center" \| "stretch">`                                     | `"stretch"` | Item alignment along the block axis.                           |
+| `justifyItems`   | `ResponsiveValue<"start" \| "end" \| "center" \| "stretch">`                                     | `"stretch"` | Item alignment along the inline axis.                          |
+| `alignContent`   | `ResponsiveValue<"start" \| "end" \| "center" \| "stretch" \| "between" \| "around" \| "evenly">` | `"stretch"` | Track-group alignment along the block axis.      |
+| `justifyContent` | `ResponsiveValue<"start" \| "end" \| "center" \| "stretch" \| "between" \| "around" \| "evenly">` | `"start"` | Track-group alignment along the inline axis.      |
 
-- `templatePreset`: quick presets — `sidebar`, `hero`, `masonry`, `card-list`, `symmetric`, `asymmetric`; `none` restores column and row counts.
-- Alignment props: `alignItems`, `justifyItems`, `alignContent`, `justifyContent` (tokenized options).
-- Spacing tokens: numeric steps `0` through `9`.
+`as` accepts `"div" | "section" | "article" | "main" | "aside" | "nav"`. `className`, `style`, and standard HTML props are forwarded; authored classes always win over the library's.
+
+Gap between items is `className="gap-4"` (or `gap-x-*` / `gap-y-*`), not a prop — see [Box](./Box.md) for the styling principle.
 
 ## Examples
 
-### Basic
+### Equal columns, responsive
 
 ```tsx
-<Grid cols={3} gap={3}>
-  <div>Card 1</div>
-  <div>Card 2</div>
-  <div>Card 3</div>
-</Grid>
-```
-
-### Template preset (masonry)
-
-```tsx
-<Grid templatePreset="masonry" gap={3}>
-  <div className="h-40">Item 1</div>
-  <div className="h-60">Item 2</div>
-  <div className="h-48">Item 3</div>
-</Grid>
-```
-
-### Responsive props
-
-```tsx
-<Grid cols={{ base: 1, md: 3 }} gap={{ base: 2, md: 3 }}>
+<Grid cols={{ base: 1, md: 3 }} className="gap-3">
   <div>1</div>
   <div>2</div>
   <div>3</div>
 </Grid>
 ```
 
-### Controlled vs Uncontrolled
+Objects are mobile-first: omitted breakpoints inherit the last supplied value through the CSS cascade, with no viewport JavaScript and no rerender.
 
-`Grid` is purely presentational and does not manage internal state — the controlled/uncontrolled pattern does not apply. Use responsive prop objects to drive responsive behavior from your app state if needed.
+### Template preset
 
-## API
+```tsx
+<Grid templatePreset="masonry" className="gap-3">
+  <div className="h-40">Item 1</div>
+  <div className="h-60">Item 2</div>
+  <div className="h-48">Item 3</div>
+</Grid>
+```
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `cols`, `rows` | `ResponsiveValue<1 ... 12>` | omitted | Explicit track counts. |
-| `gap`, `rowGap`, `columnGap` | `ResponsiveValue<0 ... 9>` | omitted | General, row, and column spacing. |
-| `autoFlow` | `ResponsiveValue<"row" \| "column" \| "dense">` | `"row"` | Auto-placement direction. |
-| `autoRows`, `autoCols` | `ResponsiveValue<"min" \| "max" \| "fr" \| true>` | omitted | Implicit tracks; `true` selects automatic sizing. |
-| `alignItems`, `justifyItems` | `ResponsiveValue<"start" \| "end" \| "center" \| "stretch">` | `"stretch"` | Item alignment. |
-| `alignContent` | `ResponsiveValue<"start" \| "end" \| "center" \| "stretch" \| "between" \| "around" \| "evenly">` | `"stretch"` | Block-axis distribution. |
-| `justifyContent` | same as `alignContent` | `"start"` | Inline-axis distribution. |
-| `templatePreset` | `ResponsiveValue<"none" \| "sidebar" \| "hero" \| "masonry" \| "card-list" \| "symmetric" \| "asymmetric">` | omitted | Active presets override both counts; `none` restores them. |
-| `as` | `"div" \| "section" \| "article" \| "main" \| "aside" \| "nav"` | `"div"` | Rendered element. |
-| `className` | `string` | omitted | Consumer utility overrides, applied last. |
-| `style` | `React.CSSProperties` | omitted | Inline overrides, including bespoke templates. |
-| `children` | `React.ReactNode` | omitted | Grid contents. |
+### Preset reset with restored counts
 
-Notes:
+A preset applies at one breakpoint; returning to `"none"` restores the column and row counts in effect from your earlier values, carried forward per breakpoint:
 
-- Defaults are `autoFlow: "row"`, `alignItems: "stretch"`, `justifyItems: "stretch"`, `alignContent: "stretch"`, and `justifyContent: "start"`. Gap is omitted unless provided.
-- Responsive props emit static breakpoint classes without viewport subscriptions.
-- An active `templatePreset` overrides both `cols` and `rows`. Set `templatePreset={{ base: "sidebar", lg: "none" }}` to restore their latest values at `lg`, or implicit tracks when counts are omitted.
-- `rowGap` and `columnGap` use `gap-y-*` and `gap-x-*`. All gap props accept numeric steps `0` through `9`.
+```tsx
+<Grid
+  cols={{ base: 2, md: 4 }}
+  rows={{ base: 2, md: 1 }}
+  templatePreset={{ base: "none", sm: "sidebar", lg: "none" }}
+  className="gap-2"
+>
+  <div>A</div>
+  <div>B</div>
+  <div>C</div>
+  <div>D</div>
+</Grid>
+```
 
-## Accessibility
+### Auto-placement and alignment
 
-- `Grid` is a layout container. It does not apply semantic roles by default — prefer semantic containers (`ul`/`li`) for lists, or add `role="list"` / `role="listitem"` to children when appropriate.
-- Ensure focusable children manage keyboard navigation; `Grid` does not alter focus behavior.
-- Use `normalizeProps` camelCase aliases like `ariaLabel` → `aria-label` when passing aria attributes to `Grid`.
+```tsx
+<Grid autoFlow="dense" alignContent="between" justifyContent="center">
+  <div>1</div>
+  <div>2</div>
+</Grid>
+```
 
-## Stories
-
-- See interactive examples and variants: [packages/core/src/components/Grid/Grid.stories.tsx](packages/core/src/components/Grid/Grid.stories.tsx)
-  - `Basic`, `TemplatePreset`, `Responsive`, `AlignmentVariants`, `AutoFlowAutoColsRows`
-
-## Source
-
-- Component source: [packages/core/src/components/Grid/Grid.tsx](packages/core/src/components/Grid/Grid.tsx)
-- Types & variants: [packages/core/src/components/Grid/grid.types.ts](packages/core/src/components/Grid/grid.types.ts), [packages/core/src/components/Grid/grid.variants.ts](packages/core/src/components/Grid/grid.variants.ts)
-
----
-
-## Guidance
-
-- Prefer token props (`gap`, `cols`, `rows`) for consistency. Use `className` as an escape hatch for arbitrary Tailwind utilities.
-- Use `templatePreset` for common page-level layout patterns; use `style` for one-off `grid-template-*` rules when necessary.
-- Add semantic roles or use semantic elements when the grid represents a list or navigation.
-
-_Generated from the component template._
+See the [Grid Storybook examples](../../packages/core/src/components/Grid/Grid.stories.tsx).

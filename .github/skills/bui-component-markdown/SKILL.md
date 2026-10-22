@@ -35,9 +35,37 @@ Add or reorder sections such as accessibility, usage guidance, or related hooks 
 
 - Document the component's own relevant props, not every inherited DOM attribute. Mention that standard HTML/React props are accepted when useful, rather than listing them all.
 - When props are inherited from a shared prop group, link to its guide instead of duplicating a long API table. Use the repository's existing documentation link conventions and verify that the target exists.
-- If a component inherits layout props or common props, link to the relevant layout/common-props guide when available. If no guide exists, document only the relevant inherited props needed to use the component and do not create a speculative link.
+- If a component inherits shared behavior that has its own guide (responsive values, text flow), link to that guide instead of duplicating a long API table. Do not create speculative links to guides that do not exist.
 - Hook options that are small and directly relevant may be documented inline in the component guide to keep the user journey in one place. This can drift from the hook's own documentation; verify the inline details against the hook source whenever either guide changes.
 - Make defaults and required values explicit. Use types and terminology consistent with the exported API.
+
+## Styling principle: props must earn their place
+
+Basic UI is Tailwind-first: utility classes authored in `className` are the
+styling layer, and the theme's `--spacing` base token makes every bare
+numeric utility resolve — including fractionals like `p-1.5`. A guide must
+never document a 1:1 pass-through prop: spacing, sizing, position,
+display, gap, overflow, and similar utilities belong in `className` as
+plain Tailwind classes.
+
+A component exposes a style prop only when it buys something a class
+cannot:
+
+- **A mix** — one intent that composes several classes (a variant recipe,
+  truncation flow, a preset template).
+- **A state** — behavior wiring, not styling (`loading`, `disabled`).
+- **A default** — the prop carries the component's identity or a sensible
+  default the user would otherwise repeat every time (Badge's `position`
+  defaults to `top-right`; Flex's `display` defaults to `flex`).
+- **A semantic** — a closed, named vocabulary (`severity`,
+  `templatePreset`).
+
+When writing an API table, include only earned props. Say once that all
+other styling is authored in `className` with Tailwind utilities, and show
+that in examples. Responsive values (`{ base: value, md: value }`) exist
+only on earned props; in `className`, use Tailwind's own responsive
+prefixes (`md:p-4`). User-authored classes always win over the library's
+classes.
 
 ## Examples and source verification
 
