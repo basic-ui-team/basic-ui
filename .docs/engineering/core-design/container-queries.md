@@ -8,6 +8,12 @@ utilities and Box modernization stack.
 **Priority:** lower than component modernization. Revisit after the current
 component modernization work has established its next priorities.
 
+> **Note (2026-10-21):** this proposal predates
+> [ADR-0001](../adr/0001-tailwind-first-primitives.md) and was designed
+> against the since-removed `LayoutProps` engine. Revisit the design —
+> container roots will most likely become a `className` recipe rather than
+> a shared layout prop — before implementing anything from this document.
+
 ## Goal
 
 Provide native CSS container-query foundations without JavaScript measurement:

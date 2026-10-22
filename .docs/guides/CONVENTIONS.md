@@ -140,12 +140,12 @@ Enforced by `scripts/check-component-imports.mjs` in CI (see Enforcement below).
 
 ## Layout utilities
 
-Use Box for shared spacing, sizing, and layout props instead of handling them
-again in each component. Layout props should become classes, not DOM attributes.
+Use Box, Flex, and Grid for structure, and author spacing, sizing, position, and display as Tailwind utilities in `className` instead of re-solving them in each component. A component may expose a style prop only when it buys a mix, state, default, or semantic — never a 1:1 utility pass-through (see [ADR-0001](../engineering/adr/0001-tailwind-first-primitives.md)).
 
-Shared layout types, recipes, and helpers live in
-[`packages/core/src/lib`](../../packages/core/src/lib). Recipe keys match the
-public prop names, such as `p` and `hMin`.
+Shared styling helpers live in
+[`packages/core/src/lib`](../../packages/core/src/lib); the responsive
+safelist derives from the component variant tables themselves, so a new
+responsive prop value needs no hand-authored vocabulary entry.
 
 ## Tests & Accessibility
 

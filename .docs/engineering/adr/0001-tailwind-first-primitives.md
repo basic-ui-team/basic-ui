@@ -119,8 +119,8 @@ repository:
 
 | Measurement | Before | After |
 | --- | --- | --- |
-| Safelisted utilities (runtime-constructed) | 764 | **170** |
-| Safelist-only compiled CSS | 490.1 KB raw / 45.5 KB gzip | **127.3 KB raw / 16.2 KB gzip** |
+| Safelisted utilities (runtime-constructed) | 645 (764 at the widest scale experiment) | **170** |
+| Safelist-only compiled CSS | 421.0 KB raw / 40.5 KB gzip (490.1 KB / 45.5 KB at the widest) | **127.3 KB raw / 16.2 KB gzip** |
 | Generated safelist file | 272 lines | **4 lines / 2.9 KB** |
 | Consumer build, component-authored classes (`ring-2`, `animate-spin`, `z-modal`) | absent | **present** |
 
@@ -132,7 +132,8 @@ Key experiments behind the numbers:
   focus ring, spinner animation, and dialog elevation generate no CSS;
   with it, they generate, at ~+27 KB raw.
 - **The safelist-before/after:** the hand-authored generic-family
-  safelist compiled to 45.5 KB gzip while *failing to include* the
+  safelist compiled to 40.5 KB gzip (45.5 KB at the widest scale
+  experiment) while *failing to include* the
   ~110 component-authored classes outside its families (Button's states,
   Dialog's overlay, Badge's positioning, Spinner's animation). The
   component-derived safelist is 16.2 KB gzip and covers both
