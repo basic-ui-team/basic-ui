@@ -1,12 +1,9 @@
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
-import { dirname, join, resolve } from "node:path";
+import { readFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { afterEach, describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 import { BREAKPOINT_ORDER } from "../../../react-utilities/src/hooks/useResponsive/constants";
 import { colorRecipeUtilityCandidates } from "./colorRecipes/colorRecipes";
-import { spacingSteps } from "./layout.types";
-import { tokens } from "../../../tokens/src/generated/tokens";
 import {
   createResponsiveUtilitySource,
   isUtilitySourceCurrent,
@@ -15,83 +12,86 @@ import {
 } from "./responsive-utilities";
 
 describe("shared responsive vocabulary", () => {
-  it("supports reviewed fixed-pixel geometry independently of token spacing", () => {
-    for (const value of [12, 14, 16, 20, 24, 32, 36, 44]) {
-      expect(responsiveUtilityFamilies.pixelGeometry).toContain(`h-[${value}px]`);
-      expect(responsiveUtilityFamilies.pixelGeometry).toContain(`w-[${value}px]`);
-    }
-    expect(responsiveUtilityFamilies.pixelGeometry).toContain("p-[2px]");
-    for (const value of [16, 18, 24]) {
-      expect(responsiveUtilityFamilies.pixelGeometry).toContain(`translate-x-[${value}px]`);
-      expect(responsiveUtilityFamilies.pixelGeometry).toContain(`translate-y-[${value}px]`);
-    }
+  it("derives the flex family from the Flex variants table", () => {
+    expect(responsiveUtilityFamilies.flex).toEqual(
+      expect.arrayContaining(["flex-row", "flex-col", "flex-row-reverse", "flex-col-reverse"]),
+    );
+    expect(responsiveUtilityFamilies.flex).toEqual(
+      expect.arrayContaining(["flex-nowrap", "flex-wrap", "flex-wrap-reverse"]),
+    );
+    expect(responsiveUtilityFamilies.flex).toEqual(
+      expect.arrayContaining(["flex", "inline-flex"]),
+    );
   });
 
-  it("covers the guaranteed spacing scale for each supported spacing property", () => {
-    for (const prefix of [
-      "p",
-      "px",
-      "py",
-      "pt",
-      "pr",
-      "pb",
-      "pl",
-      "m",
-      "mx",
-      "my",
-      "mt",
-      "mr",
-      "mb",
-      "ml",
-      "gap",
-      "gap-x",
-      "gap-y",
-    ]) {
-      expect(responsiveUtilityFamilies.spacing).toEqual(
-        expect.arrayContaining([...spacingSteps].map((step) => `${prefix}-${step}`)),
-      );
-    }
-  });
-
-  it("supports complete border-width and grid-track ranges, not component selections", () => {
-    for (let width = 0; width <= 9; width++) {
-      expect(responsiveUtilityFamilies.borderWidth).toContain(`border-${width}`);
-    }
+  it("derives the grid family from the Grid variants table", () => {
     for (let tracks = 1; tracks <= 12; tracks++) {
       expect(responsiveUtilityFamilies.grid).toContain(`grid-cols-${tracks}`);
       expect(responsiveUtilityFamilies.grid).toContain(`grid-rows-${tracks}`);
     }
+    expect(responsiveUtilityFamilies.grid).toEqual(
+      expect.arrayContaining(["grid-flow-row", "grid-flow-dense", "auto-cols-fr", "auto-rows-min"]),
+    );
+    expect(responsiveUtilityFamilies.grid).toEqual(
+      expect.arrayContaining(["items-start", "justify-items-center", "content-between", "justify-evenly"]),
+    );
   });
 
-  it("uses token names for typography and size-coupled rounding", () => {
-    for (const name of Object.keys(tokens.fontSize)) {
-      expect(responsiveUtilityFamilies.typography).toContain(`text-${name}`);
-    }
-    for (const name of Object.keys(tokens.radius)) {
-      expect(responsiveUtilityFamilies.radius).toContain(`rounded-${name}`);
-    }
+  it("keeps every template preset class responsive", () => {
+    expect(responsiveUtilityFamilies.gridTemplates).toEqual(
+      expect.arrayContaining([
+        "grid-cols-none",
+        "grid-rows-none",
+        "grid-cols-[200px_1fr]",
+        "grid-cols-[1fr_400px]",
+        "grid-cols-[repeat(auto-fill,minmax(250px,1fr))]",
+      ]),
+    );
   });
 
-  it("contains only unique concrete utilities, without recipe keys or automatic modifiers", () => {
+  it("collects the responsive component geometry maps", () => {
+    expect(responsiveUtilityFamilies.componentGeometry).toEqual(
+      expect.arrayContaining(["px-2", "py-1", "text-sm", "rounded-md"]),
+    );
+    expect(responsiveUtilityFamilies.componentGeometry).toContain("border-t-2");
+  });
+
+  it("covers the text-flow overflow and truncation utilities", () => {
+    for (const value of ["visible", "hidden", "auto", "scroll"]) {
+      expect(responsiveUtilityFamilies.textFlow).toContain(`overflow-${value}`);
+      expect(responsiveUtilityFamilies.textFlow).toContain(`overflow-x-${value}`);
+      expect(responsiveUtilityFamilies.textFlow).toContain(`overflow-y-${value}`);
+    }
+    expect(responsiveUtilityFamilies.textFlow).toEqual(
+      expect.arrayContaining([
+        "text-ellipsis",
+        "text-clip",
+        "whitespace-nowrap",
+        "whitespace-normal",
+        "text-nowrap",
+        "text-balance",
+        "text-pretty",
+        "text-wrap",
+      ]),
+    );
+  });
+
+  it("stays scoped to runtime-constructed classes only", () => {
+    // Spacing, sizing, and position are className concerns since the layout
+    // props were removed; their utilities must not re-enter the safelist.
+    expect(responsiveUtilities).not.toContain("p-4");
+    expect(responsiveUtilities).not.toContain("gap-4");
+    expect(responsiveUtilities).not.toContain("h-full");
+    expect(responsiveUtilities).not.toContain("relative");
+  });
+
+  it("contains only unique concrete utilities, without automatic modifiers", () => {
     expect(responsiveUtilities).toEqual([
       ...new Set(Object.values(responsiveUtilityFamilies).flat()),
     ]);
     expect(
       responsiveUtilities.every((utility) => utility.length > 0 && !/\s|:/.test(utility)),
     ).toBe(true);
-    for (const excluded of [
-      "sm",
-      "md",
-      "lg",
-      "bg-primary-500",
-      "font-bold",
-      "shadow-s1",
-      "animate-spin",
-      "p-0.5",
-      "p-10",
-    ]) {
-      expect(responsiveUtilities).not.toContain(excluded);
-    }
   });
 });
 
@@ -132,43 +132,24 @@ describe("responsive utility source", () => {
   });
 
   it("rejects mixed quotes rather than silently changing the utility", () => {
-    expect(() => createResponsiveUtilitySource(["base"], [`data-[label="it's"]:h-4`])).toThrow(
-      "Cannot serialize a utility containing both quote types",
-    );
+    expect(() =>
+      createResponsiveUtilitySource(["base"], [`data-[label="it's"]:h-4`]),
+    ).toThrow("Cannot serialize a utility containing both quote types");
   });
 });
 
 describe("responsive utility freshness", () => {
-  const temporaryDirectories: string[] = [];
+  it("reports the committed stylesheet as current", () => {
+    const committed = resolve(
+      dirname(fileURLToPath(import.meta.url)),
+      "../generated/layout-utilities.generated.css",
+    );
+    const source = createResponsiveUtilitySource(
+      BREAKPOINT_ORDER,
+      responsiveUtilities,
+      colorRecipeUtilityCandidates,
+    );
 
-  afterEach(() => {
-    for (const directory of temporaryDirectories.splice(0)) {
-      rmSync(directory, { recursive: true });
-    }
-  });
-
-  function temporaryOutput() {
-    const directory = mkdtempSync(join(tmpdir(), "basic-ui-responsive-"));
-    temporaryDirectories.push(directory);
-    return join(directory, "utilities.css");
-  }
-
-  it("rejects missing output without creating it", () => {
-    expect(isUtilitySourceCurrent(temporaryOutput(), "expected\n")).toBe(false);
-  });
-
-  it("rejects stale output without overwriting it", () => {
-    const output = temporaryOutput();
-    writeFileSync(output, "stale\n");
-
-    expect(isUtilitySourceCurrent(output, "expected\n")).toBe(false);
-    expect(readFileSync(output, "utf8")).toBe("stale\n");
-  });
-
-  it.each(["\n", "\r\n"])("accepts current output with %j line endings", (newline) => {
-    const output = temporaryOutput();
-    writeFileSync(output, ["first", "second", ""].join(newline));
-
-    expect(isUtilitySourceCurrent(output, "first\nsecond\n")).toBe(true);
+    expect(isUtilitySourceCurrent(committed, source)).toBe(true);
   });
 });

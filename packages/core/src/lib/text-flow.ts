@@ -5,8 +5,15 @@ import {
   type Breakpoint,
   type ResponsiveValue,
 } from "@basic-ui/react-utilities";
-import { generateLayoutClassNames } from "./layout-utils";
-import type { LayoutProps, OverflowType } from "./layout.types";
+
+export type OverflowType = "visible" | "hidden" | "auto" | "scroll";
+
+/** Overflow controls shared by every text-flow consumer (Text, Header, Card sections). */
+export interface TextFlowOverflowProps {
+  overflow?: ResponsiveValue<OverflowType>;
+  overflowX?: ResponsiveValue<OverflowType>;
+  overflowY?: ResponsiveValue<OverflowType>;
+}
 
 export const textWrapClasses = {
   nowrap: "text-nowrap",
@@ -14,6 +21,18 @@ export const textWrapClasses = {
   balance: "text-balance",
   pretty: "text-pretty",
 } as const;
+
+function overflowClasses(
+  overflow: ResponsiveValue<OverflowType> | undefined,
+  overflowX: ResponsiveValue<OverflowType> | undefined,
+  overflowY: ResponsiveValue<OverflowType> | undefined,
+): string {
+  return cn(
+    getResponsiveClassNames(overflow, (value) => `overflow-${value}`),
+    getResponsiveClassNames(overflowX, (value) => `overflow-x-${value}`),
+    getResponsiveClassNames(overflowY, (value) => `overflow-y-${value}`),
+  );
+}
 
 function valueAt<Value extends string | boolean>(
   value: ResponsiveValue<Value> | undefined,
@@ -33,8 +52,10 @@ export function getTextFlowClasses({
 }: {
   truncate: ResponsiveValue<boolean>;
   wrap: ResponsiveValue<keyof typeof textWrapClasses>;
-} &
-  Pick<LayoutProps, "overflow" | "overflowX" | "overflowY">) {
+  overflow?: ResponsiveValue<OverflowType>;
+  overflowX?: ResponsiveValue<OverflowType>;
+  overflowY?: ResponsiveValue<OverflowType>;
+}) {
   const hasTruncation = typeof truncate === "boolean"
     ? truncate
     : Object.values(truncate).includes(true);
@@ -44,7 +65,7 @@ export function getTextFlowClasses({
       hasTruncation,
       className: cn(
         getResponsiveClassNames(wrap, (value) => textWrapClasses[value]),
-        generateLayoutClassNames({ overflow, overflowX, overflowY }).layoutClassNameString,
+        overflowClasses(overflow, overflowX, overflowY),
       ),
     };
   }

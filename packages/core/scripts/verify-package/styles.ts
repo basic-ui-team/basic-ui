@@ -46,8 +46,9 @@ export async function phaseStylesheetSmoke() {
     "static palette variables resolve through the published chain",
     css.includes("--color-teal-700"),
   );
-  assert("responsive selector generated (sm:p-4)", css.includes(".sm\\:p-4"));
-  assert("digit-escaped responsive selector generated (2xl:p-4)", css.includes(".\\32 xl\\:p-4"));
+  assert("base spacing token resolves through the published chain", css.includes("--spacing:"));
+  assert("responsive selector generated (sm:flex-col)", css.includes(".sm\\:flex-col"));
+  assert("digit-escaped responsive selector generated (2xl:grid-cols-2)", css.includes(".\\32 xl\\:grid-cols-2"));
   assert(
     "component-authored focus ring generated (focus-visible:ring-2)",
     css.includes(".focus-visible\\:ring-2"),
