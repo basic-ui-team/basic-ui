@@ -16,7 +16,8 @@ import { Grid } from "@basic-ui/core";
 
 `Grid` renders a grid container and exposes the decisions that benefit from a typed, closable vocabulary: column and row counts, auto-placement, four alignment axes, and a set of named template presets. Gap, padding, and sizing are authored in `className` with Tailwind utilities.
 
-Every prop accepts a [responsive value](./Layout.md): a single value or an object of breakpoints.
+Each Grid layout prop accepts a single value or a responsive object. See
+[Layout](./Layout.md) for how responsive values resolve.
 
 ## API
 
@@ -24,7 +25,7 @@ Every prop accepts a [responsive value](./Layout.md): a single value or an objec
 | ---------------- | ----------------------------------------------------------------------------------------------------------- | ----------- | ------------------------------------------------------------------- |
 | `cols`           | `ResponsiveValue<1 \| 2 \| ... \| 12>`                                                                      | —           | Number of equal columns.                                            |
 | `rows`           | `ResponsiveValue<1 \| 2 \| ... \| 12>`                                                                      | —           | Number of equal rows.                                               |
-| `templatePreset` | `ResponsiveValue<"none" \| "sidebar" \| "hero" \| "masonry" \| "card-list" \| "symmetric" \| "asymmetric">` | —           | Named template. `"none"` restores the latest column and row counts. |
+| `templatePreset` | `ResponsiveValue<"none" \| "sidebar" \| "hero" \| "masonry" \| "card-list" \| "symmetric" \| "asymmetric">` | —           | Named template. `"none"` restores the latest column and row counts, or uses implicit tracks if counts were not set. |
 | `autoFlow`       | `ResponsiveValue<"row" \| "column" \| "dense">`                                                             | `"row"`     | How auto-placed items flow.                                         |
 | `autoRows`       | `ResponsiveValue<"min" \| "max" \| "fr" \| true>`                                                           | —           | Size of implicitly created rows (`true` maps to `auto`).            |
 | `autoCols`       | `ResponsiveValue<"min" \| "max" \| "fr" \| true>`                                                           | —           | Size of implicitly created columns.                                 |
@@ -35,7 +36,8 @@ Every prop accepts a [responsive value](./Layout.md): a single value or an objec
 
 `as` accepts `"div" | "section" | "article" | "main" | "aside" | "nav"`. `className`, `style`, and standard HTML props are forwarded; authored classes always win over the library's.
 
-Gap between items is `className="gap-4"` (or `gap-x-*` / `gap-y-*`), not a prop — see [Box](./Box.md) for the styling principle.
+Set spacing between items with Tailwind classes such as `gap-4`, `gap-x-*`,
+or `gap-y-*`; see [Layout](./Layout.md) for the styling approach.
 
 ## Examples
 
@@ -49,7 +51,7 @@ Gap between items is `className="gap-4"` (or `gap-x-*` / `gap-y-*`), not a prop 
 </Grid>
 ```
 
-Objects are mobile-first: omitted breakpoints inherit the last supplied value through the CSS cascade, with no viewport JavaScript and no rerender.
+See [Layout](./Layout.md) for how responsive breakpoint values are applied.
 
 ### Template preset
 

@@ -48,7 +48,9 @@ Tailwind; open-ended styling such as margins, gaps, and widths stays in
 
 ## Responsive layouts
 
-Flex and Grid props accept responsive values, for example:
+Flex and Grid layout props accept a single value or a responsive object.
+In responsive objects, later breakpoints inherit the last value supplied.
+For example:
 
 ```tsx
 <Flex direction={{ base: "column", md: "row" }} className="gap-2 md:gap-4">
@@ -57,7 +59,8 @@ Flex and Grid props accept responsive values, for example:
 ```
 
 Use Tailwind's responsive prefixes in `className`; Box uses these classes for
-responsive styling too. See Tailwind's
+responsive styling too. Responsive values resolve to breakpoint-prefixed
+classes for CSS to apply. See Tailwind's
 [responsive design](https://tailwindcss.com/docs/responsive-design) guide.
 
 ## Tailwind v4 references

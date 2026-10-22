@@ -15,7 +15,8 @@ import { Flex } from "@basic-ui/core";
 
 `Flex` renders a flex container and exposes the handful of flexbox decisions that benefit from a typed, closable vocabulary: direction, justification, alignment, wrapping, and display. Everything else — gap, padding, sizing — is authored in `className` with Tailwind utilities, because a prop for those would only shadow the class you can already write.
 
-Every prop accepts a [responsive value](./Layout.md): a single value or an object of breakpoints.
+Each Flex layout prop accepts a single value or a responsive object. See
+[Layout](./Layout.md) for how responsive values resolve.
 
 ## API
 
@@ -29,7 +30,8 @@ Every prop accepts a [responsive value](./Layout.md): a single value or an objec
 
 `as` accepts `"div" | "section" | "article" | "nav" | "header" | "footer"`. `className`, `style`, and standard HTML props are forwarded; authored classes always win over the library's.
 
-Spacing between items is `className="gap-4"` (or `gap-x-*` / `gap-y-*`), not a prop — see [Box](./Box.md) for the styling principle.
+Set spacing between items with Tailwind classes such as `gap-4`, `gap-x-*`,
+or `gap-y-*`; see [Layout](./Layout.md) for the styling approach.
 
 ## Examples
 
@@ -63,6 +65,6 @@ Spacing between items is `className="gap-4"` (or `gap-x-*` / `gap-y-*`), not a p
 </Flex>
 ```
 
-Objects are mobile-first: omitted breakpoints inherit the last supplied value through the CSS cascade, with no viewport JavaScript and no rerender.
+See [Layout](./Layout.md) for how responsive breakpoint values are applied.
 
 See the [Flex Storybook examples](../../packages/core/src/components/Flex/Flex.stories.tsx).

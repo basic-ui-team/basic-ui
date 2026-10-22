@@ -12,20 +12,15 @@ import { Box } from "@basic-ui/core";
 
 ## Overview
 
-`Box` is a thin, unopinionated shell. It renders the element you choose (via `as`), merges nothing, and styles nothing — all styling is authored in `className` with Tailwind utilities, exactly as you would write it anywhere else in your app. Use it for semantic structure and ad-hoc layout; reach for [Flex](./Flex.md) or [Grid](./Grid.md) when their typed props earn their place.
-
-`Box` carries no style props by design: a padding or margin prop would only shadow the Tailwind utility you can already write. The theme's base `--spacing` token makes every bare numeric utility resolve, including fractionals (`p-1.5`) and values beyond the common steps.
+`Box` is a thin, polymorphic wrapper: choose the rendered element with `as`, and author styling with Tailwind utilities in `className`. It adds no classes of its own and passes `className` through unchanged. The standard React `style` prop is also forwarded. Use Box for semantic structure and ad-hoc layout; use [Flex](./Flex.md) or [Grid](./Grid.md) when their focused layout props are useful.
 
 ## API
 
-| Prop        | Type              | Default   | Description                                                       |
-| ----------- | ----------------- | --------- | ----------------------------------------------------------------- |
-| `as`        | `ElementType`     | `"div"`   | The element to render. Any element is allowed.                    |
-| `children`  | `React.ReactNode` | —         | Content.                                                          |
-| `className` | `string`          | —         | Tailwind utilities, passed through verbatim.                      |
-| `style`     | `React.CSSProperties` | —    | Inline styles.                                                    |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `as` | `ElementType` | `"div"` | The element to render. Any element is allowed. |
 
-Standard HTML attributes and event handlers for the rendered element are accepted and forwarded.
+Standard HTML and React props—including `children`, `className`, `style`, and event handlers—are accepted and forwarded to the rendered element.
 
 ## Examples
 
