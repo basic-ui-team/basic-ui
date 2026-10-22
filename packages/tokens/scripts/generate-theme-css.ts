@@ -2,7 +2,6 @@ import { lightTheme } from "../src/themes/light";
 import { darkTheme } from "../src/themes/dark";
 import { resolveTheme } from "../src/runtime/resolveTheme";
 import { themeToCSSVariables } from "../src/serialization/themeToCSSVariables";
-import { DEFAULT_SPACING_SCALE } from "../src/scales/spacing";
 import {
   BRAND_PALETTE_FAMILIES,
   TAILWIND_PALETTE_FAMILIES,
@@ -63,11 +62,12 @@ function generateTheme() {
   });
 
   // Generate CSS string for light theme
-  // Tailwind's base spacing multiplier: bare numeric utilities outside the
-  // token scale (p-0.5, p-12, anything authored in className) resolve to
-  // calc(var(--spacing) * N); derived from the scale's base unit.
+  // Tailwind's base spacing multiplier, matching its default: every bare
+  // numeric utility (p-2, p-0.5, p-12, anything authored in className)
+  // resolves to calc(var(--spacing) * N). The design system adopts
+  // Tailwind's linear scale rather than maintaining a custom one.
   const lightCSS = [
-    `  --spacing: ${DEFAULT_SPACING_SCALE.base}${DEFAULT_SPACING_SCALE.unit};`,
+    `  --spacing: 0.25rem;`,
     ...Object.entries(resolvedLightProps).map(([key, value]) => `  ${key}: ${value};`),
   ].join("\n");
 

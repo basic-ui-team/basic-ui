@@ -22,24 +22,6 @@ type SemanticState =
   | "inverted"
   | "skeleton";
 
-/** Numeric spacing scale positions. */
-export type SpacingStep = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
-export type SpacingStepToken = `${SpacingStep}`;
-export type ResolvedSpacingScale = Partial<Record<SpacingStepToken, string>>;
-export type SpacingScaleUnit = "px" | "rem";
-export type SpacingScaleRounding = "whole" | "up" | "down";
-
-export interface SpacingScaleConfig {
-  /** The first non-zero spacing value before the scale ratio is applied. */
-  base: number;
-  /** The multiplicative ratio between consecutive non-zero steps. */
-  ratio: number;
-  /** Number of available positions, including the zero step. */
-  steps: number;
-  unit: SpacingScaleUnit;
-  rounding: SpacingScaleRounding;
-  overrides?: Partial<Record<SpacingStepToken, string>>;
-}
 
 /** Border radius: from sharp (0px) to full (9999px) */
 export type RadiusToken = "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "full";
@@ -113,7 +95,6 @@ export type SemanticColors = {
  */
 export default interface ThemeConfig {
   color?: Partial<RampColors> & Partial<SemanticColors> & { white?: string; black?: string }; // Include base colors
-  spacing?: SpacingScaleConfig;
   radius?: Partial<Record<RadiusToken, string>>;
   shadow?: Partial<Record<ShadowToken, string>>;
   fontSize?: Partial<Record<FontSizeTokens, string>>;
@@ -129,9 +110,7 @@ export default interface ThemeConfig {
   opacity?: Partial<Record<OpacityTokens, string | number>>;
 }
 
-export interface ResolvedTheme extends Omit<ThemeConfig, "spacing"> {
-  spacing: ResolvedSpacingScale;
-}
+export type ResolvedTheme = ThemeConfig;
 
 export type DeepPartial<T> = T extends object
   ? { [Key in keyof T]?: DeepPartial<T[Key]> }

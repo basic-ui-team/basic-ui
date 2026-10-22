@@ -2,10 +2,6 @@
 export type {
   RampColors,
   SemanticColors,
-  SpacingScaleConfig,
-  SpacingScaleRounding,
-  SpacingScaleUnit,
-  SpacingStep,
   ThemeOverride,
   RadiusToken,
   ShadowToken,
@@ -32,7 +28,6 @@ export { mergeTheme } from "./runtime/mergeTheme";
 // Theme presets and scale defaults
 export { lightTheme } from "./themes/light";
 export { darkTheme } from "./themes/dark";
-export { DEFAULT_SPACING_SCALE } from "./scales/spacing";
 
 // Palette registry
 export {

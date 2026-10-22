@@ -1,8 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { mergeTheme } from "./mergeTheme";
-import { resolveTheme } from "./resolveTheme";
 import type ThemeConfig from "../types";
-import { DEFAULT_SPACING_SCALE } from "../scales/spacing";
 
 const baseTheme: ThemeConfig = {
   color: {
@@ -10,7 +8,6 @@ const baseTheme: ThemeConfig = {
     primary: { 50: "hsl(119 43% 52%)" },
     fg: { base: "hsl(210 10% 18%)" },
   },
-  spacing: DEFAULT_SPACING_SCALE,
   radius: { md: "0.375rem", sm: "0.25rem" },
   shadow: { s2: "0 1px 2px 0 rgb(0 0 0 / 0.05)" },
   fontSize: { md: "1rem", sm: "0.875rem" },
@@ -59,46 +56,23 @@ describe("mergeTheme", () => {
     }
   });
 
-  it("merges spacing scale overrides and resolves them once", () => {
-    const result = mergeTheme(baseTheme, {
-      spacing: { overrides: { "5": "1.5rem" } },
-    });
-
-    expect(result.spacing["1"]).toBe("4px");
-    expect(result.spacing["5"]).toBe("1.5rem");
-  });
-
-  it("resolves partial spacing overrides against the default scale when the base omits spacing", () => {
-    const result = mergeTheme({}, {
-      spacing: { overrides: { "5": "1rem" } },
-    });
-
-    expect(result.spacing["1"]).toBe("4px");
-    expect(result.spacing["5"]).toBe("1rem");
-    expect(result.spacing["9"]).toBe("64px");
-  });
-
   it("handles empty override", () => {
     const result = mergeTheme(baseTheme, {});
     expect(result.color).toEqual(baseTheme.color);
-    expect(result.spacing["1"]).toBe("4px");
   });
 
   it("preserves base values across multiple categories", () => {
     const result = mergeTheme(baseTheme, { color: { primary: { 50: "#FF0000" } } });
-    expect(result.spacing).toEqual(resolveTheme({}).spacing);
     expect(result.radius).toEqual(baseTheme.radius);
   });
 
   it("merges multiple categories simultaneously", () => {
     const override = {
       color: { primary: { 50: "#0066FF" } },
-      spacing: { overrides: { "5": "2rem" } },
       fontSize: { md: "1.125rem" },
     };
     const result = mergeTheme(baseTheme, override);
     expect(result.color?.primary?.[50]).toBe("#0066FF");
-    expect(result.spacing["5"]).toBe("2rem");
     expect(result.fontSize?.md).toBe("1.125rem");
   });
 

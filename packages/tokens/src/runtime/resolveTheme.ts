@@ -1,20 +1,11 @@
 import type ThemeConfig from "../types";
 import type { ResolvedTheme } from "../types";
-import { DEFAULT_SPACING_SCALE, resolveSpacingScale } from "../scales/spacing";
 
+/**
+ * Resolve a theme configuration into its final form. The custom spacing
+ * scale was removed in favor of Tailwind's native linear spacing (`--spacing`
+ * multiplier), so resolution is an identity pass kept for API stability.
+ */
 export function resolveTheme(theme: ThemeConfig): ResolvedTheme {
-  const spacingConfig = {
-    ...DEFAULT_SPACING_SCALE,
-    ...theme.spacing,
-    overrides: {
-      ...DEFAULT_SPACING_SCALE.overrides,
-      ...theme.spacing?.overrides,
-    },
-  };
-  const spacingScale = resolveSpacingScale(spacingConfig);
-
-  return {
-    ...theme,
-    spacing: spacingScale,
-  } as ResolvedTheme;
+  return theme as ResolvedTheme;
 }

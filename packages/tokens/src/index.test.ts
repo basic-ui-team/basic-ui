@@ -5,7 +5,6 @@ describe("@basic-ui/tokens public API", () => {
   it("exports only theme authoring values", () => {
     expect(Object.keys(tokens).sort()).toEqual([
       "BRAND_PALETTE_FAMILIES",
-      "DEFAULT_SPACING_SCALE",
       "PALETTE_FAMILIES",
       "TAILWIND_PALETTE_FAMILIES",
       "createTheme",

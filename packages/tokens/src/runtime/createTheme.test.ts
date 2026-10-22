@@ -47,8 +47,6 @@ describe("createTheme", () => {
           } else {
             varName = `--color-${key}`;
           }
-        } else if (category === "spacing") {
-          varName = `--spacing-${key}`;
         } else if (category === "radius") {
           varName = `--radius-${key}`;
         } else if (category === "fontSize") {
@@ -76,16 +74,6 @@ describe("createTheme", () => {
       expect(mockRoot.style.setProperty).toHaveBeenCalledWith("--radius-md", "0.5rem");
     });
 
-    it("resolves and injects spacing scale overrides", () => {
-      createTheme({
-        light: {
-          spacing: { overrides: { "5": "1.5rem", "6": "3rem" } },
-        },
-      });
-
-      expect(mockRoot.style.setProperty).toHaveBeenCalledWith("--spacing-5", "1.5rem");
-      expect(mockRoot.style.setProperty).toHaveBeenCalledWith("--spacing-6", "3rem");
-    });
   });
 
   describe("dark theme injection", () => {
