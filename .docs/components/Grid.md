@@ -20,18 +20,18 @@ Every prop accepts a [responsive value](./Layout.md): a single value or an objec
 
 ## API
 
-| Prop             | Type                                                                                             | Default  | Description                                                       |
-| ---------------- | ------------------------------------------------------------------------------------------------ | -------- | ----------------------------------------------------------------- |
-| `cols`           | `ResponsiveValue<1 \| 2 \| ... \| 12>`                                                          | —        | Number of equal columns.                                          |
-| `rows`           | `ResponsiveValue<1 \| 2 \| ... \| 12>`                                                          | —        | Number of equal rows.                                             |
-| `templatePreset` | `ResponsiveValue<"none" \| "sidebar" \| "hero" \| "masonry" \| "card-list" \| "symmetric" \| "asymmetric">` | — | Named template. `"none"` restores the latest column and row counts. |
-| `autoFlow`       | `ResponsiveValue<"row" \| "column" \| "dense">`                                                  | `"row"`  | How auto-placed items flow.                                       |
-| `autoRows`       | `ResponsiveValue<"min" \| "max" \| "fr" \| true>`                                               | —        | Size of implicitly created rows (`true` maps to `auto`).           |
-| `autoCols`       | `ResponsiveValue<"min" \| "max" \| "fr" \| true>`                                                | —        | Size of implicitly created columns.                               |
-| `alignItems`     | `ResponsiveValue<"start" \| "end" \| "center" \| "stretch">`                                     | `"stretch"` | Item alignment along the block axis.                           |
-| `justifyItems`   | `ResponsiveValue<"start" \| "end" \| "center" \| "stretch">`                                     | `"stretch"` | Item alignment along the inline axis.                          |
-| `alignContent`   | `ResponsiveValue<"start" \| "end" \| "center" \| "stretch" \| "between" \| "around" \| "evenly">` | `"stretch"` | Track-group alignment along the block axis.      |
-| `justifyContent` | `ResponsiveValue<"start" \| "end" \| "center" \| "stretch" \| "between" \| "around" \| "evenly">` | `"start"` | Track-group alignment along the inline axis.      |
+| Prop             | Type                                                                                                        | Default     | Description                                                         |
+| ---------------- | ----------------------------------------------------------------------------------------------------------- | ----------- | ------------------------------------------------------------------- |
+| `cols`           | `ResponsiveValue<1 \| 2 \| ... \| 12>`                                                                      | —           | Number of equal columns.                                            |
+| `rows`           | `ResponsiveValue<1 \| 2 \| ... \| 12>`                                                                      | —           | Number of equal rows.                                               |
+| `templatePreset` | `ResponsiveValue<"none" \| "sidebar" \| "hero" \| "masonry" \| "card-list" \| "symmetric" \| "asymmetric">` | —           | Named template. `"none"` restores the latest column and row counts. |
+| `autoFlow`       | `ResponsiveValue<"row" \| "column" \| "dense">`                                                             | `"row"`     | How auto-placed items flow.                                         |
+| `autoRows`       | `ResponsiveValue<"min" \| "max" \| "fr" \| true>`                                                           | —           | Size of implicitly created rows (`true` maps to `auto`).            |
+| `autoCols`       | `ResponsiveValue<"min" \| "max" \| "fr" \| true>`                                                           | —           | Size of implicitly created columns.                                 |
+| `alignItems`     | `ResponsiveValue<"start" \| "end" \| "center" \| "stretch">`                                                | `"stretch"` | Item alignment along the block axis.                                |
+| `justifyItems`   | `ResponsiveValue<"start" \| "end" \| "center" \| "stretch">`                                                | `"stretch"` | Item alignment along the inline axis.                               |
+| `alignContent`   | `ResponsiveValue<"start" \| "end" \| "center" \| "stretch" \| "between" \| "around" \| "evenly">`           | `"stretch"` | Track-group alignment along the block axis.                         |
+| `justifyContent` | `ResponsiveValue<"start" \| "end" \| "center" \| "stretch" \| "between" \| "around" \| "evenly">`           | `"start"`   | Track-group alignment along the inline axis.                        |
 
 `as` accepts `"div" | "section" | "article" | "main" | "aside" | "nav"`. `className`, `style`, and standard HTML props are forwarded; authored classes always win over the library's.
 
