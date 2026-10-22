@@ -29,6 +29,7 @@ export default defineConfig({
     alias: {
       "@basic-ui/icons": path.resolve(__dirname, "../icons/src"),
       "@basic-ui/react-utilities": path.resolve(__dirname, "../react-utilities/src"),
+      "@basic-ui/tokens": path.resolve(__dirname, "../tokens/src"),
     },
   },
   test: {
