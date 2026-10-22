@@ -1,5 +1,4 @@
 import { CommonProps, ResponsiveValue, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
-import { LayoutProps } from "../../lib";
 import { PaletteColor } from "../../lib/colorRecipes/colorRecipes";
 
 export type SpinnerColor = "default" | "muted" | PaletteColor;
@@ -8,8 +7,7 @@ export type SpinnerSizes = "xs" | "sm" | "md" | "lg" | "xl";
 export type AllowedSpinnerElements = "div" | "span";
 
 export interface SpinnerOwnProps
-  extends CommonProps,
-    Pick<LayoutProps, "m" | "mx" | "my" | "mb" | "ml" | "mr" | "mt"> {
+  extends CommonProps {
   /** Size of the spinner. @default "md" */
   size?: ResponsiveValue<SpinnerSizes>;
 

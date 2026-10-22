@@ -71,7 +71,7 @@ export const Colors: Story = {
   args: { ...Default.args, currentPage: 3 },
   render: (args) => {
     return (
-      <Flex direction="column" align="center" gap={3}>
+      <Flex direction="column" align="center" className="gap-3">
         {(["teal", "violet", "rose", "amber"] as const).map((color) => (
           <TablePagination key={color} {...args} color={color} />
         ))}
@@ -87,7 +87,7 @@ export const PaginationShapes: Story = {
   },
   render: (args) => {
     return (
-      <Flex direction="column" align="center" gap={3}>
+      <Flex direction="column" align="center" className="gap-3">
         <TablePagination {...args} shape="rounded" />
         <TablePagination {...args} shape="square" />
         <TablePagination {...args} shape="circular" />
@@ -113,7 +113,7 @@ export const SiblingBoundaryButtons: Story = {
   },
   render: (args) => {
     return (
-      <Flex direction="column" align="center" gap={4}>
+      <Flex direction="column" align="center" className="gap-4">
         <Text>maxSiblingButtons=1, maxBoundaryButtons=2</Text>
         <TablePagination {...args} maxSiblingButtons={1} maxBoundaryButtons={2} />
         <Text>maxSiblingButtons=3, maxBoundaryButtons=0</Text>
@@ -157,8 +157,8 @@ export const Controlled: Story = {
   render: (args) => {
     const [currentPage, setCurrentPage] = useState(1);
     return (
-      <Flex direction="column" align="center" gap={3}>
-        <Flex gap={3}>
+      <Flex direction="column" align="center" className="gap-3">
+        <Flex className="gap-3">
           <button
             className="px-3 py-2 bg-primary-500 rounded-md border-foreground-primary border-2"
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}

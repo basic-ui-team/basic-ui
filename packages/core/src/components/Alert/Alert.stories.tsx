@@ -45,7 +45,7 @@ export const Description: Story = {
 
 export const Severity: Story = {
   render: () => (
-    <Flex direction="column" gap={3} className="max-w-full">
+    <Flex direction="column" className="gap-3 max-w-full">
       {(Object.keys(messages) as Array<keyof typeof messages>).map((severity) => (
         <Alert key={severity} severity={severity} title={severity}>
           {messages[severity]}
@@ -57,7 +57,7 @@ export const Severity: Story = {
 
 export const Variants: Story = {
   render: () => (
-    <Flex direction="column" gap={3} className="max-w-full">
+    <Flex direction="column" className="gap-3 max-w-full">
       <Alert severity="info" variant="subtle" title="Subtle">
         A lightly tinted surface.
       </Alert>
@@ -73,7 +73,7 @@ export const Variants: Story = {
 
 export const Color: Story = {
   render: () => (
-    <Flex direction="column" gap={3} className="max-w-full">
+    <Flex direction="column" className="gap-3 max-w-full">
       {(["teal", "violet", "rose"] as const).map((color) => (
         <Alert key={color} severity="info" color={color} title={color}>
           The severity keeps the role and icon; the family sets the colors.
@@ -131,7 +131,7 @@ export const Controlled: Story = {
     const [open, setOpen] = useState(true);
 
     return (
-      <Flex direction="column" gap={3} className="max-w-full">
+      <Flex direction="column" className="gap-3 max-w-full">
         <Button variant="outline" color="primary" size="sm" onClick={() => setOpen(true)}>
           Show alert
         </Button>

@@ -4,7 +4,7 @@ import { resolveTheme } from "../runtime/resolveTheme";
 import type ThemeConfig from "../types";
 
 const serializeTheme = (theme: ThemeConfig) =>
-  themeToCSSVariables({ ...resolveTheme(theme), spacing: {} });
+  themeToCSSVariables(resolveTheme(theme));
 
 describe("themeToCSSVariables", () => {
   it("flattens a single category with correct CSS variable prefix", () => {
@@ -82,7 +82,7 @@ describe("themeToCSSVariables", () => {
   it("returns empty object for empty theme", () => {
     const result = themeToCSSVariables(resolveTheme({}));
 
-    expect(result.customProperties).toHaveProperty("--spacing-0", "0px");
+    expect(result.customProperties).toEqual({});
   });
 
   it("handles multi-word token keys correctly", () => {
@@ -106,14 +106,13 @@ describe("themeToCSSVariables", () => {
       const theme: ThemeConfig = {
         color: { primary: { "500": "#FF0000" } },
       };
-      const resolvedTheme = { ...resolveTheme(theme), spacing: {} };
+      const resolvedTheme = resolveTheme(theme);
 
       const first = themeToCSSVariables(resolvedTheme);
 
       // tokens mirror should contain compact token names
       expect(first.tokens).toEqual({
         color: { primary: { "500": "primary-500" } },
-        spacing: {},
       });
 
       // second call with the same object should return the cached object (same reference)

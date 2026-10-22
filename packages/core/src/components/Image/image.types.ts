@@ -1,7 +1,6 @@
 import { ImgHTMLAttributes } from "react";
 import { CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities"; // Your existing types
 import { ResponsiveValue } from "@basic-ui/react-utilities";
-import { LayoutProps } from "../../lib";
 
 export type ObjectFitType = "cover" | "contain" | "fill" | "none" | "scale-down";
 
@@ -9,8 +8,7 @@ export type AspectRatioType = "square" | "video" | "landscape" | "portrait" | "a
 
 export interface ImageOwnProps
   extends Omit<ImgHTMLAttributes<HTMLImageElement>, "width" | "height" | "src" | "alt">,
-    CommonProps,
-    LayoutProps {
+    CommonProps {
   /** The source URL of the image. */
   src: string;
   /** Alt text for accessibility. */

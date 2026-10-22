@@ -11,14 +11,13 @@ import tokensPackage from "../../tokens/package.json";
 import { BREAKPOINT_ORDER } from "../../react-utilities/src/hooks/useResponsive/constants";
 import {
   createResponsiveUtilitySource,
+  responsiveUtilityFamilies,
   responsiveUtilities,
 } from "../src/lib/responsive-utilities";
 import { toggleSizeClasses, toggleThumbGeometryVariants } from "../src/components/Toggle/toggle.variants";
-import { badgeGeometryVariants } from "../src/components/Badge/badge.variants";
 import { gridVariants } from "../src/components/Grid/grid.variants";
+import { flexVariants } from "../src/components/Flex/flex.variants";
 import { dividerThicknessClasses } from "../src/components/Divider/divider.variants";
-import { spacingSteps } from "../src/lib/layout.types";
-import { generateLayoutClassNames } from "../src/lib/layout-utils";
 import { iconSizeClasses } from "../src/components/Icon/icon.variants";
 import { spinnerSizeClasses } from "../src/components/Spinner/spinner.variants";
 import { buttonSizeClasses } from "../src/components/Button/button.variants";
@@ -33,9 +32,6 @@ import {
   cardImageObjectFitClasses,
   cardImageAspectRatioClasses,
 } from "../src/components/Card/card.variants";
-import { flexVariants } from "../src/components/Flex/flex.variants";
-import layoutVariants from "../src/lib/layout.variants";
-import { SizingValues } from "../src/lib/layout.types";
 import { getTextFlowClasses, textWrapClasses } from "../src/lib/text-flow";
 
 const coreRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -73,6 +69,8 @@ beforeAll(() => {
   });
   stageStyles(tokensPackage, resolve(coreRoot, "../tokens"), {
     "src/generated/styles/theme.css": tokensPackage.exports["./styles/theme.css"],
+    "src/generated/styles/palette-static.css":
+      tokensPackage.exports["./styles/palette-static.css"],
   });
   generatedPath = join(
     directory,
@@ -94,7 +92,7 @@ async function compileFixture(generatedSource?: string, theme = "") {
   const require = createRequire(join(directory, "package.json"));
   const compiler = await compile(`${fixture}\n${theme}`, {
     base: directory,
-    loadStylesheet: async (id, base) => {
+    loadStylesheet: async (id: string, base: string) => {
       const path = require.resolve(id === "tailwindcss" ? "tailwindcss/index.css" : id, {
         paths: [base, coreRoot],
       });
@@ -110,7 +108,18 @@ async function compileFixture(generatedSource?: string, theme = "") {
   });
 
   expect(compiler.root).toBe("none");
-  expect(compiler.sources).toEqual([]);
+  // Automatic detection is off; the only registered source is the package's
+  // self-registration (`@source "./"` in the shipped stylesheet), pointing at
+  // the package dist for consumer builds to scan. Component-authored literal
+  // coverage is asserted by verify-package's consumer build, not here — this
+  // file verifies the responsive safelist vocabulary.
+  expect(compiler.sources).toEqual([
+    {
+      base: join(directory, "node_modules", "@basic-ui", "core", "dist"),
+      pattern: "./",
+      negated: false,
+    },
+  ]);
   return compiler.build([]);
 }
 
@@ -155,21 +164,9 @@ describe("responsive utilities through the public CSS entry", () => {
     expectUtilityCoverage(css, Object.values(iconSizeClasses));
   });
 
-  it("covers every layout axis and Flex composition without scalar recipes", async () => {
+  it("covers every responsive Flex and Grid prop family", async () => {
+    const css = await compileFixture();
     const classes = [
-      ...spacingSteps.flatMap((step) =>
-        (["p", "px", "py", "pt", "pr", "pb", "pl", "m", "mx", "my", "mt", "mr", "mb", "ml", "gap"] as const)
-          .map((prop) => layoutVariants({ [prop]: step }))),
-      ...SizingValues.flatMap((value) =>
-        (["h", "hMin", "w", "wMin"] as const).map((prop) => layoutVariants({ [prop]: value }))),
-      ...(["none", "full", "screen", "min", "max", "fit"] as const)
-        .map((value) => layoutVariants({ hMax: value, wMax: value })),
-      ...(["visible", "hidden", "auto", "scroll"] as const)
-        .map((value) => layoutVariants({ overflow: value, overflowX: value, overflowY: value })),
-      ...(["static", "relative", "absolute", "fixed", "sticky"] as const)
-        .map((position) => layoutVariants({ position })),
-      ...(["block", "inline", "inline-block", "none"] as const)
-        .map((display) => layoutVariants({ display })),
       ...(["row", "column", "row-reverse", "column-reverse"] as const)
         .map((direction) => flexVariants({ direction })),
       ...(["nowrap", "wrap", "reverse"] as const).map((wrap) => flexVariants({ wrap })),
@@ -177,53 +174,8 @@ describe("responsive utilities through the public CSS entry", () => {
         .map((value) => flexVariants({ justify: value, align: value })),
       ...(["between", "around", "evenly"] as const).map((justify) => flexVariants({ justify })),
       flexVariants({ display: "flex" }), flexVariants({ display: "inline-flex" }),
-    ];
-    expectUtilityCoverage(await compileFixture(), classes);
-  });
-
-  it("covers actual text-flow truncation and restoration output", async () => {
-    const { className } = getTextFlowClasses({
-      truncate: { base: true, md: false, lg: true, xl: false },
-      wrap: { base: "pretty", xl: "nowrap" },
-      overflowX: { base: "auto", md: "scroll" },
-      overflowY: { base: "hidden", xl: "visible" },
-    });
-    const css = await compileFixture();
-    for (const candidate of className.split(/\s+/)) {
-      const escaped = candidate.replace(/[^a-zA-Z0-9_-]/g, "\\$&");
-      expect(css, `Missing CSS for ${candidate}`).toContain(`.${escaped} {`);
-    }
-  });
-
-  it("compiles concrete layout resets including maximum dimensions", async () => {
-    const css = await compileFixture();
-    const { layoutClassNameString } = generateLayoutClassNames({
-      p: { base: 4, md: 0 },
-      h: { base: "full", md: "auto" },
-      hMax: { base: "screen", md: "none" },
-      wMax: { base: "none", md: "full", lg: "none" },
-      overflow: { base: "hidden", md: "visible" },
-    });
-    for (const candidate of layoutClassNameString.split(/\s+/)) {
-      const escaped = candidate.replace(/[^a-zA-Z0-9_-]/g, "\\$&");
-      expect(css, `Missing CSS for ${candidate}`).toContain(`.${escaped} {`);
-    }
-    expect(css).toContain("max-height: none");
-    expect(css).toContain("max-width: none");
-    expect(css).not.toContain("max-h-auto");
-    expect(css).not.toContain("max-w-auto");
-  });
-
-  it("covers Grid presets, axis gaps, and directional Divider thickness", async () => {
-    const css = await compileFixture();
-    const classes = [
       ...(["none", "sidebar", "hero", "masonry", "card-list", "symmetric", "asymmetric"] as const)
         .map((templatePreset) => gridVariants({ templatePreset })),
-      ...spacingSteps.map((step) => gridVariants({
-        gap: step,
-        rowGap: step,
-        columnGap: step,
-      })),
       ...([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const)
         .map((count) => gridVariants({ cols: count, rows: count })),
       ...(["row", "column", "dense"] as const).map((autoFlow) => gridVariants({ autoFlow })),
@@ -240,12 +192,17 @@ describe("responsive utilities through the public CSS entry", () => {
     expectUtilityCoverage(css, classes);
   });
 
-  it("covers count and dot Badge geometry at every breakpoint", async () => {
+  it("covers actual text-flow truncation and restoration output", async () => {
+    const { className } = getTextFlowClasses({
+      truncate: { base: true, md: false, lg: true, xl: false },
+      wrap: { base: "pretty", xl: "nowrap" },
+      overflowX: { base: "auto", md: "scroll" },
+      overflowY: { base: "hidden", xl: "visible" },
+    });
     const css = await compileFixture();
-    for (const variant of ["count", "dot"] as const) {
-      for (const size of ["sm", "md", "lg"] as const) {
-        expectUtilityCoverage(css, [badgeGeometryVariants({ variant, size })]);
-      }
+    for (const candidate of className.split(/\s+/)) {
+      const escaped = candidate.replace(/[^a-zA-Z0-9_-]/g, "\\$&");
+      expect(css, `Missing CSS for ${candidate}`).toContain(`.${escaped} {`);
     }
   });
 
@@ -272,9 +229,10 @@ describe("responsive utilities through the public CSS entry", () => {
       }
     }
     expect(css).toContain("@media (width >= 768px)");
-    expect(css).toContain("border-width: 9px");
     expect(css).toContain("grid-template-columns: repeat(12, minmax(0, 1fr))");
-    for (const excluded of ["bg-red-500", "font-bold", "shadow-s1", "animate-spin"]) {
+    // Spacing and sizing are className concerns since the layout props were
+    // removed; their utilities must not be safelisted.
+    for (const excluded of ["bg-red-500", "font-bold", "shadow-s1", "animate-spin", "p-4", "gap-4", "h-full"]) {
       expect(css).not.toContain(`.md\\:${excluded} {`);
     }
 
@@ -288,6 +246,7 @@ describe("responsive utilities through the public CSS entry", () => {
   it("preserves explicitly supplied modifiers, quoted selectors, and arbitrary values", async () => {
     const utilities = [
       "h-4",
+      "p-0.5",
       "dark:h-5",
       "content-['saved']",
       'data-[state="checked"]:w-5',
@@ -303,6 +262,10 @@ describe("responsive utilities through the public CSS entry", () => {
     }
     expect(css).toContain("@media (width >= 768px)");
     expect(css).not.toContain(".md\\:flex-row");
+    // Fractionals are a className concern, not a prop: the theme's base
+    // --spacing token makes them resolve through Tailwind's calc fallback.
+    expect(css).toContain("calc(var(--spacing) * 0.5)");
+    expect(css).toContain("--spacing: 0.25rem");
   });
 });
 
@@ -345,5 +308,13 @@ describe("color recipe utilities in the public CSS entry", () => {
     expect(css).not.toContain(".bg-teal-700");
     expect(css).not.toContain(".bg-violet-700");
     expect(css).not.toContain(".text-rose-600");
+  });
+});
+
+describe("families match their component sources", () => {
+  it("keeps the vocabulary equal to the union of its families", () => {
+    expect(responsiveUtilities).toEqual([
+      ...new Set(Object.values(responsiveUtilityFamilies).flat()),
+    ]);
   });
 });

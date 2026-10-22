@@ -25,36 +25,10 @@ export type ColorShade =
 
 export type PaletteColorValue = ColorShade | "white" | "black";
 
-/** Palette color families with a full shade ramp available as CSS variables. */
-export const PALETTE_FAMILIES = [
-  "red",
-  "orange",
-  "amber",
-  "yellow",
-  "lime",
-  "green",
-  "emerald",
-  "teal",
-  "cyan",
-  "sky",
-  "blue",
-  "indigo",
-  "violet",
-  "purple",
-  "fuchsia",
-  "pink",
-  "rose",
-  "slate",
-  "gray",
-  "zinc",
-  "neutral",
-  "stone",
-  // Brand families defined by the basic-ui generated theme.
-  "primary",
-  "secondary",
-] as const;
-
-export type PaletteColor = (typeof PALETTE_FAMILIES)[number];
+/** The palette registry lives in @basic-ui/tokens; recipes consume it from there. */
+import { PALETTE_FAMILIES, type PaletteColor } from "@basic-ui/tokens";
+export { PALETTE_FAMILIES } from "@basic-ui/tokens";
+export type { PaletteColor } from "@basic-ui/tokens";
 
 export type ColorRecipeChannel = "bg" | "text" | "border";
 

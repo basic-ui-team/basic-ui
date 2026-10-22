@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { axe } from "jest-axe";
 import { act, fireEvent } from "@testing-library/react";
+import type { ReactElement } from "react";
 import { renderWithProviders, screen } from "../../test-utils";
 import { Tooltip } from "./Tooltip";
 
@@ -26,6 +27,21 @@ describe("Tooltip", () => {
       </Tooltip>,
     );
     expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+  });
+
+  it("renders a non-element child without crashing and warns in development", () => {
+    const spy = vi.spyOn(console, "warn").mockImplementation(() => {});
+    const notAnElement = "plain text" as unknown as ReactElement;
+    renderWithProviders(
+      <Tooltip label="Helpful hint">
+        {notAnElement}
+      </Tooltip>,
+    );
+    expect(screen.getByText("plain text")).toBeInTheDocument();
+    expect(spy).toHaveBeenCalledWith(
+      "Tooltip requires a single React element as its child; the tooltip will not be announced for this trigger.",
+    );
+    spy.mockRestore();
   });
 
   it("opens after the default delay on hover and wires aria-describedby", () => {

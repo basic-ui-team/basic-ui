@@ -12,7 +12,8 @@
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
-    "./styles/theme.css": "./dist/generated/styles/theme.css"
+    "./styles/theme.css": "./dist/generated/styles/theme.css",
+    "./styles/palette-static.css": "./dist/generated/styles/palette-static.css"
   },
   "files": [
     "dist"
@@ -29,6 +30,7 @@
   "devDependencies": {
     "tsx": "^4.21.0",
     "typescript": "^5.9.0",
+    "tailwindcss": "^4.2.2",
     "vite": "^6.1.0",
     "vitest": "^4.1.1"
   }

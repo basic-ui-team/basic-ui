@@ -159,17 +159,17 @@ describe("Icon", () => {
       expect(span).toHaveClass("w-5", "h-5", "hover:opacity-75");
     });
 
-    it("should apply layout props to its existing wrapper", () => {
-      const { container } = render(<Icon icon={<TestIcon />} p={2} m={3} />);
+    it("should apply classes to its existing wrapper", () => {
+      const { container } = render(<Icon icon={<TestIcon />} className="p-2 m-3" />);
       const span = container.querySelector("span");
 
       expect(span).toHaveClass("p-2", "m-3");
       expect(container.querySelectorAll("span")).toHaveLength(1);
     });
 
-    it("should resolve responsive layout props on its existing wrapper", () => {
+    it("should apply authored responsive classes to its existing wrapper", () => {
       const { container } = render(
-        <Icon icon={<TestIcon />} p={{ base: 1, md: 4 }} />,
+        <Icon icon={<TestIcon />} className="p-1 md:p-4" />,
       );
       const span = container.querySelector("span");
 

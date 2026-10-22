@@ -67,15 +67,14 @@ describe("Flex", () => {
       const { container } = renderWithProviders(
         <Flex
           direction={{ base: "column", md: "row" }}
-          p={2}
-          className="flex-row md:flex-col p-4"
+          className="flex-row md:flex-col"
         >
           Test
         </Flex>,
       );
 
-      expect(container.firstChild).toHaveClass("flex-row", "md:flex-col", "p-4");
-      expect(container.firstChild).not.toHaveClass("flex-col", "md:flex-row", "p-2");
+      expect(container.firstChild).toHaveClass("flex-row", "md:flex-col");
+      expect(container.firstChild).not.toHaveClass("flex-col", "md:flex-row");
     });
 
     it("applies direction classes", () => {
@@ -101,18 +100,6 @@ describe("Flex", () => {
     it("applies display classes", () => {
       const { container } = renderWithProviders(<Flex display="inline-flex">Test</Flex>);
       expect(container.firstChild).toHaveClass("inline-flex");
-    });
-
-    it("uses Box layout classes for gap and padding", () => {
-      const { container } = renderWithProviders(
-        <Flex gap={{ base: 3, md: 4 }} p={2}>
-          Test
-        </Flex>,
-      );
-      expect(container.firstChild).toHaveClass("gap-3");
-      expect(container.firstChild).toHaveClass("md:gap-4");
-      expect(container.firstChild).toHaveClass("p-2");
-      expect(container.firstChild).not.toHaveAttribute("gap");
     });
 
     it("emits static responsive variant classes", () => {

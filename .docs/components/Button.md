@@ -15,7 +15,7 @@ import { Button } from "@basic-ui/core";
 The `Button` component is designed for consistent, accessible user interactions across your application. It supports:
 
 - Multiple visual variants (solid, ghost, outline, link)
-- Semantic color schemes (primary, secondary, error, success, warning, info, etc.)
+- Palette color families (e.g. `primary`, `secondary`, `teal`, `rose`) from the theme
 - Responsive sizing (sm, md, lg)
 - Loading states with optional custom icons and text
 - Disabled states with proper accessibility
@@ -35,11 +35,11 @@ The `Button` component is designed for consistent, accessible user interactions 
   Ghost Button
 </Button>
 
-<Button variant="outline" color="error">
+<Button variant="outline" color="rose">
   Outline Button
 </Button>
 
-<Button variant="link" color="info">
+<Button variant="link" color="sky">
   Link Button
 </Button>
 ```
@@ -121,7 +121,7 @@ const handleClick = () => {
 | Prop | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
 | `variant` | `'solid' \| 'ghost' \| 'outline' \| 'link'` | `'solid'` | Visual style variant of the button |
-| `color` | `'default' \| 'muted' \| 'primary' \| 'secondary' \| 'error' \| 'success' \| 'warning' \| 'info'` | `'default'` | Semantic color scheme |
+| `color` | `PaletteColor` | `'red'` | Any palette family: Tailwind's (e.g. `'teal'`, `'rose'`) or the brand ramps (`'primary'`, `'secondary'`) |
 | `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Button size (responsive values supported) |
 | `disabled` | `boolean` | `false` | Disables the button and applies disabled styles |
 | `loading` | `boolean` | `false` | Marks the button busy and disables interaction |

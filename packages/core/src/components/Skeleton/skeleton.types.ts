@@ -1,12 +1,10 @@
 import { CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
-import { LayoutProps } from "../../lib";
 
 export type AllowedSkeletonComponent = "div" | "span";
 export type SkeletonVariant = "text" | "rectangular" | "circular";
 
 export interface SkeletonOwnProps
-  extends CommonProps,
-    Pick<LayoutProps, "w" | "h" | "wMin" | "hMin" | "wMax" | "hMax"> {
+  extends CommonProps {
   /** The skeleton variant to display. */
   variant?: SkeletonVariant;
   /** Whether the skeleton should be animated. */

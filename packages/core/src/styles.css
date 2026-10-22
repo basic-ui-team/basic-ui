@@ -1,2 +1,8 @@
 @import "@basic-ui/tokens/styles/theme.css";
+@import "@basic-ui/tokens/styles/palette-static.css";
 @import "./generated/layout-utilities.generated.css";
+/* Self-registration: every class the components author as literals in this
+   package's dist is discoverable to consumer Tailwind builds, which never
+   scan node_modules on their own. The safelist covers only what the runtime
+   constructs. */
+@source "./";

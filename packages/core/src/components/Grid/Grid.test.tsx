@@ -12,8 +12,6 @@ describe("Grid", () => {
         cols={{ base: 2, md: 4 }}
         rows={{ base: 3, lg: 5 }}
         templatePreset={{ base: "none", sm: "sidebar", xl: "none" }}
-        rowGap={{ base: 1, md: 3 }}
-        columnGap={{ base: 2, lg: 4 }}
       />,
     );
     expect(markup).toContain("grid-cols-2");
@@ -23,8 +21,6 @@ describe("Grid", () => {
     expect(markup).toContain("md:grid-cols-[200px_1fr]");
     expect(markup).toContain("xl:grid-cols-4");
     expect(markup).toContain("xl:grid-rows-5");
-    expect(markup).toContain("md:gap-y-3");
-    expect(markup).toContain("lg:gap-x-4");
     expect(markup).not.toContain("md:grid ");
   });
 
@@ -85,21 +81,6 @@ describe("Grid", () => {
     ])("applies correct autoFlow class when autoFlow is %s", (flow, expected) => {
       const { container } = renderWithProviders(<Grid autoFlow={flow}>Test</Grid>);
       expect(container.firstChild).toHaveClass(`grid-flow-${expected}`);
-    });
-
-    it("applies gap token classes", () => {
-      const { container } = renderWithProviders(<Grid gap={3}>Test</Grid>);
-      expect(container.firstChild).toHaveClass("gap-3");
-    });
-
-    it("applies rowGap/columnGap token classes", () => {
-      const { container } = renderWithProviders(
-        <Grid rowGap={2} columnGap={4}>
-          Test
-        </Grid>,
-      );
-      expect(container.firstChild).toHaveClass("gap-y-2");
-      expect(container.firstChild).toHaveClass("gap-x-4");
     });
 
     it("applies alignment classes", () => {

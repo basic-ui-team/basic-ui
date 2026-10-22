@@ -42,7 +42,7 @@ export const Default: Story = {
 
 export const Color: Story = {
   render: () => (
-    <Box className="flex flex-col flex-wrap gap-4 w-full" p={4}>
+    <Box className="flex flex-col flex-wrap gap-4 w-full p-4">
       {PALETTE_FAMILIES.map((family) => (
         <Box className="flex flex-wrap items-center">
           <span className="font-bold w-24">{family}</span>

@@ -1,13 +1,12 @@
 import React from "react";
 import type { ResponsiveValue } from "@basic-ui/react-utilities";
-import { LayoutProps } from "../../lib";
 import { PaletteColor } from "../../lib/colorRecipes/colorRecipes";
 
 export type IconColor = "muted" | PaletteColor;
 
 type IconSize = "xs" | "sm" | "md" | "lg" | "xl";
 
-export interface IconProps extends LayoutProps, React.HTMLAttributes<HTMLSpanElement> {
+export interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
   /**
    * The icon to render — can be an SVG component or React node
    * Pass icon components from @basic-ui/icons or custom SVG elements

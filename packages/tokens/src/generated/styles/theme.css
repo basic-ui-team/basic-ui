@@ -9,6 +9,7 @@
 /* ===== THEME CONFIGURATION ===== */
 /* All design tokens with resolved values for Tailwind utility generation */
 @theme {
+  --spacing: 0.25rem;
   --color-white: #fff;
   --color-black: #000;
   --color-bg-base: #fff;
@@ -79,16 +80,6 @@
   --color-neutral-800: oklch(27.8% 0.033 256.848);
   --color-neutral-900: oklch(21% 0.034 264.665);
   --color-neutral-950: oklch(13% 0.028 261.692);
-  --spacing-0: 0px;
-  --spacing-1: 4px;
-  --spacing-2: 6px;
-  --spacing-3: 8px;
-  --spacing-4: 11px;
-  --spacing-5: 16px;
-  --spacing-6: 23px;
-  --spacing-7: 32px;
-  --spacing-8: 45px;
-  --spacing-9: 64px;
   --radius-none: 0;
   --radius-sm: 0.25rem;
   --radius-md: 0.375rem;

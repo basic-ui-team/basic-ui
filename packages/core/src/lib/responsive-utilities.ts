@@ -1,112 +1,128 @@
 import { existsSync, readFileSync } from "node:fs";
-import { tokens } from "../../../tokens/src/generated/tokens";
+import { flexVariants } from "../components/Flex/flex.variants";
+import { gridVariants } from "../components/Grid/grid.variants";
+import { buttonSizeClasses } from "../components/Button/button.variants";
+import { iconSizeClasses } from "../components/Icon/icon.variants";
+import { spinnerSizeClasses } from "../components/Spinner/spinner.variants";
+import { textSizeClasses, textAlignClasses } from "../components/Text/text.variants";
+import { headerSizeClasses, headerAlignClasses } from "../components/Header/header.variants";
+import { imageObjectFitClasses, imageAspectRatioClasses } from "../components/Image/image.variants";
+import {
+  cardSectionSpacingClasses,
+  cardTitleSizeClasses,
+  cardDescriptionSizeClasses,
+  cardTextAlignClasses,
+  cardImageObjectFitClasses,
+  cardImageAspectRatioClasses,
+} from "../components/Card/card.variants";
+import {
+  toggleSizeClasses,
+  toggleThumbGeometryVariants,
+} from "../components/Toggle/toggle.variants";
+import { dividerThicknessClasses } from "../components/Divider/divider.variants";
+import { textWrapClasses } from "./text-flow";
 
-function utilitiesFor(prefixes: readonly string[], values: readonly (string | number)[]): string[] {
-  return prefixes.flatMap((prefix) => values.map((value) => `${prefix}-${value}`));
+/**
+ * The responsive vocabulary: every utility class the library constructs at
+ * runtime (responsive prop values and geometry maps), so the generated
+ * safelist guarantees CSS at every breakpoint. Derived from the same cva
+ * tables and maps the components use — the single source of truth.
+ *
+ * Classes the components author as literals (cva base strings, one-off
+ * utilities) are not listed here: consumer builds discover them through the
+ * shipped stylesheet's `@source "./"` self-registration.
+ */
+
+const flexDirections = ["row", "column", "row-reverse", "column-reverse"] as const;
+const flexWraps = ["nowrap", "wrap", "reverse"] as const;
+const flexDisplays = ["flex", "inline-flex"] as const;
+const flexJustify = ["start", "end", "center", "between", "around", "evenly", "stretch"] as const;
+const flexAlign = ["start", "end", "center", "stretch"] as const;
+
+const gridCounts = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const;
+const gridFlows = ["row", "column", "dense"] as const;
+const gridAutoSizes = ["min", "max", "fr", true] as const;
+const gridAlign = ["start", "end", "center", "stretch"] as const;
+const gridContent = ["start", "end", "center", "stretch", "between", "around", "evenly"] as const;
+const gridPresets = [
+  "none",
+  "sidebar",
+  "hero",
+  "masonry",
+  "card-list",
+  "symmetric",
+  "asymmetric",
+] as const;
+
+const overflowValues = ["visible", "hidden", "auto", "scroll"] as const;
+
+function classesOf(...values: (string | undefined)[]): string[] {
+  return values.flatMap((value) => (value ?? "").split(/\s+/)).filter(Boolean);
 }
 
-const spacing = Object.keys(tokens.spacing);
-const numericDimensions = Array.from({ length: 25 }, (_, index) => index / 2);
-const fractionalSpacing = [0.5, 1.5, 2.5, 3.5];
-const dimensions = [...new Set([...spacing, ...numericDimensions]), "auto", "full", "screen", "min", "max", "fit"];
-const borderWidths = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-const gridTracks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+function geometryMapClasses(map: Record<string, unknown>): string[] {
+  return Object.values(map).flatMap((value) =>
+    typeof value === "string" ? value.split(/\s+/) : [],
+  );
+}
 
 export const responsiveUtilityFamilies = {
-  spacing: utilitiesFor(
-    [
-      "p",
-      "px",
-      "py",
-      "pt",
-      "pr",
-      "pb",
-      "pl",
-      "m",
-      "mx",
-      "my",
-      "mt",
-      "mr",
-      "mb",
-      "ml",
-      "gap",
-      "gap-x",
-      "gap-y",
-    ],
-    [...spacing, ...fractionalSpacing],
+  flex: classesOf(
+    ...flexDirections.map((direction) => flexVariants({ direction })),
+    ...flexWraps.map((wrap) => flexVariants({ wrap })),
+    ...flexDisplays.map((display) => flexVariants({ display })),
   ),
-  sizing: [
-    ...utilitiesFor(["h", "min-h", "w", "min-w"], dimensions),
-    ...utilitiesFor(
-      ["max-h", "max-w"],
-      [...new Set([...spacing, ...numericDimensions]), "none", "full", "screen", "min", "max", "fit"],
-    ),
-  ],
-  pixelGeometry: [
-    ...utilitiesFor(["h", "w"], [12, 14, 16, 20, 24, 32, 36, 44].map((value) => `[${value}px]`)),
-    "p-[2px]",
-    ...utilitiesFor(["translate-x", "translate-y"], [16, 18, 24].map((value) => `[${value}px]`)),
-  ],
-  borderWidth: utilitiesFor(
-    ["border", "border-x", "border-y", "border-t", "border-r", "border-b", "border-l"],
-    borderWidths,
+  alignment: classesOf(
+    ...flexJustify.map((justify) => flexVariants({ justify })),
+    ...flexAlign.map((align) => flexVariants({ align })),
   ),
-  radius: utilitiesFor(["rounded"], Object.keys(tokens.radius)),
-  translation: utilitiesFor(["translate-x", "translate-y"], [...new Set([...spacing, ...numericDimensions]), "1/2", "full"]),
-  display: [
-    "block",
-    "inline",
-    "inline-block",
-    "hidden",
-    "flex",
-    "inline-flex",
-    "grid",
-    "inline-grid",
-  ],
-  flex: utilitiesFor(
-    ["flex"],
-    ["row", "col", "row-reverse", "col-reverse", "nowrap", "wrap", "wrap-reverse"],
+  display: classesOf("flex", "inline-flex", "grid", "inline-grid", "hidden"),
+  grid: classesOf(
+    ...gridCounts.map((cols) => gridVariants({ cols })),
+    ...gridCounts.map((rows) => gridVariants({ rows })),
+    ...gridFlows.map((autoFlow) => gridVariants({ autoFlow })),
+    ...gridAutoSizes.map((autoRows) => gridVariants({ autoRows })),
+    ...gridAutoSizes.map((autoCols) => gridVariants({ autoCols })),
+    ...gridAlign.map((alignItems) => gridVariants({ alignItems })),
+    ...gridAlign.map((justifyItems) => gridVariants({ justifyItems })),
+    ...gridContent.map((alignContent) => gridVariants({ alignContent })),
+    ...gridContent.map((justifyContent) => gridVariants({ justifyContent })),
   ),
-  alignment: [
-    ...utilitiesFor(
-      ["justify", "content"],
-      ["start", "end", "center", "between", "around", "evenly", "stretch"],
+  gridTemplates: classesOf(...gridPresets.map((templatePreset) => gridVariants({ templatePreset }))),
+  componentGeometry: classesOf(
+    ...geometryMapClasses(buttonSizeClasses),
+    ...geometryMapClasses(iconSizeClasses),
+    ...geometryMapClasses(spinnerSizeClasses),
+    ...geometryMapClasses(textSizeClasses),
+    ...geometryMapClasses(textAlignClasses),
+    ...geometryMapClasses(headerSizeClasses),
+    ...geometryMapClasses(headerAlignClasses),
+    ...geometryMapClasses(imageObjectFitClasses),
+    ...geometryMapClasses(imageAspectRatioClasses),
+    ...geometryMapClasses(cardSectionSpacingClasses),
+    ...geometryMapClasses(cardTitleSizeClasses),
+    ...geometryMapClasses(cardDescriptionSizeClasses),
+    ...geometryMapClasses(cardTextAlignClasses),
+    ...geometryMapClasses(cardImageObjectFitClasses),
+    ...geometryMapClasses(cardImageAspectRatioClasses),
+    ...geometryMapClasses(toggleSizeClasses),
+    ...(["sm", "md", "lg"] as const).flatMap((size) =>
+      [false, true].flatMap((checked) =>
+        classesOf(toggleThumbGeometryVariants({ size, checked })),
+      ),
     ),
-    ...utilitiesFor(["items", "justify-items"], ["start", "end", "center", "stretch"]),
-  ],
-  grid: [
-    ...utilitiesFor(["grid-cols", "grid-rows"], [...gridTracks, "none"]),
-    ...utilitiesFor(["grid-flow"], ["row", "col", "dense", "row-dense", "col-dense"]),
-    ...utilitiesFor(["auto-cols", "auto-rows"], ["auto", "min", "max", "fr"]),
-  ],
-  gridTemplates: [
-    "grid-cols-[200px_1fr]",
-    "grid-cols-[1fr_400px]",
-    "grid-cols-[repeat(auto-fill,minmax(250px,1fr))]",
-    "grid-cols-[repeat(auto-fill,minmax(300px,1fr))]",
-    "grid-cols-[repeat(auto-fit,minmax(200px,1fr))]",
-    "grid-cols-[200px_1fr_300px]",
-  ],
-  typography: [
-    ...utilitiesFor(["text"], Object.keys(tokens.fontSize)),
-    ...utilitiesFor(["leading"], Object.keys(tokens.lineHeight)),
-    ...utilitiesFor(
-      ["text"],
-      ["left", "center", "right", "wrap", "nowrap", "balance", "pretty", "ellipsis", "clip"],
-    ),
-    "truncate",
-    "whitespace-normal",
+    ...Object.values(dividerThicknessClasses).flatMap((direction) => geometryMapClasses(direction)),
+  ),
+  textFlow: classesOf(
+    ...Object.values(textWrapClasses),
+    ...overflowValues.map((value) => `overflow-${value}`),
+    ...overflowValues.map((value) => `overflow-x-${value}`),
+    ...overflowValues.map((value) => `overflow-y-${value}`),
+    "text-ellipsis",
+    "text-clip",
     "whitespace-nowrap",
-  ],
-  position: ["static", "relative", "absolute", "fixed", "sticky"],
-  overflow: utilitiesFor(
-    ["overflow", "overflow-x", "overflow-y"],
-    ["visible", "hidden", "auto", "scroll"],
+    "whitespace-normal",
   ),
-  media: [
-    ...utilitiesFor(["object"], ["cover", "contain", "fill", "none", "scale-down"]),
-    ...utilitiesFor(["aspect"], ["auto", "square", "video", "[4/3]", "[3/4]"]),
-  ],
 } satisfies Record<string, readonly string[]>;
 
 export const responsiveUtilities = [...new Set(Object.values(responsiveUtilityFamilies).flat())];
@@ -115,7 +131,6 @@ export function createResponsiveUtilitySource(
   breakpointOrder: readonly string[],
   utilities: readonly string[],
   fixedCandidates: readonly string[] = [],
-  staticTheme = "",
 ): string {
   const prefixes = breakpointOrder
     .map((breakpoint) => (breakpoint === "base" ? "" : `${breakpoint}:`))
@@ -156,7 +171,7 @@ export function createResponsiveUtilitySource(
 
   return `/* Auto-generated \u2014 run \`pnpm generate:layout-utilities\` in packages/core to regenerate. */
 
-${[...directives, ...fixedDirectives, ...(staticTheme ? [staticTheme] : [])].join("\n")}
+${[...directives, ...fixedDirectives].join("\n")}
 `;
 }
 

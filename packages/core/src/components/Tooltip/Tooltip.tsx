@@ -65,16 +65,27 @@ export const Tooltip: React.FC<TooltipProps> = ({
 
   // Inject the tooltip id onto the trigger while open, preserving any
   // description IDs the trigger already carries; hover/focus handlers live on
-  // the wrapper so they cover the whole trigger surface.
-  const childProps = (children as React.ReactElement<Record<string, unknown>>).props;
-  const describedBy = childProps["aria-describedby"];
-  const trigger = React.cloneElement(children as React.ReactElement<Record<string, unknown>>, {
-    "aria-describedby": isOpen
-      ? [typeof describedBy === "string" ? describedBy : undefined, effectiveId]
-          .filter(Boolean)
-          .join(" ")
-      : describedBy,
-  });
+  // the wrapper so they cover the whole trigger surface. Cloning requires a
+  // single element: anything else renders as-is with a dev-only warning, and
+  // the trigger gains no aria-describedby wiring.
+  const isValidTrigger = React.isValidElement(children);
+  if (process.env.NODE_ENV !== "production" && !isValidTrigger) {
+    console.warn(
+      "Tooltip requires a single React element as its child; the tooltip will not be announced for this trigger.",
+    );
+  }
+  const describedBy = isValidTrigger
+    ? (children.props as Record<string, unknown>)["aria-describedby"]
+    : undefined;
+  const trigger = isValidTrigger
+    ? React.cloneElement(children as React.ReactElement<Record<string, unknown>>, {
+        "aria-describedby": isOpen
+          ? [typeof describedBy === "string" ? describedBy : undefined, effectiveId]
+              .filter(Boolean)
+              .join(" ")
+          : describedBy,
+      })
+    : null;
 
   return (
     <Box
@@ -86,7 +97,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
       onFocus={disabled ? undefined : triggerProps.onFocus}
       onBlur={disabled ? undefined : triggerProps.onBlur}
     >
-      {disabled ? children : trigger}
+      {disabled || !trigger ? children : trigger}
       {isOpen && !disabled && (
         <Portal>
           <Box

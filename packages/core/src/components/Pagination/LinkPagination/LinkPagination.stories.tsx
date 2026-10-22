@@ -33,7 +33,7 @@ export const Default: Story = {
 export const Colors: Story = {
   args: { ...Default.args, currentPage: 3 },
   render: (args) => (
-    <Flex direction="column" align="center" gap={3}>
+    <Flex direction="column" align="center" className="gap-3">
       {(["teal", "violet", "rose", "amber"] as const).map((color) => (
         <LinkPagination key={color} {...args} color={color} />
       ))}

@@ -4,7 +4,9 @@ import * as tokens from "./index";
 describe("@basic-ui/tokens public API", () => {
   it("exports only theme authoring values", () => {
     expect(Object.keys(tokens).sort()).toEqual([
-      "DEFAULT_SPACING_SCALE",
+      "BRAND_PALETTE_FAMILIES",
+      "PALETTE_FAMILIES",
+      "TAILWIND_PALETTE_FAMILIES",
       "createTheme",
       "darkTheme",
       "lightTheme",

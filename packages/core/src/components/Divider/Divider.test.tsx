@@ -6,26 +6,22 @@ import { renderToString } from "react-dom/server";
 
 describe("Divider - variants and behavior", () => {
   it.each(["horizontal", "vertical"] as const)(
-    "keeps %s semantics scalar while thickness and inset change",
+    "keeps %s semantics scalar while thickness changes",
     (direction) => {
       const markup = renderToString(
         <Divider
           direction={direction}
           decorative={false}
           thickness={{ base: "thick", md: "none", lg: "thin" }}
-          inset={{ base: 1, md: 3 }}
           appearance="dashed"
           color="green"
         />,
       );
       const axis = direction === "horizontal" ? "t" : "l";
-      const margin = direction === "horizontal" ? "mx" : "my";
       expect(markup).toContain(`aria-orientation="${direction}"`);
       expect(markup).toContain(`border-${axis}-4`);
       expect(markup).toContain(`md:border-${axis}-0`);
       expect(markup).toContain(`lg:border-${axis}-1`);
-      expect(markup).toContain(`${margin}-1`);
-      expect(markup).toContain(`md:${margin}-3`);
       expect(markup).toContain("border-dashed");
       expect(markup).not.toContain("md:border-dashed");
       expect(markup).not.toContain("md:border-(--cr-border)");
@@ -92,6 +88,7 @@ describe("Divider - variants and behavior", () => {
     const el = container.firstChild as HTMLElement;
     expect(el).toHaveAttribute("role", "separator");
     expect(getByText("Section Break")).toBeInTheDocument();
+    expect(getByText("Section Break")).toHaveClass("bg-bg-base", "text-fg-muted");
   });
 
   it("warns when using a non-hr element for a semantic divider", () => {

@@ -24,10 +24,7 @@ const _Divider = <As extends AllowedDividerElements = "hr">(
     appearance = "solid",
     thickness = "medium",
     color = "default",
-    inset = 0,
     label,
-    m = 0,
-    p = 0,
     className,
     style,
     ...rest
@@ -44,7 +41,7 @@ const _Divider = <As extends AllowedDividerElements = "hr">(
   const isDecorative = !isSemantic;
 
   // If semantic and not using an HR element, warn the developer about semantic correctness.
-  if (isSemantic && Comp !== "hr") {
+  if (process.env.NODE_ENV !== "production" && isSemantic && Comp !== "hr") {
     console.warn(
       `Divider: For semantic dividers (decorative={false} or label provided), it's recommended to use "hr" as the element for semantic correctness. You used "${Comp}". Consider changing to "hr" or setting decorative={true}.`,
     );
@@ -53,10 +50,6 @@ const _Divider = <As extends AllowedDividerElements = "hr">(
   return (
     <Box
       as={Comp}
-      m={m}
-      p={p}
-      mx={direction === "horizontal" ? inset : undefined}
-      my={direction === "vertical" ? inset : undefined}
       ref={ref}
       role={isDecorative ? "presentation" : "separator"}
       aria-label={isSemantic && label ? label : undefined}
@@ -75,7 +68,7 @@ const _Divider = <As extends AllowedDividerElements = "hr">(
       {...(rest as BoxProps<As>)}
     >
       {label && (
-        <span className="shrink-0 bg-background px-2 text-muted-foreground text-sm">{label}</span>
+        <span className="shrink-0 bg-bg-base px-2 text-fg-muted text-sm">{label}</span>
       )}
     </Box>
   );
