@@ -12,14 +12,14 @@
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
-    "./styles/theme.css": "./dist/generated/styles/theme.css",
-    "./styles/palette-static.css": "./dist/generated/styles/palette-static.css"
+    "./theme.css": "./dist/theme.css",
+    "./palette-static.css": "./dist/palette-static.css"
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "generate": "tsx scripts/generate-theme-css.ts",
+    "generate": "tsx scripts/generate-palette-static.ts",
     "build": "pnpm generate && vite build && pnpm exec tsc -p tsconfig.build.json && node scripts/copy-css.mjs",
     "lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\" --cache",
     "preview": "vite preview",

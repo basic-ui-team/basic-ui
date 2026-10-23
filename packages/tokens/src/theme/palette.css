@@ -1,0 +1,54 @@
+/*
+ * Palette: the color scales the design system authors — the brand ramps and
+ * white/black. Emitted statically because two runtime consumers reference
+ * these variables by name, invisible to the consumer's Tailwind build
+ * scanner:
+ *  - the semantic layer's var() indirection (semantic.css)
+ *  - color cooking in @basic-ui/core, which constructs
+ *    var(--color-<family>-<shade>) from consumer props
+ *
+ * The standard Tailwind families — including neutral, whose ramp the
+ * semantic layer points at — are vendored from the installed Tailwind theme
+ * into the generated palette-static.css instead.
+ */
+
+@theme static {
+  --color-white: #fff;
+  --color-black: #000;
+
+  --color-primary-50: oklch(98.2% 0.018 155.826);
+  --color-primary-100: oklch(96.2% 0.044 156.743);
+  --color-primary-200: oklch(92.5% 0.084 155.995);
+  --color-primary-300: oklch(87.1% 0.15 154.449);
+  --color-primary-400: oklch(79.2% 0.209 151.711);
+  --color-primary-500: oklch(72.3% 0.219 149.579);
+  --color-primary-600: oklch(62.7% 0.194 149.214);
+  --color-primary-700: oklch(52.7% 0.154 150.069);
+  --color-primary-800: oklch(44.8% 0.119 151.328);
+  --color-primary-900: oklch(39.3% 0.095 152.535);
+  --color-primary-950: oklch(26.6% 0.065 152.934);
+
+  --color-secondary-50: oklch(97.7% 0.014 308.299);
+  --color-secondary-100: oklch(94.6% 0.033 307.174);
+  --color-secondary-200: oklch(90.2% 0.063 306.703);
+  --color-secondary-300: oklch(82.7% 0.119 306.383);
+  --color-secondary-400: oklch(71.4% 0.203 305.504);
+  --color-secondary-500: oklch(62.7% 0.265 303.9);
+  --color-secondary-600: oklch(55.8% 0.288 302.321);
+  --color-secondary-700: oklch(49.6% 0.265 301.924);
+  --color-secondary-800: oklch(43.8% 0.218 303.724);
+  --color-secondary-900: oklch(38.1% 0.176 304.987);
+  --color-secondary-950: oklch(29.1% 0.149 302.717);
+
+  --color-accent-50: oklch(98.7% 0.022 95.277);
+  --color-accent-100: oklch(96.2% 0.059 95.617);
+  --color-accent-200: oklch(92.4% 0.12 95.746);
+  --color-accent-300: oklch(87.9% 0.169 91.605);
+  --color-accent-400: oklch(82.8% 0.189 84.429);
+  --color-accent-500: oklch(76.9% 0.188 70.08);
+  --color-accent-600: oklch(66.6% 0.179 58.318);
+  --color-accent-700: oklch(55.5% 0.163 48.998);
+  --color-accent-800: oklch(47.3% 0.137 46.201);
+  --color-accent-900: oklch(41.4% 0.112 45.904);
+  --color-accent-950: oklch(27.9% 0.077 45.635);
+}

@@ -1,0 +1,112 @@
+/*
+ * Utility shims for names Tailwind v4 cannot resolve to custom properties at
+ * runtime:
+ *  - duration-* accepts bare numbers only (no --duration-* utility namespace)
+ *  - z-* and opacity-* accept bare numbers only
+ *  - shadow-* utilities inline theme values (see shadows.css)
+ *
+ * Each shim resolves the theme variable, keeping the value overridable at
+ * runtime (including by the dark.css overrides). The shadow shims preserve
+ * Tailwind's composed box-shadow, so rings and inset shadows still combine.
+ */
+
+@utility duration-fast {
+  transition-duration: var(--duration-fast);
+}
+
+@utility duration-normal {
+  transition-duration: var(--duration-normal);
+}
+
+@utility duration-slow {
+  transition-duration: var(--duration-slow);
+}
+
+@utility z-base {
+  z-index: var(--z-index-base);
+}
+
+@utility z-elevated {
+  z-index: var(--z-index-elevated);
+}
+
+@utility z-docked {
+  z-index: var(--z-index-docked);
+}
+
+@utility z-dropdown {
+  z-index: var(--z-index-dropdown);
+}
+
+@utility z-sticky {
+  z-index: var(--z-index-sticky);
+}
+
+@utility z-banner {
+  z-index: var(--z-index-banner);
+}
+
+@utility z-overlay {
+  z-index: var(--z-index-overlay);
+}
+
+@utility z-modal {
+  z-index: var(--z-index-modal);
+}
+
+@utility z-popover {
+  z-index: var(--z-index-popover);
+}
+
+@utility z-toast {
+  z-index: var(--z-index-toast);
+}
+
+@utility z-tooltip {
+  z-index: var(--z-index-tooltip);
+}
+
+@utility opacity-base {
+  opacity: var(--opacity-base);
+}
+
+@utility opacity-muted {
+  opacity: var(--opacity-muted);
+}
+
+@utility opacity-disabled {
+  opacity: var(--opacity-disabled);
+}
+
+@utility opacity-hover {
+  opacity: var(--opacity-hover);
+}
+
+@utility opacity-overlay {
+  opacity: var(--opacity-overlay);
+}
+
+@utility shadow-s1 {
+  --tw-shadow: var(--shadow-s1);
+  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+}
+
+@utility shadow-s2 {
+  --tw-shadow: var(--shadow-s2);
+  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+}
+
+@utility shadow-s3 {
+  --tw-shadow: var(--shadow-s3);
+  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+}
+
+@utility shadow-s4 {
+  --tw-shadow: var(--shadow-s4);
+  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+}
+
+@utility shadow-s5 {
+  --tw-shadow: var(--shadow-s5);
+  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+}

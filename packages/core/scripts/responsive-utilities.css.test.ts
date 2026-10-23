@@ -1,4 +1,4 @@
-import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { copyFileSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
@@ -61,16 +61,22 @@ function stageStyles(
 beforeAll(() => {
   directory = mkdtempSync(join(tmpdir(), "basic-ui-responsive-css-"));
 
-  // Stage the exported CSS layout so tests do not depend on a previous package build.
   stageStyles(corePackage, coreRoot, {
     "src/styles.css": corePackage.exports["./styles.css"],
     "src/generated/layout-utilities.generated.css":
       "./dist/generated/layout-utilities.generated.css",
   });
+  const themePartStyles = Object.fromEntries(
+    readdirSync(resolve(coreRoot, "../tokens/src/theme")).map((file) => [
+      `src/theme/${file}`,
+      `./dist/theme/${file}`,
+    ]),
+  );
   stageStyles(tokensPackage, resolve(coreRoot, "../tokens"), {
-    "src/generated/styles/theme.css": tokensPackage.exports["./styles/theme.css"],
+    "src/theme.css": tokensPackage.exports["./theme.css"],
+    ...themePartStyles,
     "src/generated/styles/palette-static.css":
-      tokensPackage.exports["./styles/palette-static.css"],
+      tokensPackage.exports["./palette-static.css"],
   });
   generatedPath = join(
     directory,
@@ -93,9 +99,11 @@ async function compileFixture(generatedSource?: string, theme = "") {
   const compiler = await compile(`${fixture}\n${theme}`, {
     base: directory,
     loadStylesheet: async (id: string, base: string) => {
-      const path = require.resolve(id === "tailwindcss" ? "tailwindcss/index.css" : id, {
-        paths: [base, coreRoot],
-      });
+      const path = id.startsWith(".")
+        ? resolve(base, id)
+        : require.resolve(id === "tailwindcss" ? "tailwindcss/index.css" : id, {
+            paths: [base, coreRoot],
+          });
       return {
         path,
         base: dirname(path),
@@ -108,11 +116,6 @@ async function compileFixture(generatedSource?: string, theme = "") {
   });
 
   expect(compiler.root).toBe("none");
-  // Automatic detection is off; the only registered source is the package's
-  // self-registration (`@source "./"` in the shipped stylesheet), pointing at
-  // the package dist for consumer builds to scan. Component-authored literal
-  // coverage is asserted by verify-package's consumer build, not here — this
-  // file verifies the responsive safelist vocabulary.
   expect(compiler.sources).toEqual([
     {
       base: join(directory, "node_modules", "@basic-ui", "core", "dist"),
