@@ -91,16 +91,16 @@ export const TruncateVariant: Story = {
 export const WrapVariants: Story = {
   render: () => (
     <Flex direction="column" align="center" className="gap-3">
-      <div className="w-128 border p-2 border-gray-300 rounded">
+      <div className="w-lg border p-2 border-gray-300 rounded">
         <Header wrap="nowrap">No wrap header example with long text that overflows.</Header>
       </div>
-      <div className="w-128 border p-2 border-gray-300 rounded">
+      <div className="w-lg border p-2 border-gray-300 rounded">
         <Header wrap="wrap">Wrapped header example with long text that flows to new lines.</Header>
       </div>
-      <div className="w-128 border p-2 border-gray-300 rounded">
+      <div className="w-lg border p-2 border-gray-300 rounded">
         <Header wrap="balance">Balanced header example with long text that is balanced.</Header>
       </div>
-      <div className="w-128 border p-2 border-gray-300 rounded">
+      <div className="w-lg border p-2 border-gray-300 rounded">
         <Header wrap="pretty">Pretty-wrapped header example with long text for demo.</Header>
       </div>
     </Flex>
