@@ -69,36 +69,12 @@ export const ColorVariants: Story = {
   render: () => (
     <Flex direction="column" className="gap-3">
       <Box className="p-3">
-        <Text className="mb-3">Base Color</Text>
+        <Text className="mb-3">Default Color</Text>
         <Divider color="default" />
       </Box>
       <Box className="p-3">
         <Text className="mb-3">Muted Color</Text>
         <Divider color="muted" />
-      </Box>
-      <Box className="p-3">
-        <Text className="mb-3">Primary Color</Text>
-        <Divider />
-      </Box>
-      <Box className="p-3">
-        <Text className="mb-3">Secondary Color</Text>
-        <Divider />
-      </Box>
-      <Box className="p-3">
-        <Text className="mb-3">Red</Text>
-        <Divider />
-      </Box>
-      <Box className="p-3">
-        <Text className="mb-3">Green</Text>
-        <Divider />
-      </Box>
-      <Box className="p-3">
-        <Text className="mb-3">Amber</Text>
-        <Divider />
-      </Box>
-      <Box className="p-3">
-        <Text className="mb-3">Sky</Text>
-        <Divider />
       </Box>
     </Flex>
   ),

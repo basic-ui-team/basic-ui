@@ -18,7 +18,6 @@ import { Badge, Button } from "@basic-ui/core";
 | `variant`      | `"count" \| "dot"`                                      | `"count"`     | Renders a count or label, or a compact status dot. |
 | `content`      | `React.ReactNode`                                       | Required for `"count"` | Content displayed by a count badge. Not accepted with `variant="dot"`. |
 | `max`          | `number`                                                | —             | For numeric content above this value, displays `max+` instead. |
-| `color`        | `"default" \| PaletteColor`                             | `"default"`   | Sets the palette family. `"default"` uses slate. |
 | `position`     | `"top-left" \| "top-right" \| "bottom-left" \| "bottom-right"` | `"top-right"` | Positions the badge relative to its attached element. |
 | `ping`         | `boolean`                                               | `false`       | Adds a pulsing halo behind the badge. |
 | `aria-label`   | `string`                                                | —             | Accessible name when the badge is exposed to assistive technology. |
@@ -38,7 +37,7 @@ An exposed badge needs an `aria-label`; the component warns in development if it
 When a numeric count exceeds `max`, the badge shows the maximum followed by `+`.
 
 ```tsx
-<Badge content={100} max={99} color="red">
+<Badge content={100} max={99}>
   <Button aria-label="Notifications">Notifications</Button>
 </Badge>
 ```
@@ -50,7 +49,7 @@ The dot variant does not display `content`. Set `ping` to add an animated halo; 
 ```tsx
 import { Badge, Box } from "@basic-ui/core";
 
-<Badge variant="dot" color="green" position="bottom-right" ping>
+<Badge variant="dot" position="bottom-right" ping>
   <Box className="h-7 w-7 rounded-full bg-surface-base" aria-label="Alex" />
 </Badge>
 ```

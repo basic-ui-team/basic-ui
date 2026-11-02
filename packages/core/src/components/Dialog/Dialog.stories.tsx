@@ -58,7 +58,10 @@ export const FullWidth: Story = {
 };
 
 export const Sizes: Story = {
-  args: { title: "Sized dialog", description: "The size prop controls the dialog's maximum width." },
+  args: {
+    title: "Sized dialog",
+    description: "The size prop controls the dialog's maximum width.",
+  },
   argTypes: {
     size: { control: "radio", options: ["sm", "md", "lg"] },
     fullWidth: { control: "boolean" },
@@ -114,12 +117,10 @@ export const WithFooter: Story = {
           description="You have unsaved changes to this project."
           footer={
             <>
-              <Button variant="ghost" color="slate" onClick={() => setOpen(false)}>
+              <Button variant="ghost" onClick={() => setOpen(false)}>
                 Cancel
               </Button>
-              <Button color="primary" onClick={() => setOpen(false)}>
-                Discard changes
-              </Button>
+              <Button onClick={() => setOpen(false)}>Discard changes</Button>
             </>
           }
         >

@@ -33,11 +33,7 @@ export const Basic: Story = {
 
 export const Description: Story = {
   render: () => (
-    <Alert
-      severity="success"
-      title="Changes saved"
-      className="max-w-full"
-    >
+    <Alert severity="success" title="Changes saved" className="max-w-full">
       Your changes are now live and visible to everyone on your team.
     </Alert>
   ),
@@ -71,18 +67,6 @@ export const Variants: Story = {
   ),
 };
 
-export const Color: Story = {
-  render: () => (
-    <Flex direction="column" className="gap-3 max-w-full">
-      {(["teal", "violet", "rose"] as const).map((color) => (
-        <Alert key={color} severity="info" color={color} title={color}>
-          The severity keeps the role and icon; the family sets the colors.
-        </Alert>
-      ))}
-    </Flex>
-  ),
-};
-
 export const WithCustomIcon: Story = {
   render: () => (
     <Alert
@@ -103,7 +87,7 @@ export const WithAction: Story = {
       severity="warning"
       title="Payment method expires soon"
       action={
-        <Button variant="link" color="amber" size="sm">
+        <Button variant="link" size="sm">
           Update
         </Button>
       }
@@ -115,12 +99,7 @@ export const WithAction: Story = {
 
 export const WithCloseButton: Story = {
   render: () => (
-    <Alert
-      severity="warning"
-      title="Trial expiring"
-      dismissible
-      className="max-w-full"
-    >
+    <Alert severity="warning" title="Trial expiring" dismissible className="max-w-full">
       Your trial expires in three days. Upgrade to keep your workspace.
     </Alert>
   ),
@@ -132,7 +111,7 @@ export const Controlled: Story = {
 
     return (
       <Flex direction="column" className="gap-3 max-w-full">
-        <Button variant="outline" color="primary" size="sm" onClick={() => setOpen(true)}>
+        <Button variant="outline" size="sm" onClick={() => setOpen(true)}>
           Show alert
         </Button>
         <Alert

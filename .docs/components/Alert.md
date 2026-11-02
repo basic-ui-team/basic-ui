@@ -14,9 +14,8 @@ import { Alert } from "@basic-ui/core";
 
 | Prop           | Type                                          | Default                        | Description                                                                           |
 | -------------- | --------------------------------------------- | ------------------------------ | ------------------------------------------------------------------------------------- |
-| `severity`     | `"success" \| "error" \| "warning" \| "info"` | `"info"`                       | Sets the alert's meaning, default icon, and default color family.                     |
+| `severity`     | `"success" \| "error" \| "warning" \| "info"` | `"info"`                       | Sets the alert's meaning, default icon, and color family.                             |
 | `variant`      | `"subtle" \| "filled" \| "outline"`           | `"filled"`                     | Sets the alert's visual style.                                                        |
-| `color`        | `PaletteColor`                                | Derived from `severity`        | Overrides the color family without changing the severity or its accessibility role.   |
 | `title`        | `React.ReactNode`                             | —                              | Optional title shown above the message.                                               |
 | `children`     | `React.ReactNode`                             | —                              | The alert message.                                                                    |
 | `icon`         | `React.ReactNode \| false`                    | Icon for the selected severity | Replaces the default icon; pass `false` to hide the icon.                             |
@@ -50,12 +49,12 @@ Severity selects a default icon and color family. Error and warning alerts use `
 </Alert>
 ```
 
-### Variants and color
+### Variants
 
-Choose a visual variant independently of the message severity. A custom color changes the palette while preserving severity semantics.
+Choose a visual variant independently of the message severity.
 
 ```tsx
-<Alert severity="warning" variant="outline" color="amber" title="Trial expiring">
+<Alert severity="warning" variant="outline" title="Trial expiring">
   Your trial expires in three days.
 </Alert>
 ```
