@@ -10,7 +10,7 @@ describe("Skeleton", () => {
       const { container } = renderWithProviders(<Skeleton />);
       const el = container.firstChild as HTMLElement;
       expect(el).toBeInTheDocument();
-      expect(el).toHaveClass("bg-fg-skeleton", "h-4", "rounded-sm");
+      expect(el).toHaveClass("bg-muted", "h-4", "rounded-sm");
       expect(el).not.toHaveClass("animate-pulse");
     });
 

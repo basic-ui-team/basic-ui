@@ -2,15 +2,13 @@ import React from "react";
 import { Box } from "../Box";
 import { cn } from "@basic-ui/react-utilities";
 import type { BadgeProps } from "./badge.types";
-import { badgeVariants, badgePaletteRecipe } from "./badge.variants";
-import { cr } from "../../lib/colorRecipes/colorRecipes";
+import { badgeVariants } from "./badge.variants";
 
 export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
   (
     {
       content,
       max,
-      color = "default",
       variant = "count",
       position = "top-right",
       ping = false,
@@ -32,9 +30,6 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
       console.warn("An exposed Badge requires an aria-label.");
     }
 
-    const family = color === "default" ? "slate" : color;
-    const cooked = cr(family, badgePaletteRecipe);
-
     return (
       <Box as="span" className="relative inline-block" data-slot="badge-anchor">
         {children}
@@ -48,18 +43,16 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
                 variant: "dot",
                 position,
               }),
-              cooked.className,
               "motion-safe:animate-[ping_1.5s_ease-out_infinite]",
             )}
-            style={cooked.style}
           />
         )}
         <Box
           as="span"
           ref={ref}
           data-slot="badge"
-          className={cn(badgeVariants({ variant, position }), cooked.className, className)}
-          style={{ ...cooked.style, ...style }}
+          className={cn(badgeVariants({ variant, position }), className)}
+          style={style}
           aria-label={isDecorative ? undefined : ariaLabel}
           aria-hidden={isDecorative || undefined}
           aria-live={isDecorative ? undefined : ariaLive}

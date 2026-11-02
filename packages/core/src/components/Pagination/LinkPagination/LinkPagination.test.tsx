@@ -171,23 +171,19 @@ describe("LinkPagination", () => {
     expect(events.some((e) => e.href === "/p/2" && e.defaultPrevented)).toBeTruthy();
   });
 
-  it("cooks page links from the color family recipes", () => {
+  it("styles the active page from the brand token", () => {
     renderWithProviders(
       <LinkPagination
         pageCount={5}
         currentPage={2}
-        color="violet"
         getPageHref={(p) => `/p/${p}`}
       />,
     );
 
     const active = screen.getByLabelText("Go to page 2");
-    expect(active).toHaveClass("bg-(--cr-bg)", "text-(color:--cr-text)");
-    expect(active.getAttribute("style")).toContain("--cr-bg: var(--color-violet-600)");
+    expect(active).toHaveClass("bg-primary", "text-primary-foreground");
 
     const resting = screen.getByLabelText("Go to page 3");
-    expect(resting.getAttribute("style")).toContain(
-      "--cr-bg: color-mix(in oklab, var(--color-violet-100) 30%, transparent)",
-    );
+    expect(resting).not.toHaveClass("bg-primary");
   });
 });

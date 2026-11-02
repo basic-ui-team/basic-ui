@@ -72,18 +72,23 @@ describe("Icon", () => {
         <Icon icon={<TestIcon />} size={{ base: "xs", md: "xl" }} color="muted" />,
       );
       const span = container.querySelector("span");
-      expect(span).toHaveClass("w-4", "h-4", "md:w-8", "md:h-8", "text-fg-muted");
-      expect(span).not.toHaveClass("w-6", "h-6", "md:text-fg-muted");
+      expect(span).toHaveClass("w-4", "h-4", "md:w-8", "md:h-8", "text-muted-foreground");
+      expect(span).not.toHaveClass("w-6", "h-6", "md:text-muted-foreground");
       expect(span).not.toHaveAttribute("color");
     });
 
     it.each([
-      ["muted", ["text-fg-muted"]],
-      ["teal", ["text-(color:--cr-text)"]],
-      ["rose", ["text-(color:--cr-text)"]],
+      ["default", []],
+      ["muted", ["text-muted-foreground"]],
     ] as const)("should apply %s color classes", (color, classes) => {
       const { container } = render(<Icon icon={<TestIcon />} color={color} />);
-      expect(container.querySelector("span")).toHaveClass(...classes);
+      const span = container.querySelector("span") as HTMLElement;
+      for (const cls of classes) {
+        expect(span).toHaveClass(cls);
+      }
+      if (color === "default") {
+        expect(span.className).not.toMatch(/text-/);
+      }
     });
   });
 
@@ -225,10 +230,10 @@ describe("Icon", () => {
   describe("Combination scenarios", () => {
     it("should combine size and semantic color", () => {
       const { container } = render(
-        <Icon icon={<TestIcon />} size="lg" color="teal" />,
+        <Icon icon={<TestIcon />} size="lg" color="muted" />,
       );
-      const span = container.querySelector("span");
-      expect(span).toHaveClass("w-7", "h-7", "text-(color:--cr-text)");
+      const span = container.querySelector("span") as HTMLElement;
+      expect(span).toHaveClass("w-7", "h-7", "text-muted-foreground");
       expect(span).toHaveAttribute("aria-hidden", "true");
     });
 
@@ -238,13 +243,13 @@ describe("Icon", () => {
           icon={<TestIcon />}
           aria-hidden={false}
           aria-label="Loading spinner"
-          color="teal"
+          color="muted"
           size="md"
           className="animate-spin"
         />,
       );
       const img = screen.getByRole("img", { name: "Loading spinner" });
-      expect(img).toHaveClass("animate-spin", "text-(color:--cr-text)", "w-6", "h-6");
+      expect(img).toHaveClass("animate-spin", "text-muted-foreground", "w-6", "h-6");
     });
 
     it("should apply only supplied responsive size variants", () => {

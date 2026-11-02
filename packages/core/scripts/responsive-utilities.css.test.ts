@@ -75,8 +75,6 @@ beforeAll(() => {
   stageStyles(tokensPackage, resolve(coreRoot, "../tokens"), {
     "src/theme.css": tokensPackage.exports["./theme.css"],
     ...themePartStyles,
-    "src/generated/styles/palette-static.css":
-      tokensPackage.exports["./palette-static.css"],
   });
   generatedPath = join(
     directory,
@@ -272,41 +270,23 @@ describe("responsive utilities through the public CSS entry", () => {
   });
 });
 
-describe("color recipe utilities in the public CSS entry", () => {
-  it("generates recipe channel utilities from the safelist", async () => {
+describe("semantic token utilities in the public CSS entry", () => {
+  it("generates bridge utilities that resolve the consumer variables", async () => {
     const css = await compileFixture();
-    // Recipe candidates are fixed utilities: no responsive prefixes apply.
-    const escape = (utility: string) => utility.replace(/[^a-zA-Z0-9_-]/g, "\\$&");
-    for (const utility of [
-      "bg-(--cr-bg)",
-      "hover:bg-(--cr-bg-hover)",
-      "active:bg-(--cr-bg-active)",
-      "text-(color:--cr-text)",
-      "border-(--cr-border)",
-      "dark:bg-(--cr-bg-dark)",
-      "dark:hover:bg-(--cr-bg-hover-dark)",
-    ]) {
-      expect(css, `Missing CSS for ${utility}`).toContain(`.${escape(utility)} {`);
-    }
-    expect(css).toContain("background-color: var(--cr-bg)");
-    expect(css).toContain("color: var(--cr-text)");
+    expect(css).toContain(".bg-primary {");
+    expect(css).toContain("background-color: var(--primary)");
+    expect(css).toContain(".text-muted-foreground {");
+    expect(css).toContain("color: var(--muted-foreground)");
   });
 
-  it("emits palette theme variables statically for recipes", async () => {
+  it("always emits the consumer-owned token values", async () => {
     const css = await compileFixture();
-    // Previously tree-shaken families must be present regardless of usage.
-    for (const variable of [
-      "--color-rose-700:",
-      "--color-violet-700:",
-      "--color-emerald-700:",
-      "--color-primary-700:",
-      "--color-white:",
-    ]) {
+    for (const variable of ["--primary:", "--background:", "--destructive:"]) {
       expect(css).toContain(variable);
     }
   });
 
-  it("stays bounded by the recipe channels, not the color palette", async () => {
+  it("stays bounded by the component-authored vocabulary", async () => {
     const css = await compileFixture();
     expect(css).not.toContain(".bg-teal-700");
     expect(css).not.toContain(".bg-violet-700");

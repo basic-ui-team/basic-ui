@@ -5,16 +5,15 @@ import {
   PolymorphicRef,
   getResponsiveClassNames,
 } from "@basic-ui/react-utilities";
-import { buttonVariants, buttonSizeClasses, buttonPaletteRecipes } from "./button.variants";
+import { buttonVariants, buttonSizeClasses } from "./button.variants";
 import { Box, BoxProps } from "../Box";
-import { cr } from "../../lib/colorRecipes/colorRecipes";
 
 /**
  * Button component with support for multiple variants, colors, sizes, and states.
  *
  * Features:
- * - Multiple variants: solid, ghost, outline, link
- * - Palette color recipes: the color prop accepts any registered palette family
+ * - Multiple variants: default, destructive, outline, ghost, link
+ * - Single brand color: variants style from the semantic tokens
  * - Responsive sizing (sm, md, lg)
  * - Loading state with optional loading text and custom icon
  * - Disabled state with proper accessibility attributes
@@ -23,7 +22,7 @@ import { cr } from "../../lib/colorRecipes/colorRecipes";
  *
  * @example
  * // Basic button
- * <Button variant="solid" color="teal">Click me</Button>
+ * <Button variant="default">Click me</Button>
  *
  * // Loading state
  * <Button loading loadingText="Submitting">Submit</Button>
@@ -38,8 +37,7 @@ export const Button = forwardRefWithAs<ButtonOwnProps, AllowedButtonElements>(
   <As extends AllowedButtonElements = "button">(
     {
       as,
-      variant = "solid",
-      color = "red",
+      variant = "default",
       size = "md",
       disabled = false,
       loading = false,
@@ -56,11 +54,9 @@ export const Button = forwardRefWithAs<ButtonOwnProps, AllowedButtonElements>(
     // Use custom link component when rendering as 'a', otherwise use default 'as' prop
     const Comp = (as === "a" && linkComponent ? linkComponent : as || "button") as As;
 
-    const paletteRecipe = cr(color, buttonPaletteRecipes[variant]);
 
     const resolvedStyles = cn(
       buttonVariants({ variant, size: null, disabled, loading }),
-      paletteRecipe.className,
       getResponsiveClassNames(size, (value) => buttonSizeClasses[value]),
       className,
     );
@@ -101,7 +97,7 @@ export const Button = forwardRefWithAs<ButtonOwnProps, AllowedButtonElements>(
         as={Comp}
         ref={ref}
         className={resolvedStyles}
-        style={{ ...paletteRecipe.style, ...style }}
+        style={style}
         aria-busy={loading}
         {...(restProps as BoxProps<As>)}
       >

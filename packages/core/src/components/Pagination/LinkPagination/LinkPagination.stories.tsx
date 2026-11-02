@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { LinkPagination } from "./LinkPagination";
-import { Flex } from "../../Flex";
 
 const meta = {
   title: "Components/Pagination/LinkPagination",
@@ -30,16 +29,6 @@ export const Default: Story = {
   render: (args) => <LinkPagination {...args} />,
 };
 
-export const Colors: Story = {
-  args: { ...Default.args, currentPage: 3 },
-  render: (args) => (
-    <Flex direction="column" align="center" className="gap-3">
-      {(["teal", "violet", "rose", "amber"] as const).map((color) => (
-        <LinkPagination key={color} {...args} color={color} />
-      ))}
-    </Flex>
-  ),
-};
 
 export const CustomIcons: Story = {
   args: {

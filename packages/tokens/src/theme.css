@@ -1,23 +1,24 @@
 /*
- * The basic-ui default theme. Basic ui is designed to work in a very familiar 
- * way with Tailwind CSS. Rather than introducing a TS layer for theming, it 
- * leverages CSS custom properties and Tailwind's native theming capabilities.
+ * The basic-ui default theme. basic-ui is designed to work in a very
+ * familiar way with Tailwind CSS: plain CSS custom properties against
+ * Tailwind v4's native theming, with no JavaScript in the styling path.
  *
- * This entry composes the theme from focused parts, merged by Tailwind across
- * the @import graph:
+ * This entry composes the theme from focused parts, merged by Tailwind
+ * across the @import graph:
  *
- *   theme/palette.css    raw color scales the design system authors
- *   theme/semantic.css   component-facing colors, by reference to the palette
+ *   theme/semantic.css   consumer-owned pair tokens (the only color source)
  *   theme/scales.css     radius, typography, motion, stacking, spacing
  *   theme/shadows.css    shadow values (plain custom properties; see file)
- *   theme/dark.css       .dark overrides for semantic colors and shadows
+ *   theme/dark.css       .dark overrides for tokens and shadows
  *   theme/utilities.css  @utility shims Tailwind cannot resolve at runtime
  *
- * The parts after shadows.css matter: dark.css must follow it in the cascade
- * (equal specificity, later wins).
+ * The parts after shadows.css matter: dark.css must follow it in the
+ * cascade (equal specificity, later wins).
  *
- * This approach also makes authoring custom themes very easy. Consumers can create 
- * their own theme overrides by defining custom properties in their CSS.
+ * Consumers re-theme by overriding the custom properties — in :root, in
+ * @theme blocks, in .dark, or on any scoped selector; utilities resolve
+ * the variables where they are used, so overrides cascade with no rebuild
+ * and no JavaScript.
  */
 
 @import "tailwindcss";
@@ -26,7 +27,6 @@
    Tailwind's dark: variant follows the OS preference instead. */
 @custom-variant dark (&:where(.dark, .dark *));
 
-@import "./theme/palette.css";
 @import "./theme/semantic.css";
 @import "./theme/scales.css";
 @import "./theme/shadows.css";

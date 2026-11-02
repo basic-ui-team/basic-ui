@@ -55,14 +55,14 @@ export const ColorVariants: Story = {
   render: () => (
     <Flex direction="column" className="gap-3">
       <Header color="default">Default color</Header>
-      <Header color="primary">Primary color</Header>
-      <Header color="secondary">Secondary color</Header>
+      <Header>Primary color</Header>
+      <Header>Secondary color</Header>
       <Header color="muted">Muted color</Header>
-      <Header color="red">Red color</Header>
-      <Header color="green">Green color</Header>
-      <Header color="amber">Amber color</Header>
-      <Header color="sky">Sky color</Header>
-      <Header color="rose">Rose color</Header>
+      <Header>Red color</Header>
+      <Header>Green color</Header>
+      <Header>Amber color</Header>
+      <Header>Sky color</Header>
+      <Header>Rose color</Header>
     </Flex>
   ),
 };
@@ -123,7 +123,7 @@ export const PolymorphicVariants: Story = {
 export const CombinedVariants: Story = {
   render: () => (
     <Flex direction="column" className="gap-3">
-      <Header size="h2" weight="bold" color="primary" align="center" wrap="balance">
+      <Header size="h2" weight="bold" align="center" wrap="balance">
         Combined header variants example
       </Header>
     </Flex>

@@ -110,3 +110,57 @@
   --tw-shadow: var(--shadow-s5);
   box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
 }
+
+/* Derived interactive states: a consumer overriding one token gets
+   consistent hover/active ramps in both modes — the mix pole
+   (--mix-pole, flipped in dark.css) carries the mode, so no dark: shim
+   variants exist. Bounded set: channels x interactive roles x states;
+   static surfaces (status fills on Alert) do not need states.
+   Tailwind wraps color-mix in @supports with the plain token fallback. */
+@utility bg-primary-hover {
+  background-color: color-mix(in oklab, var(--primary) 85%, var(--mix-pole));
+}
+
+@utility bg-primary-active {
+  background-color: color-mix(in oklab, var(--primary) 75%, var(--mix-pole));
+}
+
+@utility text-primary-hover {
+  color: color-mix(in oklab, var(--primary) 85%, var(--mix-pole));
+}
+
+@utility text-primary-active {
+  color: color-mix(in oklab, var(--primary) 75%, var(--mix-pole));
+}
+
+@utility border-primary-hover {
+  border-color: color-mix(in oklab, var(--primary) 85%, var(--mix-pole));
+}
+
+@utility border-primary-active {
+  border-color: color-mix(in oklab, var(--primary) 75%, var(--mix-pole));
+}
+
+@utility bg-destructive-hover {
+  background-color: color-mix(in oklab, var(--destructive) 85%, var(--mix-pole));
+}
+
+@utility bg-destructive-active {
+  background-color: color-mix(in oklab, var(--destructive) 75%, var(--mix-pole));
+}
+
+@utility text-destructive-hover {
+  color: color-mix(in oklab, var(--destructive) 85%, var(--mix-pole));
+}
+
+@utility border-destructive-hover {
+  border-color: color-mix(in oklab, var(--destructive) 85%, var(--mix-pole));
+}
+
+@utility bg-muted-hover {
+  background-color: color-mix(in oklab, var(--muted) 88%, var(--mix-pole));
+}
+
+@utility bg-muted-active {
+  background-color: color-mix(in oklab, var(--muted) 80%, var(--mix-pole));
+}

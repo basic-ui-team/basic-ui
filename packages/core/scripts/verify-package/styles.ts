@@ -15,7 +15,8 @@ import { assert } from "./report";
  * Also asserts the self-registration contract: the shipped stylesheet's
  * `@source "./"` must make consumer builds scan this package's dist, so
  * classes the components author as literals (focus rings, animations,
- * elevation) generate without any consumer-side safelist.
+ * elevation, derived hover states) generate without any consumer-side
+ * safelist.
  */
 export async function phaseStylesheetSmoke() {
   console.log("\n== 5. Published stylesheet through Tailwind ==");
@@ -41,11 +42,8 @@ export async function phaseStylesheetSmoke() {
   });
 
   const css = readFileSync(join(dir, "out", "consumer.css"), "utf8");
-  assert("tokens theme resolves through the published chain", css.includes("--color-bg-base"));
-  assert(
-    "static palette variables resolve through the published chain",
-    css.includes("--color-teal-700"),
-  );
+  assert("tokens theme resolves through the published chain", css.includes("--primary:oklch"));
+  assert("bridge utility resolves the consumer variable", css.includes("var(--primary)"));
   assert("base spacing token resolves through the published chain", css.includes("--spacing:"));
   assert("responsive selector generated (sm:flex-col)", css.includes(".sm\\:flex-col"));
   assert("digit-escaped responsive selector generated (2xl:grid-cols-2)", css.includes(".\\32 xl\\:grid-cols-2"));
@@ -55,4 +53,8 @@ export async function phaseStylesheetSmoke() {
   );
   assert("component-authored animation generated (animate-spin)", css.includes(".animate-spin"));
   assert("component-authored elevation generated (z-modal)", css.includes(".z-modal"));
+  assert(
+    "component-authored derived hover state generated (hover:bg-primary-hover)",
+    css.includes(".hover\\:bg-primary-hover"),
+  );
 }

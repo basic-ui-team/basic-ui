@@ -7,8 +7,7 @@ import {
   getResponsiveClassNames,
 } from "@basic-ui/react-utilities";
 import { AllowedHeaderElements, HeaderOwnProps, HeaderProps } from "./header.types";
-import { headerVariants, headerSizeClasses, headerAlignClasses, headerPaletteRecipe } from "./header.variants";
-import { cr, isPaletteColor } from "../../lib/colorRecipes/colorRecipes";
+import { headerVariants, headerSizeClasses, headerAlignClasses } from "./header.variants";
 import { Box, BoxProps } from "../Box";
 import { getTextFlowClasses } from "../../lib";
 
@@ -34,14 +33,12 @@ const _Header = <As extends AllowedHeaderElements = "h1">(
   const Comp = (as || "h1") as As;
 
   const flow = getTextFlowClasses({ truncate, wrap, overflow, overflowX, overflowY });
-  const palette = isPaletteColor(color);
-  const cooked = palette ? cr(color, headerPaletteRecipe) : null;
 
   const resolvedStyles = cn(
     headerVariants({
       size: null,
       weight,
-      color: palette ? "palette" : color,
+      color,
       align: null,
       truncate: null,
       wrap: null,
@@ -50,7 +47,6 @@ const _Header = <As extends AllowedHeaderElements = "h1">(
     getResponsiveClassNames(align, (value) => headerAlignClasses[value]),
     flow.className,
     className,
-    cooked?.className,
   );
 
   const accessibilityProps = getTruncateAccessibilityProps(children, flow.hasTruncation, rest);
@@ -63,7 +59,7 @@ const _Header = <As extends AllowedHeaderElements = "h1">(
       as={Comp}
       ref={ref}
       className={resolvedStyles}
-      style={{ ...cooked?.style, ...style }}
+      style={style}
       {...accessibilityProps}
       {...(normalizedRest as BoxProps<As>)}
     >

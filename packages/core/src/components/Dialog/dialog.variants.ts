@@ -19,7 +19,7 @@ export const dialogBackdropVariants = cva("fixed inset-0 z-overlay bg-black/50")
 
 export const dialogVariants = cva(
   [
-    "bg-surface-base rounded-lg shadow-s4",
+    "bg-surface rounded-lg shadow-s4",
     "mx-auto",
     "focus-visible:outline-none",
   ].join(" "),
@@ -60,18 +60,18 @@ export const dialogHeaderVariants = cva("flex items-center justify-between gap-3
 });
 
 export const dialogTitleVariants = cva(
-  "font-sans font-semibold leading-tight text-fg-base text-lg",
+  "font-sans font-semibold leading-tight text-foreground text-lg",
 );
 
 export const dialogBodyVariants = cva("flex flex-col gap-2 p-3");
 
-export const dialogDescriptionVariants = cva("font-normal leading-snug text-fg-muted text-sm");
+export const dialogDescriptionVariants = cva("font-normal leading-snug text-muted-foreground text-sm");
 
 export const dialogFooterVariants = cva("flex items-center justify-end gap-2 p-3 pt-0");
 
 export const dialogCloseVariants = cva(
   [
-    "shrink-0 p-2 rounded-sm text-fg-muted hover:text-fg-base hover:bg-black/5",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current ring-offset-bg-base focus-visible:ring-offset-2",
+    "shrink-0 p-2 rounded-sm text-muted-foreground hover:text-foreground hover:bg-black/5",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current ring-offset-background focus-visible:ring-offset-2",
   ].join(" "),
 );

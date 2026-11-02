@@ -3,7 +3,6 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Button } from "./Button";
 import { Box } from "../Box";
 import { Spinner } from "../Spinner";
-import { PALETTE_FAMILIES } from "../../lib/colorRecipes/colorRecipes";
 
 const meta: Meta<typeof Button> = {
   title: "Components/Button",
@@ -15,11 +14,7 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     variant: {
       control: "select",
-      options: ["solid", "ghost", "outline", "link"],
-    },
-    color: {
-      control: "select",
-      options: [...PALETTE_FAMILIES],
+      options: ["default", "destructive", "outline", "ghost", "link"],
     },
     size: {
       control: "select",
@@ -40,20 +35,13 @@ export const Default: Story = {
   },
 };
 
-export const Color: Story = {
+export const Variants: Story = {
   render: () => (
-    <Box className="flex flex-col flex-wrap gap-4 w-full p-4">
-      {PALETTE_FAMILIES.map((family) => (
-        <Box className="flex flex-wrap items-center">
-          <span className="font-bold w-24">{family}</span>
-          <Box className="flex justify-between gap-8">
-            {(["solid", "outline", "ghost", "link"] as const).map((variant) => (
-              <Button key={variant} color={family} variant={variant}>
-                {variant.substring(0, 1).toUpperCase() + variant.substring(1)}
-              </Button>
-            ))}
-          </Box>
-        </Box>
+    <Box className="flex flex-wrap items-center gap-4 p-4">
+      {(["default", "destructive", "outline", "ghost", "link"] as const).map((variant) => (
+        <Button key={variant} variant={variant}>
+          {variant.substring(0, 1).toUpperCase() + variant.substring(1)}
+        </Button>
       ))}
     </Box>
   ),
@@ -76,7 +64,7 @@ export const Loading: Story = {
       <Button loading loadingText="Submitting">
         With text
       </Button>
-      <Button loading loadingIcon={<Spinner as="span" size="sm" color="primary" />}>
+      <Button loading loadingIcon={<Spinner as="span" size="sm" />}>
         With spinner
       </Button>
     </Box>
@@ -104,7 +92,7 @@ export const WithClickAction: Story = {
 export const WithCustomLoadingIcon: Story = {
   args: {
     loading: true,
-    loadingIcon: <Spinner as="span" size={{ base: "xs", md: "sm" }} color="primary" />,
+    loadingIcon: <Spinner as="span" size={{ base: "xs", md: "sm" }} />,
     children: "Loading",
   },
 };
@@ -126,7 +114,7 @@ export const WithCustomLoadingText: Story = {
 
 export const AsAnchor: Story = {
   render: () => (
-    <Button as="a" href="#" color="primary">
+    <Button as="a" href="#">
       Anchor Link
     </Button>
   ),
@@ -144,7 +132,7 @@ export const WithCustomLinkComponent: Story = {
 
     return (
       <Box className="flex gap-2 items-center flex-wrap">
-        <Button as="a" linkComponent={CustomLink} href="/docs" color="primary">
+        <Button as="a" linkComponent={CustomLink} href="/docs">
           Go to Docs
         </Button>
         <Button as="a" linkComponent={CustomLink} href="/github" variant="ghost">

@@ -47,7 +47,7 @@ describe("Card integration", () => {
           overflow={{ base: "auto", sm: "scroll" }}
           align={{ base: "left", lg: "right" }}
           weight="bold"
-          color="green"
+         
         >
           Full text
         </Component>,
@@ -58,11 +58,11 @@ describe("Card integration", () => {
         "md:overflow-scroll", "md:text-clip", "md:whitespace-normal", "md:text-balance",
         "lg:text-pretty", "lg:text-right",
         "xl:overflow-hidden", "xl:text-ellipsis", "xl:whitespace-nowrap",
-        "font-bold", "text-(color:--cr-text)",
+        "font-bold", "text-foreground",
       );
       expect(element).toHaveAttribute("title", "Full text");
       expect(element).toHaveAttribute("aria-label", "Full text");
-      expect(element).not.toHaveClass("lg:font-bold", "lg:text-(color:--cr-text)");
+      expect(element).not.toHaveClass("lg:font-bold", "lg:text-foreground");
       expect(element).not.toHaveAttribute("truncate");
     });
 

@@ -1,5 +1,4 @@
 import { cva } from "class-variance-authority";
-import type { ColorRecipe } from "../../lib/colorRecipes/colorRecipes";
 
 export const spinnerSizeClasses = {
   xs: "h-4 w-4 border-1",
@@ -15,13 +14,8 @@ export const spinnerVariants = cva(
     variants: {
       size: spinnerSizeClasses,
       color: {
-        default: "border-border-base border-t-transparent",
-        muted: "border-border-muted border-t-transparent",
-        // Sentinel used when a palette-family color applies the recipe variables.
-        // Colors only the x/b sides so no all-sides utility can compete with
-        // the transparent top segment, in either theme.
-        palette:
-          "border-x-(--cr-border) border-b-(--cr-border) border-t-transparent dark:border-x-(--cr-border-dark) dark:border-b-(--cr-border-dark)",
+        default: "border-border border-t-transparent",
+        muted: "border-muted border-t-transparent",
       },
     },
     defaultVariants: {
@@ -30,7 +24,3 @@ export const spinnerVariants = cva(
     },
   },
 );
-
-export const spinnerPaletteRecipe: ColorRecipe = {
-  border: { value: "500", dark: { value: "400" } },
-};

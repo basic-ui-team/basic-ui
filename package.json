@@ -17,7 +17,6 @@
     "build:core": "turbo build --filter=@basic-ui/core",
     "build:tokens": "turbo build --filter=@basic-ui/tokens",
     "build:icons": "turbo build --filter=@basic-ui/icons",
-    "generate": "pnpm --filter @basic-ui/tokens generate",
     "storybook": "turbo dev --filter=@basic-ui/storybook",
     "storybook:build": "turbo build --filter=@basic-ui/storybook",
     "lint": "turbo lint",

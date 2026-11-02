@@ -70,7 +70,6 @@ describe("Button", () => {
       <Button
         size={{ base: "sm", md: "lg", xl: "md" }}
         variant="outline"
-        color="emerald"
         disabled
         loading
       >
@@ -80,11 +79,10 @@ describe("Button", () => {
     const button = screen.getByRole("button");
     expect(button).toHaveClass(
       "px-2", "py-1", "text-sm", "gap-1", "rounded-md",
-      "inline-flex", "border-2",
-      "text-(color:--cr-text)",
+      "inline-flex", "border",
+      "text-foreground",
       "cursor-not-allowed",
     );
-    expect(button.getAttribute("style")).toContain("--cr-text: var(--color-emerald-700)");
     expect([...button.classList].filter((name) => name.startsWith("md:"))).toEqual([
       "md:px-6", "md:py-3", "md:text-lg", "md:gap-3", "md:rounded-xl",
     ]);
@@ -282,37 +280,38 @@ describe("Button", () => {
   });
 });
 
-describe("Button color recipes", () => {
-  it("applies recipe utilities and variables for the default color", () => {
+describe("Button variants", () => {
+  it("styles the default variant from the brand pair", () => {
     renderWithProviders(<Button>Painted</Button>);
     const btn = screen.getByRole("button", { name: "Painted" });
-    expect(btn).toHaveClass("bg-(--cr-bg)");
-    const style = btn.getAttribute("style") ?? "";
-    expect(style).toContain("--cr-bg: var(--color-red-700)");
-    expect(style).toContain("--cr-bg-hover: var(--color-red-600)");
-    expect(style).toContain("--cr-bg-dark: var(--color-red-700)");
+    expect(btn).toHaveClass("bg-primary", "text-primary-foreground", "hover:bg-primary-hover");
   });
 
-  it("cooks recipes per palette family and variant", () => {
-    renderWithProviders(<Button color="teal" variant="link">Link</Button>);
+  it("styles the destructive variant from its pair", () => {
+    renderWithProviders(<Button variant="destructive">Delete</Button>);
+    const btn = screen.getByRole("button", { name: "Delete" });
+    expect(btn).toHaveClass("bg-destructive", "text-destructive-foreground");
+  });
+
+  it("styles outline and ghost from neutral tokens with a brand ring", () => {
+    renderWithProviders(<Button variant="outline">Outlined</Button>);
+    const outlined = screen.getByRole("button", { name: "Outlined" });
+    expect(outlined).toHaveClass("border", "border-input", "bg-background", "text-foreground");
+
+    renderWithProviders(<Button variant="ghost">Ghosted</Button>);
+    const ghost = screen.getByRole("button", { name: "Ghosted" });
+    expect(ghost).toHaveClass("text-foreground", "hover:bg-muted-hover");
+  });
+
+  it("styles the link variant from the brand token", () => {
+    renderWithProviders(<Button variant="link">Link</Button>);
     const btn = screen.getByRole("button", { name: "Link" });
-    expect(btn).toHaveClass("text-(color:--cr-text)");
-    const style = btn.getAttribute("style") ?? "";
-    expect(style).toContain("--cr-text: var(--color-teal-700)");
-    expect(style).toContain("--cr-text-dark: var(--color-teal-200)");
+    expect(btn).toHaveClass("text-primary", "hover:underline");
   });
 
-  it("falls back to the light recipe when a dark recipe is omitted", () => {
-    renderWithProviders(<Button color="teal">Plain</Button>);
-    const style = screen.getByRole("button", { name: "Plain" }).getAttribute("style") ?? "";
-    expect(style).toContain("--cr-text: var(--color-white)");
-    expect(style).toContain("--cr-text-dark: var(--color-white)");
-  });
-
-  it("applies explicit ghost focus paints in both themes", () => {
-    renderWithProviders(<Button variant="ghost" color="teal">Ghost</Button>);
-    const style = screen.getByRole("button", { name: "Ghost" }).getAttribute("style") ?? "";
-    expect(style).toContain("--cr-bg-focus: var(--color-teal-500)");
-    expect(style).toContain("--cr-bg-focus-dark: var(--color-teal-500)");
+  it("focus rings resolve the ring token", () => {
+    renderWithProviders(<Button variant="ghost">Ghost</Button>);
+    const btn = screen.getByRole("button", { name: "Ghost" });
+    expect(btn).toHaveClass("focus-visible:ring-2", "focus-visible:ring-ring", "ring-offset-background");
   });
 });

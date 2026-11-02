@@ -22,7 +22,7 @@ const messages = {
   info: "A new version is available.",
   success: "Your profile was updated.",
   warning: "Your trial expires in three days.",
-  error: "We could not save your changes.",
+  destructive: "We could not save your changes.",
 } as const;
 
 export const Basic: Story = {

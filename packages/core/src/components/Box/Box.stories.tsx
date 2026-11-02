@@ -14,7 +14,7 @@ type Story = StoryObj<typeof Box>;
 
 export const Default: Story = {
   render: () => (
-    <Box className="rounded-lg border border-border-base bg-surface-base p-3 text-fg-base">
+    <Box className="rounded-lg border border-border bg-surface p-3 text-foreground">
       <Text as="span">A transparent, polymorphic layout primitive.</Text>
     </Box>
   ),
@@ -22,7 +22,7 @@ export const Default: Story = {
 
 export const SemanticElements: Story = {
   render: () => (
-    <Box as="article" className="p-4 max-w-xl rounded-lg border border-border-base bg-surface-base">
+    <Box as="article" className="p-4 max-w-xl rounded-lg border border-border bg-surface">
       <Box as="header" className="mb-3">
         <Box as="h2" className="text-lg font-semibold">
           Release notes
@@ -46,7 +46,7 @@ export const SemanticElements: Story = {
 
 export const Display: Story = {
   render: () => (
-    <Box className="p-3 rounded-lg border border-border-base bg-surface-base">
+    <Box className="p-3 rounded-lg border border-border bg-surface">
       <Box className="block p-2 rounded bg-surface-hover">
         Block
       </Box>
@@ -62,7 +62,7 @@ export const Display: Story = {
 
 export const Spacing: Story = {
   render: () => (
-    <Box className="p-3 rounded-lg border border-border-base bg-surface-base">
+    <Box className="p-3 rounded-lg border border-border bg-surface">
       <Box className="p-3 rounded bg-surface-hover">
         <Text as="span">p=3</Text>
       </Box>
@@ -79,13 +79,13 @@ export const Spacing: Story = {
 export const Sizing: Story = {
   render: () => (
     <Flex direction="column" className="gap-3 max-w-xl">
-      <Box className="w-full p-3 rounded-lg border border-border-base bg-surface-base">
+      <Box className="w-full p-3 rounded-lg border border-border bg-surface">
         <Text as="span">w=&quot;full&quot;</Text>
       </Box>
-      <Box className="w-fit p-3 rounded-lg border border-border-base bg-surface-base">
+      <Box className="w-fit p-3 rounded-lg border border-border bg-surface">
         <Text as="span">w=&quot;fit&quot;</Text>
       </Box>
-      <Box className="min-w-full p-3 rounded-lg border border-border-base bg-surface-base">
+      <Box className="min-w-full p-3 rounded-lg border border-border bg-surface">
         <Text as="span">wMin=&quot;full&quot;</Text>
       </Box>
     </Flex>
@@ -95,7 +95,7 @@ export const Sizing: Story = {
 export const PositionAndOverflow: Story = {
   render: () => (
     <Flex direction="column" className="gap-3 max-w-xl">
-      <Box className="relative p-4 rounded-lg border border-border-base bg-surface-base">
+      <Box className="relative p-4 rounded-lg border border-border bg-surface">
         <Text as="span">A positioned ancestor</Text>
         <Box
           className="absolute right-2 top-2 rounded bg-sky-100 px-2 py-1 text-sky-800"
@@ -103,7 +103,7 @@ export const PositionAndOverflow: Story = {
           Pinned
         </Box>
       </Box>
-      <Box className="overflow-x-auto p-3 rounded-lg border border-border-base bg-surface-base">
+      <Box className="overflow-x-auto p-3 rounded-lg border border-border bg-surface">
         <Box className="w-max whitespace-nowrap">
           Horizontal overflow remains scrollable when content exceeds its container.
         </Box>
@@ -115,7 +115,7 @@ export const PositionAndOverflow: Story = {
 export const Responsive: Story = {
   render: () => (
     <Box
-      className="block md:inline-block p-2 md:p-4 rounded-lg border border-border-base bg-surface-base"
+      className="block md:inline-block p-2 md:p-4 rounded-lg border border-border bg-surface"
     >
       <Text as="span">
         Resize the preview: this emits stable <code>p-2 md:p-4 block md:inline-block</code>{" "}

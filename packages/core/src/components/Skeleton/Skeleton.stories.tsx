@@ -106,7 +106,7 @@ export const LoadingList: Story = {
 
 export const UserCard: Story = {
   render: () => (
-    <Box className="border border-border-base rounded-lg p-4 w-80">
+    <Box className="border border-border rounded-lg p-4 w-80">
       <Flex align="center" className="gap-2 pb-2 w-full">
         <Skeleton variant="circular" animated className="h-12 w-12" />
         <Flex direction="column" align="end" className="gap-2 w-full">

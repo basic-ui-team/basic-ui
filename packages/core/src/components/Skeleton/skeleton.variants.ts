@@ -1,6 +1,6 @@
 import { cva } from "class-variance-authority";
 
-export const skeletonVariants = cva("bg-fg-skeleton", {
+export const skeletonVariants = cva("bg-muted", {
   variants: {
     variant: {
       text: "h-4 rounded-sm",

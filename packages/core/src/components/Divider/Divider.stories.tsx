@@ -78,27 +78,27 @@ export const ColorVariants: Story = {
       </Box>
       <Box className="p-3">
         <Text className="mb-3">Primary Color</Text>
-        <Divider color="primary" />
+        <Divider />
       </Box>
       <Box className="p-3">
         <Text className="mb-3">Secondary Color</Text>
-        <Divider color="secondary" />
+        <Divider />
       </Box>
       <Box className="p-3">
         <Text className="mb-3">Red</Text>
-        <Divider color="red" />
+        <Divider />
       </Box>
       <Box className="p-3">
         <Text className="mb-3">Green</Text>
-        <Divider color="green" />
+        <Divider />
       </Box>
       <Box className="p-3">
         <Text className="mb-3">Amber</Text>
-        <Divider color="amber" />
+        <Divider />
       </Box>
       <Box className="p-3">
         <Text className="mb-3">Sky</Text>
-        <Divider color="sky" />
+        <Divider />
       </Box>
     </Flex>
   ),

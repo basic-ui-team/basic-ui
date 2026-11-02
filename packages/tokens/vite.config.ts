@@ -1,24 +1,5 @@
-import { defineConfig } from "vite";
-import path from "path";
-import { fileURLToPath } from "node:url";
+import { defineConfig } from "vitest/config";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-export default defineConfig({
-  build: {
-    lib: {
-      entry: {
-        index: path.resolve(__dirname, "src/index.ts"),
-      },
-      formats: ["es"],
-    },
-    rollupOptions: {
-      output: {
-        entryFileNames: "[name].js",
-      },
-    },
-    copyPublicDir: false,
-    minify: "esbuild",
-    sourcemap: true,
-  },
-});
+// Local config shadows the workspace root vitest config, whose setup file
+// path is root-relative. The theme contract tests need no setup.
+export default defineConfig({});

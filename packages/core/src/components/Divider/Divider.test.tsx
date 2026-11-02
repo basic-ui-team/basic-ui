@@ -14,7 +14,7 @@ describe("Divider - variants and behavior", () => {
           decorative={false}
           thickness={{ base: "thick", md: "none", lg: "thin" }}
           appearance="dashed"
-          color="green"
+         
         />,
       );
       const axis = direction === "horizontal" ? "t" : "l";
@@ -24,7 +24,7 @@ describe("Divider - variants and behavior", () => {
       expect(markup).toContain(`lg:border-${axis}-1`);
       expect(markup).toContain("border-dashed");
       expect(markup).not.toContain("md:border-dashed");
-      expect(markup).not.toContain("md:border-(--cr-border)");
+      expect(markup).not.toContain("md:border-border");
     },
   );
 
@@ -63,8 +63,8 @@ describe("Divider - variants and behavior", () => {
       if (value === "dashed") expect(el.className.includes("border-dashed")).toBe(true);
       if (value === "dotted") expect(el.className.includes("border-dotted")).toBe(true);
     } else if (variant === "color") {
-      if (value === "default") expect(el.className.includes("border-border-base")).toBe(true);
-      if (value === "muted") expect(el.className.includes("border-border-muted")).toBe(true);
+      if (value === "default") expect(el.className.includes("border-border")).toBe(true);
+      if (value === "muted") expect(el.className.includes("border-muted")).toBe(true);
     }
   });
 
@@ -88,7 +88,7 @@ describe("Divider - variants and behavior", () => {
     const el = container.firstChild as HTMLElement;
     expect(el).toHaveAttribute("role", "separator");
     expect(getByText("Section Break")).toBeInTheDocument();
-    expect(getByText("Section Break")).toHaveClass("bg-bg-base", "text-fg-muted");
+    expect(getByText("Section Break")).toHaveClass("bg-background", "text-muted-foreground");
   });
 
   it("warns when using a non-hr element for a semantic divider", () => {

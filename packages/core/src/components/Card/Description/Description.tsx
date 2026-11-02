@@ -12,10 +12,8 @@ import {
   cardDescriptionVariants,
   cardDescriptionSizeClasses,
   cardTextAlignClasses,
-  cardTextPaletteRecipe,
 } from "../card.variants";
 import { getTextFlowClasses } from "../../../lib";
-import { cr, isPaletteColor } from "../../../lib/colorRecipes/colorRecipes";
 import { useContext } from "react";
 import { CardContext } from "../Card";
 
@@ -41,10 +39,8 @@ const _Description = <As extends AllowedTextElements = "p">(
   const Comp = (as || "p") as As;
   const flow = getTextFlowClasses({ truncate, wrap, overflow, overflowX, overflowY });
   const selected = useContext(CardContext)?.selected;
-  const palette = isPaletteColor(color);
-  const cooked = palette ? cr(color, cardTextPaletteRecipe) : null;
 
-  const colorVariant = palette ? "palette" : color ?? (selected ? "inherit" : "default");
+  const colorVariant = color ?? (selected ? "inherit" : "default");
 
   const resolvedStyles = cn(
     cardDescriptionVariants({
@@ -59,7 +55,6 @@ const _Description = <As extends AllowedTextElements = "p">(
     getResponsiveClassNames(align, (value) => cardTextAlignClasses[value]),
     flow.className,
     className,
-    cooked?.className,
   );
   const accessibilityProps = getTruncateAccessibilityProps(children, flow.hasTruncation, rest);
   const normalizedRest = normalizeProps(rest);
@@ -68,7 +63,7 @@ const _Description = <As extends AllowedTextElements = "p">(
       as={Comp}
       ref={ref}
       className={resolvedStyles}
-      style={{ ...cooked?.style, ...style }}
+      style={style}
       {...accessibilityProps}
       {...(normalizedRest as BoxProps<As>)}
     >

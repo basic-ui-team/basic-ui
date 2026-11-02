@@ -95,31 +95,31 @@ export const ColorVariants: Story = {
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
         ut labore et dolore magna aliqua." (Muted)
       </Text>
-      <Text color="primary">
+      <Text>
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
         ut labore et dolore magna aliqua." (Primary)
       </Text>
-      <Text color="secondary">
+      <Text>
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
         ut labore et dolore magna aliqua." (Secondary)
       </Text>
-      <Text color="red">
+      <Text>
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
         ut labore et dolore magna aliqua." (Red)
       </Text>
-      <Text color="green">
+      <Text>
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
         ut labore et dolore magna aliqua." (Green)
       </Text>
-      <Text color="amber">
+      <Text>
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
         ut labore et dolore magna aliqua." (Amber)
       </Text>
-      <Text color="sky">
+      <Text>
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
         ut labore et dolore magna aliqua." (Sky)
       </Text>
-      <Text color="rose">
+      <Text>
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
         ut labore et dolore magna aliqua." (Rose)
       </Text>
@@ -224,7 +224,7 @@ export const PolymorphicVariants: Story = {
 export const CombinedVariants: Story = {
   render: () => (
     <div className="flex flex-col gap-3">
-      <Text size="lg" weight="bold" color="primary" align="center" wrap="balance">
+      <Text size="lg" weight="bold" align="center" wrap="balance">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
         ut labore et dolore magna aliqua." (Combined Variants)
       </Text>

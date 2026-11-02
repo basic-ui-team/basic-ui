@@ -12,6 +12,6 @@ export const tooltipVariants = [
   "py-1",
   "text-sm",
   "max-w-[16rem]",
-  "bg-surface-inverted",
-  "text-fg-inverted",
+  "bg-overlay",
+  "text-overlay-foreground",
 ].join(" ");

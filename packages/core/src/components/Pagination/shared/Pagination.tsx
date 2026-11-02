@@ -5,11 +5,9 @@ import { PaginationViewProps } from "./pagination.types";
 import { cn } from "@basic-ui/react-utilities";
 import {
   paginationButtonVariants,
-  paginationButtonPaletteRecipes,
   paginationEllipsisVariants,
   paginationVariants,
 } from "./pagination.variants";
-import { cr } from "../../../lib/colorRecipes/colorRecipes";
 import { ChevronLeftIcon, ChevronRightIcon } from "@basic-ui/icons";
 import { Box } from "../../Box";
 
@@ -23,7 +21,6 @@ export const Pagination = React.forwardRef<HTMLElement, PaginationViewProps>(
       hasNext,
       shape,
       variant,
-      color,
       className,
       customIcons,
       renderPage,
@@ -33,8 +30,6 @@ export const Pagination = React.forwardRef<HTMLElement, PaginationViewProps>(
     },
     ref,
   ) => {
-    const cookedResting = cr(color, paginationButtonPaletteRecipes.default);
-    const cookedActive = cr(color, paginationButtonPaletteRecipes.active);
 
     if (totalPages <= 1) return null;
 
@@ -72,20 +67,20 @@ export const Pagination = React.forwardRef<HTMLElement, PaginationViewProps>(
         {renderControl(
           "first",
           !hasPrev,
-          cn(paginationButtonVariants({ size: "md", shape, variant }), cookedResting.className),
+          cn(paginationButtonVariants({ size: "md", shape, variant })),
           "Go to first page",
           handlePageChange ? () => handlePageChange(1) : undefined,
           customIcons?.first || <ChevronLeftIcon />,
-          cookedResting.style,
+          undefined,
         )}
         {renderControl(
           "prev",
           !hasPrev,
-          cn(paginationButtonVariants({ size: "md", shape, variant }), cookedResting.className),
+          cn(paginationButtonVariants({ size: "md", shape, variant })),
           "Go to previous page",
           handlePageChange ? () => handlePageChange(activePage - 1) : undefined,
           customIcons?.previous || <ChevronLeftIcon />,
-          cookedResting.style,
+          undefined,
         )}
         {pageNumbers.map((pageNumber, idx) =>
           pageNumber === "ellipsis" ? (
@@ -104,31 +99,28 @@ export const Pagination = React.forwardRef<HTMLElement, PaginationViewProps>(
               `Go to page ${pageNumber}`,
               handlePageChange ? () => handlePageChange(pageNumber as number) : undefined,
               pageNumber === activePage ? -1 : undefined,
-              cn(
-                paginationButtonVariants({ size: "md", shape, variant }),
-                pageNumber === activePage ? cookedActive.className : cookedResting.className,
-              ),
-              pageNumber === activePage ? cookedActive.style : cookedResting.style,
+              paginationButtonVariants({ size: "md", shape, variant, active: pageNumber === activePage }),
+              undefined,
             )
           ),
         )}
         {renderControl(
           "next",
           !hasNext,
-          cn(paginationButtonVariants({ size: "md", shape, variant }), cookedResting.className),
+          cn(paginationButtonVariants({ size: "md", shape, variant })),
           "Go to next page",
           handlePageChange ? () => handlePageChange(activePage + 1) : undefined,
           customIcons?.next || <ChevronRightIcon />,
-          cookedResting.style,
+          undefined,
         )}
         {renderControl(
           "last",
           !hasNext,
-          cn(paginationButtonVariants({ size: "md", shape, variant }), cookedResting.className),
+          cn(paginationButtonVariants({ size: "md", shape, variant })),
           "Go to last page",
           handlePageChange ? () => handlePageChange(totalPages) : undefined,
           customIcons?.last || <ChevronRightIcon />,
-          cookedResting.style,
+          undefined,
         )}
       </Box>
     );

@@ -89,7 +89,7 @@ describe("Dialog", () => {
     expect(screen.getByRole("dialog").firstElementChild).toHaveClass("justify-end");
     expect(screen.getByRole("dialog")).toHaveAttribute("aria-label", "Dialog without a title");
     expect(screen.getByRole("dialog")).not.toHaveAttribute("aria-describedby");
-    expect(screen.getByRole("button", { name: "Close" })).toHaveClass("text-fg-muted");
+    expect(screen.getByRole("button", { name: "Close" })).toHaveClass("text-muted-foreground");
   });
 
   it("dismisses on outside pointerdown by default", async () => {

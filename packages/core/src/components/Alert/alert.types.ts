@@ -1,8 +1,7 @@
 import type React from "react";
 import type { CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
-import type { PaletteColor } from "../../lib/colorRecipes/colorRecipes";
 
-export type AlertSeverity = "success" | "error" | "warning" | "info";
+export type AlertSeverity = "success" | "destructive" | "warning" | "info";
 export type AlertVariant = "subtle" | "filled" | "outline";
 
 export interface AlertOwnProps extends CommonProps {
@@ -12,8 +11,6 @@ export interface AlertOwnProps extends CommonProps {
   /** Alert visual style variant. @default "subtle" */
   variant?: AlertVariant;
 
-  /** Palette family for the alert's colors. Overrides the default color derived from the severity. */
-  color?: PaletteColor;
 
   /** Custom icon for the alert. Set to `false` to disable the icon. */
   icon?: React.ReactNode | false;
