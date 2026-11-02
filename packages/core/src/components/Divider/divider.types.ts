@@ -1,9 +1,8 @@
 import { CommonProps, ResponsiveValue, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
-import { PaletteColor } from "../../lib/colorRecipes/colorRecipes";
 
 export type DividerDirection = "horizontal" | "vertical";
 export type DividerAppearance = "solid" | "dashed" | "dotted";
-export type DividerColor = "default" | "muted" | PaletteColor;
+export type DividerColor = "default" | "muted";
 export type DividerThickness = "thin" | "medium" | "thick" | "none";
 
 export interface DividerOwnProps extends CommonProps {
@@ -21,7 +20,7 @@ export interface DividerOwnProps extends CommonProps {
   /** Thickness of the divider line. "thin" for 1px, "medium" for 2px, "thick" for 4px, "none" for no line. Supports responsive values. @default "medium" */
   thickness?: ResponsiveValue<DividerThickness>;
 
-  /** Border color: structural neutral, informational severity, or palette family. @default "default" */
+  /** Border color: structural neutral, color variant. @default "default" */
   color?: DividerColor;
 
   /** Optional label for the divider, used for accessibility purposes. If provided, the divider will have `role="separator"` and the label will be announced by screen readers. */

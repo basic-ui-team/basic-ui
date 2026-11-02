@@ -1,12 +1,7 @@
-import { readFileSync } from "node:fs";
-import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { BREAKPOINT_ORDER } from "../../../react-utilities/src/hooks/useResponsive/constants";
-import { colorRecipeUtilityCandidates } from "./colorRecipes/colorRecipes";
 import {
   createResponsiveUtilitySource,
-  isUtilitySourceCurrent,
+
   responsiveUtilities,
   responsiveUtilityFamilies,
 } from "./responsive-utilities";
@@ -96,22 +91,9 @@ describe("shared responsive vocabulary", () => {
 });
 
 describe("responsive utility source", () => {
-  it("matches the generated stylesheet from the shared vocabulary and recipe candidates", () => {
-    const source = createResponsiveUtilitySource(
-      BREAKPOINT_ORDER,
-      responsiveUtilities,
-      colorRecipeUtilityCandidates,
-    );
-    const committed = readFileSync(
-      resolve(
-        dirname(fileURLToPath(import.meta.url)),
-        "../generated/layout-utilities.generated.css",
-      ),
-      "utf8",
-    );
-
-    expect(source).toBe(committed.replace(/\r\n/g, "\n"));
-  });
+  // The committed stylesheet is guarded against drift by
+  // `pnpm check:layout-utilities` (the generator's --check mode); these
+  // tests cover the serializer's own behavior.
 
   it("emits only the supplied breakpoint forms and exact unique candidates", () => {
     const source = createResponsiveUtilitySource(["base", "md", "2xl"], ["h-4", "w-4", "h-4"]);
@@ -138,18 +120,6 @@ describe("responsive utility source", () => {
   });
 });
 
-describe("responsive utility freshness", () => {
-  it("reports the committed stylesheet as current", () => {
-    const committed = resolve(
-      dirname(fileURLToPath(import.meta.url)),
-      "../generated/layout-utilities.generated.css",
-    );
-    const source = createResponsiveUtilitySource(
-      BREAKPOINT_ORDER,
-      responsiveUtilities,
-      colorRecipeUtilityCandidates,
-    );
-
-    expect(isUtilitySourceCurrent(committed, source)).toBe(true);
-  });
-});
+// The committed stylesheet's freshness is guarded by
+// `pnpm check:layout-utilities` (the generator's --check mode), which
+// regenerates from the same vocabulary and fixed candidates.

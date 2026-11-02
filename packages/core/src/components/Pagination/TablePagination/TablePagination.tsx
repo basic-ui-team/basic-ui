@@ -38,7 +38,6 @@ export const TablePagination = React.forwardRef<HTMLElement, TablePaginationProp
       maxBoundaryButtons = 1,
       shape = "rounded",
       variant: variant = "default",
-      color = "primary",
       className,
       initialPage,
       ...rest
@@ -133,7 +132,6 @@ export const TablePagination = React.forwardRef<HTMLElement, TablePaginationProp
         hasNext={hasNext}
         shape={shape}
         variant={variant}
-        color={color}
         className={className}
         renderPage={renderPage}
         renderControl={renderControl}

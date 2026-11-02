@@ -5,7 +5,6 @@ import {
   RestrictedPropsWithAs,
 } from "@basic-ui/react-utilities";
 import { BoxProps } from "../Box";
-import { PaletteColor } from "../../lib/colorRecipes/colorRecipes";
 import type { ImgHTMLAttributes } from "react";
 import { type TextFlowOverflowProps } from "../../lib";
 
@@ -110,7 +109,7 @@ export interface CardFooterProps extends BoxProps {
 }
 
 /** Text color for CardTitle/CardDescription: structural neutral, informational severity, or palette family. */
-export type CardTextColor = "default" | "muted" | PaletteColor;
+export type CardTextColor = "default" | "muted" | "inherit";
 
 /**
  * Allowed heading elements for CardTitle.

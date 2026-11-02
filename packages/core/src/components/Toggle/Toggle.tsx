@@ -12,9 +12,7 @@ import {
   toggleSizeClasses,
   toggleVariants,
   toggleThumbGeometryVariants,
-  toggleCheckedRecipe,
 } from "./toggle.variants";
-import { cr } from "../../lib/colorRecipes/colorRecipes";
 
 /**
  * Toggle (switch) component for binary on/off choices.
@@ -40,7 +38,6 @@ export const Toggle = forwardRefWithAs<ToggleOwnProps, AllowedToggleElements>(
       defaultValue = false,
       onChange,
       size = "md",
-      color = "primary",
       disabled = false,
       className,
       style,
@@ -54,7 +51,6 @@ export const Toggle = forwardRefWithAs<ToggleOwnProps, AllowedToggleElements>(
       defaultValue,
       onChange,
     });
-    const cooked = cr(color, toggleCheckedRecipe);
     const { id } = useAriaIds({ prefix: "toggle" });
     return (
       <Box
@@ -70,12 +66,11 @@ export const Toggle = forwardRefWithAs<ToggleOwnProps, AllowedToggleElements>(
             checked: Boolean(checked),
             disabled,
           }),
-          checked ? cooked.className : null,
           getResponsiveClassNames(size, (value) => toggleSizeClasses[value]),
           className,
         )}
         id={id}
-        style={{ ...cooked.style, ...style }}
+        style={style}
         {...(rest as BoxProps<As>)}
         onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
           if (disabled) {

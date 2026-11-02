@@ -1,0 +1,15 @@
+/** Shadows: plain custom properties for box shadows, outside the @theme namespaces.
+ * Used in utilities.css to provide runtime-resolvable shadow values.
+ */
+:root,
+:host {
+  --shadow-s1: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-s2: 0 1px 2px 0 rgb(0 0 0 / 0.05), 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-s3: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1),
+    0 10px 15px -3px rgb(0 0 0 / 0.1);
+  --shadow-s4: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.05),
+    0 10px 15px -3px rgb(0 0 0 / 0.1), 0 20px 25px -5px rgb(0 0 0 / 0.1);
+  --shadow-s5: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.05),
+    0 10px 15px -3px rgb(0 0 0 / 0.1), 0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 25px 50px -12px rgb(0 0 0 / 0.25);
+}

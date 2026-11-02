@@ -13,14 +13,11 @@ describe("Alert", () => {
     expect(screen.getByText("Updated")).toBeInTheDocument();
     expect(screen.getByText("Your profile was updated.")).toBeInTheDocument();
     expect(container.querySelector("svg")).toBeInTheDocument();
-    expect(container.firstChild).toHaveClass("bg-(--cr-bg)", "text-(color:--cr-text)");
-    expect((container.firstChild as HTMLElement).getAttribute("style")).toContain(
-      "--cr-bg: var(--color-sky-200)",
-    );
+    expect(container.firstChild).toHaveClass("bg-info", "text-info-foreground");
   });
 
-  it.each<["error" | "warning" | "info" | "success", "alert" | "status"]>([
-    ["error", "alert"],
+  it.each<["destructive" | "warning" | "info" | "success", "alert" | "status"]>([
+    ["destructive", "alert"],
     ["warning", "alert"],
     ["info", "status"],
     ["success", "status"],
@@ -37,12 +34,8 @@ describe("Alert", () => {
       </Alert>,
     );
 
-    expect(container.firstChild).toHaveClass("border-2", "border-(--cr-border)");
-    expect(container.firstChild).not.toHaveClass("bg-(--cr-bg)");
-    expect(container.firstChild).not.toHaveClass("bg-(--cr-bg)");
-    expect((container.firstChild as HTMLElement).getAttribute("style")).toContain(
-      "--cr-border: var(--color-amber-300)",
-    );
+    expect(container.firstChild).toHaveClass("border-2", "border-warning", "text-foreground");
+    expect(container.firstChild).not.toHaveClass("bg-warning");
   });
 
   it("supports custom icons and removes the icon slot when disabled", () => {
@@ -111,36 +104,23 @@ describe("Alert", () => {
     expect(screen.getByText("Message")).toBeInTheDocument();
   });
 
-  it("cooks a custom color override while keeping the severity role", () => {
+  it("renders a filled destructive alert from the status pair", () => {
     const { container } = renderWithProviders(
-      <Alert severity="error" color="teal">
-        Message
-      </Alert>,
+      <Alert severity="destructive">Message</Alert>,
     );
 
     expect(screen.getByRole("alert")).toBeInTheDocument();
-    expect((container.firstChild as HTMLElement).getAttribute("style")).toContain(
-      "--cr-bg: var(--color-teal-200)",
-    );
-    expect((container.firstChild as HTMLElement).getAttribute("style")).toContain(
-      "--cr-text: var(--color-teal-800)",
-    );
+    expect(container.firstChild).toHaveClass("bg-destructive", "text-destructive-foreground");
   });
 
-  it("renders a filled alert with an opaque family background", () => {
+  it("renders a filled alert with an opaque status background", () => {
     const { container } = renderWithProviders(
       <Alert severity="info" variant="filled">
         Message
       </Alert>,
     );
 
-    expect(container.firstChild).toHaveClass("bg-(--cr-bg)", "text-(color:--cr-text)");
-    expect((container.firstChild as HTMLElement).getAttribute("style")).toContain(
-      "--cr-bg: var(--color-sky-200)",
-    );
-    expect((container.firstChild as HTMLElement).getAttribute("style")).toContain(
-      "--cr-text: var(--color-sky-800)",
-    );
+    expect(container.firstChild).toHaveClass("bg-info", "text-info-foreground");
   });
 
   it("forwards refs and supports section roots", () => {

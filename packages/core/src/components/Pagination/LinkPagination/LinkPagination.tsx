@@ -42,7 +42,6 @@ export const LinkPagination = React.forwardRef<
       maxBoundaryButtons = 1,
       shape = "rounded",
       variant: variant = "default",
-      color = "primary",
       className,
       ...rest
     },
@@ -163,7 +162,6 @@ export const LinkPagination = React.forwardRef<
         hasNext={hasNext}
         shape={shape}
         variant={variant}
-        color={color}
         className={className}
         renderPage={renderPage}
         renderControl={renderControl}

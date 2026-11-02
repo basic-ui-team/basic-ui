@@ -1,0 +1,37 @@
+/*
+ * Dark mode: the same custom properties re-declared under .dark. Unlayered,
+ * so it wins over any layered theme emission on the same element, and
+ * utilities keep resolving the same variables — they follow with no
+ * JavaScript. Apps toggle the .dark class on <html>.
+ */
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+
+  --surface: oklch(0.205 0 0);
+  --surface-foreground: oklch(0.985 0 0);
+
+  --overlay: oklch(0.269 0 0);
+  --overlay-foreground: oklch(0.985 0 0);
+
+  --muted: oklch(0.205 0 0);
+  --muted-foreground: oklch(0.704 0 0);
+
+  --primary: oklch(0.79 0.15 150);
+  --primary-foreground: oklch(0.205 0 0);
+
+  --border: oklch(0.279 0 0);
+  --ring: oklch(0.65 0.08 150);
+  --input: oklch(0.279 0 0);
+
+  /* Derived-state mix pole: dark mode lightens interactive surfaces
+     toward white. */
+  --mix-pole: #fff;
+
+  --shadow-s1: 0 1px 2px 0 hsl(0 0% 100% / 0.1);
+  --shadow-s2: 0 1px 2px 0 hsl(0 0% 100% / 0.08), 0 4px 6px -1px hsl(0 0% 100% / 0.12);
+  --shadow-s3: 0 1px 3px 0 hsl(0 0% 100% / 0.1), 0 4px 6px -2px hsl(0 0% 100% / 0.1), 0 10px 15px -3px hsl(0 0% 100% / 0.12);
+  --shadow-s4: 0 1px 3px 0 hsl(0 0% 100% / 0.1), 0 4px 6px -2px hsl(0 0% 100% / 0.05), 0 10px 15px -3px hsl(0 0% 100% / 0.12), 0 20px 25px -5px hsl(0 0% 100% / 0.12);
+  --shadow-s5: 0 1px 3px 0 hsl(0 0% 100% / 0.1), 0 4px 6px -2px hsl(0 0% 100% / 0.05), 0 10px 15px -3px hsl(0 0% 100% / 0.12), 0 20px 25px -5px hsl(0 0% 100% / 0.12), 0 25px 50px -12px hsl(0 0% 100% / 0.15);
+}

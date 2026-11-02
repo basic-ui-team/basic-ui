@@ -24,8 +24,8 @@ describe("variants", () => {
   };
 
   const colorMap: Record<string, string> = {
-    default: "text-fg-base",
-    muted: "text-fg-muted",
+    default: "text-foreground",
+    muted: "text-muted-foreground",
   };
 
   const alignMap: Record<string, string> = {
@@ -117,7 +117,7 @@ describe("responsive CSS", () => {
         as="h3"
         size={{ base: "h6", lg: "h1" }}
         align={{ base: "left", md: "right" }}
-        color="green"
+       
         weight="bold"
       >
         Heading
@@ -127,8 +127,8 @@ describe("responsive CSS", () => {
     expect(markup).toContain("text-sm");
     expect(markup).toContain("lg:text-3xl");
     expect(markup).toContain("md:text-right");
-    expect(markup).toContain("text-(color:--cr-text)");
-    expect(markup).not.toMatch(/(?:md|lg):(?:font-|text-fg-|leading-)/);
+    expect(markup).toContain("text-foreground");
+    expect(markup).not.toMatch(/(?:md|lg):(?:font-|text-foreground|leading-)/);
   });
 
   it.each(["h1", "h2", "h3", "h4", "h5", "h6"] as const)(
@@ -180,17 +180,14 @@ describe("responsive CSS", () => {
   });
 });
 
-describe("palette colors", () => {
-  it("should apply palette recipe utilities and variables", () => {
-    const { container } = renderWithProviders(<Header color="teal">Test</Header>);
-    const header = container.firstChild as HTMLElement;
-    expect(header).toHaveClass("text-(color:--cr-text)");
-    expect(header.getAttribute("style")).toContain("--cr-text: var(--color-teal-700)");
-    expect(header.getAttribute("style")).toContain("--cr-text-dark: var(--color-teal-300)");
+describe("color variants", () => {
+  it("applies the muted foreground variant", () => {
+    const { container } = renderWithProviders(<Header color="muted">Test</Header>);
+    expect(container.firstChild).toHaveClass("text-muted-foreground");
   });
 
-  it("should not apply structural color classes when a palette color is provided", () => {
-    const { container } = renderWithProviders(<Header color="teal">Test</Header>);
+  it("does not apply a structural color class when muted is provided", () => {
+    const { container } = renderWithProviders(<Header color="muted">Test</Header>);
     expect(container.firstChild).not.toHaveClass(headerVariants({ color: "default" }));
   });
 });
@@ -261,7 +258,7 @@ describe("ref forwarding", () => {
 describe("accessibility", () => {
   it("should pass an axe accessibility audit", async () => {
     const { container } = renderWithProviders(
-      <Header size="h2" weight="bold" color="primary" align="center" truncate wrap="balance">
+      <Header size="h2" weight="bold" align="center" truncate wrap="balance">
         Accessibility Test Header
       </Header>,
     );

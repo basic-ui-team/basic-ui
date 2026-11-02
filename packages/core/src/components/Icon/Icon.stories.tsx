@@ -36,7 +36,6 @@ import {
   XIcon,
 } from "@basic-ui/icons";
 import { Icon } from "./Icon";
-import { PALETTE_FAMILIES } from "../../lib/colorRecipes/colorRecipes";
 
 type LibraryIcon = ComponentType<SVGProps<SVGSVGElement>>;
 
@@ -110,11 +109,6 @@ const meta: Meta<typeof Icon> = {
       control: { type: "select" },
       options: ["xs", "sm", "md", "lg", "xl"],
     },
-    color: {
-      control: { type: "select" },
-      options: ["muted", ...PALETTE_FAMILIES],
-      description: "Optional semantic color. Inherits the parent's color when omitted.",
-    },
   },
 } satisfies Meta<typeof Icon>;
 
@@ -144,9 +138,7 @@ export const Sizes: Story = {
 export const SemanticColors: Story = {
   render: () => (
     <div className="flex flex-wrap items-center gap-6">
-      {(
-        ["muted", ...PALETTE_FAMILIES] as const
-      ).map((color) => (
+      {(["default", "muted"] as const).map((color) => (
         <div key={color} className="flex flex-col items-center gap-2">
           <Icon icon={<UsersIcon />} color={color} size="lg" />
           <span className="text-sm">{color}</span>
@@ -159,7 +151,7 @@ export const SemanticColors: Story = {
 export const InheritedColor: Story = {
   render: () => (
     <div className="flex flex-wrap gap-6">
-      <div className="flex items-center gap-3 rounded-lg bg-surface-base p-4 text-green-700">
+      <div className="flex items-center gap-3 rounded-lg bg-surface p-4 text-green-700">
         <Icon icon={<SunIcon />} size="lg" />
         <span>Inherits the parent's semantic color</span>
       </div>
@@ -175,7 +167,7 @@ export const ResponsiveSizes: Story = {
   args: {
     icon: <BellIcon />,
     size: { base: "sm", md: "md", lg: "xl" },
-    color: "sky",
+
   },
   parameters: {
     docs: {
@@ -195,14 +187,13 @@ export const CustomSvg: Story = {
       </svg>
     ),
     size: "xl",
-    color: "muted",
+
   },
 };
 
 export const AccessibleMeaningfulIcon: Story = {
   args: {
     icon: <CheckCircleIcon />,
-    color: "green",
     "aria-hidden": false,
     "aria-label": "Saved successfully",
   },
@@ -218,7 +209,7 @@ export const AllIcons: Story = {
             {icons.map(([name, IconComponent]) => (
               <div
                 key={name}
-                className="flex min-h-20 flex-col items-center justify-center gap-2 rounded-lg border border-border-base p-3"
+                className="flex min-h-20 flex-col items-center justify-center gap-2 rounded-lg border border-border p-3"
               >
                 <Icon icon={<IconComponent />} size="lg" />
                 <span className="text-center text-xs">{name}</span>

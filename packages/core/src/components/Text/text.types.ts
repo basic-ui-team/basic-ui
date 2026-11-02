@@ -1,18 +1,17 @@
 import { CommonProps, ResponsiveValue, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
 import { type TextFlowOverflowProps } from "../../lib";
-import { PaletteColor } from "../../lib/colorRecipes/colorRecipes";
 
 export type AllowedTextElements = "span" | "p" | "div";
 
-/** Text color: structural neutral, informational severity, or palette family. */
-export type TextColor = "default" | "muted" | PaletteColor;
+/** Text color: structural neutral, color variant. */
+export type TextColor = "default" | "muted";
 
 export interface TextOwnProps extends CommonProps, TextFlowOverflowProps {
   /** Size of the text. @default "md" */
   size?: ResponsiveValue<"xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl">;
   /** Font weight. @default "normal" */
   weight?: "normal" | "medium" | "semibold" | "bold";
-  /** Text color: structural neutral, informational severity, or palette family. @default "default" */
+  /** Text color: structural neutral, informational severity, or color variant. @default "default" */
   color?: TextColor;
   /** Text alignment. @default "left" */
   align?: ResponsiveValue<"left" | "center" | "right">;

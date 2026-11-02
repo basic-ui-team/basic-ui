@@ -67,18 +67,6 @@ export const Default: Story = {
 };
 
 /** Palette families: resting buttons tint, the current page paints solid. */
-export const Colors: Story = {
-  args: { ...Default.args, currentPage: 3 },
-  render: (args) => {
-    return (
-      <Flex direction="column" align="center" className="gap-3">
-        {(["teal", "violet", "rose", "amber"] as const).map((color) => (
-          <TablePagination key={color} {...args} color={color} />
-        ))}
-      </Flex>
-    );
-  },
-};
 
 /** Custom shape and sibling/boundary button counts. */
 export const PaginationShapes: Story = {

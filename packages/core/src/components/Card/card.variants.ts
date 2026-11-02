@@ -1,5 +1,4 @@
 import { cva } from "class-variance-authority";
-import type { ColorRecipe } from "../../lib/colorRecipes/colorRecipes";
 import { textWrapClasses } from "../../lib";
 
 export const cardSectionSpacingClasses = {
@@ -51,25 +50,25 @@ export const cardImageAspectRatioClasses = {
 export const cardRootVariants = cva("transition-all duration-normal ease-spring", {
   variants: {
     variant: {
-      default: "bg-surface-base rounded-lg shadow-s2 hover:shadow-s3 active:shadow-s1",
-      elevated: "bg-surface-base rounded-lg shadow-s4 hover:shadow-s5 active:shadow-s3",
+      default: "bg-surface rounded-lg shadow-s2 hover:shadow-s3 active:shadow-s1",
+      elevated: "bg-surface rounded-lg shadow-s4 hover:shadow-s5 active:shadow-s3",
       outlined:
-        "bg-surface-base border border-border-base rounded-lg shadow-s2 hover:shadow-s3 active:shadow-s1", // duplication so we don't set a base styling.
+        "bg-surface border border-border rounded-lg shadow-s2 hover:shadow-s3 active:shadow-s1", // duplication so we don't set a base styling.
       unstyled: "",
     },
     isLink: {
-      true: "no-underline text-inherit decoration-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current ring-offset-bg-base focus-visible:ring-offset-2",
+      true: "no-underline text-inherit decoration-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current ring-offset-background focus-visible:ring-offset-2",
       false: "",
     },
     interaction: {
       static: "",
       clickable:
-        "cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current ring-offset-bg-base focus-visible:ring-offset-2",
+        "cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current ring-offset-background focus-visible:ring-offset-2",
       draggable: "cursor-move",
-      both: "cursor-move focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current ring-offset-bg-base focus-visible:ring-offset-2",
+      both: "cursor-move focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current ring-offset-background focus-visible:ring-offset-2",
     },
     selected: {
-      true: "bg-bg-inverted text-fg-inverted",
+      true: "bg-foreground text-background",
       false: "",
     },
     disabled: {
@@ -90,7 +89,7 @@ export const cardSectionVariants = cva("", {
   variants: {
     variant: cardSectionSpacingClasses,
     sticky: {
-      true: "sticky bottom-0 z-sticky bg-surface-base/5 backdrop-blur-xs",
+      true: "sticky bottom-0 z-sticky bg-surface/5 backdrop-blur-xs",
       false: "",
     },
     disabled: {
@@ -127,9 +126,8 @@ export const cardTitleVariants = cva("font-sans font-normal leading-tight", {
       bold: "font-bold",
     },
     color: {
-      default: "text-fg-base",
-      muted: "text-fg-muted",
-      palette: "",
+      default: "text-foreground",
+      muted: "text-muted-foreground",
       inherit: "",
     },
     align: cardTextAlignClasses,
@@ -159,9 +157,8 @@ export const cardDescriptionVariants = cva("font-sans", {
       bold: "font-bold",
     },
     color: {
-      default: "text-fg-base",
-      muted: "text-fg-muted",
-      palette: "",
+      default: "text-foreground",
+      muted: "text-muted-foreground",
       inherit: "",
     },
     align: cardTextAlignClasses,
@@ -201,6 +198,3 @@ export const cardImageFitVariants = cva("inline-block overflow-hidden", {
   },
 });
 
-export const cardTextPaletteRecipe: ColorRecipe = {
-  text: { value: "700", dark: { value: "300" } },
-};

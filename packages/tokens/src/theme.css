@@ -1,0 +1,34 @@
+/*
+ * The basic-ui default theme. basic-ui is designed to work in a very
+ * familiar way with Tailwind CSS: plain CSS custom properties against
+ * Tailwind v4's native theming, with no JavaScript in the styling path.
+ *
+ * This entry composes the theme from focused parts, merged by Tailwind
+ * across the @import graph:
+ *
+ *   theme/semantic.css   consumer-owned pair tokens (the only color source)
+ *   theme/scales.css     radius, typography, motion, stacking, spacing
+ *   theme/shadows.css    shadow values (plain custom properties; see file)
+ *   theme/dark.css       .dark overrides for tokens and shadows
+ *   theme/utilities.css  @utility shims Tailwind cannot resolve at runtime
+ *
+ * The parts after shadows.css matter: dark.css must follow it in the
+ * cascade (equal specificity, later wins).
+ *
+ * Consumers re-theme by overriding the custom properties — in :root, in
+ * @theme blocks, in .dark, or on any scoped selector; utilities resolve
+ * the variables where they are used, so overrides cascade with no rebuild
+ * and no JavaScript.
+ */
+
+@import "tailwindcss";
+
+/* Dark mode is class-based (apps toggle .dark on <html>). Without this,
+   Tailwind's dark: variant follows the OS preference instead. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@import "./theme/semantic.css";
+@import "./theme/scales.css";
+@import "./theme/shadows.css";
+@import "./theme/dark.css";
+@import "./theme/utilities.css";

@@ -1,7 +1,6 @@
 export { Badge } from "./Badge";
 
 export type {
-  BadgeColor,
   BadgeCountProps,
   BadgeDotProps,
   BadgePosition,

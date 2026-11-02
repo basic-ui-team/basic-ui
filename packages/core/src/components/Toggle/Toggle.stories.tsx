@@ -1,7 +1,6 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Toggle } from "./Toggle";
-import { PALETTE_FAMILIES } from "../../lib/colorRecipes/colorRecipes";
 import { Box } from "../Box";
 import { Flex } from "../Flex";
 import { Text } from "../Text";
@@ -17,7 +16,6 @@ const meta: Meta<typeof Toggle> = {
     size: { control: "select", options: ["sm", "md", "lg"] },
     color: {
       control: "select",
-      options: [...PALETTE_FAMILIES],
     },
     disabled: { control: "boolean" },
   },
@@ -47,17 +45,27 @@ export const Sizes: Story = {
   ),
 };
 
-export const Colors: Story = {
+export const States: Story = {
   render: () => (
     <Flex direction="row" className="gap-3" align="start" wrap="wrap">
-      {PALETTE_FAMILIES.map((color) => (
-        <Flex key={color} className="gap-2" align="center">
-          <Toggle color={color} defaultValue />
-          <Text as="span" size="sm">
-            {color}
-          </Text>
-        </Flex>
-      ))}
+      <Flex className="gap-2" align="center">
+        <Toggle defaultValue />
+        <Text as="span" size="sm">
+          checked
+        </Text>
+      </Flex>
+      <Flex className="gap-2" align="center">
+        <Toggle />
+        <Text as="span" size="sm">
+          unchecked
+        </Text>
+      </Flex>
+      <Flex className="gap-2" align="center">
+        <Toggle disabled />
+        <Text as="span" size="sm">
+          disabled
+        </Text>
+      </Flex>
     </Flex>
   ),
 };

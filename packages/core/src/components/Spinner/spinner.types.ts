@@ -1,7 +1,6 @@
 import { CommonProps, ResponsiveValue, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
-import { PaletteColor } from "../../lib/colorRecipes/colorRecipes";
 
-export type SpinnerColor = "default" | "muted" | PaletteColor;
+export type SpinnerColor = "default" | "muted";
 export type SpinnerSizes = "xs" | "sm" | "md" | "lg" | "xl";
 
 export type AllowedSpinnerElements = "div" | "span";

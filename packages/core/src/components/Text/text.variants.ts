@@ -1,5 +1,4 @@
 import { cva } from "class-variance-authority";
-import type { ColorRecipe } from "../../lib/colorRecipes/colorRecipes";
 import { textWrapClasses } from "../../lib";
 
 export const textSizeClasses = {
@@ -28,9 +27,8 @@ export const textVariants = cva("font-sans", {
       bold: "font-bold",
     },
     color: {
-      default: "text-fg-base",
-      muted: "text-fg-muted",
-      palette: "",
+      default: "text-foreground",
+      muted: "text-muted-foreground",
     },
     align: textAlignClasses,
     truncate: {
@@ -47,7 +45,3 @@ export const textVariants = cva("font-sans", {
     wrap: "wrap",
   },
 });
-
-export const textPaletteRecipe: ColorRecipe = {
-  text: { value: "700", dark: { value: "300" } },
-};

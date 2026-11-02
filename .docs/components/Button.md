@@ -5,9 +5,7 @@ A flexible, accessible button component with multiple variants, colors, sizes, a
 ```tsx
 import { Button } from "@basic-ui/core";
 
-<Button variant="solid" color="primary">
-  Click me
-</Button>;
+<Button variant="solid">Click me</Button>;
 ```
 
 ## Overview
@@ -15,7 +13,6 @@ import { Button } from "@basic-ui/core";
 The `Button` component is designed for consistent, accessible user interactions across your application. It supports:
 
 - Multiple visual variants (solid, ghost, outline, link)
-- Palette color families (e.g. `primary`, `secondary`, `teal`, `rose`) from the theme
 - Responsive sizing (sm, md, lg)
 - Loading states with optional custom icons and text
 - Disabled states with proper accessibility
@@ -27,19 +24,19 @@ The `Button` component is designed for consistent, accessible user interactions 
 ### Basic Usage
 
 ```tsx
-<Button variant="solid" color="primary">
+<Button variant="solid">
   Primary Button
 </Button>
 
-<Button variant="ghost" color="secondary">
+<Button variant="ghost">
   Ghost Button
 </Button>
 
-<Button variant="outline" color="rose">
+<Button variant="outline">
   Outline Button
 </Button>
 
-<Button variant="link" color="sky">
+<Button variant="link">
   Link Button
 </Button>
 ```
@@ -69,7 +66,7 @@ supplied icon; pass a styled icon element or `Spinner` when needed.
 </Button>
 
 // With a consumer-styled spinner
-<Button loading loadingIcon={<Spinner as="span" size="sm" color="primary" />}>
+<Button loading loadingIcon={<Spinner as="span" size="sm" />}>
   Loading
 </Button>
 ```
@@ -89,16 +86,15 @@ supplied icon; pass a styled icon element or `Spinner` when needed.
 
 ```tsx
 // Native anchor
-<Button as="a" href="/page" color="primary">
+<Button as="a" href="/page">
   Navigate
 </Button>
 
 // With custom link component (Next.js, React Router, etc.)
-<Button 
-  as="a" 
-  linkComponent={NextLink} 
+<Button
+  as="a"
+  linkComponent={NextLink}
   href="/docs"
-  color="primary"
 >
   Go to Docs
 </Button>
@@ -108,29 +104,26 @@ supplied icon; pass a styled icon element or `Spinner` when needed.
 
 ```tsx
 const handleClick = () => {
-  console.log('Button clicked');
+  console.log("Button clicked");
 };
 
-<Button onClick={handleClick}>
-  Click Me
-</Button>
+<Button onClick={handleClick}>Click Me</Button>;
 ```
 
 ## API
 
-| Prop | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| `variant` | `'solid' \| 'ghost' \| 'outline' \| 'link'` | `'solid'` | Visual style variant of the button |
-| `color` | `PaletteColor` | `'red'` | Any palette family: Tailwind's (e.g. `'teal'`, `'rose'`) or the brand ramps (`'primary'`, `'secondary'`) |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Button size (responsive values supported) |
-| `disabled` | `boolean` | `false` | Disables the button and applies disabled styles |
-| `loading` | `boolean` | `false` | Marks the button busy and disables interaction |
-| `loadingText` | `string` | — | Replaces children while loading; otherwise children remain visible |
-| `loadingIcon` | `React.ReactNode` | — | Optional loading icon element with consumer-owned styling; no default icon |
-| `as` | `'button' \| 'a'` | `'button'` | Polymorphic element type |
-| `linkComponent` | `React.ElementType` | — | Custom link component (Next.js Link, React Router Link, etc.) |
-| `className` | `string` | — | Additional CSS classes |
-| `children` | `React.ReactNode` | — | Button content |
+| Prop            | Type                                        | Default    | Description                                                                |
+| --------------- | ------------------------------------------- | ---------- | -------------------------------------------------------------------------- |
+| `variant`       | `'solid' \| 'ghost' \| 'outline' \| 'link'` | `'solid'`  | Visual style variant of the button                                         |
+| `size`          | `'sm' \| 'md' \| 'lg'`                      | `'md'`     | Button size (responsive values supported)                                  |
+| `disabled`      | `boolean`                                   | `false`    | Disables the button and applies disabled styles                            |
+| `loading`       | `boolean`                                   | `false`    | Marks the button busy and disables interaction                             |
+| `loadingText`   | `string`                                    | —          | Replaces children while loading; otherwise children remain visible         |
+| `loadingIcon`   | `React.ReactNode`                           | —          | Optional loading icon element with consumer-owned styling; no default icon |
+| `as`            | `'button' \| 'a'`                           | `'button'` | Polymorphic element type                                                   |
+| `linkComponent` | `React.ElementType`                         | —          | Custom link component (Next.js Link, React Router Link, etc.)              |
+| `className`     | `string`                                    | —          | Additional CSS classes                                                     |
+| `children`      | `React.ReactNode`                           | —          | Button content                                                             |
 
 ## Accessibility
 

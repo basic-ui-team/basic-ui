@@ -8,17 +8,17 @@ import {
   alertContentVariants,
   alertActionVariants,
   alertDismissButtonVariants,
-  alertPaletteRecipe,
+  alertSeverityClasses,
+  alertSeverityIconClasses,
 } from "./alert.variants";
 import { Box, BoxProps } from "../Box";
 import { Icon } from "../Icon";
-import { cr, type PaletteColor } from "../../lib/colorRecipes/colorRecipes";
 
-const ICON_MAP: Record<AlertSeverity, { icon: React.ComponentType; color: string }> = {
-  success: { icon: CheckCircleIcon, color: "green" },
-  error: { icon: XCircleIcon, color: "red" },
-  warning: { icon: AlertTriangleIcon, color: "amber" },
-  info: { icon: InfoIcon, color: "sky" },
+const ICON_MAP: Record<AlertSeverity, React.ComponentType> = {
+  success: CheckCircleIcon,
+  warning: AlertTriangleIcon,
+  destructive: XCircleIcon,
+  info: InfoIcon,
 };
 
 /**
@@ -28,7 +28,7 @@ const ICON_MAP: Record<AlertSeverity, { icon: React.ComponentType; color: string
  * The alert content is provided via `children`. An optional `title` prop can be used for a heading.
  *
  * Accessibility:
- * - Uses `role="alert"` for error/warning (time-sensitive)
+ * - Uses `role="alert"` for destructive/warning (time-sensitive)
  * - Uses `role="status"` for info/success (polite notifications)
  * - Includes semantic icons and title support
  * - Dismissible alerts include accessible close button
@@ -37,9 +37,9 @@ const ICON_MAP: Record<AlertSeverity, { icon: React.ComponentType; color: string
  * // Simple info alert
  * <Alert severity="info">This is an informational message</Alert>
  *
- * // Controlled, dismissible error alert
+ * // Controlled, dismissible destructive alert
  * <Alert
- *   severity="error"
+ *   severity="destructive"
  *   title="Error"
  *   open={showAlert}
  *   onOpenChange={setShowAlert}
@@ -54,7 +54,6 @@ export const Alert = forwardRefWithAs<AlertOwnProps, AllowedAlertElements>(
       as,
       severity = "info",
       variant = "filled",
-      color,
       icon,
       title,
       action,
@@ -73,7 +72,7 @@ export const Alert = forwardRefWithAs<AlertOwnProps, AllowedAlertElements>(
 
     const Comp = (as || "div") as As;
     const iconElement =
-      icon === false ? null : icon ?? React.createElement(ICON_MAP[severity].icon);
+      icon === false ? null : icon ?? React.createElement(ICON_MAP[severity]);
     const hasActions = Boolean(action) || dismissible;
 
     if (!isOpen) {
@@ -81,21 +80,23 @@ export const Alert = forwardRefWithAs<AlertOwnProps, AllowedAlertElements>(
     }
 
     // Semantic role: alert for urgent messages, status for polite notifications
-    const role = severity === "error" || severity === "warning" ? "alert" : "status";
+    const role = severity === "destructive" || severity === "warning" ? "alert" : "status";
 
-    const effectiveColor = color ?? (ICON_MAP[severity].color as PaletteColor);
-    const cooked = cr(effectiveColor, alertPaletteRecipe[variant]);
+    const severityClasses = alertSeverityClasses[severity][variant];
+    const iconColor = variant === "filled" ? undefined : alertSeverityIconClasses[severity];
 
     return (
       <Box
         as={Comp}
         ref={ref}
         role={role}
-        className={cn(alertVariants({ variant }), cooked?.className, className)}
-        style={{ ...cooked.style, ...style }}
+        className={cn(alertVariants({ variant }), severityClasses, className)}
+        style={style}
         {...(props as BoxProps<As>)}
       >
-        {iconElement !== null && <Icon icon={iconElement} />}
+        {iconElement !== null && (
+          <Icon icon={iconElement} className={iconColor} />
+        )}
 
         <Box as="div" className={alertContentVariants()}>
           {title && <Box className={alertTitleVariants()}>{title}</Box>}
@@ -121,5 +122,3 @@ export const Alert = forwardRefWithAs<AlertOwnProps, AllowedAlertElements>(
     );
   },
 );
-
-(Alert as unknown as { displayName?: string }).displayName = "Alert";

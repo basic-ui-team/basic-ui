@@ -95,34 +95,6 @@ export const ColorVariants: Story = {
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
         ut labore et dolore magna aliqua." (Muted)
       </Text>
-      <Text color="primary">
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua." (Primary)
-      </Text>
-      <Text color="secondary">
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua." (Secondary)
-      </Text>
-      <Text color="red">
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua." (Red)
-      </Text>
-      <Text color="green">
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua." (Green)
-      </Text>
-      <Text color="amber">
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua." (Amber)
-      </Text>
-      <Text color="sky">
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua." (Sky)
-      </Text>
-      <Text color="rose">
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua." (Rose)
-      </Text>
     </div>
   ),
 };
@@ -224,7 +196,7 @@ export const PolymorphicVariants: Story = {
 export const CombinedVariants: Story = {
   render: () => (
     <div className="flex flex-col gap-3">
-      <Text size="lg" weight="bold" color="primary" align="center" wrap="balance">
+      <Text size="lg" weight="bold" align="center" wrap="balance">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
         ut labore et dolore magna aliqua." (Combined Variants)
       </Text>

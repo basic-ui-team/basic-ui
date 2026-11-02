@@ -17,4 +17,12 @@ describe("cn utility function", () => {
   it("handles falsy values gracefully", () => {
     expect(cn("text-sm", null, undefined, false, "font-bold")).toBe("text-sm font-bold");
   });
+
+  it("lets consumer classes win conflicts against library token utilities", () => {
+    expect(cn("bg-primary", "bg-teal-700")).toBe("bg-teal-700");
+    expect(cn("text-primary-foreground", "text-teal-50")).toBe("text-teal-50");
+    expect(cn("bg-primary hover:bg-primary-hover", "bg-teal-700")).toBe(
+      "hover:bg-primary-hover bg-teal-700",
+    );
+  });
 });

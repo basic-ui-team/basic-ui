@@ -42,17 +42,15 @@ import { renderToString } from "react-dom/server";
     });
   });
 
-  describe("palette colors", () => {
-    it("should apply palette recipe utilities and variables", () => {
-      const { container } = renderWithProviders(<Text color="teal">Test</Text>);
+  describe("color variants", () => {
+    it("applies the muted foreground variant", () => {
+      const { container } = renderWithProviders(<Text color="muted">Test</Text>);
       const el = container.firstChild as HTMLElement;
-      expect(el).toHaveClass("text-(color:--cr-text)");
-      expect(el.getAttribute("style")).toContain("--cr-text: var(--color-teal-700)");
-      expect(el.getAttribute("style")).toContain("--cr-text-dark: var(--color-teal-300)");
+      expect(el).toHaveClass("text-muted-foreground");
     });
 
-    it("should not apply structural color classes when a palette color is provided", () => {
-      const { container } = renderWithProviders(<Text color="teal">Test</Text>);
+    it("does not apply a structural color class when muted is provided", () => {
+      const { container } = renderWithProviders(<Text color="muted">Test</Text>);
       expect(container.firstChild).not.toHaveClass(textVariants({ color: "default" }));
     });
   });
@@ -104,7 +102,7 @@ import { renderToString } from "react-dom/server";
           <Text
             size={{ base: "xs", lg: "2xl" }}
             align={{ base: "center", md: "right" }}
-            color="sky"
+           
             weight="semibold"
           >
             Text
@@ -113,8 +111,8 @@ import { renderToString } from "react-dom/server";
         expect(markup).toContain("text-xs");
         expect(markup).toContain("lg:text-2xl");
         expect(markup).toContain("md:text-right");
-        expect(markup).toContain("text-(color:--cr-text)");
-        expect(markup).not.toMatch(/(?:md|lg):(?:font-|text-fg-)/);
+        expect(markup).toContain("text-foreground");
+        expect(markup).not.toMatch(/(?:md|lg):(?:font-|text-foreground)/);
       });
 
       it("restores flow after truncation and keeps full-text attributes stable", () => {
@@ -176,7 +174,7 @@ import { renderToString } from "react-dom/server";
 
     it("should pass an axe accessibility audit", async () => {
       const { container } = renderWithProviders(
-        <Text size="lg" weight="bold" color="primary" align="center" truncate wrap="balance">
+        <Text size="lg" weight="bold" align="center" truncate wrap="balance">
           Accessibility Test Text
         </Text>,
       );

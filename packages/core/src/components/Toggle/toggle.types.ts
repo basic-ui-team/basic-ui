@@ -1,5 +1,4 @@
 import { CommonProps, ResponsiveValue, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
-import { PaletteColor } from "../../lib/colorRecipes/colorRecipes";
 
 type toggleSizes = "sm" | "md" | "lg";
 
@@ -15,7 +14,6 @@ export interface ToggleOwnProps extends CommonProps {
   /** Size of the toggle, which can be responsive. */
   size?: ResponsiveValue<toggleSizes>;
   /** Palette family applied to the track when the switch is on. @default "primary" */
-  color?: PaletteColor;
   /** If true, disables the toggle. */
   disabled?: boolean;
 }

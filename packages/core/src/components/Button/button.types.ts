@@ -1,8 +1,7 @@
 import { ResponsiveValue } from "@basic-ui/react-utilities";
 import { CommonProps, RestrictedPropsWithAs } from "@basic-ui/react-utilities";
-import type { PaletteColor } from "../../lib/colorRecipes/colorRecipes";
 
-type buttonVariants = "solid" | "ghost" | "outline" | "link";
+type buttonVariants = "default" | "destructive" | "outline" | "ghost" | "link";
 type buttonSizes = "sm" | "md" | "lg";
 export type AllowedButtonElements = "button" | "a";
 
@@ -11,8 +10,6 @@ export interface ButtonOwnProps extends CommonProps {
   variant?: buttonVariants;
   /** Size of the button, which can be responsive. */
   size?: ResponsiveValue<buttonSizes>;
-  /** Color of the button. */
-  color?: PaletteColor;
   /** If true, disables the button and applies appropriate disabled styles and attributes. */
   disabled?: boolean;
   /** If true, marks the button busy and disables interaction. */

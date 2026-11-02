@@ -1,4 +1,4 @@
-import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { copyFileSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
@@ -61,16 +61,20 @@ function stageStyles(
 beforeAll(() => {
   directory = mkdtempSync(join(tmpdir(), "basic-ui-responsive-css-"));
 
-  // Stage the exported CSS layout so tests do not depend on a previous package build.
   stageStyles(corePackage, coreRoot, {
     "src/styles.css": corePackage.exports["./styles.css"],
     "src/generated/layout-utilities.generated.css":
       "./dist/generated/layout-utilities.generated.css",
   });
+  const themePartStyles = Object.fromEntries(
+    readdirSync(resolve(coreRoot, "../tokens/src/theme")).map((file) => [
+      `src/theme/${file}`,
+      `./dist/theme/${file}`,
+    ]),
+  );
   stageStyles(tokensPackage, resolve(coreRoot, "../tokens"), {
-    "src/generated/styles/theme.css": tokensPackage.exports["./styles/theme.css"],
-    "src/generated/styles/palette-static.css":
-      tokensPackage.exports["./styles/palette-static.css"],
+    "src/theme.css": tokensPackage.exports["./theme.css"],
+    ...themePartStyles,
   });
   generatedPath = join(
     directory,
@@ -93,9 +97,11 @@ async function compileFixture(generatedSource?: string, theme = "") {
   const compiler = await compile(`${fixture}\n${theme}`, {
     base: directory,
     loadStylesheet: async (id: string, base: string) => {
-      const path = require.resolve(id === "tailwindcss" ? "tailwindcss/index.css" : id, {
-        paths: [base, coreRoot],
-      });
+      const path = id.startsWith(".")
+        ? resolve(base, id)
+        : require.resolve(id === "tailwindcss" ? "tailwindcss/index.css" : id, {
+            paths: [base, coreRoot],
+          });
       return {
         path,
         base: dirname(path),
@@ -108,11 +114,6 @@ async function compileFixture(generatedSource?: string, theme = "") {
   });
 
   expect(compiler.root).toBe("none");
-  // Automatic detection is off; the only registered source is the package's
-  // self-registration (`@source "./"` in the shipped stylesheet), pointing at
-  // the package dist for consumer builds to scan. Component-authored literal
-  // coverage is asserted by verify-package's consumer build, not here — this
-  // file verifies the responsive safelist vocabulary.
   expect(compiler.sources).toEqual([
     {
       base: join(directory, "node_modules", "@basic-ui", "core", "dist"),
@@ -269,41 +270,23 @@ describe("responsive utilities through the public CSS entry", () => {
   });
 });
 
-describe("color recipe utilities in the public CSS entry", () => {
-  it("generates recipe channel utilities from the safelist", async () => {
+describe("semantic token utilities in the public CSS entry", () => {
+  it("generates bridge utilities that resolve the consumer variables", async () => {
     const css = await compileFixture();
-    // Recipe candidates are fixed utilities: no responsive prefixes apply.
-    const escape = (utility: string) => utility.replace(/[^a-zA-Z0-9_-]/g, "\\$&");
-    for (const utility of [
-      "bg-(--cr-bg)",
-      "hover:bg-(--cr-bg-hover)",
-      "active:bg-(--cr-bg-active)",
-      "text-(color:--cr-text)",
-      "border-(--cr-border)",
-      "dark:bg-(--cr-bg-dark)",
-      "dark:hover:bg-(--cr-bg-hover-dark)",
-    ]) {
-      expect(css, `Missing CSS for ${utility}`).toContain(`.${escape(utility)} {`);
-    }
-    expect(css).toContain("background-color: var(--cr-bg)");
-    expect(css).toContain("color: var(--cr-text)");
+    expect(css).toContain(".bg-primary {");
+    expect(css).toContain("background-color: var(--primary)");
+    expect(css).toContain(".text-muted-foreground {");
+    expect(css).toContain("color: var(--muted-foreground)");
   });
 
-  it("emits palette theme variables statically for recipes", async () => {
+  it("always emits the consumer-owned token values", async () => {
     const css = await compileFixture();
-    // Previously tree-shaken families must be present regardless of usage.
-    for (const variable of [
-      "--color-rose-700:",
-      "--color-violet-700:",
-      "--color-emerald-700:",
-      "--color-primary-700:",
-      "--color-white:",
-    ]) {
+    for (const variable of ["--primary:", "--background:", "--destructive:"]) {
       expect(css).toContain(variable);
     }
   });
 
-  it("stays bounded by the recipe channels, not the color palette", async () => {
+  it("stays bounded by the component-authored vocabulary", async () => {
     const css = await compileFixture();
     expect(css).not.toContain(".bg-teal-700");
     expect(css).not.toContain(".bg-violet-700");

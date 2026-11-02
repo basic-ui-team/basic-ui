@@ -1,0 +1,166 @@
+/*
+ * Utility shims for names Tailwind v4 cannot resolve to custom properties at
+ * runtime:
+ *  - duration-* accepts bare numbers only (no --duration-* utility namespace)
+ *  - z-* and opacity-* accept bare numbers only
+ *  - shadow-* utilities inline theme values (see shadows.css)
+ *
+ * Each shim resolves the theme variable, keeping the value overridable at
+ * runtime (including by the dark.css overrides). The shadow shims preserve
+ * Tailwind's composed box-shadow, so rings and inset shadows still combine.
+ */
+
+@utility duration-fast {
+  transition-duration: var(--duration-fast);
+}
+
+@utility duration-normal {
+  transition-duration: var(--duration-normal);
+}
+
+@utility duration-slow {
+  transition-duration: var(--duration-slow);
+}
+
+@utility z-base {
+  z-index: var(--z-index-base);
+}
+
+@utility z-elevated {
+  z-index: var(--z-index-elevated);
+}
+
+@utility z-docked {
+  z-index: var(--z-index-docked);
+}
+
+@utility z-dropdown {
+  z-index: var(--z-index-dropdown);
+}
+
+@utility z-sticky {
+  z-index: var(--z-index-sticky);
+}
+
+@utility z-banner {
+  z-index: var(--z-index-banner);
+}
+
+@utility z-overlay {
+  z-index: var(--z-index-overlay);
+}
+
+@utility z-modal {
+  z-index: var(--z-index-modal);
+}
+
+@utility z-popover {
+  z-index: var(--z-index-popover);
+}
+
+@utility z-toast {
+  z-index: var(--z-index-toast);
+}
+
+@utility z-tooltip {
+  z-index: var(--z-index-tooltip);
+}
+
+@utility opacity-base {
+  opacity: var(--opacity-base);
+}
+
+@utility opacity-muted {
+  opacity: var(--opacity-muted);
+}
+
+@utility opacity-disabled {
+  opacity: var(--opacity-disabled);
+}
+
+@utility opacity-hover {
+  opacity: var(--opacity-hover);
+}
+
+@utility opacity-overlay {
+  opacity: var(--opacity-overlay);
+}
+
+@utility shadow-s1 {
+  --tw-shadow: var(--shadow-s1);
+  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+}
+
+@utility shadow-s2 {
+  --tw-shadow: var(--shadow-s2);
+  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+}
+
+@utility shadow-s3 {
+  --tw-shadow: var(--shadow-s3);
+  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+}
+
+@utility shadow-s4 {
+  --tw-shadow: var(--shadow-s4);
+  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+}
+
+@utility shadow-s5 {
+  --tw-shadow: var(--shadow-s5);
+  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+}
+
+/* Derived interactive states: a consumer overriding one token gets
+   consistent hover/active ramps in both modes — the mix pole
+   (--mix-pole, flipped in dark.css) carries the mode, so no dark: shim
+   variants exist. Bounded set: channels x interactive roles x states;
+   static surfaces (status fills on Alert) do not need states.
+   Tailwind wraps color-mix in @supports with the plain token fallback. */
+@utility bg-primary-hover {
+  background-color: color-mix(in oklab, var(--primary) 85%, var(--mix-pole));
+}
+
+@utility bg-primary-active {
+  background-color: color-mix(in oklab, var(--primary) 75%, var(--mix-pole));
+}
+
+@utility text-primary-hover {
+  color: color-mix(in oklab, var(--primary) 85%, var(--mix-pole));
+}
+
+@utility text-primary-active {
+  color: color-mix(in oklab, var(--primary) 75%, var(--mix-pole));
+}
+
+@utility border-primary-hover {
+  border-color: color-mix(in oklab, var(--primary) 85%, var(--mix-pole));
+}
+
+@utility border-primary-active {
+  border-color: color-mix(in oklab, var(--primary) 75%, var(--mix-pole));
+}
+
+@utility bg-destructive-hover {
+  background-color: color-mix(in oklab, var(--destructive) 85%, var(--mix-pole));
+}
+
+@utility bg-destructive-active {
+  background-color: color-mix(in oklab, var(--destructive) 75%, var(--mix-pole));
+}
+
+@utility text-destructive-hover {
+  color: color-mix(in oklab, var(--destructive) 85%, var(--mix-pole));
+}
+
+@utility border-destructive-hover {
+  border-color: color-mix(in oklab, var(--destructive) 85%, var(--mix-pole));
+}
+
+@utility bg-muted-hover {
+  background-color: color-mix(in oklab, var(--muted) 88%, var(--mix-pole));
+}
+
+@utility bg-muted-active {
+  background-color: color-mix(in oklab, var(--muted) 80%, var(--mix-pole));
+}

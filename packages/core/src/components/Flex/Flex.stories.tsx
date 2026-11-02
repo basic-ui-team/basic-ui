@@ -110,25 +110,25 @@ export const Align: Story = {
   render: () => (
     <Flex direction="column" className="gap-3">
       <Header size="h4">Align variants</Header>
-      <Flex align="start" className="gap-3 border border-border-base p-2">
+      <Flex align="start" className="gap-3 border border-border p-2">
         <Text className="border p-2 h-8">Start A</Text>
         <Text className="border p-2 h-16">Start B (tall)</Text>
         <Text className="border p-2 h-12">Start C</Text>
       </Flex>
 
-      <Flex align="center" className="gap-3 border border-border-base p-2">
+      <Flex align="center" className="gap-3 border border-border p-2">
         <Text className="border p-2 h-8">Center A</Text>
         <Text className="border p-2 h-16">Center B (tall)</Text>
         <Text className="border p-2 h-12">Center C</Text>
       </Flex>
 
-      <Flex align="end" className="gap-3 border border-border-base p-2">
+      <Flex align="end" className="gap-3 border border-border p-2">
         <Text className="border p-2 h-8">End A</Text>
         <Text className="border p-2 h-16">End B (tall)</Text>
         <Text className="border p-2 h-12">End C</Text>
       </Flex>
 
-      <Flex align="stretch" className="gap-3 border border-border-base p-2">
+      <Flex align="stretch" className="gap-3 border border-border p-2">
         <Text className="border p-2">Stretch A</Text>
         <Text className="border p-2">Stretch B</Text>
         <Text className="border p-2">Stretch C</Text>
@@ -142,37 +142,37 @@ export const Justify: Story = {
     <Flex direction="column" className="gap-3">
       <Header size="h4">Justify variants</Header>
 
-      <Flex justify="start" className="gap-3 border border-border-base p-2">
+      <Flex justify="start" className="gap-3 border border-border p-2">
         <Text className="border p-2">Start 1</Text>
         <Text className="border p-2">Start 2</Text>
         <Text className="border p-2">Start 3</Text>
       </Flex>
 
-      <Flex justify="center" className="gap-3 border border-border-base p-2">
+      <Flex justify="center" className="gap-3 border border-border p-2">
         <Text className="border p-2">Center 1</Text>
         <Text className="border p-2">Center 2</Text>
         <Text className="border p-2">Center 3</Text>
       </Flex>
 
-      <Flex justify="end" className="gap-3 border border-border-base p-2">
+      <Flex justify="end" className="gap-3 border border-border p-2">
         <Text className="border p-2">End 1</Text>
         <Text className="border p-2">End 2</Text>
         <Text className="border p-2">End 3</Text>
       </Flex>
 
-      <Flex justify="between" className="gap-3 border border-border-base p-2">
+      <Flex justify="between" className="gap-3 border border-border p-2">
         <Text className="border p-2">Between 1</Text>
         <Text className="border p-2">Between 2</Text>
         <Text className="border p-2">Between 3</Text>
       </Flex>
 
-      <Flex justify="around" className="gap-3 border border-border-base p-2">
+      <Flex justify="around" className="gap-3 border border-border p-2">
         <Text className="border p-2">Around 1</Text>
         <Text className="border p-2">Around 2</Text>
         <Text className="border p-2">Around 3</Text>
       </Flex>
 
-      <Flex justify="evenly" className="gap-3 border border-border-base p-2">
+      <Flex justify="evenly" className="gap-3 border border-border p-2">
         <Text className="border p-2">Evenly 1</Text>
         <Text className="border p-2">Evenly 2</Text>
         <Text className="border p-2">Evenly 3</Text>

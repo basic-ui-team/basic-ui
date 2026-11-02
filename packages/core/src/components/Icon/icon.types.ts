@@ -1,8 +1,7 @@
 import React from "react";
 import type { ResponsiveValue } from "@basic-ui/react-utilities";
-import { PaletteColor } from "../../lib/colorRecipes/colorRecipes";
 
-export type IconColor = "muted" | PaletteColor;
+export type IconColor = "default" | "muted";
 
 type IconSize = "xs" | "sm" | "md" | "lg" | "xl";
 

@@ -111,20 +111,16 @@ describe("TablePagination", () => {
     expect(screen.getByRole("navigation")).toHaveClass("test-class");
     });
 
-  it("cooks the active page solid and resting buttons tinted", () => {
+  it("styles the active page from the brand token", () => {
     renderWithProviders(
-      <TablePagination pageCount={5} currentPage={2} color="teal" onPageChange={() => {}} />,
+      <TablePagination pageCount={5} currentPage={2} onPageChange={() => {}} />,
     );
 
     const active = screen.getByLabelText("Go to page 2");
     expect(active).toHaveAttribute("aria-current", "page");
-    expect(active).toHaveClass("bg-(--cr-bg)", "text-(color:--cr-text)");
-    expect(active.getAttribute("style")).toContain("--cr-bg: var(--color-teal-600)");
-    expect(active.getAttribute("style")).toContain("--cr-text: var(--color-white)");
+    expect(active).toHaveClass("bg-primary", "text-primary-foreground");
 
     const resting = screen.getByLabelText("Go to page 3");
-    expect(resting.getAttribute("style")).toContain(
-      "--cr-bg: color-mix(in oklab, var(--color-teal-100) 30%, transparent)",
-    );
+    expect(resting).not.toHaveClass("bg-primary");
   });
 });
