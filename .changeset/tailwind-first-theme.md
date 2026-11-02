@@ -10,9 +10,7 @@ overriding CSS custom properties—no JavaScript theme setup or rebuild needed.
   palette, semantic colors, scales, shadows, and dark-mode overrides are
   split into focused files. Semantic colors reference the palette, so a
   palette override updates every component. Dark mode uses a `.dark` class.
-- Stylesheet imports have new paths: use `@basic-ui/tokens/theme.css` or
-  `@basic-ui/tokens/palette-static.css` instead of the old
-  `@basic-ui/tokens/styles/*` paths.
+- Stylesheet imports now use `@basic-ui/tokens/theme.css`; the old `@basic-ui/tokens/styles/*` paths and `palette-static.css` export were removed.
 - The JavaScript theming API has been removed, including `ThemeConfig`,
   `lightTheme`/`darkTheme`, `createTheme`, `mergeTheme`, `resolveTheme`,
   theme serialization, and the generated `tokens.ts`/`darkTokens` mirrors.
