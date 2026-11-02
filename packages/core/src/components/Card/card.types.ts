@@ -25,7 +25,8 @@ export interface CardRootProps extends BoxProps<AllowedCardElements> {
 
   /**
    * Determines the interaction behavior.
-   * If 'clickable' or 'both', the component renders as a <button> (or <a> if href is provided).
+   * If 'clickable', the component renders as a <button> (or <a> if href is provided).
+   * If 'both', it uses the `as` element or a <div> by default.
    * If 'draggable' or 'both', the component becomes draggable.
    * @default "static"
    */
@@ -44,7 +45,8 @@ export interface CardRootProps extends BoxProps<AllowedCardElements> {
   selected?: boolean;
 
   /**
-   * Whether the card is disabled. Applies a disabled style and prevents interaction.
+   * Whether the card is disabled. Prevents interaction, disables native buttons,
+   * and removes href and keyboard focus from links.
    * @default false
    */
   disabled?: boolean;

@@ -11,6 +11,143 @@ describe("Card", () => {
     expect(root?.tagName).toBe("DIV");
   });
 
+  describe.each([
+    ["Card", Card],
+    ["Card.Unstyled", Card.Unstyled],
+  ])("%s interactions", (_name, Component) => {
+    it("disables native buttons for pointer and keyboard activation", () => {
+      const onClick = vi.fn();
+      renderWithProviders(
+        <Component interaction="clickable" disabled onClick={onClick}>
+          Disabled button
+        </Component>,
+      );
+      const button = screen.getByText("Disabled button");
+
+      expect(button).toBeDisabled();
+      fireEvent.click(button);
+      fireEvent.keyDown(button, { key: "Enter" });
+      fireEvent.keyDown(button, { key: " " });
+      expect(onClick).not.toHaveBeenCalled();
+    });
+
+    it("does not activate a disabled non-native button on Enter or Space", () => {
+      const onClick = vi.fn();
+      renderWithProviders(
+        <Component interaction="both" disabled onClick={onClick}>
+          Disabled interactive card
+        </Component>,
+      );
+      const card = screen.getByText("Disabled interactive card");
+
+      expect(card).toHaveAttribute("tabindex", "-1");
+      fireEvent.keyDown(card, { key: "Enter" });
+      fireEvent.keyDown(card, { key: " " });
+      expect(onClick).not.toHaveBeenCalled();
+    });
+
+    it("invokes href click handlers and retains native link keyboard behavior", async () => {
+      const user = setupUser();
+      const onClick = vi.fn((event: React.MouseEvent) => event.preventDefault());
+      renderWithProviders(
+        <Component href="/destination" onClick={onClick}>
+          Link card
+        </Component>,
+      );
+      const link = screen.getByRole("link", { name: "Link card" });
+
+      await user.click(link);
+      expect(onClick).toHaveBeenCalledTimes(1);
+      link.focus();
+      await user.keyboard("{Enter}");
+      expect(onClick).toHaveBeenCalledTimes(2);
+      expect(onClick.mock.calls[1][0].type).toBe("click");
+    });
+
+    it("prevents disabled links from navigating or activating", () => {
+      const onClick = vi.fn();
+      renderWithProviders(
+        <Component href="/destination" disabled onClick={onClick}>
+          Disabled link
+        </Component>,
+      );
+      const link = screen.getByText("Disabled link");
+
+      expect(link).toHaveAttribute("aria-disabled", "true");
+      expect(link).toHaveAttribute("tabindex", "-1");
+      expect(link).not.toHaveAttribute("href");
+      fireEvent.click(link);
+      fireEvent.keyDown(link, { key: "Enter" });
+      expect(onClick).not.toHaveBeenCalled();
+    });
+
+    it("activates a non-native interactive card with a click event", () => {
+      const onClick = vi.fn();
+      renderWithProviders(
+        <Component interaction="both" onClick={onClick}>
+          Interactive card
+        </Component>,
+      );
+
+      fireEvent.keyDown(screen.getByText("Interactive card"), { key: "Enter" });
+      expect(onClick).toHaveBeenCalledOnce();
+      expect(onClick.mock.calls[0][0].type).toBe("click");
+    });
+
+    it("uses native keyboard activation for buttons without double-firing", async () => {
+      const user = setupUser();
+      const onClick = vi.fn();
+      renderWithProviders(
+        <Component interaction="clickable" onClick={onClick}>
+          Enabled button
+        </Component>,
+      );
+      screen.getByRole("button", { name: "Enabled button" }).focus();
+      await user.keyboard("{Enter}");
+      await user.keyboard(" ");
+
+      expect(onClick).toHaveBeenCalledTimes(2);
+      expect(onClick.mock.calls.map(([event]) => event.type)).toEqual(["click", "click"]);
+    });
+
+    it("allows consumers to cancel keyboard activation", () => {
+      const onClick = vi.fn();
+      const onKeyDown = vi.fn((event: React.KeyboardEvent) => event.preventDefault());
+      renderWithProviders(
+        <Component interaction="both" onClick={onClick} onKeyDown={onKeyDown}>
+          Cancelled card
+        </Component>,
+      );
+      fireEvent.keyDown(screen.getByText("Cancelled card"), { key: "Enter" });
+
+      expect(onKeyDown).toHaveBeenCalledOnce();
+      expect(onClick).not.toHaveBeenCalled();
+    });
+
+    it("keeps explicitly disabled cards out of the tab order", () => {
+      renderWithProviders(
+        <Component href="/destination" disabled tabIndex={0}>
+          Disabled link
+        </Component>,
+      );
+      expect(screen.getByText("Disabled link")).toHaveAttribute("tabindex", "-1");
+    });
+
+    it("supports keyboard activation on an anchor without an href", () => {
+      const onClick = vi.fn();
+      renderWithProviders(
+        <Component as="a" interaction="both" onClick={onClick}>
+          Interactive anchor
+        </Component>,
+      );
+      const card = screen.getByRole("button", { name: "Interactive anchor" });
+      fireEvent.keyDown(card, { key: "Enter" });
+
+      expect(onClick).toHaveBeenCalledOnce();
+      expect(onClick.mock.calls[0][0].type).toBe("click");
+    });
+  });
+
   it("applies elevated variant classes", () => {
     const { container } = renderWithProviders(<Card variant="elevated">Elevated</Card>);
     const root = container.firstChild as HTMLElement | null;
