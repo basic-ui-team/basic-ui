@@ -26,6 +26,8 @@ export const _Card = <As extends AllowedCardElements = "div">(
     selected,
     disabled,
     onClick,
+    onKeyDown,
+    tabIndex,
     onDragStart,
     onDragEnd,
     onDragOver,
@@ -60,14 +62,24 @@ export const _Card = <As extends AllowedCardElements = "div">(
 
   const isDraggable = interaction === "draggable" || interaction === "both";
   const isClickable = !!href || interaction === "clickable" || interaction === "both";
-  const onKeyDown = (event: React.KeyboardEvent<HTMLButtonElement | HTMLAnchorElement>) => {
-    if (isClickable && (event.key === "Enter" || event.key === " ")) {
+  const isNativeInteractive = resolvedAs === "button" || (resolvedAs === "a" && !!href);
+  const consumerKeyDown: React.KeyboardEventHandler<HTMLElement> | undefined = onKeyDown;
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
+    consumerKeyDown?.(event);
+    if (
+      !event.defaultPrevented &&
+      !disabled &&
+      isClickable &&
+      !isNativeInteractive &&
+      event.target === event.currentTarget &&
+      (event.key === "Enter" || event.key === " ")
+    ) {
       event.preventDefault();
-      onClick?.(event as unknown as React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>);
+      event.currentTarget.click();
     }
   };
 
-  const anchorProps = href
+  const anchorProps = href && !disabled
     ? ({ href } as Record<string, unknown>)
     : ({} as Record<string, unknown>);
 
@@ -84,11 +96,12 @@ export const _Card = <As extends AllowedCardElements = "div">(
         ref={ref}
         as={resolvedAs as AllowedCardElements}
         {...anchorProps}
+        {...(resolvedAs === "button" ? { disabled } : {})}
         className={cardClassName}
-        role={resolvedAs !== "a" && resolvedAs !== "button" && isClickable ? "button" : undefined}
+        role={!isNativeInteractive && isClickable ? "button" : undefined}
         aria-label={ariaLabel}
         draggable={isDraggable && !disabled}
-        onKeyDown={onKeyDown}
+        onKeyDown={handleKeyDown}
         onClick={isClickable && !disabled ? onClick : undefined}
         onDragStart={isDraggable && !disabled ? onDragStart : undefined}
         onDragEnd={isDraggable && !disabled ? onDragEnd : undefined}
@@ -96,7 +109,7 @@ export const _Card = <As extends AllowedCardElements = "div">(
         onDrop={isDraggable && !disabled ? onDrop : undefined}
         aria-disabled={disabled || undefined}
         data-selected={selected || undefined}
-        tabIndex={isClickable && !disabled ? 0 : undefined}
+        tabIndex={isClickable ? (disabled ? -1 : tabIndex ?? 0) : tabIndex}
         style={style}
         {...rest}
       >

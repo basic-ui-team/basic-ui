@@ -1,5 +1,6 @@
 import { renderWithProviders, setupUser, screen } from "../../test-utils";
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
+import { act } from "@testing-library/react";
 import * as React from "react";
 import { useFocusTrap } from "./useFocusTrap";
 
@@ -172,6 +173,77 @@ describe("useFocusTrap", () => {
     await user.tab();
     // Cycles within the inner trap, not out to the outer one
     expect(getByTestId("inner-first")).toHaveFocus();
+  });
+  it("restores the outer trap when a nested trap unmounts", async () => {
+    const user = setupUser();
+    function Inner() {
+      const ref = React.useRef<HTMLDivElement>(null);
+      useFocusTrap({ ref });
+      return <div ref={ref}><button>inner</button></div>;
+    }
+    function Outer({ showInner }: { showInner: boolean }) {
+      const ref = React.useRef<HTMLDivElement>(null);
+      useFocusTrap({ ref });
+      return (
+        <div ref={ref}>
+          <button>outer first</button>
+          <button>outer last</button>
+          {showInner && <Inner />}
+        </div>
+      );
+    }
+
+    const { rerender } = renderWithProviders(<Outer showInner={false} />);
+    rerender(<Outer showInner />);
+    expect(screen.getByText("inner")).toHaveFocus();
+    rerender(<Outer showInner={false} />);
+
+    screen.getByText("outer last").focus();
+    await user.tab();
+    expect(screen.getByText("outer first")).toHaveFocus();
+    await user.tab({ shift: true });
+    expect(screen.getByText("outer last")).toHaveFocus();
+  });
+  it("removes a deferred nested trap from the stack when it unmounts", async () => {
+    let callback: FrameRequestCallback | undefined;
+    const requestFrame = vi.spyOn(window, "requestAnimationFrame").mockImplementation((next) => {
+      callback = next;
+      return 1;
+    });
+    const user = setupUser();
+    function Inner() {
+      const ref = React.useRef<HTMLDivElement>(null);
+      const [visible, setVisible] = React.useState(false);
+      useFocusTrap({ ref });
+      React.useEffect(() => setVisible(true), []);
+      return visible ? <div ref={ref}><button>deferred inner</button></div> : null;
+    }
+    function Outer({ showInner }: { showInner: boolean }) {
+      const ref = React.useRef<HTMLDivElement>(null);
+      useFocusTrap({ ref });
+      return (
+        <div ref={ref}>
+          <button>deferred outer first</button>
+          <button>deferred outer last</button>
+          {showInner && <Inner />}
+        </div>
+      );
+    }
+
+    try {
+      const { rerender } = renderWithProviders(<Outer showInner={false} />);
+      rerender(<Outer showInner />);
+      expect(callback).toBeDefined();
+      act(() => callback?.(0));
+      expect(screen.getByText("deferred inner")).toHaveFocus();
+      rerender(<Outer showInner={false} />);
+
+      screen.getByText("deferred outer last").focus();
+      await user.tab();
+      expect(screen.getByText("deferred outer first")).toHaveFocus();
+    } finally {
+      requestFrame.mockRestore();
+    }
   });
   it("restores focus to the previously focused element on deactivate", () => {
     const outside = React.createRef<HTMLButtonElement>();

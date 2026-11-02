@@ -74,9 +74,11 @@ export function useFocusTrap(props: UseFocusTrapProps): void {
     let cancelled = false;
     let cleanupListener: (() => void) | null = null;
     let restoreTabindex: (() => void) | null = null;
+    let activeContainer: HTMLElement | null = null;
 
     const activate = (container: HTMLElement) => {
       if (cancelled) return;
+      activeContainer = container;
       activated.current = true;
       previouslyFocused.current = document.activeElement;
       trapStack.push(container);
@@ -162,8 +164,10 @@ export function useFocusTrap(props: UseFocusTrapProps): void {
       cancelAnimationFrame(raf);
       cleanupListener?.();
       restoreTabindex?.();
-      const index = trapStack.indexOf(ref.current!);
-      if (index !== -1) trapStack.splice(index, 1);
+      if (activeContainer) {
+        const index = trapStack.indexOf(activeContainer);
+        if (index !== -1) trapStack.splice(index, 1);
+      }
       if (activated.current) {
         for (const el of hiddenSiblings.current) {
           el.removeAttribute("aria-hidden");
