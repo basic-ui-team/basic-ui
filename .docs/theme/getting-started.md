@@ -34,27 +34,25 @@ Add this to your app's CSS entry point:
 @import "@basic-ui/core/styles.css";
 ```
 
-The core stylesheet includes the theme, palette, and component classes, and registers its own source files with Tailwind. You do not need to add a separate import for `@basic-ui/tokens`.
+The core stylesheet includes the theme and component utilities, and registers its own source files with Tailwind. You do not need to add a separate import for `@basic-ui/tokens`.
 
 ## Make a first change
 
-Use an `@theme` block after the import to override semantic tokens or add a color:
+Override the semantic variables after the import. For example, set the primary pair and page colors on `:root`:
 
 ```css
 @import "@basic-ui/core/styles.css";
 
-@theme {
-  /* Override existing semantic tokens */
-  --color-bg-base: #f7f8fa;
-  --color-fg-base: #182230;
-  --color-border-base: #d7dce2;
-
-  /* Add a color utility, such as bg-brand-surface */
-  --color-brand-surface: #eef2ff;
+:root {
+  --background: #f7f8fa;
+  --foreground: #182230;
+  --primary: #3558a8;
+  --primary-foreground: white;
+  --border: #d7dce2;
 }
 ```
 
-Keep the `@theme` block after the import. Do not use a plain `:root` block to override semantic tokens: it would take precedence over the theme's `.dark` values. For changing a palette ramp, see [Customizing a theme](./customizing.md).
+These variables are the theme's CSS API. Components use the shared semantic colors; there are no palette ramps or JavaScript theme setup. For the other variables you can override, see [Customizing a theme](./customizing.md).
 
 ## Use dark mode
 
@@ -66,13 +64,15 @@ The `dark:` variant and the theme's dark colors follow a `.dark` class. Add it t
 </html>
 ```
 
-The theme does not switch based on the operating system preference. Your app controls when to add or remove the class. To customize dark semantic colors, add a `.dark` rule after the import:
+The theme does not switch based on the operating system preference. Your app controls when to add or remove the class. Override the same variables under `.dark` to customize their dark-mode values:
 
 ```css
 .dark {
-  --color-bg-base: #111827;
-  --color-fg-base: #f9fafb;
-  --color-border-base: #374151;
+  --background: #111827;
+  --foreground: #f9fafb;
+  --primary: #9ab6ff;
+  --primary-foreground: #111827;
+  --border: #374151;
 }
 ```
 
@@ -80,6 +80,6 @@ See [Dark mode](./dark-mode.md) for more detail.
 
 ## Check the result
 
-Run the app and check a page with basic-ui components. If your changes do not appear, check that Tailwind CSS v4 processes the stylesheet and that your overrides follow the import. If light-mode changes appear but dark mode looks wrong, move semantic overrides from `:root` to `@theme`. Confirm that `.dark` is on the page or an ancestor when checking dark mode.
+Run the app and check a page with basic-ui components. If your changes do not appear, check that Tailwind CSS v4 processes the stylesheet and that your overrides follow the import. If dark-mode changes do not appear, confirm that the `.dark` class is on the page or an ancestor and that the overrides are inside a `.dark` rule.
 
 For the token layers, see [Theme concepts](./concepts.md). For the available token groups, see the [token reference](./reference/tokens.md).

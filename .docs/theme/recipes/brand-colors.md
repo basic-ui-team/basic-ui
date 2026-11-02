@@ -1,30 +1,32 @@
-# Change the brand colors
+# Change the primary color
 
-Replace the `primary`, `secondary`, and `accent` ramps to change the brand colors used by both utilities and component `color` props, such as `<Button color="primary" />`.
+Components share the `primary` semantic color. Override `--primary` and `--primary-foreground` to change the brand color and the text or icon color paired with it.
 
-## Override the ramps
+## Override the primary pair
 
-Add your values after the core stylesheet import in an `@theme static` block:
+Add your values after the core stylesheet import:
 
 ```css
 @import "@basic-ui/core/styles.css";
 
-@theme static {
-  --color-primary-500: oklch(0.66 0.19 250);
-  --color-primary-600: oklch(0.55 0.17 250);
-  --color-accent-500: oklch(0.75 0.16 80);
+:root {
+  --primary: oklch(0.55 0.2 250);
+  --primary-foreground: white;
+}
+
+.dark {
+  --primary: oklch(0.78 0.13 250);
+  --primary-foreground: oklch(0.2 0.03 250);
 }
 ```
 
-This partial override is enough to change those shades; other shades retain their defaults. For a consistent component palette, define the full 50–950 ramp for each brand color you change. See [Customizing a theme](../customizing.md) for a complete ramp example.
-
-You do not need separate dark-mode ramps. The palette is mode-independent; component color recipes select darker shades for dark mode.
+The `.dark` override is optional, but it lets you choose a primary color that works better against dark surfaces. There are no palette ramps or component `color` props to configure.
 
 ## Check the result
 
-Test the updated colors in both modes:
+Check the primary color and its foreground in both modes:
 
-- `Button` with `color="primary"` in solid, ghost, outline, and link variants.
-- Focus rings on colorized buttons.
-- `Toggle`, `Spinner`, and `Icon` with brand colors.
-- Direct utilities such as `bg-primary-600` and `text-accent-500`.
+- Buttons in solid, ghost, outline, and link variants.
+- Text and icons on primary-colored surfaces.
+- Focus rings and hover/active states.
+- Contrast between the primary color and its foreground.

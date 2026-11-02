@@ -22,22 +22,22 @@ You can connect this to React state, a saved preference, or another theme settin
 
 ## Override dark colors
 
-The default dark theme changes semantic colors and shadows. Palette ramps remain the same; color recipes select darker shades for dark mode.
+The default dark theme changes the semantic variables and shadows.
 
 Add a `.dark` rule after the core stylesheet import to change dark semantic values. This selector has the same specificity as the library's rule, so your later declarations take effect:
 
 ```css
 .dark {
-  --color-surface-base: #10161d;
-  --color-fg-muted: #aab6c5;
-  --color-border-base: #354151;
+  --surface: #10161d;
+  --muted-foreground: #aab6c5;
+  --border: #354151;
   --shadow-s1: 0 1px 2px 0 rgb(255 255 255 / 0.12);
 }
 ```
 
 The `--shadow-s1` through `--shadow-s5` values are ordinary CSS custom properties and can be overridden the same way. The default dark shadows use white-based values to create light-tinted elevation.
 
-For the light semantic values, use `@theme`; for dark semantic values, use `.dark`. A plain `:root` semantic override takes precedence over the dark rule. See [Customizing a theme](./customizing.md) for the cascade details.
+Set default semantic values on `:root` and dark values under `.dark`. Since the variables are ordinary CSS custom properties, you can also scope them to a selector. See [Customizing a theme](./customizing.md) for examples.
 
 ## Check both modes
 

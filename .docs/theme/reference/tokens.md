@@ -4,36 +4,26 @@
 
 | Import | Includes |
 |---|---|
-| `@basic-ui/core/styles.css` | Theme, palette, component classes, and source registration for Core components. Use this when building with `@basic-ui/core`. |
-| `@basic-ui/tokens/theme.css` | Authored palette ramps, semantic tokens, scales, dark overrides, and utility shims. |
-| `@basic-ui/tokens/palette-static.css` | Standard Tailwind color families, emitted for runtime palette lookups. |
+| `@basic-ui/core/styles.css` | Theme, component utilities, and source registration for Core components. Use this when building with `@basic-ui/core`. |
+| `@basic-ui/tokens/theme.css` | Theme stylesheet. Use this directly when you need the theme without Core's component styles. |
 
-Core's stylesheet imports both token stylesheets. When using Core, you do not need to import them separately.
+Core's stylesheet imports `@basic-ui/tokens/theme.css`. The Tokens package exports this stylesheet only; it has no JavaScript API.
 
-## Palette tokens
+## Semantic variables
 
-Color variables use the `--color-<family>-<shade>` form:
+The theme exposes consumer-owned CSS custom properties. Override them directly in CSS; component styles and Tailwind utilities resolve these variables at the point of use.
 
-- Authored ramps: `primary`, `secondary`, and `accent`, shades 50–950.
-- Standard Tailwind families: 22 families, including `neutral`, shades 50–950. These are vendored from the installed Tailwind theme.
-- `white` and `black`.
-
-The palette is emitted statically so component color recipes can look up any family and shade at runtime. Standard palette utilities use names such as `bg-primary-600` and `text-accent-500`; Tailwind also supports color opacity modifiers.
-
-Component `color` props accept the 22 standard families and the three authored brand ramps. For the recipe behavior, see [Theme concepts](../concepts.md).
-
-## Semantic color tokens
-
-Semantic variables name common interface roles and states:
-
-| Token family | States | Utility example |
+| Role | Variables | Tailwind utility examples |
 |---|---|---|
-| `--color-bg-*` | `base`, `muted`, `hover`, `active`, `disabled`, `inverted` | `bg-bg-base` |
-| `--color-fg-*` | `base`, `muted`, `hover`, `active`, `disabled`, `inverted`, `skeleton` | `text-fg-muted` |
-| `--color-surface-*` | `base`, `hover`, `active`, `disabled`, `inverted` | `bg-surface-base` |
-| `--color-border-*` | `base`, `muted`, `hover`, `active`, `disabled`, `inverted` | `border-border-base` |
+| Page | `--background`, `--foreground` | `bg-background`, `text-foreground` |
+| Surface | `--surface`, `--surface-foreground` | `bg-surface`, `text-surface-foreground` |
+| Overlay | `--overlay`, `--overlay-foreground` | `bg-overlay`, `text-overlay-foreground` |
+| Muted | `--muted`, `--muted-foreground` | `bg-muted`, `text-muted-foreground` |
+| Primary | `--primary`, `--primary-foreground` | `bg-primary`, `text-primary-foreground` |
+| Border and focus | `--border`, `--input`, `--ring` | `border-border`, `border-input`, `ring-ring` |
+| Status | `--success`, `--warning`, `--destructive`, `--info` and corresponding `-foreground` variables | `bg-success`, `text-warning-foreground`, etc. |
 
-The repeated `bg` in `bg-bg-base` is intentional: the first `bg` is the utility and the second is the token family.
+Surface and status foreground variables pair text and icon colors with their corresponding backgrounds. `--mix-pole` is also available for derived hover and active color utilities; the default is black in light mode and white in dark mode.
 
 ## Other tokens
 
@@ -57,6 +47,6 @@ The theme provides utility shims for named durations, z-index values, opacity va
 
 ## Default light and dark values
 
-Light semantic tokens use white and neutral grays. Dark tokens invert those grays and use white-based shadows. The palette ramps themselves are mode-independent; color recipes select the appropriate shades.
+The theme defines semantic values for both modes. Add the `.dark` class to activate dark values; override variables directly in `:root` and `.dark`, or scope them to an application selector.
 
 For override and emission behavior, see [Customizing a theme](../customizing.md).
